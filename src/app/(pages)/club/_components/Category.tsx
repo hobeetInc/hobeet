@@ -1,22 +1,48 @@
-import { MAIN_CATEGORIES, SUB_CATEGORIES } from "../_types/ClubForm";
+"use client";
 
-interface CategoryProps {
+import { useEffect, useState } from "react";
+import { fetchMainCategories, fetchSubCategories } from "../_api/supabase";
+import { MainCategory, SubCategory } from "../_types/ClubForm";
+
+type CategoryProps = {
   isOpen: number | null;
   onSubSelect: (mainId: number, subId: number) => void;
   onToggle: (id: number) => void;
   selectedSubId: number | null;
-}
+};
 
 const Category = ({ isOpen, onSubSelect, onToggle, selectedSubId }: CategoryProps) => {
+  const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const mainData = await fetchMainCategories();
+      const subData = await fetchSubCategories();
+
+      console.log("수퍼베이스!!", mainData);
+
+      setMainCategories(mainData);
+      setSubCategories(subData);
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
   const getSubCategory = (mainId: number) => {
-    return SUB_CATEGORIES.filter((sub) => sub.m_c_id === mainId);
+    return subCategories?.filter((sub) => sub.m_c_id === mainId);
   };
+
+  if (isLoading) return <div>로딩 중...</div>;
 
   return (
     <div>
       <h1 className="mb-4">반짝모임 주제를 선택하세요</h1>
       <div className="flex flex-col gap-2">
-        {MAIN_CATEGORIES.map((main) => (
+        {mainCategories?.map((main) => (
           <button onClick={() => onToggle(main.m_c_id)} className="next-box bg-gray-100" key={main.m_c_id}>
             {main.m_c_name}
             <br />

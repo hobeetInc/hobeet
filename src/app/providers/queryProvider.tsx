@@ -1,7 +1,7 @@
 // In Next.js, this file would be called: app/providers.jsx
 "use client";
 
-// Since QueryClientProvider relies on useContext under the hood, we have to put 'use client' on top
+// Since Provider relies on useContext under the hood, we have to put 'use client' on top
 import { isServer, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function makeQueryClient() {

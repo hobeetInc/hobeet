@@ -85,7 +85,12 @@ const OneTimePage = () => {
           />
         );
       case 2:
-        return <></>;
+        return (
+          <div>
+            <h1>모임의 제목을 작성해 주세요</h1>
+            <input type="text" className="border-2 border-black mt-4 w-[358px] h-[48px]" />
+          </div>
+        );
       case 3:
         return <></>;
       case 4:
