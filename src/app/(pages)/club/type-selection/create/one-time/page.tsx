@@ -7,6 +7,7 @@ import browserClient from "@/utils/supabase/client";
 import Category from "../../../_components/Category";
 import ImageUpload from "../../../_components/ImageUpload";
 import { uploadImage } from "../../../_api/supabase";
+import DateTime from "../../../_components/DateTime";
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
@@ -99,7 +100,7 @@ const OneTimePage = () => {
           </div>
         );
       case 4:
-        return <></>;
+        return <DateTime formData={formData} setFormData={setFormData} />;
       case 5:
         return <></>;
       case 6:
