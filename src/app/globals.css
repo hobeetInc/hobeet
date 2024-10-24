@@ -125,3 +125,13 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+@layer utilities {
+  .next-button {
+    @apply bg-gray-100 w-[358px] h-[53px] rounded-lg hover:border-2 hover:border-black;
+  }
+
+  .next-box {
+    @apply w-[358px] h-[82px] p-4;
+  }
+}
