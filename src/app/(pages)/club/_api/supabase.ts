@@ -20,3 +20,17 @@ export const fetchNeedSubCategories = async (mainId: number) => {
   if (error) throw error;
   return data;
 };
+
+// 스토리지에 이미지 넣기
+export const uploadImage = async (file: File) => {
+  const { data, error } = await browserClient.storage.from("club-images").upload(`club-images/${Date.now()}`, file);
+
+  if (error) throw error;
+
+  // 업로드된 이미지 URL 가져오기
+  const {
+    data: { publicUrl }
+  } = browserClient.storage.from("club-image").getPublicUrl(data.path);
+
+  return publicUrl;
+};

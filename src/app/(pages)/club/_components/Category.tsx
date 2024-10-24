@@ -1,19 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { fetchMainCategories, fetchSubCategories } from "../_api/supabase";
-import { MainCategory, SubCategory } from "../_types/ClubForm";
+import { CategoryProps, MainCategory, OneTimeClubForm, SubCategory } from "../_types/ClubForm";
 
-type CategoryProps = {
-  isOpen: number | null;
-  onSubSelect: (mainId: number, subId: number) => void;
-  onToggle: (id: number) => void;
-  selectedSubId: number | null;
-};
-
-const Category = ({ isOpen, onSubSelect, onToggle, selectedSubId }: CategoryProps) => {
+const Category = ({ formData, setFormData }: CategoryProps) => {
   const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+  const [openCategoryId, setOpenCategoryId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -22,7 +16,9 @@ const Category = ({ isOpen, onSubSelect, onToggle, selectedSubId }: CategoryProp
       const mainData = await fetchMainCategories();
       const subData = await fetchSubCategories();
 
+      // 확인용
       console.log("수퍼베이스!!", mainData);
+      console.log("수퍼베이스!!", subData);
 
       setMainCategories(mainData);
       setSubCategories(subData);
@@ -31,6 +27,20 @@ const Category = ({ isOpen, onSubSelect, onToggle, selectedSubId }: CategoryProp
 
     fetchData();
   }, []);
+
+  // 카테고리 토글 함수
+  const handleCategoryToggle = (categoryId: number) => {
+    setOpenCategoryId(openCategoryId === categoryId ? null : categoryId);
+  };
+
+  // 중분류 카테고리 선택
+  const handleSubCategorySelect = (mainId: number, subId: number) => {
+    setFormData({
+      ...formData,
+      m_c_id: mainId,
+      s_c_id: subId
+    });
+  };
 
   const getSubCategory = (mainId: number) => {
     return subCategories?.filter((sub) => sub.m_c_id === mainId);
@@ -43,20 +53,20 @@ const Category = ({ isOpen, onSubSelect, onToggle, selectedSubId }: CategoryProp
       <h1 className="mb-4">반짝모임 주제를 선택하세요</h1>
       <div className="flex flex-col gap-2">
         {mainCategories?.map((main) => (
-          <button onClick={() => onToggle(main.m_c_id)} className="next-box bg-gray-100" key={main.m_c_id}>
+          <button onClick={() => handleCategoryToggle(main.m_c_id)} className="next-box bg-gray-100" key={main.m_c_id}>
             {main.m_c_name}
             <br />
             <br />
-            {isOpen === main.m_c_id &&
+            {openCategoryId === main.m_c_id &&
               getSubCategory(main.m_c_id).map((sub) => (
                 <button
                   key={sub.s_c_id}
                   onClick={(e) => {
                     e.stopPropagation(); // 상위 버튼 클릭 방지
-                    onSubSelect(main.m_c_id, sub.s_c_id);
+                    handleSubCategorySelect(main.m_c_id, sub.s_c_id);
                   }}
                   className={`border-2 border-black p-1 m-1 
-                  ${selectedSubId === sub.s_c_id && "bg-blue-200"}`}
+                  ${formData.s_c_id === sub.s_c_id && "bg-blue-200"}`}
                 >
                   {sub.s_c_name}
                 </button>

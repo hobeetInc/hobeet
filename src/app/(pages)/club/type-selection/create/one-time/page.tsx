@@ -5,6 +5,8 @@ import { useState } from "react";
 import { OneTimeClubForm } from "../../../_types/ClubForm";
 import browserClient from "@/utils/supabase/client";
 import Category from "../../../_components/Category";
+import ImageUpload from "../../../_components/ImageUpload";
+import { uploadImage } from "../../../_api/supabase";
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
@@ -12,7 +14,6 @@ const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
 const OneTimePage = () => {
   const router = useRouter();
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(1);
-  const [openCategoryId, setOpenCategoryId] = useState<number | null>(null);
   const [formData, setFormData] = useState<OneTimeClubForm>({
     m_c_id: 0,
     s_c_id: 0,
@@ -37,33 +38,24 @@ const OneTimePage = () => {
     }
   };
 
-  // 다음단계 버튼
-  const handleNext = () => {
-    if (step === 7) {
-      handleSubmit();
-    } else {
-      setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7);
-    }
-  };
-
-  // 카테고리 토글 함수
-  const handleCategoryToggle = (categoryId: number) => {
-    setOpenCategoryId(openCategoryId === categoryId ? null : categoryId);
-  };
-
-  // 중분류 카테고리 선택
-  const handleSubCategorySelect = (mainId: number, subId: number) => {
-    setFormData({
-      ...formData,
-      m_c_id: mainId,
-      s_c_id: subId
-    });
-  };
-
   const handleSubmit = async () => {
     try {
+      let finalFormData = { ...formData };
+
+      // formData의 이미지가 File 객체인 경우 업로드
+      if (formData.one_time_image instanceof File) {
+        // 이미지 업로드 후 URL 받아오기
+        const imageUrl = await uploadImage(formData.one_time_image);
+
+        // URL을 formData에 설정
+        finalFormData = {
+          ...finalFormData,
+          one_time_image: imageUrl
+        };
+      }
+
       // supabase에 데이터 저장
-      const { data, error } = await browserClient.from("one_time_club").insert([formData]);
+      const { data, error } = await browserClient.from("one_time_club").insert([finalFormData]);
 
       if (error) throw error;
 
@@ -76,23 +68,36 @@ const OneTimePage = () => {
   const renderStep = () => {
     switch (step) {
       case 1:
-        return (
-          <Category
-            isOpen={openCategoryId}
-            onSubSelect={handleSubCategorySelect}
-            onToggle={handleCategoryToggle}
-            selectedSubId={formData.s_c_id}
-          />
-        );
+        return <Category formData={formData} setFormData={setFormData} />;
       case 2:
         return (
           <div>
-            <h1>모임의 제목을 작성해 주세요</h1>
-            <input type="text" className="border-2 border-black mt-4 w-[358px] h-[48px]" />
+            <h1 className="mb-4">모임의 제목을 작성해 주세요</h1>
+            <input
+              type="text"
+              value={formData.one_time_club_name}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  one_time_club_name: e.target.value
+                })
+              }
+              className="border-2 border-black mt-4 w-[358px] h-[48px] p-2"
+            />
           </div>
         );
       case 3:
-        return <></>;
+        return (
+          <div>
+            <h1 className="mb-4">모임을 소개해주세요</h1>
+            <ImageUpload formData={formData} setFormData={setFormData} />
+            <textarea
+              value={formData.one_time_club_introduction}
+              onChange={(e) => setFormData({ ...formData, one_time_club_introduction: e.target.value })}
+              className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
+            />
+          </div>
+        );
       case 4:
         return <></>;
       case 5:
@@ -101,6 +106,36 @@ const OneTimePage = () => {
         return <></>;
       case 7:
         return <></>;
+    }
+  };
+
+  // 다음단계 버튼
+  const handleNext = () => {
+    if (step === 1 && formData.s_c_id === 0) {
+      alert("카테고리를 선택해주세요");
+      return;
+    }
+
+    if (step === 2 && !formData.one_time_club_name.trim()) {
+      alert("모임 제목을 입력해주세요");
+      return;
+    }
+
+    if (step === 3) {
+      if (!formData.one_time_image) {
+        alert("이미지를 선택해주세요");
+        return;
+      }
+      if (!formData.one_time_club_introduction.trim()) {
+        alert("모임 소개글을 입력해주세요");
+        return;
+      }
+    }
+
+    if (step === 7) {
+      handleSubmit();
+    } else {
+      setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7);
     }
   };
 
