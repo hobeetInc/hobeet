@@ -134,6 +134,13 @@ const OneTimePage = () => {
       }
     }
 
+    if (step === 5) {
+      if (!formData.one_time_club_location) {
+        alert("모임 장소를 정해주세요");
+        return;
+      }
+    }
+
     if (step === 7) {
       handleSubmit();
     } else {

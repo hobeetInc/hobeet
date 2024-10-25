@@ -5,7 +5,21 @@ import { CategoryProps } from "../_types/ClubForm";
 
 declare global {
   interface Window {
-    daum: any;
+    daum: {
+      Postcode: new (config: {
+        oncomplete: (data: {
+          userSelectedType: string;
+          roadAddress: string;
+          jibunAddress: string;
+          bname: string;
+          buildingName: string;
+          apartment: string;
+          zonecode: string;
+        }) => void;
+      }) => {
+        open: () => void;
+      };
+    };
   }
 }
 
@@ -95,15 +109,17 @@ const AddressSearch = ({ formData, setFormData }: CategoryProps) => {
       detailAddress: newDetailAddress
     }));
 
-    // 상세주소가 입력될 때마다 전체 주소 업데이트
-    const fullAddress = `[${addressData.zonecode}] ${addressData.address}${
-      newDetailAddress ? `, ${newDetailAddress}` : ""
-    }`;
+    // 기본주소가 있을 때만 formData 업데이트
+    if (addressData.zonecode && addressData.address) {
+      const fullAddress = `[${addressData.zonecode}] ${addressData.address}${
+        newDetailAddress ? `, ${newDetailAddress}` : ""
+      }`;
 
-    setFormData({
-      ...formData,
-      one_time_club_location: fullAddress
-    });
+      setFormData({
+        ...formData,
+        one_time_club_location: fullAddress
+      });
+    }
   };
 
   return (

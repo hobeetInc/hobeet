@@ -16,11 +16,11 @@ const DateTime = ({ formData, setFormData }: CategoryProps) => {
     setStartDate(date);
 
     if (date) {
-      // 선택된 시간에 9시간을 더해서 저장
-      const utcDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+      // 9시간을 더해서 저장(시간 보정)
+      const utcDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
       setFormData({
         ...formData,
-        one_time_club_date_time: utcDate.toISOString()
+        one_time_club_date_time: utcDate.toISOString() // toISOString()하면 아홉시간 빠지게 됨
       });
     }
   };
