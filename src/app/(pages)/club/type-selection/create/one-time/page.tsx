@@ -2,21 +2,24 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { OneTimeClubForm } from "../../../_types/ClubForm";
-import browserClient from "@/utils/supabase/client";
+// import { OneTimeClubForm } from "../../../_types/ClubForm";
 import Category from "../../../_components/Category";
 import ImageUpload from "../../../_components/ImageUpload";
-import { uploadImage } from "../../../_api/supabase";
+import { submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
 import DateTime from "../../../_components/DateTime";
 import AddressSearch from "../../../_components/AddressSearch";
+import MemberType from "../../../_components/MemberType";
+import { Tables } from "../../../../../../../database.types";
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
 
+//
+
 const OneTimePage = () => {
   const router = useRouter();
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(1);
-  const [formData, setFormData] = useState<OneTimeClubForm>({
+  const [formData, setFormData] = useState<Tables<"one_time_club">>({
     m_c_id: 0,
     s_c_id: 0,
     user_id: userId,
@@ -27,7 +30,7 @@ const OneTimePage = () => {
     one_time_tax: 0,
     one_time_gender: null,
     one_time_age: null,
-    one_time_image: null,
+    one_time_image: "",
     one_time_club_introduction: ""
   });
 
@@ -40,31 +43,24 @@ const OneTimePage = () => {
     }
   };
 
+  // supabase 제출 버튼
   const handleSubmit = async () => {
-    try {
-      let finalFormData = { ...formData };
+    let finalFormData = { ...formData };
 
-      // formData의 이미지가 File 객체인 경우 업로드
-      if (formData.one_time_image instanceof File) {
-        // 이미지 업로드 후 URL 받아오기
-        const imageUrl = await uploadImage(formData.one_time_image);
+    // formData의 이미지가 File 객체인 경우 업로드
+    if (formData.one_time_image instanceof File) {
+      // 이미지 업로드 후 URL 받아오기
+      const imageUrl = await uploadImage(formData.one_time_image);
 
-        // URL을 formData에 설정
-        finalFormData = {
-          ...finalFormData,
-          one_time_image: imageUrl
-        };
-      }
-
-      // supabase에 데이터 저장
-      const { data, error } = await browserClient.from("one_time_club").insert([finalFormData]);
-
-      if (error) throw error;
-
-      return data;
-    } catch (error) {
-      console.error("모임생성시 오류", error);
+      // URL을 formData에 설정
+      finalFormData = {
+        ...finalFormData,
+        one_time_image: imageUrl
+      };
     }
+
+    // supabase에 데이터 저장
+    submitOneTimeClubData(finalFormData);
   };
 
   const renderStep = () => {
@@ -105,7 +101,7 @@ const OneTimePage = () => {
       case 5:
         return <AddressSearch formData={formData} setFormData={setFormData} />;
       case 6:
-        return <></>;
+        return <MemberType formData={formData} setFormData={setFormData} />;
       case 7:
         return <></>;
     }

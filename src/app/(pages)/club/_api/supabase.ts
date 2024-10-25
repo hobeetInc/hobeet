@@ -1,6 +1,14 @@
 import browserClient from "@/utils/supabase/client";
+import { OneTimeClubForm } from "../_types/ClubForm";
 
-// 대분류 카테고리 조히
+// supabase에 일회성 모임 제출
+export const submitOneTimeClubData = async (finalFormData: OneTimeClubForm) => {
+  const { data, error } = await browserClient.from("one_time_club").insert([finalFormData]);
+  if (error) throw error;
+  return data;
+};
+
+// 대분류 카테고리 조회
 export const fetchMainCategories = async () => {
   const { data, error } = await browserClient.from("m_category").select("*").order("m_c_id");
   if (error) throw error;

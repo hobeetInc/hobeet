@@ -1,8 +1,8 @@
 "use client";
 
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchMainCategories, fetchSubCategories } from "../_api/supabase";
-import { CategoryProps, MainCategory, OneTimeClubForm, SubCategory } from "../_types/ClubForm";
+import { CategoryProps, MainCategory, SubCategory } from "../_types/ClubForm";
 
 const Category = ({ formData, setFormData }: CategoryProps) => {
   const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);
