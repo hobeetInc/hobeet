@@ -53,7 +53,11 @@ const Category = ({ formData, setFormData }: CategoryProps) => {
       <h1 className="mb-4">반짝모임 주제를 선택하세요</h1>
       <div className="flex flex-col gap-2">
         {mainCategories?.map((main) => (
-          <button onClick={() => handleCategoryToggle(main.m_c_id)} className="next-box bg-gray-100" key={main.m_c_id}>
+          <div
+            onClick={() => handleCategoryToggle(main.m_c_id)}
+            className="next-box bg-gray-100 cursor-pointer"
+            key={main.m_c_id}
+          >
             {main.m_c_name}
             <br />
             <br />
@@ -71,7 +75,7 @@ const Category = ({ formData, setFormData }: CategoryProps) => {
                   {sub.s_c_name}
                 </button>
               ))}
-          </button>
+          </div>
         ))}
       </div>
     </div>
