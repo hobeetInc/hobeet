@@ -7,7 +7,7 @@ import { ko } from "date-fns/locale";
 const DateTime = ({ formData, setFormData }: CategoryProps) => {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
 
-  let handleColor = (time: Date) => {
+  const handleColor = (time: Date) => {
     return time.getHours() > 12 ? "text-success" : "text-error";
   };
 
@@ -16,16 +16,18 @@ const DateTime = ({ formData, setFormData }: CategoryProps) => {
     setStartDate(date);
 
     if (date) {
+      // 선택된 시간에 9시간을 더해서 저장
+      const utcDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
       setFormData({
         ...formData,
-        one_time_club_date_time: date.toISOString()
+        one_time_club_date_time: utcDate.toISOString()
       });
     }
   };
 
   return (
     <div>
-      <h1 className="mb-4">모임 날짜와 시간을 선택해주세요</h1>
+      <h1 className="mb-4">언제 만날까요?</h1>
       <DatePicker
         selected={startDate}
         onChange={handleDateChange}
@@ -43,11 +45,10 @@ const DateTime = ({ formData, setFormData }: CategoryProps) => {
       <br />
       <br />
       {startDate && (
-        <p>
-          선택된 날짜: {startDate.toLocaleDateString()}
-          <br />
-          선택된 시간: {startDate.toLocaleTimeString()}
-        </p>
+        <div className="flex flex-col gap-4">
+          <div className="next-box bg-gray-100">선택된 날짜: {startDate.toLocaleDateString()}</div>
+          <div className="next-box bg-gray-100">선택된 시간: {startDate.toLocaleTimeString()}</div>
+        </div>
       )}
     </div>
   );
