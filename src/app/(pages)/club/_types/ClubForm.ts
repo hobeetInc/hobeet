@@ -32,3 +32,22 @@ export type CategoryProps = {
   formData: OneTimeClubForm;
   setFormData: React.Dispatch<SetStateAction<OneTimeClubForm>>;
 };
+
+// 정기적 모임 타입
+export interface RegularClubForm {
+  m_c_id: number;
+  regular_club_age?: number | null;
+  regular_club_approval?: boolean;
+  regular_club_gender?: string | null;
+  regular_club_image: string | File | null;
+  regular_club_introduction: string;
+  regular_club_name: string;
+  regular_club_people_limited?: number | null;
+  s_c_id?: number;
+  user_id?: string;
+}
+
+export type RegularProps = {
+  formData: RegularClubForm;
+  setFormData: React.Dispatch<SetStateAction<RegularClubForm>>;
+};

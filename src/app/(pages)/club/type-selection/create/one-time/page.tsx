@@ -26,17 +26,17 @@ const OneTimePage = () => {
     // 필수값이면서 null이 허용되지 않는 필드들
     m_c_id: 0,
     s_c_id: 0,
-    one_time_club_date_time: "",
     user_id: userId,
     one_time_club_name: "",
     one_time_club_location: "",
     one_time_club_introduction: "",
     one_time_image: "",
+    one_time_club_date_time: "",
     one_time_tax: null,
 
     // null이 허용되는 선택적 필드들
-    one_time_age: null,
     one_time_gender: null,
+    one_time_age: null,
     one_time_people_limited: null
   });
 
