@@ -3,11 +3,25 @@
 import { useState } from "react";
 import { CategoryProps } from "../_types/ClubForm";
 
-const MemberType = ({ formData, setFormData }: CategoryProps) => {
+type MemeberTypeProps = CategoryProps & {
+  selectedGender: string;
+  setSelectedGender: (value: string) => void;
+  selectedAge: string;
+  setSelectedAge: (value: string) => void;
+};
+
+const MemberType = ({
+  formData,
+  setFormData,
+  selectedGender,
+  setSelectedGender,
+  selectedAge,
+  setSelectedAge
+}: MemeberTypeProps) => {
   const [genderToggle, setGenderToggle] = useState<boolean>(false);
   const [ageToggle, setAgeToggle] = useState<boolean>(false);
-  const [selectedGender, setSelectedGender] = useState<string>("");
-  const [selectedAge, setSelectedAge] = useState<string>("");
+
+  // const [limited, setLimited] = useState<string | null>(null);
 
   const gender = ["누구나", "여자만", "남자만"];
   const age = ["누구나", "10대", "20대", "30대", "40대", "50대 이상"];
@@ -15,9 +29,14 @@ const MemberType = ({ formData, setFormData }: CategoryProps) => {
   // 성별 선택 핸들러
   const handleGender = (e: React.MouseEvent, gender: string) => {
     e.stopPropagation();
+
     setSelectedGender(gender);
 
-    setFormData({ ...formData, one_time_gender: gender });
+    if (gender === "누구나") {
+      setFormData({ ...formData, one_time_gender: null });
+    } else {
+      setFormData({ ...formData, one_time_gender: gender });
+    }
   };
 
   // 나이 선택 핸들러
@@ -26,7 +45,7 @@ const MemberType = ({ formData, setFormData }: CategoryProps) => {
     setSelectedAge(age);
 
     if (age === "누구나") {
-      setFormData({ ...formData, one_time_age: 100 });
+      setFormData({ ...formData, one_time_age: null });
     } else if (age === "10대") {
       setFormData({ ...formData, one_time_age: 19 });
     } else if (age === "20대") {
@@ -37,6 +56,14 @@ const MemberType = ({ formData, setFormData }: CategoryProps) => {
       setFormData({ ...formData, one_time_age: 49 });
     } else if (age === "50대 이상") {
       setFormData({ ...formData, one_time_age: 50 });
+    }
+  };
+
+  const handlePeopleLimit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === "") {
+      setFormData({ ...formData, one_time_people_limited: null });
+    } else {
+      setFormData({ ...formData, one_time_people_limited: parseInt(e.target.value) });
     }
   };
 
@@ -79,6 +106,16 @@ const MemberType = ({ formData, setFormData }: CategoryProps) => {
                 </button>
               ))}
           </div>
+        </div>
+        <div className="next-box bg-gray-100 flex flex-col gap-4">
+          <h1>최대인원수</h1>
+          <input
+            type="number"
+            placeholder="인원수를 적지 않으면 인원제한 없이 생성됩니다"
+            className="w-[328px] h-8 rounded-lg p-2"
+            value={formData.one_time_people_limited || ""}
+            onChange={handlePeopleLimit}
+          />
         </div>
       </div>
     </div>

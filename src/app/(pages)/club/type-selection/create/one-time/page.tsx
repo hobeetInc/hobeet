@@ -2,14 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-// import { OneTimeClubForm } from "../../../_types/ClubForm";
 import Category from "../../../_components/Category";
 import ImageUpload from "../../../_components/ImageUpload";
 import { submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
 import DateTime from "../../../_components/DateTime";
 import AddressSearch from "../../../_components/AddressSearch";
 import MemberType from "../../../_components/MemberType";
-import { Tables } from "../../../../../../../database.types";
+import { OneTimeClubForm } from "../../../_types/ClubForm";
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
@@ -19,20 +18,26 @@ const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
 const OneTimePage = () => {
   const router = useRouter();
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(1);
-  const [formData, setFormData] = useState<Tables<"one_time_club">>({
+  const [formData, setFormData] = useState<OneTimeClubForm>({
+    // 필수값이면서 null이 허용되지 않는 필드들
     m_c_id: 0,
     s_c_id: 0,
+    one_time_club_date_time: "",
     user_id: userId,
     one_time_club_name: "",
-    one_time_club_date_time: "",
     one_time_club_location: "",
-    one_time_club_limited: null,
-    one_time_tax: 0,
-    one_time_gender: null,
-    one_time_age: null,
+    one_time_club_introduction: "",
     one_time_image: "",
-    one_time_club_introduction: ""
+    one_time_tax: 0,
+
+    // null이 허용되는 선택적 필드들
+    one_time_age: null,
+    one_time_gender: null,
+    one_time_people_limited: null
   });
+  // 성별제한과 나이제한은 초기값이 null이기 때문에 어쩔 수 없이 부모 컴포넌트로 뺌
+  const [selectedGender, setSelectedGender] = useState<string>("");
+  const [selectedAge, setSelectedAge] = useState<string>("");
 
   // 뒤로가기 버튼
   const handleBack = () => {
@@ -48,7 +53,7 @@ const OneTimePage = () => {
     let finalFormData = { ...formData };
 
     // formData의 이미지가 File 객체인 경우 업로드
-    if (formData.one_time_image instanceof File) {
+    if (!formData.one_time_image.startsWith("http")) {
       // 이미지 업로드 후 URL 받아오기
       const imageUrl = await uploadImage(formData.one_time_image);
 
@@ -101,7 +106,16 @@ const OneTimePage = () => {
       case 5:
         return <AddressSearch formData={formData} setFormData={setFormData} />;
       case 6:
-        return <MemberType formData={formData} setFormData={setFormData} />;
+        return (
+          <MemberType
+            formData={formData}
+            setFormData={setFormData}
+            selectedGender={selectedGender}
+            setSelectedGender={setSelectedGender}
+            selectedAge={selectedAge}
+            setSelectedAge={setSelectedAge}
+          />
+        );
       case 7:
         return <></>;
     }
@@ -133,6 +147,18 @@ const OneTimePage = () => {
     if (step === 5) {
       if (!formData.one_time_club_location) {
         alert("모임 장소를 정해주세요");
+        return;
+      }
+    }
+
+    if (step === 6) {
+      if (!selectedGender) {
+        alert("성별제한을 설정해주세요");
+        return;
+      }
+
+      if (!selectedAge) {
+        alert("나이제한을 설정해주세요");
         return;
       }
     }

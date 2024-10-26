@@ -2,11 +2,9 @@
 import { useRef, useState } from "react";
 import { CategoryProps } from "../_types/ClubForm";
 import Image from "next/image";
-import { uploadImage } from "../_api/supabase";
 
 const ImageUpload = ({ formData, setFormData }: CategoryProps) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,9 +22,6 @@ const ImageUpload = ({ formData, setFormData }: CategoryProps) => {
       alert("이미지 파일만 업로드가 가능합니다");
       return;
     }
-
-    // 파일 객체 저장
-    setSelectedFile(file);
 
     // 이미지 미리보기용 URL 생성
     const previewImageUrl = URL.createObjectURL(file);

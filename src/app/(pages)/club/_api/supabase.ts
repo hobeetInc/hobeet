@@ -30,7 +30,7 @@ export const fetchNeedSubCategories = async (mainId: number) => {
 };
 
 // 스토리지에 이미지 넣기
-export const uploadImage = async (file: File) => {
+export const uploadImage = async (file: string) => {
   const { data, error } = await browserClient.storage.from("club-images").upload(`club-images/${Date.now()}`, file);
 
   if (error) throw error;
