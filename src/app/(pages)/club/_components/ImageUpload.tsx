@@ -41,16 +41,24 @@ const ImageUpload = ({ formData, setFormData }: CategoryProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <input type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/png, image/jpeg" />
-      {previewUrl && (
-        <div>
-          <Image src={previewUrl} alt="모임대표이미지" width={300} height={200} />
-          <button onClick={handleDeleteImage} className="border-2 border-black p-1 my-2">
-            이미지 삭제
-          </button>
-        </div>
-      )}
+    <div>
+      <h1 className="mb-4">모임을 소개해주세요</h1>
+      <div className="flex flex-col gap-4">
+        <input type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/png, image/jpeg" />
+        {previewUrl && (
+          <div>
+            <Image src={previewUrl} alt="모임대표이미지" width={300} height={200} />
+            <button onClick={handleDeleteImage} className="border-2 border-black p-1 my-2">
+              이미지 삭제
+            </button>
+          </div>
+        )}
+      </div>
+      <textarea
+        value={formData.one_time_club_introduction}
+        onChange={(e) => setFormData({ ...formData, one_time_club_introduction: e.target.value })}
+        className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
+      />
     </div>
   );
 };

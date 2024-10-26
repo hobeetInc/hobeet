@@ -12,7 +12,7 @@ export interface OneTimeClubForm {
   one_time_gender?: string | null;
   one_time_image: string | File | null;
   one_time_people_limited?: number | null;
-  one_time_tax: number;
+  one_time_tax: number | null;
   s_c_id: number;
   user_id?: string;
 }

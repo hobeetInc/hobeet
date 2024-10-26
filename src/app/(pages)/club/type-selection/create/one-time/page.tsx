@@ -1,24 +1,27 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { OneTimeClubForm } from "../../../_types/ClubForm";
+import { submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
+// 컴포넌트 임포트
 import Category from "../../../_components/Category";
 import ImageUpload from "../../../_components/ImageUpload";
-import { submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
 import DateTime from "../../../_components/DateTime";
 import AddressSearch from "../../../_components/AddressSearch";
 import MemberType from "../../../_components/MemberType";
-import { OneTimeClubForm } from "../../../_types/ClubForm";
 import Tax from "../../../_components/Tax";
+import { ClubTitle } from "../../../_components/ClubTitle";
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
 
-//
-
 const OneTimePage = () => {
   const router = useRouter();
+
+  // 상태 관리
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(1);
+  const [selectedGender, setSelectedGender] = useState<string>("");
+  const [selectedAge, setSelectedAge] = useState<string>("");
   const [formData, setFormData] = useState<OneTimeClubForm>({
     // 필수값이면서 null이 허용되지 않는 필드들
     m_c_id: 0,
@@ -29,105 +32,15 @@ const OneTimePage = () => {
     one_time_club_location: "",
     one_time_club_introduction: "",
     one_time_image: "",
-    one_time_tax: 0,
+    one_time_tax: null,
 
     // null이 허용되는 선택적 필드들
     one_time_age: null,
     one_time_gender: null,
     one_time_people_limited: null
   });
-  // 성별제한과 나이제한은 초기값이 null이기 때문에 어쩔 수 없이 부모 컴포넌트로 뺌
-  const [selectedGender, setSelectedGender] = useState<string>("");
-  const [selectedAge, setSelectedAge] = useState<string>("");
 
-  // 뒤로가기 버튼
-  const handleBack = () => {
-    if (step === 1) {
-      router.back();
-    } else {
-      setStep((prev) => (prev - 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7);
-    }
-  };
-
-  // supabase 제출 버튼
-  const handleSubmit = async () => {
-    try {
-      let finalFormData = { ...formData };
-
-      // File 객체인 경우에만 업로드 처리
-      if (formData.one_time_image instanceof File) {
-        const imageUrl = await uploadImage(formData.one_time_image);
-        finalFormData = {
-          ...finalFormData,
-          one_time_image: imageUrl
-        };
-      }
-
-      // supabase에 데이터 저장
-      await submitOneTimeClubData(finalFormData);
-      alert("일회성 모임 생성에 성공했습니다");
-      // 성공 시 처리
-      // router.push("/success-page"); 원하는 페이지로 이동
-    } catch (error) {
-      console.error("제출 중 오류 발생:", error);
-      alert("일회성 모임 생성 중 오류가 발생했습니다.");
-    }
-  };
-
-  const renderStep = () => {
-    switch (step) {
-      case 1:
-        return <Category formData={formData} setFormData={setFormData} />;
-      case 2:
-        return (
-          <div>
-            <h1 className="mb-4">모임의 제목을 작성해 주세요</h1>
-            <input
-              type="text"
-              value={formData.one_time_club_name}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  one_time_club_name: e.target.value
-                })
-              }
-              className="border-2 border-black mt-4 w-[358px] h-[48px] p-2"
-            />
-          </div>
-        );
-      case 3:
-        return (
-          <div>
-            <h1 className="mb-4">모임을 소개해주세요</h1>
-            <ImageUpload formData={formData} setFormData={setFormData} />
-            <textarea
-              value={formData.one_time_club_introduction}
-              onChange={(e) => setFormData({ ...formData, one_time_club_introduction: e.target.value })}
-              className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
-            />
-          </div>
-        );
-      case 4:
-        return <DateTime formData={formData} setFormData={setFormData} />;
-      case 5:
-        return <AddressSearch formData={formData} setFormData={setFormData} />;
-      case 6:
-        return (
-          <MemberType
-            formData={formData}
-            setFormData={setFormData}
-            selectedGender={selectedGender}
-            setSelectedGender={setSelectedGender}
-            selectedAge={selectedAge}
-            setSelectedAge={setSelectedAge}
-          />
-        );
-      case 7:
-        return <Tax formData={formData} setFormData={setFormData} />;
-    }
-  };
-
-  // 다음단계 버튼
+  // 다음단계 버튼 (유효성 검사 함수)
   const handleNext = () => {
     if (step === 1 && formData.s_c_id === 0) {
       alert("카테고리를 선택해주세요");
@@ -176,9 +89,76 @@ const OneTimePage = () => {
     }
 
     if (step === 7) {
+      if (formData.one_time_tax === null) {
+        alert("금액을 입력해주세요");
+        return;
+      }
       handleSubmit();
     } else {
       setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7);
+    }
+  };
+
+  // 뒤로가기 버튼
+  const handleBack = () => {
+    if (step === 1) {
+      router.back();
+    } else {
+      setStep((prev) => (prev - 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7);
+    }
+  };
+
+  // 슈퍼베이스 제출 버튼
+  const handleSubmit = async () => {
+    try {
+      let finalFormData = { ...formData };
+
+      // File 객체인 경우에만 업로드 처리
+      if (formData.one_time_image instanceof File) {
+        const imageUrl = await uploadImage(formData.one_time_image);
+        finalFormData = {
+          ...finalFormData,
+          one_time_image: imageUrl
+        };
+      }
+
+      // 슈퍼베이스에 데이터 저장
+      await submitOneTimeClubData(finalFormData);
+      alert("일회성 모임 생성에 성공했습니다");
+      // 성공 시 처리
+      // router.push("/success-page"); 원하는 페이지로 이동
+    } catch (error) {
+      console.error("제출 중 오류 발생:", error);
+      alert("일회성 모임 생성 중 오류가 발생했습니다.");
+    }
+  };
+
+  // 렌더링 함수
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return <Category formData={formData} setFormData={setFormData} />;
+      case 2:
+        return <ClubTitle formData={formData} setFormData={setFormData} />;
+      case 3:
+        return <ImageUpload formData={formData} setFormData={setFormData} />;
+      case 4:
+        return <DateTime formData={formData} setFormData={setFormData} />;
+      case 5:
+        return <AddressSearch formData={formData} setFormData={setFormData} />;
+      case 6:
+        return (
+          <MemberType
+            formData={formData}
+            setFormData={setFormData}
+            selectedGender={selectedGender}
+            setSelectedGender={setSelectedGender}
+            selectedAge={selectedAge}
+            setSelectedAge={setSelectedAge}
+          />
+        );
+      case 7:
+        return <Tax formData={formData} setFormData={setFormData} />;
     }
   };
 
