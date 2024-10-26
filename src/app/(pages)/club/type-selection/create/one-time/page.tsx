@@ -9,6 +9,7 @@ import DateTime from "../../../_components/DateTime";
 import AddressSearch from "../../../_components/AddressSearch";
 import MemberType from "../../../_components/MemberType";
 import { OneTimeClubForm } from "../../../_types/ClubForm";
+import Tax from "../../../_components/Tax";
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
@@ -50,22 +51,26 @@ const OneTimePage = () => {
 
   // supabase 제출 버튼
   const handleSubmit = async () => {
-    let finalFormData = { ...formData };
+    try {
+      let finalFormData = { ...formData };
 
-    // formData의 이미지가 File 객체인 경우 업로드
-    if (!formData.one_time_image.startsWith("http")) {
-      // 이미지 업로드 후 URL 받아오기
-      const imageUrl = await uploadImage(formData.one_time_image);
+      // File 객체인 경우에만 업로드 처리
+      if (formData.one_time_image instanceof File) {
+        const imageUrl = await uploadImage(formData.one_time_image);
+        finalFormData = {
+          ...finalFormData,
+          one_time_image: imageUrl
+        };
+      }
 
-      // URL을 formData에 설정
-      finalFormData = {
-        ...finalFormData,
-        one_time_image: imageUrl
-      };
+      // supabase에 데이터 저장
+      await submitOneTimeClubData(finalFormData);
+      // 성공 시 처리
+      // router.push("/success-page"); 원하는 페이지로 이동
+    } catch (error) {
+      console.error("제출 중 오류 발생:", error);
+      alert("일회성 모임 생성 중 오류가 발생했습니다.");
     }
-
-    // supabase에 데이터 저장
-    submitOneTimeClubData(finalFormData);
   };
 
   const renderStep = () => {
@@ -117,7 +122,7 @@ const OneTimePage = () => {
           />
         );
       case 7:
-        return <></>;
+        return <Tax formData={formData} setFormData={setFormData} />;
     }
   };
 
@@ -140,6 +145,12 @@ const OneTimePage = () => {
       }
       if (!formData.one_time_club_introduction.trim()) {
         alert("모임 소개글을 입력해주세요");
+        return;
+      }
+    }
+    if (step === 4) {
+      if (!formData.one_time_club_date_time) {
+        alert("날짜와 시간을 선택해주세요");
         return;
       }
     }

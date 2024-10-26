@@ -10,7 +10,7 @@ export interface OneTimeClubForm {
   one_time_club_name: string;
   one_time_create_at?: string;
   one_time_gender?: string | null;
-  one_time_image: string;
+  one_time_image: string | File | null;
   one_time_people_limited?: number | null;
   one_time_tax: number;
   s_c_id: number;
