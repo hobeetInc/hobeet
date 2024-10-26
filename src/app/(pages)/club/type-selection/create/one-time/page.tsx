@@ -65,6 +65,7 @@ const OneTimePage = () => {
 
       // supabase에 데이터 저장
       await submitOneTimeClubData(finalFormData);
+      alert("일회성 모임 생성에 성공했습니다");
       // 성공 시 처리
       // router.push("/success-page"); 원하는 페이지로 이동
     } catch (error) {
@@ -189,9 +190,19 @@ const OneTimePage = () => {
           뒤
         </button>
         <div>{renderStep()}</div>
-        <button onClick={handleNext} className="next-button">
-          다음
-        </button>
+
+        {step === 7 ? (
+          <button
+            onClick={handleNext}
+            className="w-[358px] h-[53px] rounded-lg hover:border-2 hover:border-black bg-red-400"
+          >
+            모임 생성
+          </button>
+        ) : (
+          <button onClick={handleNext} className="next-button">
+            다음
+          </button>
+        )}
       </div>
     </div>
   );
