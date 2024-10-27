@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { CategoryProps } from "../../_types/ClubForm";
 
@@ -7,6 +7,19 @@ const ImageUpload = ({ formData, setFormData }: CategoryProps) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // 컴포넌트 마운트 시 또는 formData의 이미지가 변경될 때 미리보기 생성
+  useEffect(() => {
+    if (formData.one_time_image instanceof File) {
+      const url = URL.createObjectURL(formData.one_time_image);
+      setPreviewUrl(url);
+
+      return () => {
+        URL.revokeObjectURL(url);
+      };
+    }
+  }, [formData.one_time_image]);
+
+  // 이미지 선택 시 처리하는 함수
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 

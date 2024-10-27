@@ -1,6 +1,6 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { OneTimeClubForm } from "../../../_types/ClubForm";
 import { submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
 import Category from "../../../_components/oneTimeClub/Category";
@@ -14,31 +14,95 @@ import ClubTitle from "../../../_components/oneTimeClub/ClubTitle";
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
+const ONETIME_CLUB_CREATE = "ONETIME_CLUB_CREATE";
 
 const OneTimePage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // 초기값 설정 시 localStorage 데이터를 먼저 확인
+  const getInitialData = () => {
+    try {
+      const savedData = localStorage.getItem(ONETIME_CLUB_CREATE);
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        return {
+          formData: data.formData,
+          selectedGender: data.selectedGender,
+          selectedAge: data.selectedAge
+        };
+      }
+    } catch (error) {
+      console.error("초기 데이터 로드 실패:", error);
+    }
+    // localStorage에 데이터가 없으면 기본값 반환
+    return {
+      formData: {
+        // 필수값이면서 null이 허용되지 않는 필드들
+        m_c_id: 0,
+        s_c_id: 0,
+        user_id: userId,
+        one_time_club_name: "",
+        one_time_club_location: "",
+        one_time_club_introduction: "",
+        one_time_image: "",
+        one_time_club_date_time: "",
+        one_time_tax: null,
+
+        // null이 허용되는 선택적 필드들
+        one_time_gender: null,
+        one_time_age: null,
+        one_time_people_limited: null
+      },
+      selectedGender: "",
+      selectedAge: ""
+    };
+  };
+
+  // localStorage의 데이터로 초기값 설정
+  const initialData = getInitialData();
+
+  // URL에서 step 파라미터 읽기
+  const currentStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
   // 상태 관리
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(1);
-  const [selectedGender, setSelectedGender] = useState<string>("");
-  const [selectedAge, setSelectedAge] = useState<string>("");
-  const [formData, setFormData] = useState<OneTimeClubForm>({
-    // 필수값이면서 null이 허용되지 않는 필드들
-    m_c_id: 0,
-    s_c_id: 0,
-    user_id: userId,
-    one_time_club_name: "",
-    one_time_club_location: "",
-    one_time_club_introduction: "",
-    one_time_image: "",
-    one_time_club_date_time: "",
-    one_time_tax: null,
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(currentStep);
+  const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
+  const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedGender);
+  const [formData, setFormData] = useState<OneTimeClubForm>(initialData.formData);
 
-    // null이 허용되는 선택적 필드들
-    one_time_gender: null,
-    one_time_age: null,
-    one_time_people_limited: null
-  });
+  // URL의 step 파라미터 변경 감지 및 적용
+  useEffect(() => {
+    const newStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7;
+    setStep(newStep);
+  }, [searchParams]);
+
+  // 컴포넌트 마운트 시 localStorage에서 데이터 불러오기
+  useEffect(() => {
+    try {
+      const savedData = localStorage.getItem(ONETIME_CLUB_CREATE);
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        setFormData(data.formData);
+        setSelectedGender(data.selectedGender);
+        setSelectedAge(data.selectedAge);
+      }
+    } catch (error) {
+      console.error("로컬스토리지에서 가져오기 실패:", error);
+    }
+  }, []);
+
+  // 데이터가 변경될때마다 로컬스토리지에 저장
+  useEffect(() => {
+    localStorage.setItem(
+      ONETIME_CLUB_CREATE,
+      JSON.stringify({
+        formData,
+        selectedGender,
+        selectedAge
+      })
+    );
+  }, [formData, selectedGender, selectedAge]);
 
   // 다음단계 버튼 (유효성 검사 함수)
   const handleNext = () => {
@@ -100,6 +164,10 @@ const OneTimePage = () => {
       setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7);
     }
   };
+  // step이 변경될 때마다 URL 업데이트
+  useEffect(() => {
+    router.push(`?step=${step}`);
+  }, [step, router]);
 
   // 뒤로가기 버튼
   const handleBack = () => {
@@ -128,6 +196,8 @@ const OneTimePage = () => {
       await submitOneTimeClubData(finalFormData);
       alert("일회성 모임 생성에 성공했습니다");
       // 성공 시 처리
+      localStorage.removeItem(ONETIME_CLUB_CREATE);
+      // 다른 페이지로 이동
       // router.push("/success-page"); 원하는 페이지로 이동
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
