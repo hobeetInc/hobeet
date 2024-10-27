@@ -21,8 +21,6 @@ const MemberType = ({
   const [genderToggle, setGenderToggle] = useState<boolean>(false);
   const [ageToggle, setAgeToggle] = useState<boolean>(false);
 
-  // const [limited, setLimited] = useState<string | null>(null);
-
   const gender = ["누구나", "여자만", "남자만"];
   const age = ["누구나", "10대", "20대", "30대", "40대", "50대 이상"];
 

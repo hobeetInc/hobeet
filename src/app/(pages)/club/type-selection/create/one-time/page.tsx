@@ -3,14 +3,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { OneTimeClubForm } from "../../../_types/ClubForm";
 import { submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
-import Category from "../../../_components/_oneTimeClub/Category";
+import Category from "../../../_components/oneTimeClub/Category";
 // 컴포넌트 임포트
-import ImageUpload from "../../../_components/_oneTimeClub/ImageUpload";
-import DateTime from "../../../_components/_oneTimeClub/DateTime";
-import AddressSearch from "../../../_components/_oneTimeClub/AddressSearch";
-import MemberType from "../../../_components/_oneTimeClub/MemberType";
-import Tax from "../../../_components/_oneTimeClub/Tax";
-import ClubTitle from "../../../_components/_oneTimeClub/ClubTitle";
+import ImageUpload from "../../../_components/oneTimeClub/ImageUpload";
+import DateTime from "../../../_components/oneTimeClub/DateTime";
+import AddressSearch from "../../../_components/oneTimeClub/AddressSearch";
+import MemberType from "../../../_components/oneTimeClub/MemberType";
+import Tax from "../../../_components/oneTimeClub/Tax";
+import ClubTitle from "../../../_components/oneTimeClub/ClubTitle";
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
@@ -47,9 +47,11 @@ const OneTimePage = () => {
       return;
     }
 
-    if (step === 2 && !formData.one_time_club_name.trim()) {
-      alert("모임 제목을 입력해주세요");
-      return;
+    if (step === 2) {
+      if (!formData.one_time_club_name.trim()) {
+        alert("모임 제목을 입력해주세요");
+        return;
+      }
     }
 
     if (step === 3) {

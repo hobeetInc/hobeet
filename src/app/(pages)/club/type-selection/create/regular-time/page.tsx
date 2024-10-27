@@ -4,6 +4,11 @@ import { useState } from "react";
 import { RegularClubForm } from "../../../_types/ClubForm";
 import { useRouter } from "next/navigation";
 import { submitRegularClubData, uploadImage } from "../../../_api/supabase";
+import Category from "../../../_components/regularClub/Category";
+import ImageUpload from "../../../_components/regularClub/ImageUpload";
+import ClubTitle from "../../../_components/regularClub/ClubTitle";
+import MemberType from "../../../_components/regularClub/MemberType";
+import ApplicationMethod from "../../../_components/regularClub/ApplicationMethod";
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
@@ -47,10 +52,32 @@ const RegularTimePage = () => {
     }
 
     if (step === 2) {
-      return;
+      if (!formData.regular_club_image) {
+        alert("이미지를 선택해주세요");
+        return;
+      }
+
+      if (!formData.regular_club_name.trim()) {
+        alert("모임 제목을 입력해주세요");
+        return;
+      }
+      if (!formData.regular_club_introduction.trim()) {
+        alert("모임 소개글을 입력해주세요");
+        return;
+      }
     }
 
     if (step === 3) {
+      if (!selectedGender) {
+        alert("성별제한을 설정해주세요");
+        return;
+      }
+
+      if (!selectedAge) {
+        alert("나이제한을 설정해주세요");
+        return;
+      }
+
       handleSubmit();
     } else {
       setStep((prev) => (prev + 1) as 1 | 2 | 3);
@@ -71,7 +98,7 @@ const RegularTimePage = () => {
       }
       // 슈퍼베이스에 데이터 저장
       await submitRegularClubData(finalFormData);
-      alert("일회성 모임 생성에 성공했습니다");
+      alert("정기적 모임 생성에 성공했습니다");
       // 성공 시 처리
       // router.push("/success-page"); 원하는 페이지로 이동
     } catch (error) {
@@ -84,16 +111,37 @@ const RegularTimePage = () => {
   const renderStep = () => {
     switch (step) {
       case 1:
-      // return <Category formData={formData} setFormData={setFormData} />;
+        return <Category formData={formData} setFormData={setFormData} />;
       case 2:
         return (
-          <div>
-            {/* <ImageUpload formData={formData} setFormData={setFormData} /> */}
-            {/* <ClubTitle formData={formData} setFormData={setFormData} /> */}
+          <div className="flex flex-col gap-4">
+            <ImageUpload formData={formData} setFormData={setFormData} />
+            <ClubTitle formData={formData} setFormData={setFormData} />
+
+            <div>
+              <h1>정기모임 소개</h1>
+              <textarea
+                value={formData.regular_club_introduction}
+                onChange={(e) => setFormData({ ...formData, regular_club_introduction: e.target.value })}
+                className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
+              />
+            </div>
           </div>
         );
       case 3:
-        return <div>{/* <MemberType /> */}</div>;
+        return (
+          <div className="flex flex-col gap-20">
+            <ApplicationMethod formData={formData} setFormData={setFormData} />
+            <MemberType
+              formData={formData}
+              setFormData={setFormData}
+              selectedGender={selectedGender}
+              setSelectedGender={setSelectedGender}
+              selectedAge={selectedAge}
+              setSelectedAge={setSelectedAge}
+            />
+          </div>
+        );
     }
   };
 
