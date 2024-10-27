@@ -1,6 +1,6 @@
-import { CategoryProps } from "../_types/ClubForm";
+import { CategoryProps } from "../../_types/ClubForm";
 
-export const ClubTitle = ({ formData, setFormData }: CategoryProps) => {
+const ClubTitle = ({ formData, setFormData }: CategoryProps) => {
   return (
     <div>
       <h1 className="mb-4">모임의 제목을 작성해 주세요</h1>
@@ -18,3 +18,5 @@ export const ClubTitle = ({ formData, setFormData }: CategoryProps) => {
     </div>
   );
 };
+
+export default ClubTitle;

@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
-import { CategoryProps } from "../_types/ClubForm";
 import Image from "next/image";
+import { CategoryProps } from "../../_types/ClubForm";
 
 const ImageUpload = ({ formData, setFormData }: CategoryProps) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);

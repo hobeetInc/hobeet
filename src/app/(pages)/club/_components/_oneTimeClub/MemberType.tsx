@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CategoryProps } from "../_types/ClubForm";
+import { CategoryProps } from "../../_types/ClubForm";
 
 type MemeberTypeProps = CategoryProps & {
   selectedGender: string;

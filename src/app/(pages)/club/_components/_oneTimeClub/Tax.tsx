@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { CategoryProps } from "../_types/ClubForm";
+import { CategoryProps } from "../../_types/ClubForm";
 
 const Tax = ({ formData, setFormData }: CategoryProps) => {
   const [showTaxInput, setShowTaxInput] = useState<boolean>(false);

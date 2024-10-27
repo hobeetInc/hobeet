@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CategoryProps } from "../_types/ClubForm";
+import { CategoryProps } from "../../_types/ClubForm";
 
 declare global {
   interface Window {
