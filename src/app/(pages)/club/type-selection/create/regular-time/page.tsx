@@ -109,7 +109,7 @@ const RegularTimePage = () => {
   // 뒤로가기 버튼
   const handleBack = () => {
     if (step === 1) {
-      router.back();
+      window.location.replace("/club/type-selection");
     } else {
       setStep((prev) => (prev - 1) as 1 | 2 | 3);
     }
