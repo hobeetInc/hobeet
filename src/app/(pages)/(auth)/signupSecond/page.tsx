@@ -5,13 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAuthStore } from "@/app/store/authStore";
-
-const sanitizeFileName = (fileName: string) => {
-  return fileName
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-zA-Z0-9.]/g, "_");
-};
+import { sanitizeFileName } from "@/utils/sanitizeFileName";
 
 const SignupSecondPage = () => {
   const [birthYear, setBirthYear] = useState("2000");
@@ -34,6 +28,25 @@ const SignupSecondPage = () => {
     user_profile_img
   } = useAuthStore();
 
+  const isLeapYear = (year: number): boolean => {
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  };
+
+  const getDaysInMonth = (year: number, month: number): number => {
+    const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if (month === 2 && isLeapYear(year)) {
+      return 29;
+    }
+    return daysInMonth[month - 1];
+  };
+
+  useEffect(() => {
+    const daysInSelectedMonth = getDaysInMonth(Number(birthYear), Number(birthMonth));
+    if (Number(birthDay) > daysInSelectedMonth) {
+      setBirthDay(String(daysInSelectedMonth));
+    }
+  }, [birthYear, birthMonth, birthDay]);
+
   useEffect(() => {
     const fetchUser = async () => {
       const {
@@ -53,7 +66,7 @@ const SignupSecondPage = () => {
 
   const calcAge = (birthYear: number) => {
     const currentYear = new Date().getFullYear();
-    return currentYear - birthYear;
+    return currentYear - birthYear + 1;
   };
 
   const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,7 +165,7 @@ const SignupSecondPage = () => {
           <div className="flex gap-3">
             <button
               type="button"
-              onClick={() => setUser_gender("남")}
+              onClick={() => setUser_gender("남성")}
               className={`flex-1 py-2 rounded ${
                 user_gender === "남" ? "bg-black text-white" : "bg-gray-200 text-black"
               }`}
@@ -161,7 +174,7 @@ const SignupSecondPage = () => {
             </button>
             <button
               type="button"
-              onClick={() => setUser_gender("여")}
+              onClick={() => setUser_gender("여성")}
               className={`flex-1 py-2 rounded ${
                 user_gender === "여" ? "bg-black text-white" : "bg-gray-200 text-black"
               }`}
@@ -201,7 +214,7 @@ const SignupSecondPage = () => {
               onChange={(e) => setBirthDay(e.target.value)}
               className="p-2 border border-gray-300 rounded"
             >
-              {[...Array(31)].map((_, i) => (
+              {[...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].map((_, i) => (
                 <option key={i + 1} value={i + 1}>
                   {i + 1}일
                 </option>
