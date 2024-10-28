@@ -167,7 +167,7 @@ const SignupSecondPage = () => {
               type="button"
               onClick={() => setUser_gender("남성")}
               className={`flex-1 py-2 rounded ${
-                user_gender === "남" ? "bg-black text-white" : "bg-gray-200 text-black"
+                user_gender === "남성" ? "bg-black text-white" : "bg-gray-200 text-black"
               }`}
             >
               남성
@@ -176,7 +176,7 @@ const SignupSecondPage = () => {
               type="button"
               onClick={() => setUser_gender("여성")}
               className={`flex-1 py-2 rounded ${
-                user_gender === "여" ? "bg-black text-white" : "bg-gray-200 text-black"
+                user_gender === "여성" ? "bg-black text-white" : "bg-gray-200 text-black"
               }`}
             >
               여성
