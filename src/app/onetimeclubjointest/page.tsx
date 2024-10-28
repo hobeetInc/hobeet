@@ -1,7 +1,7 @@
 "use client";
 
 import JoinClubButton from "@/components/oneTimeClubJoinButton";
-import { OneTimeClub } from "@/types/oneTimeClub";
+import { OneTimeClub } from "@/utils/onetimeclubjoin/_api/supabase";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 
@@ -41,3 +41,5 @@ export default function OneTimeClubJoinTest() {
     </div>
   );
 }
+
+// 테스트 페이지 입니다

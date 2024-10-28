@@ -1,4 +1,5 @@
-import { ClubJoinError, joinClub } from "@/utils/onetimeclubjoin/join";
+import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
+import { oneTimeClubJoin } from "@/utils/onetimeclubjoin/join";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 
@@ -28,7 +29,10 @@ export default function JoinClubButton({ clubId, onSuccess, onError }: JoinClubB
         onError?.("로그인이 필요합니다.");
         return;
       }
-      const result = await joinClub(clubId, user.id);
+      const result = await oneTimeClubJoin({
+        clubId: clubId,
+        userId: user.id
+      });
 
       if (result.success) {
         onSuccess?.();
