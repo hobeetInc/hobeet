@@ -32,8 +32,10 @@ const MemberType = ({
 
     if (gender === "누구나") {
       setFormData({ ...formData, one_time_gender: null });
-    } else {
-      setFormData({ ...formData, one_time_gender: gender });
+    } else if (gender === "여자만") {
+      setFormData({ ...formData, one_time_gender: "여성" });
+    } else if (gender === "남자만") {
+      setFormData({ ...formData, one_time_gender: "남성" });
     }
   };
 
