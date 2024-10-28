@@ -1,14 +1,18 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
-import { useAuthStore } from "./store/authStore";
 import Link from "next/link";
+import { useAuth } from "./store/AuthContext";
+import { useAuthStore } from "./store/authStore";
 
 export default function Home() {
-  const { user_name } = useAuthStore();
+  const { userName } = useAuth();
+  const reset = useAuthStore((state) => state.reset);
+
   const handleLogout = async () => {
     const supabase = createClient();
     const { error } = await supabase.auth.signOut();
+    reset();
     if (error) {
       console.log(error);
       return;
@@ -16,9 +20,10 @@ export default function Home() {
       alert("지웠음");
     }
   };
+
   return (
     <div>
-      홈 입니다.{user_name}
+      홈 입니다.{userName}
       <button className="bg-gray-400" onClick={handleLogout}>
         로그아웃
       </button>

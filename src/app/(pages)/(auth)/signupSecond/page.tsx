@@ -17,15 +17,15 @@ const SignupSecondPage = () => {
   const supabase = browserClient;
 
   const {
-    setUser_id,
-    setUser_email,
-    setUser_name,
-    setUser_gender,
-    setUser_age,
-    setUser_profile_img,
-    user_name,
-    user_gender,
-    user_profile_img
+    setUserId,
+    setUserEmail,
+    setUserName,
+    setUserGender,
+    setUserAge,
+    setUserProfileImg,
+    userName,
+    userGender,
+    userProfileImg
   } = useAuthStore();
 
   const isLeapYear = (year: number): boolean => {
@@ -54,15 +54,15 @@ const SignupSecondPage = () => {
       } = await supabase.auth.getUser();
 
       if (user) {
-        setUser_id(user.id);
-        setUser_email(user.email || "");
-        setUser_name(user.user_metadata?.full_name || "");
-        setUser_profile_img(user.user_metadata?.avatar_url || "");
+        setUserId(user.id);
+        setUserEmail(user.email || "");
+        setUserName(user.user_metadata?.full_name || "");
+        setUserProfileImg(user.user_metadata?.avatar_url || "");
       }
     };
 
     fetchUser();
-  }, [supabase, setUser_id, setUser_email, setUser_name, setUser_profile_img]);
+  }, [supabase, setUserId, setUserEmail, setUserName, setUserProfileImg]);
 
   const calcAge = (birthYear: number) => {
     const currentYear = new Date().getFullYear();
@@ -74,7 +74,7 @@ const SignupSecondPage = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setUser_profile_img(reader.result as string);
+        setUserProfileImg(reader.result as string);
       };
       reader.readAsDataURL(file);
       setProfileFile(file);
@@ -84,14 +84,14 @@ const SignupSecondPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const userId = useAuthStore.getState().user_id;
+    const userId = useAuthStore.getState().userId;
 
     if (!userId) {
       console.log("사용자의 아이디를 찾을 수 없습니다.");
       return;
     }
 
-    let uploadedImageUrl = user_profile_img;
+    let uploadedImageUrl = userProfileImg;
 
     if (profileFile) {
       const sanitizedFileName = sanitizeFileName(profileFile.name);
@@ -106,18 +106,18 @@ const SignupSecondPage = () => {
         uploadedImageUrl = supabase.storage.from("avatars").getPublicUrl(`public/${userId}/${sanitizedFileName}`)
           .data.publicUrl;
 
-        setUser_profile_img(uploadedImageUrl);
+        setUserProfileImg(uploadedImageUrl);
       }
     }
 
     const userAge = calcAge(Number(birthYear));
-    setUser_age(userAge);
+    setUserAge(userAge);
 
     const { data, error } = await supabase
       .from("user")
       .update({
-        user_name,
-        user_gender,
+        user_name: userName,
+        user_gender: userGender,
         user_age: userAge,
         user_profile_img: uploadedImageUrl
       })
@@ -140,7 +140,7 @@ const SignupSecondPage = () => {
         <div className="flex justify-center mb-5">
           <label htmlFor="profileImg">
             <Image
-              src={user_profile_img || "/default-avatar.png"}
+              src={userProfileImg || "/default-avatar.png"}
               alt="프로필 이미지"
               width={96}
               height={96}
@@ -154,7 +154,7 @@ const SignupSecondPage = () => {
           <label className="block text-gray-700 font-bold mb-2">이름</label>
           <input
             type="text"
-            onChange={(e) => setUser_name(e.target.value)}
+            onChange={(e) => setUserName(e.target.value)}
             placeholder="이름을 입력해주세요."
             className="w-full p-2 border border-gray-300 rounded"
           />
@@ -165,18 +165,18 @@ const SignupSecondPage = () => {
           <div className="flex gap-3">
             <button
               type="button"
-              onClick={() => setUser_gender("남성")}
+              onClick={() => setUserGender("남성")}
               className={`flex-1 py-2 rounded ${
-                user_gender === "남성" ? "bg-black text-white" : "bg-gray-200 text-black"
+                userGender === "남성" ? "bg-black text-white" : "bg-gray-200 text-black"
               }`}
             >
               남성
             </button>
             <button
               type="button"
-              onClick={() => setUser_gender("여성")}
+              onClick={() => setUserGender("여성")}
               className={`flex-1 py-2 rounded ${
-                user_gender === "여성" ? "bg-black text-white" : "bg-gray-200 text-black"
+                userGender === "여성" ? "bg-black text-white" : "bg-gray-200 text-black"
               }`}
             >
               여성

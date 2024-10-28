@@ -1,9 +1,14 @@
 "use client";
 
-import { createContext, ReactNode } from "react";
-import { useAuthStore } from "./authStore";
+import { createContext, ReactNode, useContext } from "react";
+import { useAuthStore, UserState } from "./authStore";
 
-export const AuthContext = createContext<ReturnType<typeof useAuthStore> | null>(null);
+export const AuthContext = createContext<UserState | null>(null);
+
+export const useAuth = (): UserState => {
+  const context = useContext(AuthContext);
+  return context as UserState;
+};
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const authStore = useAuthStore();
