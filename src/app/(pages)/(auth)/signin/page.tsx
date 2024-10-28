@@ -24,6 +24,23 @@ const SigninPage = () => {
     }
   };
 
+  const handleSignInWithKakao = async () => {
+    try {
+      await supabase.auth.signInWithOAuth({
+        provider: "kakao",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent"
+          }
+        }
+      });
+    } catch (err) {
+      console.log("Kakao 로그인 에러", err);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center w-[390px] h-[844px]">
       <div className="text-center mb-10">
@@ -35,7 +52,9 @@ const SigninPage = () => {
         <button className="w-full py-4 bg-gray-300 text-center rounded-lg" onClick={handleSignInWithGoogle}>
           구글로 시작하기
         </button>
-        <button className="w-full py-4 bg-gray-300 text-center rounded-lg">카카오로 시작하기</button>
+        <button className="w-full py-4 bg-gray-300 text-center rounded-lg" onClick={handleSignInWithKakao}>
+          카카오로 시작하기
+        </button>
         <button className="w-full py-4 bg-gray-300 text-center rounded-lg">이메일로 시작하기</button>
         <div className="flex flex-col items-center justify-center">
           <Link href={"/"} className="mb-4">

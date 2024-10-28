@@ -139,13 +139,15 @@ const SignupSecondPage = () => {
       <form onSubmit={handleSubmit}>
         <div className="flex justify-center mb-5">
           <label htmlFor="profileImg">
-            <Image
-              src={userProfileImg || "/default-avatar.png"}
-              alt="프로필 이미지"
-              width={96}
-              height={96}
-              className="rounded-full object-cover cursor-pointer"
-            />
+            <div className="rounded-full flex items-center overflow-hidden w-32 h-32">
+              <Image
+                src={userProfileImg || "/default-avatar.png"}
+                alt="프로필 이미지"
+                width={128}
+                height={128}
+                className="object-cover cursor-pointer"
+              />
+            </div>
           </label>
           <input type="file" id="profileImg" className="hidden" onChange={handleImagePreview} />
         </div>

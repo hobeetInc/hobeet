@@ -27,6 +27,7 @@ export async function GET(request: Request) {
         if (userError) {
           console.log("회원 정보 조회 실패", userError);
         }
+        console.log(userData);
 
         if (userData && !userData.user_name) {
           return NextResponse.redirect(`${origin}/signupSecond`);
