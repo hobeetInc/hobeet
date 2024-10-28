@@ -4,16 +4,21 @@ import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { useAuthStore } from "@/app/store/authStore";
 import { sanitizeFileName } from "@/utils/sanitizeFileName";
+import { useAuth } from "@/app/store/AuthContext";
+
+const NAME_REGEX = /^[가-힣]{2,5}$/;
 
 const SignupSecondPage = () => {
   const [birthYear, setBirthYear] = useState("2000");
   const [birthMonth, setBirthMonth] = useState("1");
   const [birthDay, setBirthDay] = useState("1");
   const [profileFile, setProfileFile] = useState<File | null>(null);
-  const router = useRouter();
+  const [nameError, setNameError] = useState("");
+  const [genderError, setGenderError] = useState("");
+  const [birthDateError, setBirthDateError] = useState("");
 
+  const router = useRouter();
   const supabase = browserClient;
 
   const {
@@ -23,10 +28,11 @@ const SignupSecondPage = () => {
     setUserGender,
     setUserAge,
     setUserProfileImg,
+    userId,
     userName,
     userGender,
     userProfileImg
-  } = useAuthStore();
+  } = useAuth();
 
   const isLeapYear = (year: number): boolean => {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
@@ -81,10 +87,38 @@ const SignupSecondPage = () => {
     }
   };
 
+  const validateName = (name: string) => {
+    const trimmedName = name.trim();
+
+    if (!trimmedName) return "이름을 입력해주세요.";
+    if (!NAME_REGEX.test(trimmedName)) return "이름은 한글 2~5자로 입력해야 합니다.";
+    return "";
+  };
+
+  const validateGender = () => {
+    if (!userGender) return "성별을 선택해주세요.";
+    return "";
+  };
+
+  const validateBirthDate = () => {
+    const today = new Date();
+    const selectedDate = new Date(Number(birthYear), Number(birthMonth) - 1, Number(birthDay));
+    if (selectedDate > today) return "미래 날짜는 선택할 수 없습니다.";
+    return "";
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const userId = useAuthStore.getState().userId;
+    const nameValidation = validateName(userName || "");
+    const genderValidation = validateGender();
+    const birthDateValidation = validateBirthDate();
+
+    setNameError(nameValidation);
+    setGenderError(genderValidation);
+    setBirthDateError(birthDateValidation);
+
+    if (nameValidation || genderValidation || birthDateValidation) return;
 
     if (!userId) {
       console.log("사용자의 아이디를 찾을 수 없습니다.");
@@ -113,7 +147,7 @@ const SignupSecondPage = () => {
     const userAge = calcAge(Number(birthYear));
     setUserAge(userAge);
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("user")
       .update({
         user_name: userName,
@@ -122,7 +156,6 @@ const SignupSecondPage = () => {
         user_profile_img: uploadedImageUrl
       })
       .eq("user_id", userId);
-    console.log(data);
 
     if (error) {
       console.log("정보 업데이트 실패", error);
@@ -156,10 +189,14 @@ const SignupSecondPage = () => {
           <label className="block text-gray-700 font-bold mb-2">이름</label>
           <input
             type="text"
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={(e) => {
+              setUserName(e.target.value);
+              setNameError(validateName(e.target.value));
+            }}
             placeholder="이름을 입력해주세요."
             className="w-full p-2 border border-gray-300 rounded"
           />
+          {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
         </div>
 
         <div className="mb-5">
@@ -167,7 +204,10 @@ const SignupSecondPage = () => {
           <div className="flex gap-3">
             <button
               type="button"
-              onClick={() => setUserGender("남성")}
+              onClick={() => {
+                setUserGender("남성");
+                setGenderError(validateGender());
+              }}
               className={`flex-1 py-2 rounded ${
                 userGender === "남성" ? "bg-black text-white" : "bg-gray-200 text-black"
               }`}
@@ -176,7 +216,10 @@ const SignupSecondPage = () => {
             </button>
             <button
               type="button"
-              onClick={() => setUserGender("여성")}
+              onClick={() => {
+                setUserGender("여성");
+                setGenderError(validateGender());
+              }}
               className={`flex-1 py-2 rounded ${
                 userGender === "여성" ? "bg-black text-white" : "bg-gray-200 text-black"
               }`}
@@ -184,6 +227,7 @@ const SignupSecondPage = () => {
               여성
             </button>
           </div>
+          {genderError && <p className="text-red-500 text-sm mt-1">{genderError}</p>}
         </div>
 
         <div className="mb-5">
@@ -223,6 +267,7 @@ const SignupSecondPage = () => {
               ))}
             </select>
           </div>
+          {birthDateError && <p className="text-red-500 text-sm mt-1">{birthDateError}</p>}
         </div>
 
         <button
