@@ -3,15 +3,26 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+// 로컬스토리지 키
+const ONETIME_CLUB_CREATE = "ONETIME_CLUB_CREATE";
+const REGULAR_CLUB_CREATE = "REGULAR_CLUB_CREATE";
+
 const TypeSelectionPage = () => {
   const router = useRouter();
   const [selectedType, setSelectedType] = useState<"one-time" | "regular-time" | null>(null);
 
   const handleBack = () => {
-    router.back();
+    localStorage.removeItem(ONETIME_CLUB_CREATE);
+    localStorage.removeItem(REGULAR_CLUB_CREATE);
+    window.location.replace("/club");
   };
 
   const handleNext = () => {
+    if (selectedType === null) {
+      alert("모임 타입을 골라주세요");
+      return;
+    }
+
     if (selectedType === "one-time") {
       router.push("/club/type-selection/create/one-time");
     } else if (selectedType === "regular-time") {

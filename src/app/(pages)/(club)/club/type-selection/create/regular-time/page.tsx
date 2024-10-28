@@ -12,6 +12,8 @@ import ApplicationMethod from "../../../_components/regularClub/ApplicationMetho
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
+
+// 로컬스토리지 키
 const REGULAR_CLUB_CREATE = "REGULAR_CLUB_CREATE";
 
 const RegularTimePage = () => {

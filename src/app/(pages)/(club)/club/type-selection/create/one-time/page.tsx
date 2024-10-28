@@ -14,6 +14,8 @@ import ClubTitle from "../../../_components/oneTimeClub/ClubTitle";
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
+
+// 로컬스토리지 키
 const ONETIME_CLUB_CREATE = "ONETIME_CLUB_CREATE";
 
 const OneTimePage = () => {
