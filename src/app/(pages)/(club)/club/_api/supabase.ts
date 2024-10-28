@@ -49,3 +49,17 @@ export const uploadImage = async (file: File) => {
 
   return publicUrl;
 };
+
+// 일회성 모임리스트 불러오기
+export const getOneTimeClub = async () => {
+  const { data, error } = await browserClient.from("one_time_club").select("*");
+  if (error) throw error;
+  return data;
+};
+
+// 정기적 모임리스트 불러오기
+export const getRegularClubList = async () => {
+  const { data, error } = await browserClient.from("regular_club").select("*");
+  if (error) throw error;
+  return data;
+};
