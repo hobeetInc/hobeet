@@ -19,10 +19,12 @@ interface ChattingRoom {
   last_message: string;
   last_message_time: string;
   last_message_time_value: string;
+  active: boolean;
 }
 
 interface Chatting {
   admin: boolean;
+  active: boolean;
   r_c_id: number;
   r_c_member_id: number;
   r_c_n_chatting_id: number;
@@ -48,7 +50,6 @@ interface RegularClub {
 
 interface Member {
   r_c_member_id: number;
-
   user_id: string;
   r_c_id: number;
   r_c_n_chatting: Chatting[];
@@ -63,6 +64,19 @@ const ChatPage = () => {
   const [chatRooms, setChatRooms] = useState<ChattingRoom[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const formatDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return {
+      date: `${month}월 ${day}일`,
+      time: `${hours}:${minutes}`
+    };
+  };
 
   useEffect(() => {
     const supabase = createClient();
@@ -88,7 +102,6 @@ const ChatPage = () => {
         });
 
         const chatData: ApiResponse = await response.json();
-        console.log(chatData);
 
         if (!response.ok) {
           throw new Error("서버에서 오류가 발생했습니다.");
@@ -97,49 +110,39 @@ const ChatPage = () => {
         if (!chatData.data || chatData.data.length === 0) {
           setErrorMessage("채팅방이 없습니다.");
           setChatRooms([]);
+          setLoading(false);
           return;
         }
 
-        const formatDateTime = (dateString: string) => {
-          const date = new Date(dateString);
-          // const year = date.getFullYear(); // 연도
-          const month = String(date.getMonth() + 1).padStart(2, "0"); // 월
-          const day = String(date.getDate()).padStart(2, "0"); // 일
-          const hours = String(date.getHours()).padStart(2, "0"); // 시
-          const minutes = String(date.getMinutes()).padStart(2, "0"); // 분
-
-          return {
-            date: `${month}월 ${day}일`, // 날짜 형식
-            time: `${hours}:${minutes}` // 시간 형식
-          };
-        };
-
         const rooms: ChattingRoom[] = chatData.data.flatMap((member) =>
-          member.r_c_n_chatting.map((chatting) => {
-            const lastMessageInfo =
-              chatting.r_c_n_chatting_message.length > 0
-                ? formatDateTime(
-                    chatting.r_c_n_chatting_message[chatting.r_c_n_chatting_message.length - 1]
-                      .r_c_n_chatting_message_create_at
-                  )
-                : { date: "", time: "" };
-
-            return {
-              user_id: member.user_id,
-              regular_club_id: member.r_c_id,
-              r_c_n_chatting_room_id: chatting.r_c_n_chatting_room.r_c_n_chatting_room_id,
-              r_c_n_chatting_room_name: chatting.r_c_n_chatting_room.r_c_n_chatting_room_name,
-              regular_club_image: member.regular_club.regular_club_image,
-              regular_club_name: member.regular_club.regular_club_name,
-              last_message:
+          member.r_c_n_chatting
+            .filter((chatting) => chatting.active)
+            .map((chatting) => {
+              const lastMessageInfo =
                 chatting.r_c_n_chatting_message.length > 0
-                  ? chatting.r_c_n_chatting_message[chatting.r_c_n_chatting_message.length - 1]
-                      .r_c_n_chatting_message_content
-                  : "새 메시지가 없습니다.",
-              last_message_time: lastMessageInfo.date,
-              last_message_time_value: lastMessageInfo.time
-            };
-          })
+                  ? formatDateTime(
+                      chatting.r_c_n_chatting_message[chatting.r_c_n_chatting_message.length - 1]
+                        .r_c_n_chatting_message_create_at
+                    )
+                  : { date: "", time: "" };
+
+              return {
+                user_id: member.user_id,
+                regular_club_id: member.r_c_id,
+                r_c_n_chatting_room_id: chatting.r_c_n_chatting_room.r_c_n_chatting_room_id,
+                r_c_n_chatting_room_name: chatting.r_c_n_chatting_room.r_c_n_chatting_room_name,
+                regular_club_image: member.regular_club.regular_club_image,
+                regular_club_name: member.regular_club.regular_club_name,
+                last_message:
+                  chatting.r_c_n_chatting_message.length > 0
+                    ? chatting.r_c_n_chatting_message[chatting.r_c_n_chatting_message.length - 1]
+                        .r_c_n_chatting_message_content
+                    : "새 메시지가 없습니다.",
+                last_message_time: lastMessageInfo.date,
+                last_message_time_value: lastMessageInfo.time,
+                active: chatting.active
+              };
+            })
         );
 
         setChatRooms(rooms);
@@ -153,7 +156,6 @@ const ChatPage = () => {
 
     fetchChatRooms();
 
-    // 리얼타임 업데이트 구독
     const subscription = supabase
       .channel("chatting")
       .on(
@@ -165,13 +167,16 @@ const ChatPage = () => {
         },
         (payload) => {
           const newMessage = payload.new;
+          const messageTime = formatDateTime(newMessage.r_c_n_chatting_message_create_at);
 
           setChatRooms((prevRooms) => {
             return prevRooms.map((room) => {
               if (room.r_c_n_chatting_room_id === newMessage.r_c_n_chatting_room_id) {
                 return {
                   ...room,
-                  last_message: newMessage.r_c_n_chatting_message_content
+                  last_message: newMessage.r_c_n_chatting_message_content,
+                  last_message_time: messageTime.date,
+                  last_message_time_value: messageTime.time
                 };
               }
               return room;
@@ -196,7 +201,17 @@ const ChatPage = () => {
 
   return (
     <>
-      <div className="flex bg-[#D9D9D9] w-full h-[90px] justify-center items-center">광고배너</div>
+      <div className="flex flex-col w-[390px]">
+        <div className="flex w-[370px] p-[8px] pt-[20px] pb-[20px] justify-between items-center">
+          <aside className="bg-[#d9d9d9] flex w-[70px] p-[5px] items-center justify-center gap-[10px] flex-shrink-0">
+            내채팅
+          </aside>
+          <aside className="bg-[#d9d9d9] flex w-[50px] h-[24px] p-[10px] items-center justify-center gap-[10px] flex-shrink-0">
+            알림
+          </aside>
+        </div>
+      </div>
+      <div className="flex bg-[#D9D9D9] w-[390px] h-[90px] justify-center items-center">광고배너</div>
       <div className="flex flex-col w-[358px] h-[calc(100%-91px)]">
         <div className="flex flex-col w-full h-[50px] border-b border-[#D9D9D9]"></div>
         <div className="flex flex-col w-full overflow-y-auto">
