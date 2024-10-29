@@ -1,20 +1,16 @@
 import browserClient from "@/utils/supabase/client";
 import { OneTimeClubForm, RegularClubForm } from "../_types/ClubForm";
-import { Tables } from "@/database.types";
-
-type OneTimeClub = Tables<"one_time_club">;
-type RegularClub = Tables<"regular_club">;
 
 // supabase에 일회성 모임 제출
 export const submitOneTimeClubData = async (finalFormData: OneTimeClubForm) => {
-  const { data, error } = await browserClient.from("one_time_club").insert([finalFormData as OneTimeClub]);
+  const { data, error } = await browserClient.from("one_time_club").insert([finalFormData]);
   if (error) throw error;
   return data;
 };
 
 // supabase에 정기적 모임 제출
 export const submitRegularClubData = async (finalFormData: RegularClubForm) => {
-  const { data, error } = await browserClient.from("regular_club").insert([finalFormData as RegularClub]);
+  const { data, error } = await browserClient.from("regular_club").insert([finalFormData]);
   if (error) throw error;
   return data;
 };
