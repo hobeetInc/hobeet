@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/client";
-import { chattingRoom } from "../types/r_c_n_chatting_room"; // chattingRoom 타입 임포트
-import { ChatRoomMeetingPlace } from "./ChatRoomMeetingPlace"; // ChatRoomMeetingPlace 컴포넌트 임포트
+import { chattingRoom } from "../types/r_c_n_chatting_room";
+import { ChatRoomMeetingPlace } from "./ChatRoomMeetingPlace";
 
 // 모임 채팅방 생성
 export async function CreateChatRoom(regularClubName: string, clubId: number) {
