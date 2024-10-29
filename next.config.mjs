@@ -15,13 +15,21 @@ const nextConfig = {
         port: '',
         pathname: '/a/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'k.kakaocdn.net',
+        port: '',
+        pathname: '/dn/**',
+      }
     ],
   },
 };
+
 // PWA 설정
 const buildConfig = withPWA({
   dest: 'public',
   mode: 'production',
   disable: process.env.NODE_ENV === 'development',
 })(nextConfig);
+
 export default buildConfig;
