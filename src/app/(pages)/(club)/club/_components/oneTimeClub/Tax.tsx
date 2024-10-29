@@ -4,17 +4,51 @@ import { CategoryProps } from "../../_types/ClubForm";
 
 const Tax = ({ formData, setFormData }: CategoryProps) => {
   const [showTaxInput, setShowTaxInput] = useState<boolean>(false);
+  const [inputError, setInputError] = useState<string>("");
 
   const handleTaxToggle = (hasTax: boolean) => {
     setShowTaxInput(hasTax);
+    setInputError("");
 
     if (!hasTax) {
       setFormData({ ...formData, one_time_tax: 0 });
+    } else {
+      setFormData({ ...formData, one_time_tax: null });
     }
   };
 
   const handleTaxAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, one_time_tax: parseInt(e.target.value) });
+    const value = e.target.value;
+
+    // 빈 문자열이면 null로 설정
+    if (value === "") {
+      setFormData({ ...formData, one_time_tax: null });
+      setInputError("");
+      return;
+    }
+
+    // 숫자가 아닌 문자가 포함되어 있는지 검사
+    if (!/^\d+$/.test(value)) {
+      setInputError("금액에 숫자만 입력해주세요");
+      return;
+    }
+
+    const numValue = parseInt(value);
+
+    // 음수 검사
+    if (numValue < 0) {
+      setInputError("0원 이상 입력해주세요");
+      return;
+    }
+
+    // 최대값 검사
+    if (numValue > 32767) {
+      setInputError("32767원 이하로 입력해주세요");
+      return;
+    }
+
+    setInputError("");
+    setFormData({ ...formData, one_time_tax: numValue });
   };
 
   return (
@@ -37,13 +71,15 @@ const Tax = ({ formData, setFormData }: CategoryProps) => {
       {showTaxInput && (
         <div className="next-box bg-gray-100">
           <input
-            type="number"
+            type="text"
             value={formData.one_time_tax || ""}
             onChange={handleTaxAmount}
             placeholder="참가비를 입력해주세요"
             className="w-[328px] h-8 rounded-lg p-2"
           />
-          {formData.one_time_tax > 0 && (
+          {inputError && <div className="text-red-500 text-sm mt-1">{inputError}</div>}
+
+          {formData.one_time_tax !== null && formData.one_time_tax > 0 && !inputError && (
             <div className="py-4 px-1 text-gray-600">{formData.one_time_tax.toLocaleString()}원</div>
           )}
         </div>

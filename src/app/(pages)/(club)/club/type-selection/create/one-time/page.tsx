@@ -11,12 +11,10 @@ import AddressSearch from "../../../_components/oneTimeClub/AddressSearch";
 import MemberType from "../../../_components/oneTimeClub/MemberType";
 import Tax from "../../../_components/oneTimeClub/Tax";
 import ClubTitle from "../../../_components/oneTimeClub/ClubTitle";
+import { ONETIME_CLUB_CREATE } from "../../../_utils/localStorage";
 
 // 임시 유저 아이디
 const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
-
-// 로컬스토리지 키
-const ONETIME_CLUB_CREATE = "ONETIME_CLUB_CREATE";
 
 const OneTimePage = () => {
   const router = useRouter();
@@ -72,6 +70,10 @@ const OneTimePage = () => {
   const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedGender);
   const [formData, setFormData] = useState<OneTimeClubForm>(initialData.formData);
+
+  useEffect(() => {
+    console.log("폼:", formData);
+  }, [formData]);
 
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
@@ -166,6 +168,7 @@ const OneTimePage = () => {
         alert("금액을 입력해주세요");
         return;
       }
+
       handleSubmit();
     } else {
       setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7);

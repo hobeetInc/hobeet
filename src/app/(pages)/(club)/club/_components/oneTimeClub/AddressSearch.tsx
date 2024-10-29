@@ -29,6 +29,16 @@ interface AddressData {
   detailAddress: string; // 상세주소
 }
 
+interface DaumPostcodeData {
+  userSelectedType: string; // 사용자가 선택한 주소 타입
+  roadAddress: string; // 도로명 주소
+  jibunAddress: string; // 지번 주소
+  bname: string; // 법정동/법정리 이름
+  buildingName: string; // 건물명
+  apartment: string; // 아파트 여부
+  zonecode: string; // 우편번호
+}
+
 const AddressSearch = ({ formData, setFormData }: CategoryProps) => {
   const [addressData, setAddressData] = useState<AddressData>({
     zonecode: "",
@@ -58,7 +68,7 @@ const AddressSearch = ({ formData, setFormData }: CategoryProps) => {
 
     // 카카오 주소 검색 팝업 뜨기
     new window.daum.Postcode({
-      oncomplete: function (data: any) {
+      oncomplete: function (data: DaumPostcodeData) {
         let addr = "";
         let extraAddr = "";
 
