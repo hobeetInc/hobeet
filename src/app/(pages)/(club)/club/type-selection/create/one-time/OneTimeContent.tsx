@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { OneTimeClubForm } from "../../../_types/ClubForm";
-import { submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
+import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
 import Category from "../../../_components/oneTimeClub/Category";
 // 컴포넌트 임포트
 import ImageUpload from "../../../_components/oneTimeClub/ImageUpload";
@@ -204,7 +204,16 @@ const OneTimeContent = () => {
       }
 
       // 슈퍼베이스에 데이터 저장
-      await submitOneTimeClubData(finalFormData);
+      const data = await submitOneTimeClubData(finalFormData);
+
+      const member = {
+        o_t_c_id: data.one_time_club_id,
+        user_id: data.user_id
+      };
+      console.log("맴버", member);
+
+      await putOneTimeMember(member);
+
       alert("일회성 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(ONETIME_CLUB_CREATE);

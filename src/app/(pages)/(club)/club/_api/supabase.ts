@@ -1,9 +1,9 @@
 import browserClient from "@/utils/supabase/client";
-import { OneTimeClubForm, RegularClubForm } from "../_types/ClubForm";
+import { OneTimeClubForm, OneTimeMember, RegularClubForm, RegularMember, RegularRequest } from "../_types/ClubForm";
 
 // supabase에 일회성 모임 제출
 export const submitOneTimeClubData = async (finalFormData: OneTimeClubForm) => {
-  const { data, error } = await browserClient.from("one_time_club").insert([finalFormData]);
+  const { data, error } = await browserClient.from("one_time_club").insert([finalFormData]).select("*").single();
   if (error) throw error;
   return data;
 };
@@ -60,6 +60,31 @@ export const getOneTimeClub = async () => {
 // 정기적 모임리스트 불러오기
 export const getRegularClubList = async () => {
   const { data, error } = await browserClient.from("regular_club").select("*");
+  if (error) throw error;
+  return data;
+};
+
+// 모임장 정기적 모임 승인 테이블에 집어넣기
+export const putRepresentative = async (representative: RegularRequest) => {
+  const { data, error } = await browserClient
+    .from("r_c_participation_request")
+    .insert([representative])
+    .select("*")
+    .single();
+  if (error) throw error;
+  return data;
+};
+
+// 모임장 정기적 모임 맴버 테이블에 집어넣기
+export const putRegularMember = async (member: RegularMember) => {
+  const { data, error } = await browserClient.from("r_c_member").insert([member]).select("*").single();
+  if (error) throw error;
+  return data;
+};
+
+// 모임장 일회성 모임 맴버 테이블에 집어넣기
+export const putOneTimeMember = async (member: OneTimeMember) => {
+  const { data, error } = await browserClient.from("o_t_c_member").insert([member]).select("*").single();
   if (error) throw error;
   return data;
 };
