@@ -28,6 +28,7 @@ type ChatInfo = {
   r_c_n_chatting_id: number;
   r_c_member_id: number;
   r_c_id: number;
+  chat_room_entry_time: string;
 };
 
 const supabase = createClient();
@@ -99,21 +100,27 @@ const ChatPage: React.FC = () => {
     },
     enabled: !!roomId && !!memberData
   });
+  // console.log(chatInfo?.chat_room_entry_time);
 
   // 메시지 목록 조회
   const { data: messages = [], isLoading: isLoadingMessages } = useQuery<Message[]>({
-    queryKey: ["messages", roomId],
+    queryKey: ["messages", roomId, chatInfo?.chat_room_entry_time],
     queryFn: async () => {
+      if (!chatInfo?.chat_room_entry_time) {
+        throw new Error("채팅방 입장 시간이 없습니다.");
+      }
+
       const { data, error } = await supabase
         .from("r_c_n_chatting_message")
         .select(`*, user:user_id(*)`)
         .eq("r_c_n_chatting_room_id", roomId)
+        .gte("r_c_n_chatting_message_create_at", chatInfo.chat_room_entry_time)
         .order("r_c_n_chatting_message_create_at", { ascending: true });
 
       if (error) throw error;
       return data || [];
     },
-    enabled: !!roomId
+    enabled: !!roomId && !!chatInfo?.chat_room_entry_time
   });
 
   // 스크롤을 맨 아래로 이동시키는 함수
