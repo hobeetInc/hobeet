@@ -38,9 +38,10 @@ const ChatPage: React.FC = () => {
   const [newMessage, setNewMessage] = useState<string>("");
   const queryClient = useQueryClient();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // 현재 사용자 정보 조회
-  const { data: currentUser } = useQuery({
+  const { data: currentUser, isSuccess: isUserFetched } = useQuery({
     queryKey: ["currentUser"],
     queryFn: async () => {
       const {
@@ -48,6 +49,38 @@ const ChatPage: React.FC = () => {
       } = await supabase.auth.getUser();
       return user;
     }
+  });
+
+  // r_c_id 조회
+  const { data: rec, isSuccess: isRecFetched } = useQuery({
+    queryKey: ["r_c_id", roomId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("r_c_n_chatting")
+        .select("r_c_id")
+        .eq("r_c_n_chatting_room_id", roomId)
+        .limit(1);
+      if (error) throw error;
+      return data ? data[0] : null;
+    },
+    enabled: !!roomId && isUserFetched
+  });
+
+  // r_c_member_id 조회
+  const { data: memberData } = useQuery({
+    queryKey: ["memberData", currentUser?.id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("r_c_member")
+        .select("r_c_member_id")
+        .eq("user_id", currentUser?.id)
+        .eq("r_c_id", rec?.r_c_id)
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!currentUser?.id && isRecFetched
   });
 
   // 채팅방 정보 조회
@@ -58,12 +91,13 @@ const ChatPage: React.FC = () => {
         .from("r_c_n_chatting")
         .select(`*, r_c_n_chatting_room (*)`)
         .eq("r_c_n_chatting_room_id", roomId)
+        .eq("r_c_member_id", memberData?.r_c_member_id)
         .single();
 
       if (error) throw error;
       return data;
     },
-    enabled: !!roomId
+    enabled: !!roomId && !!memberData
   });
 
   // 메시지 목록 조회
@@ -95,7 +129,7 @@ const ChatPage: React.FC = () => {
   // 메시지 전송 무테이션
   const sendMessageMutation = useMutation({
     mutationFn: async (messageContent: string) => {
-      if (!chatInfo || !currentUser) throw new Error("Required information missing");
+      if (!chatInfo || !currentUser) throw new Error("전송실패실패실패");
 
       const { error } = await supabase.from("r_c_n_chatting_message").insert([
         {
@@ -140,6 +174,15 @@ const ChatPage: React.FC = () => {
       supabase.removeChannel(subscription);
     };
   }, [roomId, queryClient]);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      const scrollHeight = textarea.scrollHeight;
+      textarea.style.height = Math.min(scrollHeight, 120) + "px";
+    }
+  }, [newMessage]);
 
   const groupMessagesByDate = (messages: Message[]) => {
     return messages.reduce((acc: { [date: string]: Message[] }, message) => {
@@ -233,17 +276,28 @@ const ChatPage: React.FC = () => {
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t">
         <div className="p-4">
           <div className="flex items-center">
-            <input
-              type="text"
+            <textarea
+              ref={textareaRef}
               value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
+              onChange={(e) => {
+                const lines = e.target.value.split("\n");
+                if (lines.length <= 5) {
+                  setNewMessage(e.target.value);
+                }
+              }}
               onKeyPress={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
                   handleSendMessage();
                 }
               }}
-              className="flex-grow p-2 border border-gray-300 bg-[#d9d9d9] rounded-[20px] focus:outline-none focus:ring-2 transition duration-200 h-12"
+              rows={1}
+              maxLength={100}
+              className="flex-grow p-2 border border-gray-300 bg-[#d9d9d9] rounded-[20px] focus:outline-none focus:ring-2 transition duration-200 min-h-[48px] max-h-[120px] resize-none overflow-y-auto"
               placeholder="메시지를 입력하세요..."
+              style={{
+                lineHeight: "1.5"
+              }}
             />
             <button
               type="button"
