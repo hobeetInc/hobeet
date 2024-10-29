@@ -29,7 +29,7 @@ export async function GET(request: Request) {
         }
 
         if (userData && !userData.user_name) {
-          return NextResponse.redirect(`${origin}/signupSecond`);
+          return NextResponse.redirect(`${origin}/signupSecond/${userData.user_id}`);
         } else {
           return NextResponse.redirect(`${origin}/auth/callback/InsertUserInfo`);
         }
