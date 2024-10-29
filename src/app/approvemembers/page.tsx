@@ -6,32 +6,29 @@ import { createClient } from "@/utils/supabase/client";
 export interface ParticipationRequest {
   r_c_participation_request_id: number;
   r_c_id: number;
-  user_id: string;
+  user_id: {
+    user_id: string;
+    user_name: string;
+  };
   r_c_participation_request_status: "pending" | "approved" | "rejected";
 }
 
 export default function ApproveMembersPage({ clubId }: { clubId: number }) {
   const [requests, setRequests] = useState<ParticipationRequest[]>([]);
   const supabase = createClient();
-
+  clubId = 18;
   useEffect(() => {
     const fetchPendingRequests = async () => {
       const { data, error } = await supabase
         .from("r_c_participation_request")
-        .select("r_c_participation_request_id, r_c_id, user_id, r_c_participation_request_status")
-        .eq("r_c_participation_request_status", "pending");
-
+        .select(`*,user_id("*")`)
+        .eq("r_c_participation_request_status", "pending")
+        .eq("r_c_id", clubId);
+      console.log("클럽아이디", data);
       if (error) {
         console.error("Error fetching pending requests:", error);
       } else if (data) {
-        // 타입을 일치시키기 위해 데이터 매핑
-        const mappedData = data.map((item) => ({
-          r_c_participation_request_id: item.r_c_participation_request_id,
-          r_c_id: item.r_c_id,
-          user_id: item.user_id,
-          r_c_participation_request_status: item.r_c_participation_request_status
-        })) as ParticipationRequest[];
-
+        const mappedData: ParticipationRequest[] = data as ParticipationRequest[];
         setRequests(mappedData);
       }
     };
@@ -39,28 +36,27 @@ export default function ApproveMembersPage({ clubId }: { clubId: number }) {
     fetchPendingRequests();
   }, [clubId]);
 
-  const approveMember = async (requestId: number, userId: string) => {
-    try {
-      console.log({
-        clubId,
-        userId,
-        requestId
-      });
-
-      // approve_club_membership 함수 호출
-      const { error: approvalError } = await supabase.rpc("approve_club_membership", {
-        p_club_id: clubId,
-        p_user_id: userId
-      });
-
-      if (approvalError) throw approvalError;
-
-      // 성공적으로 처리된 경우
+  const approveMember = async (requestId: number) => {
+    const { data, error } = await supabase
+      .from("r_c_participation_request")
+      .update({ r_c_participation_request_status: "active" })
+      .eq("r_c_participation_request_id", requestId)
+      .select("*")
+      .single();
+    console.log("data", data);
+    if (!error) {
       setRequests((prev) => prev.filter((req) => req.r_c_participation_request_id !== requestId));
-      alert("가입이 승인되었습니다.");
-    } catch (error) {
-      console.error("승인 처리 중 오류:", error);
-      alert("승인 중 오류가 발생했습니다.");
+      const { error } = await supabase.from("r_c_member").insert({
+        user_id: data.user_id,
+        r_c_id: data.r_c_id,
+        r_c_participation_request_id: data.r_c_participation_request_id,
+        regular_club_request_status: "active"
+      });
+      if (!error) {
+        alert("가입이 승인 되었습니다.");
+      }
+    } else {
+      alert("승인 처리 중 오류가 발생했습니다.");
     }
   };
 
@@ -84,8 +80,8 @@ export default function ApproveMembersPage({ clubId }: { clubId: number }) {
       <h2>모임 가입 요청 승인</h2>
       {requests.map((req) => (
         <div key={req.r_c_participation_request_id}>
-          <span>{req.user_id}</span>
-          <button onClick={() => approveMember(req.r_c_participation_request_id, req.user_id)}>승인하기</button>
+          <span>{req.user_id.user_name}</span>
+          <button onClick={() => approveMember(req.r_c_participation_request_id)}>승인하기</button>
           <button onClick={() => rejectMember(req.r_c_participation_request_id)}>거부하기</button>
         </div>
       ))}
