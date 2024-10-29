@@ -1,16 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useAuth } from "./store/AuthContext";
 import { useAuthStore } from "./store/authStore";
 import { createClient } from "@/utils/supabase/client";
 import { CreateChatRoom } from "./(pages)/(chat)/_components/ChatRoom";
 import { ChatRoomRecruiterEntrance } from "./(pages)/(chat)/_components/ChatRoomRecruiterEntrance";
 
 export default function Home() {
-  const { userName } = useAuth();
   const reset = useAuthStore((state) => state.reset);
-
   const handleLogout = async () => {
     const supabase = createClient();
     const { error } = await supabase.auth.signOut();
