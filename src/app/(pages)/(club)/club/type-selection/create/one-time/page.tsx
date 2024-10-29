@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import OneTimeContent from "./OneTime";
+import OneTimeContent from "./OneTimeContent";
 
 const OnePage = () => {
   return (
