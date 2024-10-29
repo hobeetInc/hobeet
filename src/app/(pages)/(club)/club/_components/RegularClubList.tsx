@@ -7,9 +7,6 @@ import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Tables } from "@/database.types";
-
-type RegularClub = Tables<"regular_club">;
 
 const RegularClubList = () => {
   const [list, setList] = useState<RegularClubForm[]>([]);
@@ -26,7 +23,7 @@ const RegularClubList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data: RegularClub[] = await getRegularClubList();
+        const data = await getRegularClubList();
 
         // 데이터 임시 확인ㅇㅇ
         console.log("데이터!!!", data);
