@@ -13,7 +13,7 @@ export interface OneTimeClubForm {
   one_time_image: string | File | null;
   one_time_people_limited: number | null;
   one_time_tax: number | null;
-  s_c_id: number;
+  s_c_id: number | null;
   user_id: string;
 }
 
@@ -43,7 +43,7 @@ export interface RegularClubForm {
   regular_club_introduction: string;
   regular_club_name: string;
   regular_club_people_limited: number | null;
-  s_c_id: number;
+  s_c_id: number | null;
   user_id: string;
 }
 

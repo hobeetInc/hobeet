@@ -17,8 +17,8 @@ const Category = ({ formData, setFormData }: RegularProps) => {
       const subData = await fetchSubCategories();
 
       // 확인용
-      console.log("수퍼베이스!!", mainData);
-      console.log("수퍼베이스!!", subData);
+      // console.log("수퍼베이스!!", mainData);
+      // console.log("수퍼베이스!!", subData);
 
       setMainCategories(mainData);
       setSubCategories(subData);

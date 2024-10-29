@@ -2,10 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-// 로컬스토리지 키
-const ONETIME_CLUB_CREATE = "ONETIME_CLUB_CREATE";
-const REGULAR_CLUB_CREATE = "REGULAR_CLUB_CREATE";
+import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "../_utils/localStorage";
 
 const TypeSelectionPage = () => {
   const router = useRouter();

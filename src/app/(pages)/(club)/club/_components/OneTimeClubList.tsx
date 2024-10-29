@@ -8,6 +8,9 @@ import { format, parseISO } from "date-fns";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Tables } from "@/database.types";
+
+type OneTimeClub = Tables<"one_time_club">;
 
 // 주소 커스텀 함수
 const customAddress = (address: string) => {
@@ -37,7 +40,7 @@ const OneTimeClubList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getOneTimeClub();
+        const data: OneTimeClub[] = await getOneTimeClub();
 
         console.log("데이터!!!", data);
 
