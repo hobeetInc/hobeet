@@ -10,7 +10,7 @@ export const submitOneTimeClubData = async (finalFormData: OneTimeClubForm) => {
 
 // supabase에 정기적 모임 제출
 export const submitRegularClubData = async (finalFormData: RegularClubForm) => {
-  const { data, error } = await browserClient.from("regular_club").insert([finalFormData]);
+  const { data, error } = await browserClient.from("regular_club").insert([finalFormData]).select("*").single();
   if (error) throw error;
   return data;
 };

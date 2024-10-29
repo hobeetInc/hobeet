@@ -2,7 +2,7 @@ import { chattingRoom } from "../types/r_c_n_chatting_room";
 import { ChatRoomMeetingPlace } from "./ChatRoomMeetingPlace";
 
 // 모임 채팅방 생성
-export async function CreateChatRoom(regularClubName: string, clubId: number, userId: string) {
+export async function CreateChatRoom(regularClubName: string, clubId: number, userId: string | null) {
   try {
     const response = await fetch("/api/createChatRoom", {
       method: "POST",
