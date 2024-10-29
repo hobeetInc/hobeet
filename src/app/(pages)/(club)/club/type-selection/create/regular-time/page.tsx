@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import RegularContent from "./Regular";
+import RegularContent from "./RegularContent";
 
 const OnePage = () => {
   return (

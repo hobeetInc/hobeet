@@ -1,18 +1,10 @@
-"use client";
-
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const CreateButton = () => {
-  const router = useRouter();
-
-  const handleCreate = () => {
-    router.push("/club/type-selection");
-  };
-
   return (
-    <button onClick={handleCreate} className="border-2 p-2 border-black">
+    <Link href={"/club/type-selection"} className="border-2 p-2 border-black">
       생성
-    </button>
+    </Link>
   );
 };
 
