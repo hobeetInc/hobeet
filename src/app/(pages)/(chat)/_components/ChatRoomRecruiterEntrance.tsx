@@ -33,7 +33,7 @@ export async function ChatRoomRecruiterEntrance(club: clubId) {
     }
 
     const data: regularClubMember = await response.json();
-    console.log(data);
+    // console.log(data);
 
     const postResponse = await fetch("/api/chatRoomRecruiterEntrance", {
       method: "POST",

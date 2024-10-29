@@ -1,16 +1,8 @@
-import { createClient } from "@/utils/supabase/client";
 import { chattingRoom } from "../types/r_c_n_chatting_room";
 import { ChatRoomMeetingPlace } from "./ChatRoomMeetingPlace";
 
 // 모임 채팅방 생성
-export async function CreateChatRoom(regularClubName: string, clubId: number) {
-  const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
-    console.error("사용자 정보 못가져왔음: ", error);
-    return;
-  }
-  const userId = data.user.id;
+export async function CreateChatRoom(regularClubName: string, clubId: number, userId: string) {
   try {
     const response = await fetch("/api/createChatRoom", {
       method: "POST",

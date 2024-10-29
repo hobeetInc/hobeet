@@ -2,6 +2,7 @@
 import { createContext, useContext } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/app/store/AuthContext";
 
 interface ChatContextType {
   roomName: string;
@@ -19,19 +20,20 @@ export const useChatContext = () => useContext(ChatContext);
 
 export function ChatProvider({ children, roomId }: { children: React.ReactNode; roomId: string }) {
   const supabase = createClient();
+  const { userId } = useAuth();
 
-  const { data: currentUser } = useQuery({
-    queryKey: ["currentUser"],
-    queryFn: async () => {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
-      return user;
-    }
-  });
+  // const { data: currentUser } = useQuery({
+  //   queryKey: ["currentUser"],
+  //   queryFn: async () => {
+  //     const {
+  //       data: { user }
+  //     } = await supabase.auth.getUser();
+  //     return user;
+  //   }
+  // });
 
   const { data: chatData, isLoading } = useQuery({
-    queryKey: ["chatRoom", roomId, currentUser?.id],
+    queryKey: ["chatRoom", roomId, userId],
     queryFn: async () => {
       try {
         const { data: roomData, error: roomError } = await supabase
@@ -46,7 +48,7 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
         const { data: chatMember, error: chatMemberError } = await supabase
           .from("r_c_member")
           .select("r_c_member_id")
-          .eq("user_id", currentUser?.id)
+          .eq("user_id", userId)
           .eq("r_c_id", roomData.regular_club_id)
           .single();
 
@@ -71,7 +73,7 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
         throw error;
       }
     },
-    enabled: !!roomId && !!currentUser
+    enabled: !!roomId && !!userId
   });
 
   return (
