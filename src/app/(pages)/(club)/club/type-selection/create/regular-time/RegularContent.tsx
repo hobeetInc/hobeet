@@ -11,6 +11,7 @@ import MemberType from "../../../_components/regularClub/MemberType";
 import ApplicationMethod from "../../../_components/regularClub/ApplicationMethod";
 import { REGULAR_CLUB_CREATE } from "../../../_utils/localStorage";
 import { useAuth } from "@/app/store/AuthContext";
+import { CreateChatRoom } from "@/app/(pages)/(chat)/_components/ChatRoom";
 
 const RegularContent = () => {
   const router = useRouter();
@@ -177,7 +178,11 @@ const RegularContent = () => {
         };
       }
       // 슈퍼베이스에 데이터 저장
-      await submitRegularClubData(finalFormData);
+      const data = await submitRegularClubData(finalFormData);
+      console.log(data);
+
+      CreateChatRoom(data.regular_club_name, data.regular_club_id, userId);
+
       alert("정기적 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(REGULAR_CLUB_CREATE);
