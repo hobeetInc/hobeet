@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { RegularClubForm } from "../../../_types/ClubForm";
 import { useRouter, useSearchParams } from "next/navigation";
-import { submitRegularClubData, uploadImage } from "../../../_api/supabase";
+import { putRegularMember, putRepresentative, submitRegularClubData, uploadImage } from "../../../_api/supabase";
 import Category from "../../../_components/regularClub/Category";
 import ImageUpload from "../../../_components/regularClub/ImageUpload";
 import ClubTitle from "../../../_components/regularClub/ClubTitle";
@@ -179,9 +179,29 @@ const RegularContent = () => {
       }
       // 슈퍼베이스에 데이터 저장
       const data = await submitRegularClubData(finalFormData);
-      console.log(data);
+      // console.log(data);
 
-      CreateChatRoom(data.regular_club_name, data.regular_club_id, userId);
+      const representive = {
+        r_c_id: data.regular_club_id,
+        user_id: data.user_id,
+        r_c_participation_request_status: "active",
+        r_c_participation_request_approved_date: new Date().toISOString()
+      };
+
+      // 승인 테이블에 넣기
+      const res = await putRepresentative(representive);
+
+      const member = {
+        user_id: data.user_id,
+        r_c_id: data.regular_club_id,
+        r_c_participation_request_id: res.r_c_participation_request_id,
+        regular_club_request_status: "active"
+      };
+
+      // 승인된 맴버 테이블에 넣기
+      await putRegularMember(member);
+
+      await CreateChatRoom(data.regular_club_name, data.regular_club_id, userId);
 
       alert("정기적 모임 생성에 성공했습니다");
       // 성공 시 처리
