@@ -13,6 +13,7 @@ import Tax from "../../../_components/oneTimeClub/Tax";
 import ClubTitle from "../../../_components/oneTimeClub/ClubTitle";
 import { ONETIME_CLUB_CREATE } from "../../../_utils/localStorage";
 import { useAuth } from "@/app/store/AuthContext";
+import { OneTimeClubChatRoom } from "@/app/(pages)/(chat)/_components/oneTimeClub/OneTimeClubChatRoom";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -213,7 +214,8 @@ const OneTimeContent = () => {
       console.log("맴버", member);
 
       await putOneTimeMember(member);
-
+      // 모임장 채팅방 생성 및 입장
+      await OneTimeClubChatRoom(data.one_time_club_name, data.one_time_club_id, userId);
       alert("일회성 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(ONETIME_CLUB_CREATE);
