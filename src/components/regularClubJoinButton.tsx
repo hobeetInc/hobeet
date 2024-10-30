@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/ChatRoomRecruiterEntrance";
+import { RegularClubChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
 import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { regularClubJoin } from "@/utils/regularclubjoin/join";
 import { createClient } from "@/utils/supabase/client";
@@ -39,7 +39,7 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError }: Re
 
       if (result.success) {
         onSuccess?.();
-        ChatRoomRecruiterEntrance({ r_c_id: clubId }); // 모임원 채팅방 입장(자동 승인)
+        RegularClubChatRoomRecruiterEntrance({ r_c_id: clubId }); // 모임원 채팅방 입장(자동 승인)
         alert(result.message);
       }
     } catch (error) {

@@ -1,8 +1,8 @@
-import { chattingRoom } from "../types/r_c_n_chatting_room";
-import { ChatRoomMeetingPlace } from "./ChatRoomMeetingPlace";
+import { chattingRoom } from "../../types/r_c_n_chatting_room";
+import { RegularClubChatRoomMeetingPlace } from "./RegularClubChatRoomMeetingPlace";
 
 // 모임 채팅방 생성
-export async function CreateChatRoom(regularClubName: string, clubId: number, userId: string | null) {
+export async function RegularClubChatRoom(regularClubName: string, clubId: number, userId: string | null) {
   try {
     const response = await fetch("/api/createChatRoom", {
       method: "POST",
@@ -18,7 +18,7 @@ export async function CreateChatRoom(regularClubName: string, clubId: number, us
       const [chatRoom] = data;
 
       // 모임장 채팅방에 입장
-      await ChatRoomMeetingPlace(chatRoom);
+      await RegularClubChatRoomMeetingPlace(chatRoom);
       console.log("채팅방 생성 완료:", chatRoom);
     } else {
       console.error("채팅방 생성 실패:", error || "Unknown error");

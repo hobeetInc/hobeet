@@ -72,7 +72,7 @@ function ChatHeader() {
   const handleChatRoomExit = async () => {
     if (confirm("정말로 채팅방을 나가겠습니까? 채팅방을 나가면 다시 들어올수없습니다.")) {
       if (r_c_n_chatting_id) {
-        const res = await ChatRoomExit(r_c_n_chatting_id);
+        const res = await ChatRoomExit(r_c_n_chatting_id, true);
 
         if (res === null) {
           router.replace("/chat");

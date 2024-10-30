@@ -255,16 +255,32 @@ const ChatPage: React.FC = () => {
                               />
                             </div>
                           )}
-                          <div className="max-w-xs break-words p-3 rounded-[16px] bg-[#d9d9d9] text-gray-900">
-                            <p>{message.r_c_n_chatting_message_content}</p>
+                          {isCurrentUser && (
+                            <span className="text-xs text-gray-500 block self-end	mr-1">
+                              {date.toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: false
+                              })}
+                            </span>
+                          )}
+
+                          <div
+                            className={`max-w-xs break-words p-3 rounded-[16px] ${
+                              isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2]"
+                            } text-gray-900`}
+                          >
+                            <p className="max-w-[150px]">{message.r_c_n_chatting_message_content}</p>
                           </div>
-                          <span className="text-xs text-gray-500 block mt-4">
-                            {date.toLocaleTimeString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                              hour12: false
-                            })}
-                          </span>
+                          {!isCurrentUser && (
+                            <span className="text-xs text-gray-500 block self-end ml-1	">
+                              {date.toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: false
+                              })}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>

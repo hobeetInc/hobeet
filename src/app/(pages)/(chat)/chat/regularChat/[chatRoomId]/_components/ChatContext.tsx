@@ -22,16 +22,6 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
   const supabase = createClient();
   const { userId } = useAuth();
 
-  // const { data: currentUser } = useQuery({
-  //   queryKey: ["currentUser"],
-  //   queryFn: async () => {
-  //     const {
-  //       data: { user }
-  //     } = await supabase.auth.getUser();
-  //     return user;
-  //   }
-  // });
-
   const { data: chatData, isLoading } = useQuery({
     queryKey: ["chatRoom", roomId, userId],
     queryFn: async () => {
