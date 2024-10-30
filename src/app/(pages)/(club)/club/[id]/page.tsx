@@ -3,6 +3,7 @@ import Image from "next/image";
 import { getOneTimeMember } from "../_api/supabase";
 import CrewList from "./_components/CrewList";
 import { GetOneTimeClub, Member } from "./_types/Crews";
+import Link from "next/link";
 
 type CrewInfo = {
   memberId: number;
@@ -16,10 +17,11 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const data: Member[] = await getOneTimeMember(oneTimeClubId);
 
   // 임시 확인용
-  console.log("데이터:", data);
+  //   console.log("데이터:", data);
 
   // 클럽 정보만 추출
   const clubInfo: GetOneTimeClub = data[0]?.one_time_club;
+  console.log("클럽인포:", clubInfo);
 
   // 날짜 커스텀
   const date = clubInfo.one_time_club_date_time;
@@ -91,8 +93,10 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="container">
-      <div className="h-[48px] bg-pink-100">
-        <button className="w-6 h-6 border-black border-2    m-3">뒤</button>
+      <div className="h-[48px] bg-pink-100 flex items-center px-4">
+        <Link href={"/club"} className="w-6 h-6 bg-slate-300 flex items-center justify-center border-4 border-black">
+          뒤
+        </Link>
       </div>
 
       <div className="flex flex-col w-full">
