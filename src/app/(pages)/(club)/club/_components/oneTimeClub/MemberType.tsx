@@ -61,7 +61,7 @@ const MemberType = ({
 
   const handlePeopleLimit = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "") {
-      setFormData({ ...formData, one_time_people_limited: null });
+      setFormData({ ...formData, one_time_people_limited: 100 });
     } else {
       setFormData({ ...formData, one_time_people_limited: parseInt(e.target.value) });
     }

@@ -43,7 +43,14 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
                     className="w-full h-full object-cover border-2 border-black"
                   />
                 </div>
-                <p>{member.userName}</p>
+
+                <div className="flex flex-col gap-1 justify-center">
+                  <div className="flex gap-2">
+                    <p>{member.userName}</p>
+                    <p className="text-[13px]">에그즈</p>
+                  </div>
+                  <p className="text-[13px]">참여도</p>
+                </div>
               </div>
             ))}
           </div>
@@ -54,7 +61,3 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
 };
 
 export default FullScreenModal;
-
-{
-  /* <div className="h-[48px] bg-pink-100">헤더 공간</div> */
-}

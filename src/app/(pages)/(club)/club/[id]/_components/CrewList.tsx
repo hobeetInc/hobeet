@@ -4,21 +4,28 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getOneTimeMember } from "../../_api/supabase";
 import FullScreenModal from "./FullScreenModal";
+import { useAuth } from "@/app/store/AuthContext";
+
+// 멤버 정보 타입 정의
+type MemberInfo = {
+  memberId: number;
+  userId: string;
+  userName: string;
+  userImage: string;
+};
 
 // CrewList 컴포넌트 props 타입
 interface CrewListProps {
-  crewMembers: {
-    memberId: number;
-    userId: string;
-    userName: string;
-    userImage: string;
-  }[];
+  crewMembers: MemberInfo[];
   clubId: number;
+  hostInfo: MemberInfo;
+  clubHostId: string;
 }
 
-const CrewList = ({ crewMembers: initialCrewMembers, clubId }: CrewListProps) => {
+const CrewList = ({ crewMembers: initialCrewMembers, clubId, hostInfo, clubHostId }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { userId } = useAuth();
 
   useEffect(() => {
     // 데이터 새로고침 함수
@@ -43,15 +50,43 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId }: CrewListProps) =>
 
     // 15분마다 데이터 새로고침
     const intervalid = setInterval(refreshData, 900000);
-
     refreshData();
 
     //클린업 함수
     return () => clearInterval(intervalid);
   }, [clubId]);
 
-  // 현재 화면에는 6r개만 표시
+  // 현재 화면에는 8개만 표시
   const displayCrew = crewList.slice(0, 8);
+
+  // 호스트일 때
+  const isHost = userId === clubHostId;
+
+  // 가입한 크루일 때
+  const isAlreadJoined = crewList.some((member) => member.userId === userId);
+
+  // 버튼 렌더링 함수
+  const renderJoinButton = () => {
+    if (isHost) {
+      return (
+        <div className="flex justify-center items-center gap-2">
+          <button className="flex-1 bg-yellow-100 h-[50px] rounded-full">{`참여 ${crewList.length}명`}</button>
+          <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
+        </div>
+      );
+    }
+
+    if (isAlreadJoined) {
+      return (
+        <div className="flex justify-center items-center gap-2">
+          <p className="flex-1 h-[50px] pt-4 font-semibold">참여 중인 에그팝이에요</p>
+          <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
+        </div>
+      );
+    }
+
+    return <button className="w-full h-[50px] bg-yellow-300 rounded-full">참여하기</button>;
+  };
 
   return (
     <>
@@ -78,7 +113,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId }: CrewListProps) =>
           ))}
         </div>
       </div>
-
+      {renderJoinButton()}
       <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
