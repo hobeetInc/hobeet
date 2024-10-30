@@ -200,7 +200,7 @@ const RegularContent = () => {
 
       // 승인된 맴버 테이블에 넣기
       await putRegularMember(member);
-
+      // 모임장 채팅방 생성 및 입장
       await CreateChatRoom(data.regular_club_name, data.regular_club_id, userId);
 
       alert("정기적 모임 생성에 성공했습니다");
