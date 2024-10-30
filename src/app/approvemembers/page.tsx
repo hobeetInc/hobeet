@@ -16,7 +16,7 @@ export interface ParticipationRequest {
 export default function ApproveMembersPage({ clubId }: { clubId: number }) {
   const [requests, setRequests] = useState<ParticipationRequest[]>([]);
   const supabase = createClient();
-  clubId = 18;
+  clubId = 18; // 상세페이지 생성 협의(어떻게 받아올 것인지 클럽아이디)
   useEffect(() => {
     const fetchPendingRequests = async () => {
       const { data, error } = await supabase

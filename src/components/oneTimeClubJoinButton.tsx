@@ -36,7 +36,7 @@ export default function JoinClubButton({ clubId, onSuccess, onError }: JoinClubB
 
       if (result.success) {
         onSuccess?.();
-        alert("모임 가입이 완료 되었습니다!");
+        alert("모임 가입이 완료 되었습니다!"); // 결제 완료되었을때 바뀔 수 있음(결제 부분 협의 후)
       }
     } catch (error) {
       if (error instanceof ClubJoinError) {
