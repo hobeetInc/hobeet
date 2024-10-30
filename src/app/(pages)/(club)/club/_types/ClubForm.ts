@@ -28,7 +28,7 @@ export interface SubCategory {
   s_c_name: string;
 }
 
-export type CategoryProps = {
+export type OneTimeProps = {
   formData: OneTimeClubForm;
   setFormData: React.Dispatch<SetStateAction<OneTimeClubForm>>;
 };

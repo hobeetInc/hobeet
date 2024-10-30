@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { CategoryProps } from "../../_types/ClubForm";
+import { OneTimeProps } from "../../_types/ClubForm";
 
-type MemeberTypeProps = CategoryProps & {
+type MemeberTypeProps = OneTimeProps & {
   selectedGender: string;
   setSelectedGender: (value: string) => void;
   selectedAge: string;

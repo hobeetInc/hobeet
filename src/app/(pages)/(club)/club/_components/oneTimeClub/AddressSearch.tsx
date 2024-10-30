@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CategoryProps } from "../../_types/ClubForm";
+import { OneTimeProps } from "../../_types/ClubForm";
 
 declare global {
   interface Window {
@@ -39,7 +39,7 @@ interface DaumPostcodeData {
   zonecode: string; // 우편번호
 }
 
-const AddressSearch = ({ formData, setFormData }: CategoryProps) => {
+const AddressSearch = ({ formData, setFormData }: OneTimeProps) => {
   const [addressData, setAddressData] = useState<AddressData>({
     zonecode: "",
     address: "",

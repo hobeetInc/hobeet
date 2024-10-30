@@ -8,6 +8,7 @@ import { format, parseISO } from "date-fns";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
 
 // 주소 커스텀 함수
 const customAddress = (address: string) => {
@@ -56,7 +57,7 @@ const OneTimeClubList = () => {
 
       <Slider {...settings}>
         {list?.map((club) => (
-          <div key={club.one_time_club_id} className="h-[200px]">
+          <Link href={`/club/${club.one_time_club_id}`} key={club.one_time_club_id} className="h-[200px]">
             <div>
               {typeof club.one_time_image === "string" && (
                 <Image
@@ -76,7 +77,7 @@ const OneTimeClubList = () => {
                 <p className="text-[11px]">{customDate(club.one_time_club_date_time)}</p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </Slider>
     </div>

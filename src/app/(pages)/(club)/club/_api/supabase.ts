@@ -88,3 +88,13 @@ export const putOneTimeMember = async (member: OneTimeMember) => {
   if (error) throw error;
   return data;
 };
+
+// 일회성 모임 상세 페이지 불러오기
+export const getOneTimeMember = async (clubId: number) => {
+  const { data, error } = await browserClient
+    .from("o_t_c_member")
+    .select(`*, one_time_club!inner(*), user!inner(user_name, user_profile_img)`)
+    .eq("o_t_c_id", clubId);
+  if (error) throw error;
+  return data;
+};
