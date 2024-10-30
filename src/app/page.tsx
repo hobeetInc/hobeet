@@ -40,7 +40,7 @@ export default function Home() {
       </Link>
       <button onClick={handleCreateChattingRoom}>채팅방 생성</button>
       <button onClick={handleChattingRoom}>채팅방 입장</button>
-      <PaymentButton amount={10000} itemName="모임비" />
+      <PaymentButton clubType={true} clubId={24} />
     </>
   );
 }

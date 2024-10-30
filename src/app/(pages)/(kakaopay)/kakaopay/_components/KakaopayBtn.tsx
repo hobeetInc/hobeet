@@ -1,15 +1,22 @@
 "use client";
 
+import { useAuth } from "@/app/store/AuthContext";
 import { useState } from "react";
 
-export default function PaymentButton({ amount, itemName }: { amount: number; itemName: string }) {
+interface PaymentButtonProps {
+  clubType: boolean;
+  clubId: number;
+}
+
+const PaymentButton = ({ clubType, clubId }: PaymentButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { userId } = useAuth();
 
   const onClickKakaopayBtn = async () => {
     try {
       setIsLoading(true);
-      const orderId = `ORDER_${Date.now()}`;
-      const userId = "d274d871-f8b4-44fb-b620-c2cf2ac50e12";
+      const orderId = `${clubId}`;
+      const requestUserId = `${userId}`;
 
       const response = await fetch("/api/payment", {
         method: "POST",
@@ -17,10 +24,10 @@ export default function PaymentButton({ amount, itemName }: { amount: number; it
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          amount,
-          itemName,
           orderId,
-          userId
+          requestUserId,
+          clubType,
+          clubId
         })
       });
 
@@ -51,4 +58,6 @@ export default function PaymentButton({ amount, itemName }: { amount: number; it
       {isLoading ? "처리중..." : "카카오페이로 결제하기"}
     </button>
   );
-}
+};
+
+export default PaymentButton;
