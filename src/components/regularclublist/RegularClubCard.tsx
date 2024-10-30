@@ -10,9 +10,11 @@ interface RegularClubCardProps {
 
 export const RegularClubCard = ({ club }: RegularClubCardProps) => {
   const [creator, setCreator] = useState<User | null>(null);
+  const [memberCount, setMemberCount] = useState<number>(0);
 
   useEffect(() => {
     fetchCreator();
+    fetchMemberCount();
   }, []);
 
   const fetchCreator = async () => {
@@ -25,6 +27,16 @@ export const RegularClubCard = ({ club }: RegularClubCardProps) => {
     setCreator(data);
   };
 
+  const fetchMemberCount = async () => {
+    const { data } = await supabase
+      .from("r_c_member")
+      .select("*", { count: "exact" })
+      .eq("r_c_id", club.regular_club_id)
+      .eq("regular_club_request_status", "active");
+
+    setMemberCount(data?.length || 0);
+  };
+
   return (
     <div className="flex items-start p-4 border rounded-lg shadow-sm">
       <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden">
@@ -35,7 +47,7 @@ export const RegularClubCard = ({ club }: RegularClubCardProps) => {
         <div className="text-sm text-gray-500">클럽(정기적)모임</div>
         <h3 className="text-lg font-semibold mt-1">{club.regular_club_name}</h3>
         <div className="text-sm text-gray-600 mt-1">
-          {creator?.user_name} • {club.approved_members?.length || 0} / {club.regular_club_people_limited}명
+          {creator?.user_name} • {memberCount} / {club.regular_club_people_limited}명
         </div>
       </div>
     </div>
