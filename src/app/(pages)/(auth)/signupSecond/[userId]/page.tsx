@@ -96,7 +96,6 @@ const SignupSecondPage = () => {
   }, [birthYear, birthMonth, birthDay]);
 
   useEffect(() => {
-    // 생년월일 선택 시 에러 메시지 제거
     if (birthYear && birthMonth && birthDay) {
       setBirthDateError("");
     }

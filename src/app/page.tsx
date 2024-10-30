@@ -5,6 +5,7 @@ import { useAuthStore } from "./store/authStore";
 import { createClient } from "@/utils/supabase/client";
 import { CreateChatRoom } from "./(pages)/(chat)/_components/ChatRoom";
 import { ChatRoomRecruiterEntrance } from "./(pages)/(chat)/_components/ChatRoomRecruiterEntrance";
+import PaymentButton from "./(pages)/(kakaopay)/kakaopay/_components/KakaopayBtn";
 
 export default function Home() {
   const reset = useAuthStore((state) => state.reset);
@@ -39,6 +40,7 @@ export default function Home() {
       </Link>
       <button onClick={handleCreateChattingRoom}>채팅방 생성</button>
       <button onClick={handleChattingRoom}>채팅방 입장</button>
+      <PaymentButton amount={10000} itemName="모임비" />
     </>
   );
 }
