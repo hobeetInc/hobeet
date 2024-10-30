@@ -13,22 +13,22 @@ type User = {
 };
 
 type Message = {
-  r_c_n_chatting_message_id: number;
-  r_c_n_chatting_id: number;
-  r_c_n_chatting_room_id: number;
-  r_c_member_id: number;
-  r_c_id: number;
+  one_time_club_chatting_room_message_id: number;
+  one_time_club_chatting_room_member_id: number;
+  one_time_club_chatting_room_id: number;
+  one_time_club_member_id: number;
+  one_time_club_id: number;
   user: User;
   user_id: string;
-  r_c_n_chatting_message_content: string;
-  r_c_n_chatting_message_create_at: string;
+  one_time_club_chatting_room_message_content: string;
+  created_at: string;
 };
 
 type ChatInfo = {
-  r_c_n_chatting_id: number;
-  r_c_member_id: number;
-  r_c_id: number;
-  chat_room_entry_time: string;
+  one_time_club_chatting_room_member_id: number;
+  one_time_member_id: number;
+  one_time_club_id: number;
+  created_at: string;
 };
 
 const supabase = createClient();
@@ -52,14 +52,13 @@ const ChatPage: React.FC = () => {
     }
   });
 
-  // r_c_id 조회
   const { data: rec, isSuccess: isRecFetched } = useQuery({
-    queryKey: ["r_c_id", roomId],
+    queryKey: ["o_t_c_id", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("r_c_n_chatting")
-        .select("r_c_id")
-        .eq("r_c_n_chatting_room_id", roomId)
+        .from("one_time_club_chatting_room_member")
+        .select("one_time_club_id")
+        .eq("one_time_club_chatting_room_id", roomId)
         .limit(1);
       if (error) throw error;
       return data ? data[0] : null;
@@ -67,15 +66,14 @@ const ChatPage: React.FC = () => {
     enabled: !!roomId && isUserFetched
   });
 
-  // r_c_member_id 조회
   const { data: memberData } = useQuery({
-    queryKey: ["memberData", currentUser?.id],
+    queryKey: ["oneTimeMemberData", currentUser?.id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("r_c_member")
-        .select("r_c_member_id")
+        .from("o_t_c_member")
+        .select("o_t_c_member_id")
         .eq("user_id", currentUser?.id)
-        .eq("r_c_id", rec?.r_c_id)
+        .eq("o_t_c_id", rec?.one_time_club_id)
         .single();
 
       if (error) throw error;
@@ -84,15 +82,14 @@ const ChatPage: React.FC = () => {
     enabled: !!currentUser?.id && isRecFetched
   });
 
-  // 채팅방 정보 조회
   const { data: chatInfo } = useQuery<ChatInfo>({
-    queryKey: ["chatInfo", roomId],
+    queryKey: ["oneTimeChatInfo", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("r_c_n_chatting")
-        .select(`*, r_c_n_chatting_room (*)`)
-        .eq("r_c_n_chatting_room_id", roomId)
-        .eq("r_c_member_id", memberData?.r_c_member_id)
+        .from("one_time_club_chatting_room_member")
+        .select(`*, one_time_club_chatting_room (*)`)
+        .eq("one_time_club_chatting_room_id", roomId)
+        .eq("one_time_member_id", memberData?.o_t_c_member_id)
         .single();
 
       if (error) throw error;
@@ -103,24 +100,24 @@ const ChatPage: React.FC = () => {
   // console.log(chatInfo?.chat_room_entry_time);
 
   // 메시지 목록 조회
-  const { data: messages = [], isLoading: isLoadingMessages } = useQuery<Message[]>({
-    queryKey: ["messages", roomId, chatInfo?.chat_room_entry_time],
+  const { data: oneTimeMessages = [], isLoading: isLoadingMessages } = useQuery<Message[]>({
+    queryKey: ["oneTimeMessages", roomId, chatInfo?.created_at],
     queryFn: async () => {
-      if (!chatInfo?.chat_room_entry_time) {
+      if (!chatInfo?.created_at) {
         throw new Error("채팅방 입장 시간이 없습니다.");
       }
 
       const { data, error } = await supabase
-        .from("r_c_n_chatting_message")
+        .from("one_time_club_chatting_room_message")
         .select(`*, user:user_id(*)`)
-        .eq("r_c_n_chatting_room_id", roomId)
-        .gte("r_c_n_chatting_message_create_at", chatInfo.chat_room_entry_time)
-        .order("r_c_n_chatting_message_create_at", { ascending: true });
+        .eq("one_time_club_chatting_room_id", roomId)
+        .gte("created_at", chatInfo.created_at)
+        .order("created_at", { ascending: true });
 
       if (error) throw error;
       return data || [];
     },
-    enabled: !!roomId && !!chatInfo?.chat_room_entry_time
+    enabled: !!roomId && !!chatInfo?.created_at
   });
 
   // 스크롤을 맨 아래로 이동시키는 함수
@@ -131,21 +128,21 @@ const ChatPage: React.FC = () => {
   // 새 메시지가 추가될 때마다 스크롤 맨 아래로 이동
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [oneTimeMessages]);
 
   // 메시지 전송 무테이션
   const sendMessageMutation = useMutation({
     mutationFn: async (messageContent: string) => {
       if (!chatInfo || !currentUser) throw new Error("전송실패실패실패");
 
-      const { error } = await supabase.from("r_c_n_chatting_message").insert([
+      const { error } = await supabase.from("one_time_club_chatting_room_message").insert([
         {
-          r_c_n_chatting_room_id: roomId,
+          one_time_club_chatting_room_id: roomId,
           user_id: currentUser.id,
-          r_c_n_chatting_id: chatInfo.r_c_n_chatting_id,
-          r_c_member_id: chatInfo.r_c_member_id,
-          r_c_id: chatInfo.r_c_id,
-          r_c_n_chatting_message_content: messageContent
+          one_time_club_chatting_room_member_id: chatInfo.one_time_club_chatting_room_member_id,
+          one_time_club_member_id: chatInfo.one_time_member_id,
+          one_time_club_id: chatInfo.one_time_club_id,
+          one_time_club_chatting_room_message_content: messageContent
         }
       ]);
 
@@ -153,7 +150,7 @@ const ChatPage: React.FC = () => {
     },
     onSuccess: () => {
       setNewMessage("");
-      queryClient.invalidateQueries({ queryKey: ["messages", roomId] });
+      queryClient.invalidateQueries({ queryKey: ["oneTimeMessages", roomId] });
     }
   });
 
@@ -168,8 +165,8 @@ const ChatPage: React.FC = () => {
         {
           event: "INSERT",
           schema: "public",
-          table: "r_c_n_chatting_message",
-          filter: `r_c_n_chatting_room_id=eq.${roomId}`
+          table: "one_time_club_chatting_room_message",
+          filter: `one_time_club_chatting_room_id=eq.${roomId}`
         },
         () => {
           queryClient.invalidateQueries({ queryKey: ["messages", roomId] });
@@ -193,7 +190,7 @@ const ChatPage: React.FC = () => {
 
   const groupMessagesByDate = (messages: Message[]) => {
     return messages.reduce((acc: { [date: string]: Message[] }, message) => {
-      const date = new Date(message.r_c_n_chatting_message_create_at);
+      const date = new Date(message.created_at);
       const dateString = date.toLocaleDateString("ko-KR", {
         year: "numeric",
         month: "long",
@@ -210,7 +207,7 @@ const ChatPage: React.FC = () => {
     }, {});
   };
 
-  const groupedMessages = groupMessagesByDate(messages);
+  const groupedMessages = groupMessagesByDate(oneTimeMessages);
 
   const handleSendMessage = () => {
     if (newMessage.trim() === "") return;
@@ -231,12 +228,12 @@ const ChatPage: React.FC = () => {
               <div key={dateString} className="mb-6">
                 <div className="text-[10px] mb-2 text-center">{dateString}</div>
                 {groupedMessages[dateString].map((message: Message) => {
-                  const date = new Date(message.r_c_n_chatting_message_create_at);
+                  const date = new Date(message.created_at);
                   const isCurrentUser = message.user.user_id === currentUser?.id;
 
                   return (
                     <div
-                      key={message.r_c_n_chatting_message_id}
+                      key={message.one_time_club_chatting_room_message_id}
                       className={`flex items-start mb-4 ${isCurrentUser ? "justify-end" : "justify-start"}`}
                     >
                       <div className={`flex flex-col ${isCurrentUser ? "items-end" : "items-start"}`}>
@@ -255,16 +252,32 @@ const ChatPage: React.FC = () => {
                               />
                             </div>
                           )}
-                          <div className="max-w-xs break-words p-3 rounded-[16px] bg-[#d9d9d9] text-gray-900">
-                            <p>{message.r_c_n_chatting_message_content}</p>
+                          {isCurrentUser && (
+                            <span className="text-xs text-gray-500 block self-end	mr-1">
+                              {date.toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: false
+                              })}
+                            </span>
+                          )}
+
+                          <div
+                            className={`max-w-xs break-words p-3 rounded-[16px] ${
+                              isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2]"
+                            } text-gray-900`}
+                          >
+                            <p className="max-w-[150px]">{message.one_time_club_chatting_room_message_content}</p>
                           </div>
-                          <span className="text-xs text-gray-500 block mt-4">
-                            {date.toLocaleTimeString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                              hour12: false
-                            })}
-                          </span>
+                          {!isCurrentUser && (
+                            <span className="text-xs text-gray-500 block self-end ml-1	">
+                              {date.toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: false
+                              })}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>

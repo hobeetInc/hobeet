@@ -127,10 +127,10 @@ export class SupabaseClubAPI {
 
   validateGenderRestriction(userGender: string, clubGender: string): void {
     if (clubGender !== null) {
-      if (clubGender === "남자만" && userGender !== "male") {
+      if (clubGender === "남성" && userGender !== "남성") {
         throw new ClubJoinError("남성만 참여 가능한 모임입니다.");
       }
-      if (clubGender === "여자만" && userGender !== "female") {
+      if (clubGender === "여성" && userGender !== "여성") {
         throw new ClubJoinError("여성만 참여 가능한 모임입니다.");
       }
     }
