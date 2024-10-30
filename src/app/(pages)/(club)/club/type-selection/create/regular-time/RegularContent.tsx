@@ -10,22 +10,21 @@ import ClubTitle from "../../../_components/regularClub/ClubTitle";
 import MemberType from "../../../_components/regularClub/MemberType";
 import ApplicationMethod from "../../../_components/regularClub/ApplicationMethod";
 import { REGULAR_CLUB_CREATE } from "../../../_utils/localStorage";
-
-// 임시 유저 아이디
-const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
+import { useAuth } from "@/app/store/AuthContext";
 
 const RegularContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { userId } = useAuth();
 
   // 초기값 설정 시 localStorage 데이터를 먼저 확인
   const getInitialData = () => {
     try {
       const savedData = localStorage.getItem(REGULAR_CLUB_CREATE);
-      if (savedData) {
+      if (savedData && userId) {
         const data = JSON.parse(savedData);
         return {
-          formData: data.formData,
+          formData: { ...data.formData, user_id: userId },
           selectedGender: data.selectedGender,
           selectedAge: data.selectedAge
         };
@@ -67,6 +66,11 @@ const RegularContent = () => {
   const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedAge);
   const [formData, setFormData] = useState<RegularClubForm>(initialData.formData);
+
+  // 폼데이터 확인용
+  useEffect(() => {
+    console.log("폼:", formData);
+  }, [formData]);
 
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
@@ -181,7 +185,7 @@ const RegularContent = () => {
       // router.push("/success-page"); 원하는 페이지로 이동
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
-      alert("일회성 모임 생성 중 오류가 발생했습니다.");
+      alert("정기적 모임 생성 중 오류가 발생했습니다.");
     }
   };
 
