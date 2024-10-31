@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { OneTimeClubForm } from "../../../_types/ClubForm";
-import { submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
+import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
 import Category from "../../../_components/oneTimeClub/Category";
 // 컴포넌트 임포트
 import ImageUpload from "../../../_components/oneTimeClub/ImageUpload";
@@ -13,6 +13,7 @@ import Tax from "../../../_components/oneTimeClub/Tax";
 import ClubTitle from "../../../_components/oneTimeClub/ClubTitle";
 import { ONETIME_CLUB_CREATE } from "../../../_utils/localStorage";
 import { useAuth } from "@/app/store/AuthContext";
+import { OneTimeClubChatRoom } from "@/app/(pages)/(chat)/_components/oneTimeClub/OneTimeClubChatRoom";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -204,12 +205,22 @@ const OneTimeContent = () => {
       }
 
       // 슈퍼베이스에 데이터 저장
-      await submitOneTimeClubData(finalFormData);
+      const data = await submitOneTimeClubData(finalFormData);
+
+      const member = {
+        o_t_c_id: data.one_time_club_id,
+        user_id: data.user_id
+      };
+      console.log("맴버", member);
+
+      await putOneTimeMember(member);
+      // 모임장 채팅방 생성 및 입장
+      await OneTimeClubChatRoom(data.one_time_club_name, data.one_time_club_id, userId);
       alert("일회성 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(ONETIME_CLUB_CREATE);
       // 다른 페이지로 이동
-      // router.push("/success-page"); 원하는 페이지로 이동
+      router.push(`/club/${data.one_time_club_id}`);
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       alert("일회성 모임 생성 중 오류가 발생했습니다.");

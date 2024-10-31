@@ -4,9 +4,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { ko } from "date-fns/locale";
-import { CategoryProps } from "../../_types/ClubForm";
+import { OneTimeProps } from "../../_types/ClubForm";
 
-const DateTime = ({ formData, setFormData }: CategoryProps) => {
+const DateTime = ({ formData, setFormData }: OneTimeProps) => {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
 
   const handleColor = (time: Date) => {
@@ -19,7 +19,7 @@ const DateTime = ({ formData, setFormData }: CategoryProps) => {
 
     if (date) {
       // 9시간을 더해서 저장(시간 보정)
-      const utcDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+      const utcDate = new Date(date.getTime());
       setFormData({
         ...formData,
         one_time_club_date_time: utcDate.toISOString() // toISOString()하면 아홉시간 빠지게 됨

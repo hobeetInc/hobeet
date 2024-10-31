@@ -17,11 +17,10 @@ interface LayoutProps {
 type ChattingMember = {
   active: boolean;
   admin: boolean;
-  r_c_id: number;
-  r_c_member_id: {
-    r_c_id: number;
-    r_c_member_id: number;
-    regular_club_request_status: string;
+  one_time_club_id: number;
+  one_time_member_id: {
+    o_t_c_id: number;
+    o_t_c_member_id: number;
     user_id: {
       user_age: number;
       user_create_at: string;
@@ -32,25 +31,25 @@ type ChattingMember = {
       user_profile_img: string;
       user_roletype: boolean;
     };
-    r_c_n_chatting_id: number;
-    r_c_n_chatting_room_id: number;
+    one_time_club_chatting_room_member_id: number;
+    one_time_club_chatting_room_id: number;
   };
 };
 
 function ChatHeader() {
-  const { roomName, isLoading, r_c_n_chatting_id, regular_club_id } = useChatContext();
+  const { roomName, isLoading, one_time_club_chatting_room_id, one_time_club_id } = useChatContext();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ChattingMember, setChattingMember] = useState<ChattingMember[]>();
   // console.log(regular_club_id);
   useEffect(() => {
     const supabase = createClient();
-    if (regular_club_id) {
+    if (one_time_club_id) {
       const fetchRegularClubId = async () => {
         const { data, error } = await supabase
-          .from("r_c_n_chatting")
-          .select(`* , r_c_member_id(* , user_id(*))`)
-          .eq("r_c_id", regular_club_id)
+          .from("one_time_club_chatting_room_member")
+          .select(`* , one_time_member_id(* , user_id(*))`)
+          .eq("one_time_club_id", one_time_club_id)
           .eq("active", true);
         if (error) {
           console.error(error);
@@ -61,7 +60,7 @@ function ChatHeader() {
       };
       fetchRegularClubId();
     }
-  }, [regular_club_id]);
+  }, [one_time_club_id]);
 
   // console.log(ChattingMember);
 
@@ -71,8 +70,8 @@ function ChatHeader() {
 
   const handleChatRoomExit = async () => {
     if (confirm("정말로 채팅방을 나가겠습니까? 채팅방을 나가면 다시 들어올수없습니다.")) {
-      if (r_c_n_chatting_id) {
-        const res = await ChatRoomExit(r_c_n_chatting_id);
+      if (one_time_club_chatting_room_id) {
+        const res = await ChatRoomExit(one_time_club_chatting_room_id, false);
 
         if (res === null) {
           router.replace("/chat");
@@ -112,19 +111,19 @@ function ChatHeader() {
                   <div className="w-full text-left py-2 px-4 rounded-md">참여자 정보</div>
                 </li>
                 {ChattingMember?.map((member) => (
-                  <li key={member.r_c_member_id.r_c_member_id}>
+                  <li key={member.one_time_member_id.o_t_c_member_id}>
                     <div className="flex items-center justify-between py-2 px-4 rounded-md">
                       <div className="flex items-center">
                         <div className="w-8 h-8 overflow-hidden rounded-full mr-2">
                           <Image
-                            src={member.r_c_member_id.user_id.user_profile_img}
+                            src={member.one_time_member_id.user_id.user_profile_img}
                             alt="프로필 이미지"
                             width={40}
                             height={40}
                             className="rounded-full"
                           />
                         </div>
-                        <span>{member.r_c_member_id.user_id.user_name}</span>
+                        <span>{member.one_time_member_id.user_id.user_name}</span>
                       </div>
                       {member.admin && <span className="text-sm text-gray-500">모임장</span>}
                     </div>

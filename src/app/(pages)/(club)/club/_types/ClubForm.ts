@@ -28,7 +28,7 @@ export interface SubCategory {
   s_c_name: string;
 }
 
-export type CategoryProps = {
+export type OneTimeProps = {
   formData: OneTimeClubForm;
   setFormData: React.Dispatch<SetStateAction<OneTimeClubForm>>;
 };
@@ -51,3 +51,25 @@ export type RegularProps = {
   formData: RegularClubForm;
   setFormData: React.Dispatch<SetStateAction<RegularClubForm>>;
 };
+
+// 정기적 모임 참가자 요청 테이블
+export interface RegularRequest {
+  r_c_id: number;
+  user_id: string;
+  r_c_participation_request_status: string;
+  r_c_participation_request_approved_date: string;
+}
+
+// 정기적 모임 참가자 맴버 테이블
+export interface RegularMember {
+  user_id: string;
+  r_c_id: number;
+  r_c_participation_request_id: number;
+  regular_club_request_status: string;
+}
+
+// 일회성 모임 참가자 맴버 테이블
+export interface OneTimeMember {
+  o_t_c_id: number;
+  user_id: string;
+}

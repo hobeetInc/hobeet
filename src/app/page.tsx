@@ -1,49 +1,28 @@
 "use client";
-
-import Link from "next/link";
+import { useEffect } from "react";
 import { useAuthStore } from "./store/authStore";
-import { createClient } from "@/utils/supabase/client";
-import { CreateChatRoom } from "./(pages)/(chat)/_components/ChatRoom";
-import { ChatRoomRecruiterEntrance } from "./(pages)/(chat)/_components/ChatRoomRecruiterEntrance";
-import { useAuth } from "./store/AuthContext";
+import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./(pages)/(club)/club/_utils/localStorage";
 import CreateButton from "./(pages)/(club)/club/_components/CreateButton";
+import RegularClubList from "./(pages)/(club)/club/_components/RegularClubList";
+import OneTimeClubList from "./(pages)/(club)/club/_components/OneTimeClubList";
 
 export default function Home() {
-  const { userId } = useAuth();
-
   const reset = useAuthStore((state) => state.reset);
-  const handleLogout = async () => {
-    const supabase = createClient();
-    const { error } = await supabase.auth.signOut();
-    reset();
-    if (error) {
-      console.log(error);
-      return;
-    } else {
-      alert("지웠음");
-    }
-  };
 
-  const handleCreateChattingRoom = () => {
-    CreateChatRoom("으아아아아", 3);
-  };
-
-  const handleChattingRoom = async () => {
-    ChatRoomRecruiterEntrance({ r_c_id: 3 });
-  };
+  useEffect(() => {
+    localStorage.removeItem(ONETIME_CLUB_CREATE);
+    localStorage.removeItem(REGULAR_CLUB_CREATE);
+  }, []);
 
   return (
-    <>
-      <div>홈 입니다.</div>
-      <button className="bg-gray-400" onClick={handleLogout}>
-        로그아웃
-      </button>
-      <Link className="bg-gray-400 ml-4" href={"/signin"}>
-        로그인
-      </Link>
-      <button onClick={handleCreateChattingRoom}>채팅방 생성</button>
-      <button onClick={handleChattingRoom}>채팅방 입장</button>
-      {userId && <CreateButton />}
-    </>
+    <div>
+      <div className="container bg-gray-200 flex justify-end">
+        <CreateButton />
+      </div>
+      <div className="container">
+        <RegularClubList />
+        <OneTimeClubList />
+      </div>
+    </div>
   );
 }

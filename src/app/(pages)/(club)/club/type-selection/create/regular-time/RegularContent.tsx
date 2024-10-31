@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { RegularClubForm } from "../../../_types/ClubForm";
 import { useRouter, useSearchParams } from "next/navigation";
-import { submitRegularClubData, uploadImage } from "../../../_api/supabase";
+import { putRegularMember, putRepresentative, submitRegularClubData, uploadImage } from "../../../_api/supabase";
 import Category from "../../../_components/regularClub/Category";
 import ImageUpload from "../../../_components/regularClub/ImageUpload";
 import ClubTitle from "../../../_components/regularClub/ClubTitle";
@@ -11,6 +11,7 @@ import MemberType from "../../../_components/regularClub/MemberType";
 import ApplicationMethod from "../../../_components/regularClub/ApplicationMethod";
 import { REGULAR_CLUB_CREATE } from "../../../_utils/localStorage";
 import { useAuth } from "@/app/store/AuthContext";
+import { RegularClubChatRoom } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoom";
 
 const RegularContent = () => {
   const router = useRouter();
@@ -177,7 +178,31 @@ const RegularContent = () => {
         };
       }
       // 슈퍼베이스에 데이터 저장
-      await submitRegularClubData(finalFormData);
+      const data = await submitRegularClubData(finalFormData);
+      // console.log(data);
+
+      const representive = {
+        r_c_id: data.regular_club_id,
+        user_id: data.user_id,
+        r_c_participation_request_status: "active",
+        r_c_participation_request_approved_date: new Date().toISOString()
+      };
+
+      // 승인 테이블에 넣기
+      const res = await putRepresentative(representive);
+
+      const member = {
+        user_id: data.user_id,
+        r_c_id: data.regular_club_id,
+        r_c_participation_request_id: res.r_c_participation_request_id,
+        regular_club_request_status: "active"
+      };
+
+      // 승인된 맴버 테이블에 넣기
+      await putRegularMember(member);
+      // 모임장 채팅방 생성 및 입장
+      await RegularClubChatRoom(data.regular_club_name, data.regular_club_id, userId);
+
       alert("정기적 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(REGULAR_CLUB_CREATE);

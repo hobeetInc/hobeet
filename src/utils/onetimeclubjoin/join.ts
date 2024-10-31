@@ -109,6 +109,7 @@
 // };
 
 import { SupabaseClubAPI, ClubJoinError } from "./_api/supabase";
+import { OneTimeClubChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/oneTimeClub/OneTimeClubChatRoomRecruiterEntrance";
 
 type OneTimeClubJoinParams = {
   clubId: number;
@@ -149,7 +150,7 @@ export const oneTimeClubJoin = async ({ clubId, userId }: OneTimeClubJoinParams)
 
     // 회원 추가
     await clubAPI.insertMember(clubId, userId);
-
+    await OneTimeClubChatRoomRecruiterEntrance({ one_time_club_id: clubId });
     return {
       success: true,
       message: "모임 가입이 완료 되었습니다."
