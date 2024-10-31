@@ -17,7 +17,7 @@ export default function Header({ className }: HeaderProps) {
       </Link>
 
       <div className="flex items-center ml-auto space-x-[16px] mr-[12px] mt-[12px] mb-[12px]">
-        <Link href="/club/type-selection">
+        <Link href="/club">
           <Image src={"/asset/PlusIcon.png"} alt="PlusIcon" width={24} height={24} />
         </Link>
         <Image src={"/asset/BellIcon.png"} alt="BellIcon" width={24} height={24} />
