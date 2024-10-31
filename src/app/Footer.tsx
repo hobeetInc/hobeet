@@ -1,16 +1,22 @@
-// Footer.tsx
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function Footer() {
+type FooterProps = {
+  className?: string;
+};
+
+export default function Footer({ className }: FooterProps) {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
-    <footer className="flex w-[390px] p-[8px 16px 0px 16px] justify-between items-center border-t border-solid border-[1px] border-[#F2F2F2] bg-[#fff]">
+    <footer
+      className={`flex w-[390px] p-[8px 16px 0px 16px] justify-between items-center border-t border-solid border-[1px] border-[#F2F2F2] bg-[#fff] ${
+        className || ""
+      }`}
+    >
       <div className="flex justify-around w-full">
         <Link href="/">
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">

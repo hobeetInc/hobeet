@@ -1,28 +1,25 @@
 "use client";
-import { useEffect } from "react";
-import { useAuthStore } from "./store/authStore";
-import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./(pages)/(club)/club/_utils/localStorage";
-import CreateButton from "./(pages)/(club)/club/_components/CreateButton";
-import RegularClubList from "./(pages)/(club)/club/_components/RegularClubList";
-import OneTimeClubList from "./(pages)/(club)/club/_components/OneTimeClubList";
+import Image from "next/image";
+import CategorySlider from "@/components/CategorySlider";
 
 export default function Home() {
-  const reset = useAuthStore((state) => state.reset);
-
-  useEffect(() => {
-    localStorage.removeItem(ONETIME_CLUB_CREATE);
-    localStorage.removeItem(REGULAR_CLUB_CREATE);
-  }, []);
-
   return (
-    <div>
-      <div className="container bg-gray-200 flex justify-end">
-        <CreateButton />
+    <div className="w-full">
+      <div className="flex justify-center items-center">
+        <div className="w-[358px] h-[295px] flex-shrink-0 rounded-[18px] bg-[#d9d9d9] overflow-hidden">
+          <Image
+            src={"/asset/MainBanner.jpg"}
+            alt="MainBanner"
+            width={358}
+            height={295}
+            className="rounded-[18px] object-cover"
+          />
+        </div>
       </div>
-      <div className="container">
-        <RegularClubList />
-        <OneTimeClubList />
+      <div className="flex w-[358px] flex-col items-start gap-[8px]">
+        <p className="text-[18px] not-italic	font-semibold leading-[135%]">이런 모임 어때요?</p>
       </div>
+      <CategorySlider />
     </div>
   );
 }

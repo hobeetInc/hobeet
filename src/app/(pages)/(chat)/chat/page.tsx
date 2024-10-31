@@ -17,7 +17,7 @@ const ChatPage = () => {
           </aside>
         </div>
       </div>
-      <div className="flex bg-[#D9D9D9] w-[390px] h-[90px] justify-center items-center">광고배너</div>
+
       <div className="grid grid-cols-2 w-[370px] h-[70px]">
         <button
           type="button"

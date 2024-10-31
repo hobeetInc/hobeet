@@ -29,7 +29,6 @@ const TypeSelectionPage = () => {
 
   return (
     <div className="container">
-      <div className="h-[48px] bg-pink-100">헤더 공간</div>
       <div className="m-4 flex flex-col gap-7">
         <button onClick={handleBack} className="w-6 h-6 border-black border-2">
           뒤

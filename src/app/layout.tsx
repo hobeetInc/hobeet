@@ -37,10 +37,10 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AuthProvider>
           <Providers>
-            <div className="flex flex-col w-[390px] h-[844px]">
-              <Header />
-              <main className="flex-grow">{children}</main>
-              <Footer />
+            <div className="fixed flex flex-col w-[390px] h-[844px] bg-white">
+              <Header className="w-full h-[48px] flex-shrink-0" />
+              <main className="flex-1 overflow-y-auto h-[739px]">{children}</main>
+              <Footer className="w-full flex-shrink-0" />
             </div>
           </Providers>
         </AuthProvider>
