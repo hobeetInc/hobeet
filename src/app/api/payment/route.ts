@@ -55,8 +55,8 @@ export async function POST(req: Request) {
         total_amount: amount,
         tax_free_amount: 0,
         approval_url: `http://localhost:3000/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
-        cancel_url: "http://localhost:3000/kakaopay/cancel",
-        fail_url: "http://localhost:3000/kakaopay/fail"
+        cancel_url: "http://localhost:3000/",
+        fail_url: "http://localhost:3000/"
       })
     });
 

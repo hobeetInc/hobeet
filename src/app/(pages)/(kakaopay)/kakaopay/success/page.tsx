@@ -1,8 +1,10 @@
 "use client";
 
+import { useAuth } from "@/app/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import { addHours, format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
 
 type OneTimeClubPay = {
@@ -29,9 +31,9 @@ type RegularClubData = {
   r_c_notification_name: string;
   r_c_notification_location: string;
   r_c_notification_date_time: string;
-  regular_club: {
-    regular_club_image: string | null;
-    category: {
+  r_c_notification_image: string;
+  r_c_id: {
+    m_c_id: {
       m_c_name: string;
     };
   };
@@ -42,6 +44,7 @@ const PaymentSuccesspage = () => {
   const [regularClubPayData, setRegularClubPayData] = useState<RegularClubPay | null>(null);
   const [oneTimeClubData, setOneTimeClubData] = useState<OneTimeClubData | null>();
   const [regularClubData, setRegularClubData] = useState<RegularClubData | null>();
+  const [paymentAmount, setPaymentAmount] = useState(null);
   const [queryParams, setQueryParams] = useState<{
     requestUserId: string | null;
     clubId: string | null;
@@ -54,6 +57,7 @@ const PaymentSuccesspage = () => {
     pgToken: null
   });
   const supabase = browserClient;
+  const { userName } = useAuth();
   const searchParams = useSearchParams();
 
   // 쿼리파라미터 추출
@@ -85,7 +89,7 @@ const PaymentSuccesspage = () => {
             .select(
               "one_time_club_name, one_time_club_location, one_time_club_date_time, one_time_image, m_c_id, m_category:m_c_id(m_c_name)"
             )
-            .eq("one_time_club_id", clubId)
+            .eq("one_time_club_id", parseInt(clubId))
             .single();
 
           if (oneTimeClubFetchError || !oneTimeClubFetchData) {
@@ -103,14 +107,13 @@ const PaymentSuccesspage = () => {
                 r_c_notification_name,
                 r_c_notification_location,
                 r_c_notification_date_time,
-                r_c_id,
-                regular_club:r_c_id (
-                  regular_club_image,
-                  category:m_c_id (m_c_name)
+                r_c_notification_image,
+                r_c_id (
+                  m_c_id (m_c_name)
                 )
               `
             )
-            .eq("r_c_notification_id", clubId)
+            .eq("r_c_notification_id", parseInt(clubId))
             .single();
 
           if (regularClubFetchError || !regularClubFetchData) {
@@ -118,16 +121,19 @@ const PaymentSuccesspage = () => {
             return;
           }
 
-          const formattedData = {
-            ...regularClubFetchData,
-            regular_club: {
-              regular_club_image: regularClubFetchData.regular_club[0]?.regular_club_image || null,
-              category: regularClubFetchData.regular_club[0]?.category[0] || null
+          const formattedData: RegularClubData = {
+            r_c_notification_name: regularClubFetchData.r_c_notification_name,
+            r_c_notification_location: regularClubFetchData.r_c_notification_location,
+            r_c_notification_date_time: regularClubFetchData.r_c_notification_date_time,
+            r_c_notification_image: regularClubFetchData.r_c_notification_image,
+            r_c_id: {
+              m_c_id: {
+                m_c_name: regularClubFetchData.r_c_id[0]?.m_c_id[0]?.m_c_name || ""
+              }
             }
           };
 
           setRegularClubData(formattedData);
-          console.log(regularClubFetchData);
         }
       } catch (err) {
         console.log(err);
@@ -194,7 +200,6 @@ const PaymentSuccesspage = () => {
   }, [queryParams]);
 
   // 결제승인
-  /*
   useEffect(() => {
     const fetchApproveData = async () => {
       try {
@@ -240,7 +245,6 @@ const PaymentSuccesspage = () => {
       fetchApproveData();
     }
   }, [queryParams, oneTimeClubPayData, regularClubPayData]);
-  */
 
   // 주문조회
   useEffect(() => {
@@ -268,6 +272,7 @@ const PaymentSuccesspage = () => {
         }
 
         const orderData = await response.json();
+        setPaymentAmount(orderData.amount.total);
         console.log(orderData);
       } catch (err) {
         console.error("결제 정보를 불러오는 중 오류가 발생했습니다.", err);
@@ -277,18 +282,34 @@ const PaymentSuccesspage = () => {
     fetchOrderData();
   }, [oneTimeClubPayData, regularClubPayData]);
 
-  //const clubData = queryParams.clubType === "true" ? oneTimeClubData : regularClubData;
+  const customAddress = (address: string) => {
+    const withoutNumber = address.replace(/\[\d+\]\s*/, "");
+    const parts = withoutNumber.split(" ");
+    return parts.slice(0, 2).join(" ");
+  };
+
+  const customDate = (dateString: string | null | undefined) => {
+    if (!dateString) {
+      return "날짜 정보 없음";
+    }
+
+    try {
+      const parsedDate = parseISO(dateString);
+      const adjustedDate = addHours(parsedDate, 9);
+      return format(adjustedDate, "yy년 MM월 dd일 HH:mm");
+    } catch (error) {
+      console.error("Invalid date format:", dateString, error);
+      return "유효하지 않은 날짜 형식";
+    }
+  };
+
   const clubImageUrl =
-    (queryParams.clubType === "true"
-      ? oneTimeClubData?.one_time_image
-      : regularClubData?.regular_club?.regular_club_image) || "";
+    (queryParams.clubType === "true" ? oneTimeClubData?.one_time_image : regularClubData?.r_c_notification_image) || "";
 
   return (
     <div className="font-sans p-5 max-w-md mx-auto">
       <h2 className="text-center text-lg font-bold mb-2">주문완료</h2>
-      <p className="text-center text-gray-600 mb-1">
-        모임 참여 신청이 완료됐어요! 모임장이 승인을 완료해야 참여할 수 있어요
-      </p>
+      <p className="text-center text-gray-600 mb-1">모임 참여 신청이 완료됐어요!</p>
 
       <div className="border-b border-gray-200 my-4"></div>
 
@@ -298,7 +319,7 @@ const PaymentSuccesspage = () => {
           <div className="text-xs text-gray-400">
             {queryParams.clubType === "true"
               ? oneTimeClubData?.m_category?.m_c_name
-              : regularClubData?.regular_club?.category.m_c_name}
+              : regularClubData?.r_c_id.m_c_id.m_c_name}
           </div>
           <div className="text-base font-semibold">
             {queryParams.clubType === "true"
@@ -307,32 +328,28 @@ const PaymentSuccesspage = () => {
           </div>
           <div className="text-xs text-gray-600">
             {queryParams.clubType === "true"
-              ? oneTimeClubData?.one_time_club_location
-              : regularClubData?.r_c_notification_location}
+              ? customAddress(oneTimeClubData?.one_time_club_location || "주소 정보 없음")
+              : customAddress(regularClubData?.r_c_notification_location || "주소 정보 없음")}
           </div>
           <div className="text-xs text-gray-600">
             {queryParams.clubType === "true"
-              ? oneTimeClubData?.one_time_club_date_time
-              : regularClubData?.r_c_notification_date_time}
+              ? customDate(oneTimeClubData?.one_time_club_date_time || "닐짜 정보 없음")
+              : customDate(regularClubData?.r_c_notification_date_time || "닐짜 정보 없음")}
           </div>
         </div>
       </div>
 
       <div className="border-t border-gray-200 py-4">
         <div className="flex justify-between mb-2">
-          <span className="text-sm text-gray-600">닉네임</span>
-          <span className="text-sm font-semibold">호빗이</span>
+          <span className="text-sm text-gray-600">이름</span>
+          <span className="text-sm font-semibold">{userName}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span className="text-sm text-gray-600">결제 금액</span>
-          <span className="text-sm font-semibold">2000원</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="text-sm text-gray-600">승인상태</span>
-          <span className="text-sm font-semibold">승인 대기중</span>
+          <span className="text-sm font-semibold">{paymentAmount}원</span>
         </div>
       </div>
-
+      {/* TODO 내 모임으로 가기 연결해야함 */}
       <button className="w-full py-3 bg-gray-300 text-gray-700 font-bold rounded-lg mt-5">내 모임으로 가기</button>
     </div>
   );
