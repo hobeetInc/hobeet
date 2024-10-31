@@ -25,6 +25,8 @@ export const OneTimeClubCard = ({ club }: OneTimeClubCardProps) => {
     setMemberCount(count || 0);
   };
 
+  const currentLocation = club.one_time_club_location.split(" ").slice(1, 3).join(" ");
+
   return (
     <div className="flex items-start p-4 border rounded-lg shadow-sm">
       <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden">
@@ -32,10 +34,10 @@ export const OneTimeClubCard = ({ club }: OneTimeClubCardProps) => {
       </div>
 
       <div className="ml-4 flex-1">
-        <div className="text-sm text-gray-500">번개(일회성)모임</div>
+        <div className="text-sm text-gray-500">에그팝</div>
         <h3 className="text-lg font-semibold mt-1">{club.one_time_club_name}</h3>
         <div className="text-sm text-gray-600 mt-1">
-          {club.one_time_club_location} • {format(new Date(club.one_time_club_date_time), "yyyy.MM.dd HH:mm")}
+          {currentLocation} • {format(new Date(club.one_time_club_date_time), "MM.dd HH:mm")}
         </div>
         <div className="text-sm text-gray-600 mt-1">
           {memberCount} / {club.one_time_people_limited}명

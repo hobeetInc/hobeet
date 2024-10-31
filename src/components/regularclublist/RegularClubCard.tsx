@@ -44,7 +44,7 @@ export const RegularClubCard = ({ club }: RegularClubCardProps) => {
       </div>
 
       <div className="ml-4 flex-1">
-        <div className="text-sm text-gray-500">클럽(정기적)모임</div>
+        <div className="text-sm text-gray-500">에그클럽</div>
         <h3 className="text-lg font-semibold mt-1">{club.regular_club_name}</h3>
         <div className="text-sm text-gray-600 mt-1">
           {creator?.user_name} • {memberCount} / {club.regular_club_people_limited}명
