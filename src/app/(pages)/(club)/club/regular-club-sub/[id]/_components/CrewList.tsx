@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getOneTimeMember } from "../../_api/supabase";
-import FullScreenModal from "./FullScreenModal";
+import { getRegularMember } from "../../../_api/supabase";
 import { useAuth } from "@/app/store/AuthContext";
+import FullScreenModal from "./FullScreenModal";
 
 // 멤버 정보 타입 정의
 type MemberInfo = {
@@ -18,11 +18,11 @@ type MemberInfo = {
 interface CrewListProps {
   crewMembers: MemberInfo[];
   clubId: number;
-  hostInfo: MemberInfo;
+  // hostInfo: MemberInfo;
   clubHostId: string;
 }
 
-const CrewList = ({ crewMembers: initialCrewMembers, clubId, hostInfo, clubHostId }: CrewListProps) => {
+const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { userId } = useAuth();
@@ -31,12 +31,10 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, hostInfo, clubHostI
     // 데이터 새로고침 함수
     const refreshData = async () => {
       try {
-        const data = await getOneTimeMember(clubId);
-
-        console.log("이태연", data);
+        const data = await getRegularMember(clubId);
 
         const newCrewMemebers = data.map((member) => ({
-          memberId: member.o_t_c_member_id,
+          memberId: member.r_c_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img
@@ -48,6 +46,8 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, hostInfo, clubHostI
       }
     };
 
+    console.log("참여크루!!!", crewList);
+
     // 15분마다 데이터 새로고침
     const intervalid = setInterval(refreshData, 900000);
     refreshData();
@@ -56,8 +56,31 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, hostInfo, clubHostI
     return () => clearInterval(intervalid);
   }, [clubId]);
 
-  // 현재 화면에는 8개만 표시
-  const displayCrew = crewList.slice(0, 8);
+  // 8개의 고정 슬롯 생성
+  const displaySlots = Array(8)
+    .fill(null)
+    .map((_, index) => {
+      const member = crewList[index];
+      return member ? (
+        // 멤버가 있는 경우
+        <div key={member.userId} className="w-[37px]">
+          <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">
+            <Image
+              src={member.userImage}
+              alt={member.userName}
+              width={37}
+              height={37}
+              className="w-full h-full object-cover border-2 border-black"
+            />
+          </div>
+        </div>
+      ) : (
+        // 빈 슬롯
+        <div key={`empty-${index}`} className="w-[37px]">
+          <div className="w-[37px] h-[37px] rounded-full border-2 border-gray-200 bg-gray-50"></div>
+        </div>
+      );
+    });
 
   // 호스트일 때
   const isHost = userId === clubHostId;
@@ -97,21 +120,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, hostInfo, clubHostI
             더보기 ➡️
           </button>
         </div>
-        <div className="grid grid-cols-8 grid-flow-col gap-2 w-full">
-          {displayCrew?.map((member) => (
-            <div key={member.userId}>
-              <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">
-                <Image
-                  src={member.userImage}
-                  alt={member.userName}
-                  width={37}
-                  height={37}
-                  className="w-full h-full object-cover border-2 border-black"
-                />
-              </div>
-            </div>
-          ))}
-        </div>
+        <div className="grid grid-cols-8 grid-flow-col gap-2 w-full">{displaySlots}</div>
       </div>
       {renderJoinButton()}
       <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

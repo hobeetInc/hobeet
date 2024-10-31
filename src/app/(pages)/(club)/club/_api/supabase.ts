@@ -98,3 +98,25 @@ export const getOneTimeMember = async (clubId: number) => {
   if (error) throw error;
   return data;
 };
+
+// 1. 정기 모임 멤버, 유저, 모임 정보 한 번에 가져오기
+export const getRegularMember = async (clubId: number) => {
+  const { data, error } = await browserClient
+    .from("r_c_member")
+    .select(`*, regular_club!inner(*), user!inner(user_name, user_profile_img)`)
+    .eq("r_c_id", clubId);
+  if (error) throw error;
+  return data;
+};
+
+// 정기 모임 공지사항 가져오기
+export const getRegularNotification = async (clubId: number) => {
+  const { data, error } = await browserClient
+    .from("r_c_notification")
+    .select("*")
+    .eq("r_c_id", clubId)
+    .order("r_c_notification_create_at", { ascending: false });
+
+  if (error) throw error;
+  return data;
+};

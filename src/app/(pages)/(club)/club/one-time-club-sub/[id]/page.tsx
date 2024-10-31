@@ -1,9 +1,8 @@
 // import { Metadata } from "next";
 import Image from "next/image";
-import { getOneTimeMember } from "../_api/supabase";
+import { getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import { GetOneTimeClub, Member } from "./_types/Crews";
-import Link from "next/link";
 
 type CrewInfo = {
   memberId: number;
@@ -94,12 +93,6 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="container">
-      <div className="h-[48px] bg-pink-100 flex items-center px-4">
-        <Link href={"/"} className="w-6 h-6 bg-slate-300 flex items-center justify-center border-4 border-black">
-          뒤
-        </Link>
-      </div>
-
       <div className="flex flex-col w-full">
         <Image
           src={clubInfo.one_time_image}
@@ -119,7 +112,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
             <p>♡</p>
           </div>
 
-          <div className="flex justify-first items-center gap-2">
+          <div className="flex justify-first items-center gap-4">
             <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full">
               <Image
                 src={hostInfo?.userImage || ""}
@@ -132,7 +125,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
             <div className="flex flex-col gap-1 justify-center">
               <div className="flex gap-2">
                 <p>{hostInfo?.userName}</p>
-                <p className="text-[13px]">에그팝</p>
+                <p className="text-[13px]">에그장</p>
               </div>
 
               <p className="text-[13px]">참여도</p>

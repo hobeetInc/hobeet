@@ -36,6 +36,7 @@ export type OneTimeProps = {
 // 정기적 모임 타입
 export interface RegularClubForm {
   m_c_id: number;
+  regular_club_id: number;
   regular_club_age: number | null;
   regular_club_approval: boolean;
   regular_club_gender: string | null;

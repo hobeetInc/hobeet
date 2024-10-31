@@ -57,7 +57,11 @@ const OneTimeClubList = () => {
 
       <Slider {...settings}>
         {list?.map((club) => (
-          <Link href={`/club/${club.one_time_club_id}`} key={club.one_time_club_id} className="h-[200px]">
+          <Link
+            href={`/club/one-time-club-sub/${club.one_time_club_id}`}
+            key={club.one_time_club_id}
+            className="h-[200px]"
+          >
             <div>
               {typeof club.one_time_image === "string" && (
                 <Image

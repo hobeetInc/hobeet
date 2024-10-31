@@ -48,7 +48,7 @@ const MemberType = ({
     setSelectedAge(age);
 
     if (age === "누구나") {
-      setFormData({ ...formData, one_time_age: null });
+      setFormData({ ...formData, one_time_age: 100 });
     } else if (age === "10대") {
       setFormData({ ...formData, one_time_age: 19 });
     } else if (age === "20대") {

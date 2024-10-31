@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import CategorySlider from "@/components/CategorySlider";
+import RegularClubList from "./(pages)/(club)/club/_components/RegularClubList";
+import OneTimeClubList from "./(pages)/(club)/club/_components/OneTimeClubList";
 
 export default function Home() {
   return (
@@ -20,6 +22,11 @@ export default function Home() {
         <p className="text-[18px] not-italic	font-semibold leading-[135%]">이런 모임 어때요?</p>
       </div>
       <CategorySlider />
+
+      <div>
+        <RegularClubList />
+        <OneTimeClubList />
+      </div>
     </div>
   );
 }
