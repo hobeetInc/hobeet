@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { RegularClubChatRoomRecruiterEntrance } from "../(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
 
 export interface ParticipationRequest {
   r_c_participation_request_id: number;
@@ -53,6 +54,7 @@ export default function ApproveMembersPage({ clubId }: { clubId: number }) {
         regular_club_request_status: "active"
       });
       if (!error) {
+        RegularClubChatRoomRecruiterEntrance({ r_c_id: clubId }); // 모임원 채팅방 입장(가입 승인 시)
         alert("가입이 승인 되었습니다.");
       }
     } else {

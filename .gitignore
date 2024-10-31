@@ -37,4 +37,7 @@ next-env.d.ts
 
 certificates
 
-public
+public/icon*
+public/manifest*
+public/sw*
+public/workbox*

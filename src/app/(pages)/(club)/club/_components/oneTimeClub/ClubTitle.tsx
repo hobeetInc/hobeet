@@ -1,6 +1,6 @@
-import { CategoryProps } from "../../_types/ClubForm";
+import { OneTimeProps } from "../../_types/ClubForm";
 
-const ClubTitle = ({ formData, setFormData }: CategoryProps) => {
+const ClubTitle = ({ formData, setFormData }: OneTimeProps) => {
   return (
     <div>
       <h1 className="mb-4">모임의 제목을 작성해 주세요</h1>

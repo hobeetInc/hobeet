@@ -1,49 +1,25 @@
 "use client";
-
-import Link from "next/link";
-import { useAuthStore } from "./store/authStore";
-import { createClient } from "@/utils/supabase/client";
-import { CreateChatRoom } from "./(pages)/(chat)/_components/ChatRoom";
-import { ChatRoomRecruiterEntrance } from "./(pages)/(chat)/_components/ChatRoomRecruiterEntrance";
-import { useAuth } from "./store/AuthContext";
-import CreateButton from "./(pages)/(club)/club/_components/CreateButton";
+import Image from "next/image";
+import CategorySlider from "@/components/CategorySlider";
 
 export default function Home() {
-  const { userId } = useAuth();
-
-  const reset = useAuthStore((state) => state.reset);
-  const handleLogout = async () => {
-    const supabase = createClient();
-    const { error } = await supabase.auth.signOut();
-    reset();
-    if (error) {
-      console.log(error);
-      return;
-    } else {
-      alert("지웠음");
-    }
-  };
-
-  const handleCreateChattingRoom = () => {
-    CreateChatRoom("으아아아아", 3);
-  };
-
-  const handleChattingRoom = async () => {
-    ChatRoomRecruiterEntrance({ r_c_id: 3 });
-  };
-
   return (
-    <>
-      <div>홈 입니다.</div>
-      <button className="bg-gray-400" onClick={handleLogout}>
-        로그아웃
-      </button>
-      <Link className="bg-gray-400 ml-4" href={"/signin"}>
-        로그인
-      </Link>
-      <button onClick={handleCreateChattingRoom}>채팅방 생성</button>
-      <button onClick={handleChattingRoom}>채팅방 입장</button>
-      {userId && <CreateButton />}
-    </>
+    <div className="w-full">
+      <div className="flex justify-center items-center">
+        <div className="w-[358px] h-[295px] flex-shrink-0 rounded-[18px] bg-[#d9d9d9] overflow-hidden">
+          <Image
+            src={"/asset/MainBanner.jpg"}
+            alt="MainBanner"
+            width={358}
+            height={295}
+            className="rounded-[18px] object-cover"
+          />
+        </div>
+      </div>
+      <div className="flex w-[358px] flex-col items-start gap-[8px]">
+        <p className="text-[18px] not-italic	font-semibold leading-[135%]">이런 모임 어때요?</p>
+      </div>
+      <CategorySlider />
+    </div>
   );
 }

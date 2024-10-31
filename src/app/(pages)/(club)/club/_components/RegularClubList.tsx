@@ -13,10 +13,10 @@ const RegularClubList = () => {
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: list.length > 3,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToShow: Math.min(list.length, 3),
+    slidesToScroll: Math.min(list.length, 3),
     autoplay: true
   };
 
@@ -24,10 +24,6 @@ const RegularClubList = () => {
     const fetchData = async () => {
       try {
         const data = await getRegularClubList();
-
-        // 데이터 임시 확인ㅇㅇ
-        console.log("데이터!!!", data);
-
         setList(data);
       } catch (error) {
         console.error("일회성모임 리스트 가져오는 중 오류가 발생했습니다", error);
@@ -40,7 +36,6 @@ const RegularClubList = () => {
   return (
     <div className="slider-container">
       <h1 className="font-extrabold text-[20px] my-10">정기적 모임 신규 리스트</h1>
-
       <Slider {...settings}>
         {list?.map((club) => (
           <div key={club.regular_club_name} className="h-[200px]">
