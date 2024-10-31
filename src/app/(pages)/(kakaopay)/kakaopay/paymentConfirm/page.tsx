@@ -34,6 +34,7 @@ type RegularClubData = {
 const PaymentConfirmPage = () => {
   const [oneTimeClubData, setOneTimeClubData] = useState<OneTimeClubData | null>();
   const [regularClubData, setRegularClubData] = useState<RegularClubData | null>();
+  const [agreeChecked, setAgreeChecked] = useState(false);
   const searchParams = useSearchParams();
   const supabase = browserClient;
 
@@ -184,12 +185,12 @@ const PaymentConfirmPage = () => {
         </div>
       </div>
       <div className="mb-4 flex items-center">
-        <input type="checkbox" id="agree" />
+        <input type="checkbox" id="agree" checked={agreeChecked} onChange={(e) => setAgreeChecked(e.target.checked)} />
         <label htmlFor="agree" className="ml-2 text-sm">
           주문 내용을 확인했으며, 결제에 동의합니다
         </label>
       </div>
-      <PaymentButton clubId={parseInt(clubId || "0")} clubType={clubType === "true"} />
+      <PaymentButton clubId={parseInt(clubId || "0")} clubType={clubType === "true"} agreeChecked={agreeChecked} />
     </div>
   );
 };

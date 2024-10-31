@@ -6,13 +6,19 @@ import { useState } from "react";
 export interface PaymentButtonProps {
   clubType: boolean;
   clubId: number;
+  agreeChecked: boolean;
 }
 
-const PaymentButton = ({ clubType, clubId }: PaymentButtonProps) => {
+const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const { userId } = useAuth();
 
   const onClickKakaopayBtn = async () => {
+    if (!agreeChecked) {
+      alert("주문 내용을 확인하고 결제에 동의해주세요.");
+      return;
+    }
+
     try {
       setIsLoading(true);
       const orderId = `${clubId}`;
