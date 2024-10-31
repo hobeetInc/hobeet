@@ -10,7 +10,7 @@ const CategorySlider = () => {
               <img src="/asset/Category icon_voltage.png" alt="에그팝" className="w-12 h-12" />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
-              <p>에그팝</p>
+              <p className="font-pretendard">에그팝</p>
             </div>
           </div>
 
@@ -19,7 +19,7 @@ const CategorySlider = () => {
               <img src="/asset/Category icon_airplane.png" alt="아웃도어/여행" className="w-12 h-12" />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
-              <p>아웃도어/여행</p>
+              <p className="font-pretendard">아웃도어/여행</p>
             </div>
           </div>
 
@@ -28,7 +28,7 @@ const CategorySlider = () => {
               <img src="/asset/Category icon_tennis.png" alt="운동/스포츠관람" className="w-12 h-12" />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
-              <p>운동/스포츠관람</p>
+              <p className="font-pretendard">운동/스포츠관람</p>
             </div>
           </div>
 
@@ -37,7 +37,7 @@ const CategorySlider = () => {
               <img src="/asset/Category icon_hot-beverage.png" alt="사교/인맥" className="w-12 h-12" />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
-              <p>사교/인맥</p>
+              <p className="font-pretendard">사교/인맥</p>
             </div>
           </div>
 
@@ -46,7 +46,7 @@ const CategorySlider = () => {
               <img src="/asset/Category icon_guitar.png" alt="문화/공연/축제" className="w-12 h-12" />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
-              <p>문화/공연/축제</p>
+              <p className="font-pretendard">문화/공연/축제</p>
             </div>
           </div>
 
@@ -55,7 +55,7 @@ const CategorySlider = () => {
               <img src="/asset/Category icon_clapper-board.png" alt="사진/영상" className="w-12 h-12" />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
-              <p>사진/영상</p>
+              <p className="font-pretendard">사진/영상</p>
             </div>
           </div>
 
@@ -64,7 +64,7 @@ const CategorySlider = () => {
               <img src="/asset/Category icon_woman-dancing.png" alt="댄스/무용" className="w-12 h-12" />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
-              <p>댄스/무용</p>
+              <p className="font-pretendard">댄스/무용</p>
             </div>
           </div>
         </div>

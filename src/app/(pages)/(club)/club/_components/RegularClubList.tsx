@@ -3,21 +3,24 @@
 import { useEffect, useState } from "react";
 import { getRegularClubList } from "../_api/supabase";
 import { RegularClubForm } from "../_types/ClubForm";
-import Image from "next/image";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
 
 const RegularClubList = () => {
   const [list, setList] = useState<RegularClubForm[]>([]);
 
   const settings = {
-    dots: true,
+    // dots: true,
     infinite: list.length > 3,
     speed: 500,
-    slidesToShow: Math.min(list.length, 3),
-    slidesToScroll: Math.min(list.length, 3),
-    autoplay: true
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: true,
+    centerMode: true,
+    centerPadding: "10px"
   };
 
   useEffect(() => {
@@ -34,31 +37,38 @@ const RegularClubList = () => {
   }, []);
 
   return (
-    <div className="slider-container">
-      <h1 className="font-extrabold text-[20px] my-10">정기적 모임 신규 리스트</h1>
+    <div className="slider-container slider-container mt-[18px] w-[360px]">
       <Slider {...settings}>
         {list?.map((club) => (
-          <div key={club.regular_club_name} className="h-[200px]">
-            <div>
+          <Link
+            href={`/club/regular-club-sub/${club.regular_club_id}`}
+            key={club.regular_club_name}
+            className="w-[380px] h-[240px]"
+          >
+            <div className="relative">
               {typeof club.regular_club_image === "string" && (
-                <Image
-                  src={club.regular_club_image}
-                  alt={club.regular_club_name}
-                  width={158}
-                  height={158}
-                  style={{ width: "158px", height: "130px" }}
-                  className="object-cover"
-                />
+                <div
+                  className="relative flex justify-end items-center"
+                  style={{
+                    width: "160px",
+                    height: "160px",
+                    padding: "112px 0px 0px 112px",
+                    borderRadius: "12px",
+                    background: `url(${club.regular_club_image}) lightgray 50% / cover no-repeat`,
+                    display: "flex",
+                    alignItems: "center"
+                  }}
+                ></div>
               )}
-            </div>
-            <div className="mt-4 flex flex-col justify-center items-center">
-              <h1 className="font-bold text-[13px]">{club.regular_club_name}</h1>
-              {/* <div className="mt-2">
+              <div className="mt-4 flex flex-col justify-center items-center">
+                <h1 className="font-bold text-[13px]">{club.regular_club_name}</h1>
+                {/* <div className="mt-2">
                 <p className="text-[11px]">{customAddress(club.regular)}</p>
                 <p className="text-[11px]">{customDate(club.one_time_club_date_time)}</p>
               </div> */}
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </Slider>
     </div>

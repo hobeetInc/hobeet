@@ -14,7 +14,11 @@ export interface OneTimeClubForm {
   one_time_people_limited: number | null;
   one_time_tax: number | null;
   s_c_id: number;
-  user_id: string;
+  user_id: {
+    user_name: string;
+    user_profile_img: string;
+  };
+  o_t_c_member: Array<{ count: number }>;
 }
 
 export interface MainCategory {
@@ -36,6 +40,7 @@ export type OneTimeProps = {
 // 정기적 모임 타입
 export interface RegularClubForm {
   m_c_id: number;
+  regular_club_id: number;
   regular_club_age: number | null;
   regular_club_approval: boolean;
   regular_club_gender: string | null;
@@ -44,7 +49,11 @@ export interface RegularClubForm {
   regular_club_name: string;
   regular_club_people_limited: number | null;
   s_c_id: number;
-  user_id: string;
+  user_id: {
+    user_name: string;
+    user_profile_img: string;
+  };
+  r_c_member: Array<{ count: number }>;
 }
 
 export type RegularProps = {
