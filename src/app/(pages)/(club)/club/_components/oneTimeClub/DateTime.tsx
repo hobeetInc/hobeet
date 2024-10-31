@@ -4,9 +4,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { ko } from "date-fns/locale";
-import { CategoryProps } from "../../_types/ClubForm";
+import { OneTimeProps } from "../../_types/ClubForm";
 
-const DateTime = ({ formData, setFormData }: CategoryProps) => {
+const DateTime = ({ formData, setFormData }: OneTimeProps) => {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
 
   const handleColor = (time: Date) => {
