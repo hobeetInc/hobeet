@@ -19,7 +19,7 @@ const DateTime = ({ formData, setFormData }: CategoryProps) => {
 
     if (date) {
       // 9시간을 더해서 저장(시간 보정)
-      const utcDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+      const utcDate = new Date(date.getTime());
       setFormData({
         ...formData,
         one_time_club_date_time: utcDate.toISOString() // toISOString()하면 아홉시간 빠지게 됨

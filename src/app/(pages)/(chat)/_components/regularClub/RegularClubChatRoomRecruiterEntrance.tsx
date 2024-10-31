@@ -19,7 +19,7 @@ type Chatting = {
 };
 
 // 정기 모임 입장 함수
-export async function ChatRoomRecruiterEntrance(club: clubId) {
+export async function RegularClubChatRoomRecruiterEntrance(club: clubId) {
   try {
     const response = await fetch(`/api/regularClubChattingRoom?r_c_id=${club.r_c_id}`, {
       method: "GET",
@@ -33,7 +33,7 @@ export async function ChatRoomRecruiterEntrance(club: clubId) {
     }
 
     const data: regularClubMember = await response.json();
-    console.log(data);
+    // console.log(data);
 
     const postResponse = await fetch("/api/chatRoomRecruiterEntrance", {
       method: "POST",

@@ -3,29 +3,29 @@
 import { useEffect, useState } from "react";
 import { RegularClubForm } from "../../../_types/ClubForm";
 import { useRouter, useSearchParams } from "next/navigation";
-import { submitRegularClubData, uploadImage } from "../../../_api/supabase";
+import { putRegularMember, putRepresentative, submitRegularClubData, uploadImage } from "../../../_api/supabase";
 import Category from "../../../_components/regularClub/Category";
 import ImageUpload from "../../../_components/regularClub/ImageUpload";
 import ClubTitle from "../../../_components/regularClub/ClubTitle";
 import MemberType from "../../../_components/regularClub/MemberType";
 import ApplicationMethod from "../../../_components/regularClub/ApplicationMethod";
 import { REGULAR_CLUB_CREATE } from "../../../_utils/localStorage";
-
-// 임시 유저 아이디
-const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
+import { useAuth } from "@/app/store/AuthContext";
+import { RegularClubChatRoom } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoom";
 
 const RegularContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { userId } = useAuth();
 
   // 초기값 설정 시 localStorage 데이터를 먼저 확인
   const getInitialData = () => {
     try {
       const savedData = localStorage.getItem(REGULAR_CLUB_CREATE);
-      if (savedData) {
+      if (savedData && userId) {
         const data = JSON.parse(savedData);
         return {
-          formData: data.formData,
+          formData: { ...data.formData, user_id: userId },
           selectedGender: data.selectedGender,
           selectedAge: data.selectedAge
         };
@@ -67,6 +67,11 @@ const RegularContent = () => {
   const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedAge);
   const [formData, setFormData] = useState<RegularClubForm>(initialData.formData);
+
+  // 폼데이터 확인용
+  useEffect(() => {
+    console.log("폼:", formData);
+  }, [formData]);
 
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
@@ -173,7 +178,31 @@ const RegularContent = () => {
         };
       }
       // 슈퍼베이스에 데이터 저장
-      await submitRegularClubData(finalFormData);
+      const data = await submitRegularClubData(finalFormData);
+      // console.log(data);
+
+      const representive = {
+        r_c_id: data.regular_club_id,
+        user_id: data.user_id,
+        r_c_participation_request_status: "active",
+        r_c_participation_request_approved_date: new Date().toISOString()
+      };
+
+      // 승인 테이블에 넣기
+      const res = await putRepresentative(representive);
+
+      const member = {
+        user_id: data.user_id,
+        r_c_id: data.regular_club_id,
+        r_c_participation_request_id: res.r_c_participation_request_id,
+        regular_club_request_status: "active"
+      };
+
+      // 승인된 맴버 테이블에 넣기
+      await putRegularMember(member);
+      // 모임장 채팅방 생성 및 입장
+      await RegularClubChatRoom(data.regular_club_name, data.regular_club_id, userId);
+
       alert("정기적 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(REGULAR_CLUB_CREATE);
@@ -181,7 +210,7 @@ const RegularContent = () => {
       // router.push("/success-page"); 원하는 페이지로 이동
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
-      alert("일회성 모임 생성 중 오류가 발생했습니다.");
+      alert("정기적 모임 생성 중 오류가 발생했습니다.");
     }
   };
 

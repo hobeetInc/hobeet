@@ -13,7 +13,7 @@ export interface OneTimeClubForm {
   one_time_image: string | File | null;
   one_time_people_limited: number | null;
   one_time_tax: number | null;
-  s_c_id: number | null;
+  s_c_id: number;
   user_id: string;
 }
 
@@ -43,7 +43,7 @@ export interface RegularClubForm {
   regular_club_introduction: string;
   regular_club_name: string;
   regular_club_people_limited: number | null;
-  s_c_id: number | null;
+  s_c_id: number;
   user_id: string;
 }
 
@@ -51,3 +51,25 @@ export type RegularProps = {
   formData: RegularClubForm;
   setFormData: React.Dispatch<SetStateAction<RegularClubForm>>;
 };
+
+// 정기적 모임 참가자 요청 테이블
+export interface RegularRequest {
+  r_c_id: number;
+  user_id: string;
+  r_c_participation_request_status: string;
+  r_c_participation_request_approved_date: string;
+}
+
+// 정기적 모임 참가자 맴버 테이블
+export interface RegularMember {
+  user_id: string;
+  r_c_id: number;
+  r_c_participation_request_id: number;
+  regular_club_request_status: string;
+}
+
+// 일회성 모임 참가자 맴버 테이블
+export interface OneTimeMember {
+  o_t_c_id: number;
+  user_id: string;
+}

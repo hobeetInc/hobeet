@@ -67,15 +67,45 @@ export class RegularClubAPI {
 
     // 성별 제한 검증
     if (club.regular_club_gender !== null && user.user_gender !== null) {
-      if (club.regular_club_gender === "남자만" && user.user_gender !== "male") {
+      if (club.regular_club_gender === "남성" && user.user_gender !== "남성") {
         throw new ClubJoinError("남성만 참여 가능한 모임입니다.");
       }
-      if (club.regular_club_gender === "여자만" && user.user_gender !== "female") {
+      if (club.regular_club_gender === "여성" && user.user_gender !== "여성") {
         throw new ClubJoinError("여성만 참여 가능한 모임입니다.");
       }
     }
   }
 
+  // async applyForMembership(clubId: number, userId: string): Promise<void> {
+  //   const isExistingMember = await this.checkExistingMember(userId, clubId);
+  //   if (isExistingMember) {
+  //     throw new ClubJoinError("이미 가입된 모임입니다.");
+  //   }
+
+  //   await this.validateJoinConditions(userId, clubId);
+
+  //   const club = await this.getClubData(clubId);
+
+  //   if (!club) {
+  //     throw new ClubJoinError("모임을 찾을 수 없습니다.");
+  //   }
+
+  //   if (club.regular_club_approval) {
+  //     await this.insertMember(clubId, userId);
+  //   } else {
+  //     const { error: trxError } = await this.supabase.rpc("apply_club_membership", {
+  //       p_club_id: clubId,
+  //       p_user_id: userId
+  //     });
+
+  //     if (trxError) {
+  //       console.error("가입 신청 처리 중 오류:", trxError);
+  //       throw new ClubJoinError("가입 신청 처리 중 오류가 발생했습니다.");
+  //     }
+  //   }
+  // }
+
+  // applyForMembership 수정
   async applyForMembership(clubId: number, userId: string): Promise<void> {
     const isExistingMember = await this.checkExistingMember(userId, clubId);
     if (isExistingMember) {
@@ -85,23 +115,20 @@ export class RegularClubAPI {
     await this.validateJoinConditions(userId, clubId);
 
     const club = await this.getClubData(clubId);
-
     if (!club) {
       throw new ClubJoinError("모임을 찾을 수 없습니다.");
     }
 
     if (club.regular_club_approval) {
-      await this.insertMember(clubId, userId);
-    } else {
-      const { error: trxError } = await this.supabase.rpc("apply_club_membership", {
-        p_club_id: clubId,
-        p_user_id: userId
+      // r_c_participation_request 테이블에 pending 상태로 추가
+      await this.supabase.from("r_c_participation_request").insert({
+        r_c_id: clubId,
+        user_id: userId,
+        r_c_participation_request_status: "pending",
+        r_c_participation_request_creat_at: new Date()
       });
-
-      if (trxError) {
-        console.error("가입 신청 처리 중 오류:", trxError);
-        throw new ClubJoinError("가입 신청 처리 중 오류가 발생했습니다.");
-      }
+    } else {
+      throw new ClubJoinError("모임장의 승인이 필요한 모임입니다.");
     }
   }
 

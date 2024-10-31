@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { OneTimeClubForm } from "../../../_types/ClubForm";
-import { submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
+import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
 import Category from "../../../_components/oneTimeClub/Category";
 // 컴포넌트 임포트
 import ImageUpload from "../../../_components/oneTimeClub/ImageUpload";
@@ -12,22 +12,23 @@ import MemberType from "../../../_components/oneTimeClub/MemberType";
 import Tax from "../../../_components/oneTimeClub/Tax";
 import ClubTitle from "../../../_components/oneTimeClub/ClubTitle";
 import { ONETIME_CLUB_CREATE } from "../../../_utils/localStorage";
-
-// 임시 유저 아이디
-const userId: string = "56db247b-6294-498f-a3f7-0ce8d81c36fc";
+import { useAuth } from "@/app/store/AuthContext";
+import { OneTimeClubChatRoom } from "@/app/(pages)/(chat)/_components/oneTimeClub/OneTimeClubChatRoom";
 
 const OneTimeContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { userId } = useAuth();
 
   // 초기값 설정 시 localStorage 데이터를 먼저 확인
   const getInitialData = () => {
     try {
       const savedData = localStorage.getItem(ONETIME_CLUB_CREATE);
-      if (savedData) {
+      if (savedData && userId) {
         const data = JSON.parse(savedData);
+
         return {
-          formData: data.formData,
+          formData: { ...data.formData, user_id: userId },
           selectedGender: data.selectedGender,
           selectedAge: data.selectedAge
         };
@@ -71,6 +72,7 @@ const OneTimeContent = () => {
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedGender);
   const [formData, setFormData] = useState<OneTimeClubForm>(initialData.formData);
 
+  // 폼데이터 확인용
   useEffect(() => {
     console.log("폼:", formData);
   }, [formData]);
@@ -203,7 +205,17 @@ const OneTimeContent = () => {
       }
 
       // 슈퍼베이스에 데이터 저장
-      await submitOneTimeClubData(finalFormData);
+      const data = await submitOneTimeClubData(finalFormData);
+
+      const member = {
+        o_t_c_id: data.one_time_club_id,
+        user_id: data.user_id
+      };
+      console.log("맴버", member);
+
+      await putOneTimeMember(member);
+      // 모임장 채팅방 생성 및 입장
+      await OneTimeClubChatRoom(data.one_time_club_name, data.one_time_club_id, userId);
       alert("일회성 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(ONETIME_CLUB_CREATE);
