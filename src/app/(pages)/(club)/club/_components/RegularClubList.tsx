@@ -13,10 +13,10 @@ const RegularClubList = () => {
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: list.length > 3,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToShow: Math.min(list.length, 3),
+    slidesToScroll: Math.min(list.length, 3),
     autoplay: true
   };
 
