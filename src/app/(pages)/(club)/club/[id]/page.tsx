@@ -4,8 +4,6 @@ import { getOneTimeMember } from "../_api/supabase";
 import CrewList from "./_components/CrewList";
 import { GetOneTimeClub, Member } from "./_types/Crews";
 import Link from "next/link";
-import { useAuth } from "@/app/store/AuthContext";
-import JoinButton from "./_components/JoinButton";
 
 type CrewInfo = {
   memberId: number;
@@ -74,7 +72,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
     if (limit === 100) {
       return "인원제한 없음";
     } else {
-      return limit;
+      return `${limit}명`;
     }
   };
 
@@ -97,7 +95,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   return (
     <div className="container">
       <div className="h-[48px] bg-pink-100 flex items-center px-4">
-        <Link href={"/club"} className="w-6 h-6 bg-slate-300 flex items-center justify-center border-4 border-black">
+        <Link href={"/"} className="w-6 h-6 bg-slate-300 flex items-center justify-center border-4 border-black">
           뒤
         </Link>
       </div>
@@ -112,7 +110,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
         />
       </div>
 
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 p-4">
         <div className="flex flex-col gap-4 mt-4">
           <p className="text-[13px]">에그팝</p>
 
@@ -146,7 +144,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
             <p>장소: {currentLocation}</p>
             <p>나이: {age(clubInfo.one_time_age)}</p>
             <p>성별: {gender(clubInfo.one_time_gender)}</p>
-            <p>인원제한: {`${limited(clubInfo.one_time_people_limited)}명`}</p>
+            <p>인원제한: {limited(clubInfo.one_time_people_limited)}</p>
             <p>참가비: {currentTax}</p>
           </div>
 

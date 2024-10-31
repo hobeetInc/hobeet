@@ -1,26 +1,68 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./_utils/localStorage";
 import RegularClubList from "./_components/RegularClubList";
 import OneTimeClubList from "./_components/OneTimeClubList";
 
-const ClubPage = () => {
-  useEffect(() => {
+const TypeSelectionPage = () => {
+  const router = useRouter();
+  const [selectedType, setSelectedType] = useState<"one-time" | "regular-time" | null>(null);
+
+  const handleBack = () => {
     localStorage.removeItem(ONETIME_CLUB_CREATE);
     localStorage.removeItem(REGULAR_CLUB_CREATE);
-  }, []);
+    window.location.replace("/");
+  };
+
+  const handleNext = () => {
+    if (selectedType === null) {
+      alert("모임 타입을 골라주세요");
+      return;
+    }
+
+    if (selectedType === "one-time") {
+      router.push("/club/one-time");
+    } else if (selectedType === "regular-time") {
+      router.push("/club/regular-time");
+    }
+  };
 
   return (
-    <>
-      <div className="">
-        <RegularClubList />
-      </div>
-      <div className="">
-        <OneTimeClubList />
+    <div className="container">
+      <div className="m-4 flex flex-col gap-7">
+        <button onClick={handleBack} className="w-6 h-6 border-black border-2">
+          뒤
+        </button>
+        <h1 className="text-lg font-bold">어떤 모임을 원하시나요?</h1>
+        <button
+          onClick={() => setSelectedType("one-time")}
+          className={`next-box ${selectedType === "one-time" ? "bg-blue-100" : "bg-gray-100"}`}
+        >
+          <span>반짝모임</span>
+          <br />
+          <span>일회성 모임으로 가볍게 만나요</span>
+          <br />
+          <span>승인 없이 바로 참여 가능해요</span>
+        </button>
+        <button
+          onClick={() => setSelectedType("regular-time")}
+          className={`next-box mb-56 ${selectedType === "regular-time" ? "bg-blue-100" : "bg-gray-100"}`}
+        >
+          <span>정기모임</span>
+          <br />
+          <span>지속적인 모임으로 계속 만나요</span>
+          <br />
+          <span>모바일 승인이 필요해요</span>
+        </button>
+
+        <button onClick={handleNext} className="next-button">
+          다음
+        </button>
       </div>
     </>
   );
 };
 
-export default ClubPage;
+export default TypeSelectionPage;
