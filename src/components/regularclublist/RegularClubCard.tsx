@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { RegularClub, User } from "@/types/clubcardlist/types";
 import { createClient } from "@/utils/supabase/client";
+import Image from "next/image";
 
 const supabase = createClient();
 
@@ -40,14 +41,33 @@ export const RegularClubCard = ({ club }: RegularClubCardProps) => {
   return (
     <div className="flex items-start p-4 border rounded-lg shadow-sm">
       <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden">
-        <img src={club.regular_club_image} alt={club.regular_club_name} className="w-full h-full object-cover" />
+        <Image
+          src={club.regular_club_image}
+          alt={club.regular_club_name}
+          width={158}
+          height={158}
+          className="w-full h-full object-cover"
+        />
       </div>
 
       <div className="ml-4 flex-1">
         <div className="text-sm text-gray-500">에그클럽</div>
         <h3 className="text-lg font-semibold mt-1">{club.regular_club_name}</h3>
-        <div className="text-sm text-gray-600 mt-1">
-          {creator?.user_name} • {memberCount} / {club.regular_club_people_limited}명
+        <div className="flex items-center text-sm text-gray-600 mt-1">
+          {creator?.user_profile_img && (
+            <Image
+              src={creator.user_profile_img}
+              alt={creator.user_name}
+              width={158}
+              height={158}
+              className="w-5 h-5 rounded-full mr-2"
+            />
+          )}
+          <span>{creator?.user_name}</span>
+          <span className="mx-2">•</span>
+          <span>
+            {memberCount} / {club.regular_club_people_limited}명
+          </span>
         </div>
       </div>
     </div>

@@ -18,24 +18,24 @@ export default function ClubListContent() {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setUserId(user.id);
-        fetchMeetings(user.id);
+        fetchClubs(user.id);
       }
     });
   }, []);
 
   useEffect(() => {
     if (userId) {
-      fetchMeetings(userId);
+      fetchClubs(userId);
     }
   }, [activeTab, userId]);
 
-  const fetchMeetings = async (currentUserId: string) => {
+  const fetchClubs = async (currentUserId: string) => {
     if (activeTab === "created") {
       const { data: oneTime } = await supabase
         .from("one_time_club")
         .select("*")
         .eq("user_id", currentUserId)
-        .order("one_time_club_date_time", { ascending: true });
+        .order("one_time_club_date_time", { ascending: false });
 
       const { data: regular } = await supabase
         .from("regular_club")
@@ -65,7 +65,7 @@ export default function ClubListContent() {
             "one_time_club_id",
             oneTimeMemberships.map((m) => m.o_t_c_id)
           )
-          .order("one_time_club_date_time", { ascending: true });
+          .order("one_time_club_date_time", { ascending: false });
         setOneTimeClubs(data || []);
       }
 
@@ -81,6 +81,12 @@ export default function ClubListContent() {
         setRegularClubs(data || []);
       }
     }
+  };
+
+  const renderEmptyState = () => {
+    const message = activeTab === "created" ? "내가 만든 모임이 없습니다" : "내가 참여한 모임이 없습니다";
+
+    return <div className="flex items-center justify-center p-12 text-gray-500">{message}</div>;
   };
 
   return (
@@ -101,12 +107,18 @@ export default function ClubListContent() {
       </div>
 
       <div className="space-y-4">
-        {oneTimeClubs.map((club) => (
-          <OneTimeClubCard key={club.one_time_club_id} club={club} />
-        ))}
-        {regularClubs.map((club) => (
-          <RegularClubCard key={club.regular_club_id} club={club} />
-        ))}
+        {oneTimeClubs.length === 0 && regularClubs.length === 0 ? (
+          renderEmptyState()
+        ) : (
+          <>
+            {oneTimeClubs.map((club) => (
+              <OneTimeClubCard key={club.one_time_club_id} club={club} />
+            ))}
+            {regularClubs.map((club) => (
+              <RegularClubCard key={club.regular_club_id} club={club} />
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

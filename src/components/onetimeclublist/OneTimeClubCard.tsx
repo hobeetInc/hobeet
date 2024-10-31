@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { createClient } from "@/utils/supabase/client";
 import { OneTimeClub } from "@/types/clubcardlist/types";
+import Image from "next/image";
 
 const supabase = createClient();
 
@@ -30,7 +31,13 @@ export const OneTimeClubCard = ({ club }: OneTimeClubCardProps) => {
   return (
     <div className="flex items-start p-4 border rounded-lg shadow-sm">
       <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden">
-        <img src={club.one_time_club_image} alt={club.one_time_club_name} className="w-full h-full object-cover" />
+        <Image
+          src={club.one_time_image}
+          alt={club.one_time_club_name}
+          width={158}
+          height={158}
+          className="w-full h-full object-cover"
+        />
       </div>
 
       <div className="ml-4 flex-1">

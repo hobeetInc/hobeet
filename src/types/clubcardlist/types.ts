@@ -9,7 +9,7 @@ export interface OneTimeClub {
   one_time_club_name: string;
   one_time_club_location: string;
   one_time_club_date_time: string;
-  one_time_club_image: string;
+  one_time_image: string;
   one_time_people_limited: number;
   user_id: string;
 }
