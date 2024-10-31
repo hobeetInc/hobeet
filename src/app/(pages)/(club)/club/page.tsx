@@ -61,7 +61,7 @@ const TypeSelectionPage = () => {
           다음
         </button>
       </div>
-    </>
+    </div>
   );
 };
 
