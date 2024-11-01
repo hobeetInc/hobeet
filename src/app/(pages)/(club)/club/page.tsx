@@ -3,8 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./_utils/localStorage";
-import RegularClubList from "./_components/RegularClubList";
-import OneTimeClubList from "./_components/OneTimeClubList";
 
 const TypeSelectionPage = () => {
   const router = useRouter();
