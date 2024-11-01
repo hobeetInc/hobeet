@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CategoryProps, MainCategory, SubCategory } from "../../_types/ClubForm";
+import { OneTimeProps, MainCategory, SubCategory } from "../../_types/ClubForm";
 import { fetchMainCategories, fetchSubCategories } from "../../_api/supabase";
 
-const Category = ({ formData, setFormData }: CategoryProps) => {
+const Category = ({ formData, setFormData }: OneTimeProps) => {
   const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [openCategoryId, setOpenCategoryId] = useState<number | null>(null);

@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { CategoryProps } from "../../_types/ClubForm";
+import { OneTimeProps } from "../../_types/ClubForm";
 
-const Tax = ({ formData, setFormData }: CategoryProps) => {
+const Tax = ({ formData, setFormData }: OneTimeProps) => {
   const [showTaxInput, setShowTaxInput] = useState<boolean>(false);
   const [inputError, setInputError] = useState<string>("");
 
@@ -42,8 +42,8 @@ const Tax = ({ formData, setFormData }: CategoryProps) => {
     }
 
     // 최대값 검사
-    if (numValue > 32767) {
-      setInputError("32767원 이하로 입력해주세요");
+    if (numValue > 1000000) {
+      setInputError("100만원 이하로 입력해주세요");
       return;
     }
 

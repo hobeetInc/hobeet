@@ -1,17 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { RegularClubForm } from "../../../_types/ClubForm";
 import { useRouter, useSearchParams } from "next/navigation";
-import { putRegularMember, putRepresentative, submitRegularClubData, uploadImage } from "../../../_api/supabase";
-import Category from "../../../_components/regularClub/Category";
-import ImageUpload from "../../../_components/regularClub/ImageUpload";
-import ClubTitle from "../../../_components/regularClub/ClubTitle";
-import MemberType from "../../../_components/regularClub/MemberType";
-import ApplicationMethod from "../../../_components/regularClub/ApplicationMethod";
-import { REGULAR_CLUB_CREATE } from "../../../_utils/localStorage";
 import { useAuth } from "@/app/store/AuthContext";
 import { RegularClubChatRoom } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoom";
+import { REGULAR_CLUB_CREATE } from "../_utils/localStorage";
+import { RegularClubForm } from "../_types/ClubForm";
+import Category from "../_components/regularClub/Category";
+import ImageUpload from "../_components/regularClub/ImageUpload";
+import ClubTitle from "../_components/regularClub/ClubTitle";
+import ApplicationMethod from "../_components/regularClub/ApplicationMethod";
+import MemberType from "../_components/regularClub/MemberType";
+import { putRegularMember, putRepresentative, submitRegularClubData, uploadImage } from "../_api/supabase";
 
 const RegularContent = () => {
   const router = useRouter();
@@ -114,7 +114,7 @@ const RegularContent = () => {
   // 뒤로가기 버튼
   const handleBack = () => {
     if (step === 1) {
-      window.location.replace("/club/type-selection");
+      window.location.replace("/club");
     } else {
       setStep((prev) => (prev - 1) as 1 | 2 | 3);
     }
@@ -154,9 +154,17 @@ const RegularContent = () => {
         return;
       }
 
-      if (formData.regular_club_people_limited !== null && formData.regular_club_people_limited >= 100) {
+      if (formData.regular_club_people_limited !== null && formData.regular_club_people_limited >= 101) {
         alert("인원제한은 100명 이하로 해주세요");
         return;
+      }
+
+      if (formData.regular_club_people_limited === null) {
+        setFormData({
+          ...formData,
+          regular_club_people_limited: 100
+        });
+        return alert("정말로 인원제한을 주지 않겠습니까?");
       }
 
       handleSubmit();
@@ -254,7 +262,6 @@ const RegularContent = () => {
 
   return (
     <div className="container">
-      <div className="h-[48px] bg-pink-100">헤더 공간</div>
       <div className="m-4 flex flex-col gap-7">
         <button onClick={handleBack} className="w-6 h-6 border-black border-2">
           뒤

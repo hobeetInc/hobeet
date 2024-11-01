@@ -1,19 +1,19 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { OneTimeClubForm } from "../../../_types/ClubForm";
-import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../../../_api/supabase";
-import Category from "../../../_components/oneTimeClub/Category";
 // 컴포넌트 임포트
-import ImageUpload from "../../../_components/oneTimeClub/ImageUpload";
-import DateTime from "../../../_components/oneTimeClub/DateTime";
-import AddressSearch from "../../../_components/oneTimeClub/AddressSearch";
-import MemberType from "../../../_components/oneTimeClub/MemberType";
-import Tax from "../../../_components/oneTimeClub/Tax";
-import ClubTitle from "../../../_components/oneTimeClub/ClubTitle";
-import { ONETIME_CLUB_CREATE } from "../../../_utils/localStorage";
 import { useAuth } from "@/app/store/AuthContext";
 import { OneTimeClubChatRoom } from "@/app/(pages)/(chat)/_components/oneTimeClub/OneTimeClubChatRoom";
+import { ONETIME_CLUB_CREATE } from "../_utils/localStorage";
+import { OneTimeClubForm } from "../_types/ClubForm";
+import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../_api/supabase";
+import Category from "../_components/oneTimeClub/Category";
+import ClubTitle from "../_components/oneTimeClub/ClubTitle";
+import ImageUpload from "../_components/oneTimeClub/ImageUpload";
+import DateTime from "../_components/oneTimeClub/DateTime";
+import AddressSearch from "../_components/oneTimeClub/AddressSearch";
+import MemberType from "../_components/oneTimeClub/MemberType";
+import Tax from "../_components/oneTimeClub/Tax";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -48,7 +48,7 @@ const OneTimeContent = () => {
         one_time_club_introduction: "",
         one_time_image: "",
         one_time_club_date_time: "",
-        one_time_tax: null,
+        one_time_tax: 0,
 
         // null이 허용되는 선택적 필드들
         one_time_gender: null,
@@ -163,6 +163,19 @@ const OneTimeContent = () => {
         alert("인원제한은 100명 이하로 해주세요");
         return;
       }
+
+      if (formData.one_time_people_limited !== null && formData.one_time_people_limited === 0) {
+        alert("0명 이상 적어주세요");
+        return;
+      }
+
+      if (formData.one_time_people_limited === null) {
+        setFormData({
+          ...formData,
+          one_time_people_limited: 100
+        });
+        return alert("정말로 인원제한을 주지 않겠습니까?");
+      }
     }
 
     if (step === 7) {
@@ -184,7 +197,7 @@ const OneTimeContent = () => {
   // 뒤로가기 버튼
   const handleBack = () => {
     if (step === 1) {
-      window.location.replace("/club/type-selection");
+      window.location.replace("/club");
     } else {
       setStep((prev) => (prev - 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7);
     }
@@ -220,7 +233,7 @@ const OneTimeContent = () => {
       // 성공 시 처리
       localStorage.removeItem(ONETIME_CLUB_CREATE);
       // 다른 페이지로 이동
-      // router.push("/success-page"); 원하는 페이지로 이동
+      router.push(`/club/${data.one_time_club_id}`);
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       alert("일회성 모임 생성 중 오류가 발생했습니다.");
@@ -258,7 +271,6 @@ const OneTimeContent = () => {
 
   return (
     <div className="container">
-      <div className="h-[48px] bg-pink-100">헤더 공간</div>
       <div className="m-4 flex flex-col gap-7">
         <button onClick={handleBack} className="w-6 h-6 border-black border-2">
           뒤

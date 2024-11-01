@@ -21,6 +21,9 @@ const MemberType = ({
   const [genderToggle, setGenderToggle] = useState<boolean>(false);
   const [ageToggle, setAgeToggle] = useState<boolean>(false);
 
+  // 인원수 입력값을 관리할 state 추가
+  const [peopleLimit, setPeopleLimit] = useState<string>("");
+
   const gender = ["누구나", "여자만", "남자만"];
   const age = ["누구나", "10대", "20대", "30대", "40대", "50대 이상"];
 
@@ -58,13 +61,15 @@ const MemberType = ({
       setFormData({ ...formData, regular_club_age: 50 });
     }
   };
-
   const handlePeopleLimit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === "") {
-      setFormData({ ...formData, regular_club_people_limited: null });
-    } else {
-      setFormData({ ...formData, regular_club_people_limited: parseInt(e.target.value) });
-    }
+    const value = e.target.value;
+    setPeopleLimit(value); // 입력값 state 업데이트
+
+    // formData 업데이트
+    setFormData({
+      ...formData,
+      regular_club_people_limited: value === "" ? 100 : parseInt(value)
+    });
   };
 
   return (
@@ -112,10 +117,8 @@ const MemberType = ({
             type="number"
             placeholder="인원수를 적지 않으면 인원제한 없이 생성됩니다"
             className="w-[328px] h-8 rounded-lg p-2"
-            value={formData.regular_club_people_limited || ""}
+            value={peopleLimit}
             onChange={handlePeopleLimit}
-            min={2}
-            max={100}
           />
         </div>
       </div>

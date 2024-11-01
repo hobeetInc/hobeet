@@ -226,7 +226,7 @@ const RegularClubChattingRoomPage = () => {
                       alt={room.regular_club_name || "기본 이미지"}
                       width={63}
                       height={63}
-                      className="object-cover"
+                      className="w-full h-full object-cover"
                     />
                   </div>
 
