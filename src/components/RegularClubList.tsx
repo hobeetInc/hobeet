@@ -28,7 +28,7 @@ const RegularClubList = () => {
         <div className="inline-flex items-center  px-4 pt-4">
           {list?.map((club) => (
             <Link
-              href={`/club/oregular-club-sub/${club.regular_club_id}`}
+              href={`/club/regular-club-sub/${club.regular_club_id}`}
               key={club.regular_club_id}
               className="w-[160px] h-[292px] mr-4"
             >

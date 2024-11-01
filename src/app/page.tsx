@@ -29,7 +29,7 @@ export default function Home() {
           <p className="text-[18px] font-semibold leading-[24.3px]  font-pretendard">에그팝 신규 리스트</p>
         </div>
         <div className="w-[24px] h-[24px] flex items-center">
-          <img className="w-[24px] h-[24px]" src="/asset/icon/Arrow-Right-Outline.png" alt="eggpop_new_list" />
+          <img className="w-[24px] h-[24px]" src="/asset/Icon/Arrow-Right-Outline.png" alt="eggpop_new_list" />
         </div>
       </div>
       <OneTimeClubList />
@@ -49,7 +49,7 @@ export default function Home() {
           <p className="text-[18px] font-semibold leading-[135%] font-pretendard">에그클럽 신규 리스트</p>
         </div>
         <div className="w-[24px] h-[24px] flex items-center">
-          <img className="w-[24px] h-[24px]" src="/asset/icon/Arrow-Right-Outline.png" alt="eggpop_new_list" />
+          <img className="w-[24px] h-[24px]" src="/asset/Icon/Arrow-Right-Outline.png" alt="eggpop_new_list" />
         </div>
       </div>
       <RegularClubList />
