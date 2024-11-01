@@ -4,6 +4,8 @@ import { InSertRegularClubNotification } from "../create/_types/subCreate";
 type ClubCardProps = { notification: InSertRegularClubNotification };
 
 const ClubCard = ({ notification }: ClubCardProps) => {
+  // console.log("노티피케이션오류!!!!:", notification);
+
   // 날짜와 시간 커스텀
   const DateTimeCustom = (dateTime: string) => {
     const date = new Date(dateTime);
@@ -39,7 +41,7 @@ const ClubCard = ({ notification }: ClubCardProps) => {
           <p>{addressCustom(notification.r_c_notification_location)}</p>
           <p>{DateTimeCustom(notification.r_c_notification_date_time)}</p>
         </div>
-        <p>맴버 몇명</p>
+        <p>맴버 {notification.r_c_notification_member[0].count}명</p>
       </div>
     </div>
   );

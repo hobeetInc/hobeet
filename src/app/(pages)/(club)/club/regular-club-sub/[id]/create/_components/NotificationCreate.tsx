@@ -451,7 +451,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
                 readOnly
               />
               <button onClick={execDaumPostcode} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                우편번호 찾기
+                주소 검색
               </button>
             </div>
 

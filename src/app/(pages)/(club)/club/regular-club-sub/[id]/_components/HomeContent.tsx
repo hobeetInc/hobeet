@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
-import CrewList from "../../_components/CrewList";
-import { getRegularClub } from "../../_types/Crews";
+import CrewList from "./CrewList";
+import { getRegularClub } from "../_types/Crews";
+import { InSertRegularClubNotification } from "../create/_types/subCreate";
 
 type CrewInfo = {
   memberId: number;
@@ -14,9 +14,10 @@ type HomeContentProps = {
   hostInfo: CrewInfo | undefined;
   crewMembers: CrewInfo[];
   regularClubId: number;
+  notificationData: InSertRegularClubNotification[];
 };
 
-const HomeContent = ({ clubInfo, hostInfo, crewMembers, regularClubId }: HomeContentProps) => (
+const HomeContent = ({ clubInfo, hostInfo, crewMembers, regularClubId, notificationData }: HomeContentProps) => (
   <>
     <div className="flex flex-col w-full">
       <Image
@@ -36,7 +37,11 @@ const HomeContent = ({ clubInfo, hostInfo, crewMembers, regularClubId }: HomeCon
           <h1 className="font-bold text-[23px]">{clubInfo.regular_club_name}</h1>
           <p>♡</p>
         </div>
+        <p>
+          맴버 {crewMembers.length} / {clubInfo.regular_club_people_limited}
+        </p>
 
+        <p>이 모임의 호스트</p>
         <div className="flex flex-col gap-10">
           <div className="flex justify-first items-center gap-4">
             <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full">
@@ -68,8 +73,8 @@ const HomeContent = ({ clubInfo, hostInfo, crewMembers, regularClubId }: HomeCon
       <CrewList
         crewMembers={crewMembers}
         clubId={regularClubId}
-        // hostInfo={hostInfo || crewMembers[0]}
         clubHostId={clubInfo.user_id}
+        notificationData={notificationData}
       />
     </div>
   </>

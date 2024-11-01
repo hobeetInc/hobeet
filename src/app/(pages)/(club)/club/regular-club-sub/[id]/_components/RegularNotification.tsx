@@ -1,5 +1,5 @@
-import ClubCard from "../../_components/ClubCard";
-import { InSertRegularClubNotification } from "../_types/subCreate";
+import ClubCard from "./ClubCard";
+import { InSertRegularClubNotification } from "../create/_types/subCreate";
 
 type RegularNotificationProps = {
   notificationData: InSertRegularClubNotification[];

@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { getRegularMember } from "../../../_api/supabase";
 import { useAuth } from "@/app/store/AuthContext";
 import FullScreenModal from "./FullScreenModal";
+import { InSertRegularClubNotification } from "../create/_types/subCreate";
+import NotificationList from "./NotificationList";
 
 // 멤버 정보 타입 정의
 type MemberInfo = {
@@ -18,11 +20,11 @@ type MemberInfo = {
 interface CrewListProps {
   crewMembers: MemberInfo[];
   clubId: number;
-  // hostInfo: MemberInfo;
   clubHostId: string;
+  notificationData: InSertRegularClubNotification[];
 }
 
-const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
+const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notificationData }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { userId } = useAuth();
@@ -93,7 +95,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
     if (isHost) {
       return (
         <div className="flex justify-center items-center gap-2">
-          <button className="flex-1 bg-yellow-100 h-[50px] rounded-full">{`참여 ${crewList.length}명`}</button>
+          <button className="flex-1 bg-yellow-100 h-[50px] rounded-full">에그즈 관리</button>
           <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
         </div>
       );
@@ -115,13 +117,14 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
     <>
       <div className="flex flex-col gap-4">
         <div className="flex justify-between">
-          <h1 className="font-extrabold text-[20px]">{`참여중인 크루원 ${crewList.length}명`}</h1>
+          <h1 className="font-extrabold text-[20px]">{`참여중인 에그즈 ${crewList.length}명`}</h1>
           <button onClick={() => setIsModalOpen(true)} className="text-gray-600 hover:text-black">
             더보기 ➡️
           </button>
         </div>
         <div className="grid grid-cols-8 grid-flow-col gap-2 w-full">{displaySlots}</div>
       </div>
+      <NotificationList notificationData={notificationData} />
       {renderJoinButton()}
       <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>

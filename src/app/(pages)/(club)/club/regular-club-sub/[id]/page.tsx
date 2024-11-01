@@ -1,9 +1,9 @@
 import { getRegularClubNotification, getRegularMember } from "../../_api/supabase";
 import { getRegularClub, Member } from "./_types/Crews";
 import { InSertRegularClubNotification } from "./create/_types/subCreate";
-import TabLayout from "./create/_components/TabLayout";
-import HomeContent from "./create/_components/HomeContent";
-import RegularNotification from "./create/_components/RegularNotification";
+import TabLayout from "./_components/TabLayout";
+import HomeContent from "./_components/HomeContent";
+import RegularNotification from "./_components/RegularNotification";
 import Link from "next/link";
 
 type CrewInfo = {
@@ -48,19 +48,25 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   // console.log("참여 크루", crewMembers);
   // console.log("호스트 정보", hostInfo);
 
-  console.log("클럽리스트:", notificationData);
+  // console.log("클럽리스트:", notificationData);
 
   return (
     <div className="container">
       <div className="flex justify-between items-center h-[48px] p-4">
         <Link href={"/"}>←</Link>
-        <h1 className="text-lg font-semibold">에그데이</h1>
+        <h1 className="text-lg font-semibold">{clubInfo.regular_club_name}</h1>
         <Link href={`/club/regular-club-sub/${regularClubId}/create`}>+</Link>
       </div>
 
       <TabLayout>
         {/* props를 통해 데이터 전달 */}
-        <HomeContent clubInfo={clubInfo} hostInfo={hostInfo} crewMembers={crewMembers} regularClubId={regularClubId} />
+        <HomeContent
+          clubInfo={clubInfo}
+          hostInfo={hostInfo}
+          crewMembers={crewMembers}
+          regularClubId={regularClubId}
+          notificationData={notificationData}
+        />
         <RegularNotification notificationData={notificationData} />
       </TabLayout>
     </div>

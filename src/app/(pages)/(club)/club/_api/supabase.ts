@@ -149,10 +149,12 @@ export const getRegularClubNotification = async (clubId: number) => {
 
   const { data, error } = await browserClient
     .from("r_c_notification")
-    .select("*")
+    .select("*, r_c_notification_member(count)")
     .eq("r_c_id", clubId)
     .gte("r_c_notification_date_time", currentDate)
     .order("r_c_notification_date_time", { ascending: true });
+
+  // console.log("이거 지금 가져오!!!!!!!!!", data);
 
   if (error) throw error;
   return data;
