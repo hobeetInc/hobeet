@@ -30,6 +30,7 @@ const SignupSecondPage = () => {
     setUserGender,
     setUserAge,
     setUserProfileImg,
+    setUserBirth,
     userId,
     userName,
     userGender,
@@ -98,6 +99,11 @@ const SignupSecondPage = () => {
   useEffect(() => {
     if (birthYear && birthMonth && birthDay) {
       setBirthDateError("");
+
+      const formattedMonth = birthMonth.padStart(2, "0");
+      const formattedDay = birthDay.padStart(2, "0");
+
+      setUserBirth(`${birthYear}-${formattedMonth}-${formattedDay}`);
     }
   }, [birthYear, birthMonth, birthDay]);
 
