@@ -17,10 +17,28 @@ export default function Footer({ className }: FooterProps) {
   const handleChattingRoom = () => {
     if (!userId) {
       alert("로그인이 필요한 서비스입니다.");
+      router.push("/signin");
     } else {
       router.push("/chat");
     }
   };
+  const handleMyClubList = () => {
+    if (!userId) {
+      alert("로그인이 필요한 서비스입니다.");
+      router.push("/signin");
+    } else {
+      router.push("/myclublist");
+    }
+  };
+
+  const handleMyPage = () => {
+    if (!userId) {
+      router.push("/signin");
+    } else {
+      router.push("/mypage");
+    }
+  };
+
   return (
     <footer
       className={`flex w-[390px] p-[8px 16px 0px 16px] justify-between items-center border-t border-solid border-[1px] border-[#F2F2F2] bg-[#fff] ${
@@ -52,7 +70,8 @@ export default function Footer({ className }: FooterProps) {
             />
           </div>
         </Link>
-        <Link href="/myclublist">
+        <button onClick={handleMyClubList}>
+          {/* <Link href="/myclublist"> */}
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
             <img
               src={
@@ -65,7 +84,8 @@ export default function Footer({ className }: FooterProps) {
               height={48}
             />
           </div>
-        </Link>
+          {/* </Link> */}
+        </button>
         <button onClick={handleChattingRoom}>
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
             <img
@@ -80,7 +100,8 @@ export default function Footer({ className }: FooterProps) {
             />
           </div>
         </button>
-        <Link href="/mypage">
+        <button onClick={handleMyPage}>
+          {/* <Link href="/mypage"> */}
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
             <img
               src={
@@ -93,7 +114,8 @@ export default function Footer({ className }: FooterProps) {
               height={48}
             />
           </div>
-        </Link>
+          {/* </Link> */}
+        </button>
       </div>
     </footer>
   );

@@ -54,9 +54,9 @@ export async function POST(req: Request) {
         quantity: 1,
         total_amount: amount,
         tax_free_amount: 0,
-        approval_url: `http://localhost:3000/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
-        cancel_url: "http://localhost:3000/",
-        fail_url: "http://localhost:3000/"
+        approval_url: `https://hobeet.vercel.app/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
+        cancel_url: "https://hobeet.vercel.app/",
+        fail_url: "https://hobeet.vercel.app/"
       })
     });
 

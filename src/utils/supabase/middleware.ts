@@ -38,7 +38,12 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (!user && request.nextUrl.pathname.startsWith("/mypage")) {
+  if (
+    !user &&
+    (request.nextUrl.pathname.startsWith("/mypage") ||
+      request.nextUrl.pathname.startsWith("/chat") ||
+      request.nextUrl.pathname.startsWith("/myclublist"))
+  ) {
     const url = request.nextUrl.clone();
     url.pathname = "/signin";
     return NextResponse.redirect(url);
