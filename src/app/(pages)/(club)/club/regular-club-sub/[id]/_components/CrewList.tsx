@@ -2,11 +2,15 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getRegularMember } from "../../../_api/supabase";
+import { getParticipationStatus, getRegularMember } from "../../../_api/supabase";
 import { useAuth } from "@/app/store/AuthContext";
 import FullScreenModal from "./FullScreenModal";
 import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import NotificationList from "./NotificationList";
+import { useRouter } from "next/navigation";
+
+// 유저 상태 정보
+type ParticipationS = "not_applied" | "pending" | "active";
 
 // 멤버 정보 타입 정의
 type MemberInfo = {
@@ -26,16 +30,20 @@ interface CrewListProps {
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notificationData }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
+  const [participationStatus, setParticipationStatus] = useState<ParticipationS>("not_applied");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { userId } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
+    console.log("useEffect 실행 시 userId:", userId);
+
     // 데이터 새로고침 함수
     const refreshData = async () => {
       try {
-        const data = await getRegularMember(clubId);
+        const memberResult = await getRegularMember(clubId);
 
-        const newCrewMemebers = data.map((member) => ({
+        const newCrewMemebers = memberResult.map((member) => ({
           memberId: member.r_c_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
@@ -43,20 +51,32 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         }));
 
         setCrewList(newCrewMemebers);
+
+        // if (userId) {
+        //   const statusResult = await getParticipationStatus({ userId, clubId });
+
+        //   setParticipationStatus(statusResult);
+        // }
+
+        if (userId) {
+          const statusResult = await getParticipationStatus({ userId, clubId });
+
+          console.log("스테이터스,", statusResult.r_c_participation_request_status);
+
+          setParticipationStatus(statusResult.r_c_participation_request_status);
+        }
       } catch (error) {
         console.error("크루인원 가져오는 중 오류:", error);
       }
     };
 
-    console.log("참여크루!!!", crewList);
-
-    // 15분마다 데이터 새로고침
-    const intervalid = setInterval(refreshData, 900000);
     refreshData();
+  }, [clubId, userId]);
 
-    //클린업 함수
-    return () => clearInterval(intervalid);
-  }, [clubId]);
+  // 상태 변경 감지를 위한 별도의 useEffect
+  useEffect(() => {
+    console.log("참여 상태 변경됨:", participationStatus);
+  }, [participationStatus]);
 
   // 8개의 고정 슬롯 생성
   const displaySlots = Array(8)
@@ -84,15 +104,34 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
       );
     });
 
-  // 호스트일 때
-  const isHost = userId === clubHostId;
+  // console.log("참가인지 확인!!", participationStatus);
 
-  // 가입한 크루일 때
-  const isAlreadJoined = crewList.some((member) => member.userId === userId);
+  // 로그인 페이지로 이동
+  const handleLoginRedirect = () => {
+    alert("로그인이 필요한 서비스입니다");
+    router.push("/signin");
+  };
 
   // 버튼 렌더링 함수
   const renderJoinButton = () => {
-    if (isHost) {
+    // 로그아웃 상태
+    if (!userId) {
+      return (
+        <button
+          type="button" // 명시적으로 버튼 타입 지정
+          onClick={(e) => {
+            e.preventDefault();
+
+            handleLoginRedirect();
+          }}
+          className="w-full h-[50px] rounded-full bg-black text-white cursor-pointer" // cursor-pointer 추가
+        >
+          참여하기
+        </button>
+      );
+    }
+
+    if (userId === clubHostId) {
       return (
         <div className="flex justify-center items-center gap-2">
           <button className="flex-1 bg-yellow-100 h-[50px] rounded-full">에그즈 관리</button>
@@ -101,16 +140,26 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
       );
     }
 
-    if (isAlreadJoined) {
-      return (
-        <div className="flex justify-center items-center gap-2">
-          <p className="flex-1 h-[50px] pt-4 font-semibold">참여 중인 에그팝이에요</p>
-          <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
-        </div>
-      );
-    }
+    switch (participationStatus) {
+      case "active":
+        return (
+          <div className="flex justify-center items-center gap-2">
+            <p className="flex-1 h-[50px] pt-4 font-semibold">참여 중인 에그클럽이에요</p>
+            <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그데이 채팅방</button>
+          </div>
+        );
 
-    return <button className="w-full h-[50px] bg-yellow-300 rounded-full">참여하기</button>;
+      case "pending":
+        return (
+          <div className="flex justify-center items-center gap-2">
+            <p className="flex-1 h-[50px] pt-4 font-semibold">에그장이 승인중이예요</p>
+            <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">승인 대기중</button>
+          </div>
+        );
+
+      case "not_applied":
+        return <button className="w-full h-[50px] rounded-full bg-black text-white">참여하기</button>;
+    }
   };
 
   return (

@@ -159,3 +159,21 @@ export const getRegularClubNotification = async (clubId: number) => {
   if (error) throw error;
   return data;
 };
+
+type GetParticipationStatusProps = {
+  userId: string | null;
+  clubId: number;
+};
+
+//정기적모임 참여 요청 정보 가져오기
+export const getParticipationStatus = async ({ userId, clubId }: GetParticipationStatusProps) => {
+  const { data, error } = await browserClient
+    .from("r_c_participation_request")
+    .select("*")
+    .eq("user_id", userId)
+    .eq("r_c_id", clubId)
+    .single();
+  if (error) throw error;
+
+  return data;
+};
