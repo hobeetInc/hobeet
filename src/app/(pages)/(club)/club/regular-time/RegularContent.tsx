@@ -215,7 +215,7 @@ const RegularContent = () => {
       // 성공 시 처리
       localStorage.removeItem(REGULAR_CLUB_CREATE);
       // 다른 페이지로 이동
-      // router.push("/success-page"); 원하는 페이지로 이동
+      router.push(`/club/regular-club-sub/${data.regular_club_id}`);
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       alert("정기적 모임 생성 중 오류가 발생했습니다.");

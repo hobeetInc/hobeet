@@ -1,5 +1,6 @@
 import browserClient from "@/utils/supabase/client";
 import { OneTimeClubForm, OneTimeMember, RegularClubForm, RegularMember, RegularRequest } from "../_types/ClubForm";
+import { RegularClubNotification } from "../regular-club-sub/[id]/create/_types/subCreate";
 
 // supabase에 일회성 모임 제출
 export const submitOneTimeClubData = async (finalFormData: OneTimeClubForm) => {
@@ -109,6 +110,50 @@ export const getOneTimeMember = async (clubId: number) => {
     .from("o_t_c_member")
     .select(`*, one_time_club!inner(*), user!inner(user_name, user_profile_img)`)
     .eq("o_t_c_id", clubId);
+  if (error) throw error;
+  return data;
+};
+
+// 1. 정기 모임 멤버, 유저, 모임 정보 한 번에 가져오기
+export const getRegularMember = async (clubId: number) => {
+  const { data, error } = await browserClient
+    .from("r_c_member")
+    .select(`*, regular_club!inner(*), user!inner(user_name, user_profile_img)`)
+    .eq("r_c_id", clubId);
+  if (error) throw error;
+  return data;
+};
+
+// 정기 모임 공지사항 가져오기
+export const getRegularNotification = async (clubId: number) => {
+  const { data, error } = await browserClient
+    .from("r_c_notification")
+    .select("*")
+    .eq("r_c_id", clubId)
+    .order("r_c_notification_create_at", { ascending: false });
+
+  if (error) throw error;
+  return data;
+};
+
+// 정기모임의 공지 집어넣기
+export const submitRegularClubNotification = async (finalData: RegularClubNotification) => {
+  const { data, error } = await browserClient.from("r_c_notification").insert([finalData]).select("*").single();
+  if (error) throw error;
+  return data;
+};
+
+// 정기모임의 공지 가져오기
+export const getRegularClubNotification = async (clubId: number) => {
+  const currentDate = new Date().toISOString();
+
+  const { data, error } = await browserClient
+    .from("r_c_notification")
+    .select("*")
+    .eq("r_c_id", clubId)
+    .gte("r_c_notification_date_time", currentDate)
+    .order("r_c_notification_date_time", { ascending: true });
+
   if (error) throw error;
   return data;
 };
