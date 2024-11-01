@@ -17,6 +17,8 @@ export interface UserState {
   setUserRoleType: (userRoleType: string) => void;
   userName: string | null;
   setUserName: (userName: string) => void;
+  userBirth: string | null;
+  setUserBirth: (userBirth: string) => void;
   userCreateAt: Date | null;
 }
 
@@ -39,6 +41,8 @@ export const useAuthStore = create<UserState>()(
       setUserRoleType: (userRoleType: string) => set({ userRoleType }),
       userName: null,
       setUserName: (userName: string) => set({ userName }),
+      userBirth: null,
+      setUserBirth: (userBirth: string) => set({ userBirth }),
       userCreateAt: null,
 
       reset: () =>
