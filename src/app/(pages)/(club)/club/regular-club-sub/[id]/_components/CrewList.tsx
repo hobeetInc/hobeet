@@ -61,7 +61,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         if (userId) {
           const statusResult = await getParticipationStatus({ userId, clubId });
 
-          console.log("스테이터스,", statusResult.r_c_participation_request_status);
+          // console.log("스테이터스,", statusResult.r_c_participation_request_status);
 
           setParticipationStatus(statusResult.r_c_participation_request_status);
         }

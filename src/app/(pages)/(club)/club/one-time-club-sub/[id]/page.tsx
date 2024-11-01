@@ -3,6 +3,7 @@ import Image from "next/image";
 import { getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import { GetOneTimeClub, Member } from "./_types/Crews";
+import Link from "next/link";
 
 type CrewInfo = {
   memberId: number;
@@ -93,6 +94,11 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="container">
+      <div className="flex justify-between items-center h-[48px] p-4">
+        <Link href={"/"}>←</Link>
+        <h1 className="text-lg font-semibold">{clubInfo.one_time_club_name}</h1>
+      </div>
+
       <div className="flex flex-col w-full">
         <Image
           src={clubInfo.one_time_image}

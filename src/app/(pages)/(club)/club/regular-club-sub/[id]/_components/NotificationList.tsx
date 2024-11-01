@@ -14,8 +14,6 @@ type NotificationListProps = {
 const NotificationList = ({ notificationData }: NotificationListProps) => {
   const [selectedDate, setSelectedDate] = useState<string>("all");
 
-  console.log("노티피케이션데이터!!!!!:", notificationData);
-
   // 날짜별로 그룹화하는 함수
   const groupDate = (notifications: InSertRegularClubNotification[]) => {
     return notificationData.reduce((groups: { [key: string]: InSertRegularClubNotification[] }, notification) => {

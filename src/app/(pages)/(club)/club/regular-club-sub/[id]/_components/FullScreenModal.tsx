@@ -32,7 +32,7 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
           </div>
           <div>
             <h1 className="font-bold text-xl mb-4">{`참여 크루원 ${crewList.length}명`}</h1>
-            {crewList?.map((member) => (
+            {crewList?.map((member, index) => (
               <div key={member.userId} className="flex items-center gap-2 mb-4">
                 <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">
                   <Image
@@ -47,7 +47,7 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
                 <div className="flex flex-col gap-1 justify-center">
                   <div className="flex gap-2">
                     <p>{member.userName}</p>
-                    <p className="text-[13px]">에그즈</p>
+                    <p className="text-[13px]">{index === 0 ? "에그장" : "에그즈"}</p>
                   </div>
                   <p className="text-[13px]">참여도</p>
                 </div>
