@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+
 import CrewList from "../../_components/CrewList";
 import { getRegularClub } from "../../_types/Crews";
 

@@ -52,11 +52,11 @@ export default function Footer({ className }: FooterProps) {
             />
           </div>
         </Link>
-        <Link href="/club">
+        <Link href="/myclublist">
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
             <img
               src={
-                pathname === "/club"
+                pathname === "/myclublist"
                   ? "/asset/Bottom nav_Button__My gathering.png"
                   : "/asset/Bottom nav_Button__My gathering_Default.png"
               }

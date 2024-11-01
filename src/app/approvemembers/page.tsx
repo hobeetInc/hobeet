@@ -161,13 +161,13 @@ const PendingRequestsTab = ({
   );
 };
 
-export default function ApproveMembersPage({ clubId }: { clubId: number }) {
+export default function ApproveMembersPage({ params }: { params: { clubId: number } }) {
   const [requests, setRequests] = useState<ParticipationRequest[]>([]);
   const [activeMembers, setActiveMembers] = useState<ParticipationRequest[]>([]);
   const [activeTab, setActiveTab] = useState<"active" | "pending">("active");
   const supabase = createClient();
 
-  clubId = 29; // 상세페이지 생성 협의(어떻게 받아올 것인지 클럽아이디)
+  params.clubId = 29; // 상세페이지 생성 협의(어떻게 받아올 것인지 클럽아이디)
 
   useEffect(() => {
     const fetchPendingAndActiveRequests = async () => {
@@ -175,13 +175,13 @@ export default function ApproveMembersPage({ clubId }: { clubId: number }) {
         .from("r_c_participation_request")
         .select(`*,user_id("*")`)
         .eq("r_c_participation_request_status", "pending")
-        .eq("r_c_id", clubId);
+        .eq("r_c_id", params);
 
       const { data: activeData, error: activeError } = await supabase
         .from("r_c_participation_request")
         .select(`*,user_id("*")`)
         .eq("r_c_participation_request_status", "active")
-        .eq("r_c_id", clubId);
+        .eq("r_c_id", params.clubId);
 
       if (pendingError || activeError) {
         console.error("Error fetching requests:", pendingError || activeError);
@@ -192,7 +192,7 @@ export default function ApproveMembersPage({ clubId }: { clubId: number }) {
     };
 
     fetchPendingAndActiveRequests();
-  }, [clubId]);
+  }, [params.clubId]);
 
   const approveMember = async (requestId: number) => {
     const { data, error } = await supabase
@@ -211,7 +211,7 @@ export default function ApproveMembersPage({ clubId }: { clubId: number }) {
         regular_club_request_status: "active"
       });
       if (!error) {
-        RegularClubChatRoomRecruiterEntrance({ r_c_id: clubId }); // 모임원 채팅방 입장(가입 승인 시)
+        RegularClubChatRoomRecruiterEntrance({ r_c_id: params.clubId }); // 모임원 채팅방 입장(가입 승인 시)
         alert("가입이 승인되었습니다.");
       } else {
         alert("승인 처리 중 오류가 발생했습니다.");
