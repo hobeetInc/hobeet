@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useAuth } from "./store/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 
 type HeaderProps = {
   className?: string;
@@ -32,7 +33,7 @@ export default function Header({ className }: HeaderProps) {
       {pathname === "/" && (
         <Link href="/">
           <div className="flex w-[96px] h-[24px] flex-shrink-0 ml-[16px] mt-[12px] mb-[12px]">
-            <img src={"/asset/MainLogo.svg"} alt="MainLogo" width={96} height={24} />
+            <Image src={"/asset/MainLogo.svg"} alt="MainLogo" width={96} height={24} />
           </div>
         </Link>
       )}
@@ -70,11 +71,11 @@ export default function Header({ className }: HeaderProps) {
       <div className="flex items-center ml-auto space-x-[16px] mr-[12px] mt-[12px] mb-[12px]">
         {pathname === "/" || pathname === "/search" ? (
           <button onClick={handleCreateMeet}>
-            <img src={"/asset/PlusIcon.png"} alt="PlusIcon" width={24} height={24} />
+            <Image src={"/asset/PlusIcon.png"} alt="PlusIcon" width={24} height={24} />
           </button>
         ) : null}
         <button onClick={handleAlarm}>
-          <img src={"/asset/BellIcon.png"} alt="BellIcon" width={24} height={24} />
+          <Image src={"/asset/BellIcon.png"} alt="BellIcon" width={24} height={24} />
         </button>
         {/* <Image src={"/asset/MenuIcon.png"} alt="MenuIcon" width={24} height={24} /> */}
       </div>

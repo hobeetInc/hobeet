@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 
 type TabLayoutProps = {
@@ -8,7 +8,7 @@ type TabLayoutProps = {
 };
 
 const TabLayout = ({ children }: TabLayoutProps) => {
-  const router = useRouter();
+  // const router = useRouter();
   const [activeTab, setActiveTab] = useState<string>("home");
 
   return (

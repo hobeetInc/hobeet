@@ -8,7 +8,8 @@ import React, { useEffect } from "react";
 const InsertUserInfo = () => {
   const supabase = browserClient;
   const router = useRouter();
-  const { setUserId, setUserEmail, setUserGender, setUserAge, setUserProfileImg, setUserName } = useAuth();
+  const { setUserId, setUserEmail, setUserGender, setUserAge, setUserProfileImg, setUserName, setUserBirth } =
+    useAuth();
   useEffect(() => {
     const insertUserInfo = async () => {
       const {
@@ -31,6 +32,7 @@ const InsertUserInfo = () => {
       setUserAge(loginUser.user_age);
       setUserProfileImg(loginUser.user_profile_img);
       setUserName(loginUser.user_name);
+      setUserBirth(loginUser.user_birth);
 
       router.push("/");
     };

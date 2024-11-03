@@ -7,6 +7,7 @@ import { addHours, format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PaymentButtonProps } from "../_components/KakaopayBtn";
+import { SupabaseClubAPI } from "@/utils/onetimeclubjoin/_api/supabase";
 
 type RegularLimited = {
   r_c_id: {
@@ -88,7 +89,6 @@ const PaymentSummaryPage = ({ clubType, clubId }: PaymentButtonProps) => {
 
         setClubData(data);
       };
-
       const fetchRegularMemberCount = async () => {
         const { count, error } = await supabase
           .from("r_c_notification_member")
