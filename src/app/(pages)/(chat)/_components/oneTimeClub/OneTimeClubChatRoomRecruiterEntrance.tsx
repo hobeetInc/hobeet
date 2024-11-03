@@ -2,10 +2,6 @@ type clubId = {
   one_time_club_id: number;
 };
 
-type userId = {
-  user_id: string;
-};
-
 type oneTimeClubMember = {
   one_time_club_id: number;
   one_time_member_id: number;
@@ -22,15 +18,14 @@ type Chatting = {
 };
 
 // 일회성 모임 입장 함수
-export async function OneTimeClubChatRoomRecruiterEntrance({ one_time_club_id, user_Id }) {
-  console.log(one_time_club_id, "야야야 이재호 야야야 이재호");
-  console.log("tlqkftlqkftlqkf", { user_Id });
+export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: clubId) {
+  console.log(one_time_club_id.one_time_club_id, "야야야 이재호 야야야 이재호");
 
   try {
     console.log("야양야야야 죄지민 여기 왔다가냐??");
 
     const response = await fetch(
-      `http://localhost:3000/api/oneTimeClubChattingRoom?one_time_club_id=${one_time_club_id}`,
+      `http://localhost:3000/api/oneTimeClubChattingRoom?one_time_club_id=${one_time_club_id.one_time_club_id}`,
       {
         method: "GET"
       }
@@ -41,7 +36,7 @@ export async function OneTimeClubChatRoomRecruiterEntrance({ one_time_club_id, u
     }
 
     const data: oneTimeClubMember = await response.json();
-    console.log("asfjkklajsflkhjasfoijqwoiryqiwyr9qy49127349872398457", data);
+    console.log("data!!!!", data);
 
     const postResponse = await fetch("http://localhost:3000/api/oneTimeChatRoomRecruiterEntrance", {
       method: "POST",

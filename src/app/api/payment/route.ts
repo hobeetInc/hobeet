@@ -56,9 +56,9 @@ export async function POST(req: Request) {
         quantity: 1,
         total_amount: amount,
         tax_free_amount: 0,
-        approval_url: `https://hobeet.vercel.app/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
-        cancel_url: "https://hobeet.vercel.app/",
-        fail_url: "https://hobeet.vercel.app/"
+        approval_url: `http://localhost:3000/kakaopay/isSuccess?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
+        cancel_url: "http://localhost:3000/",
+        fail_url: "http://localhost:3000/"
       })
     });
 
@@ -80,9 +80,6 @@ export async function POST(req: Request) {
         o_t_c_kakaopay_tid: tid
       });
       // 입장 시키는중@@@
-      const clubApi = new SupabaseClubAPI();
-      clubApi.insertMember(clubId, requestUserId);
-      console.log("여기는 왔다갔냐구 죄지민!!!!");
 
       if (error) {
         console.error("Supabase insert error:", error);
@@ -109,7 +106,6 @@ export async function POST(req: Request) {
         r_c_notification_kakaopay_tid: tid
       });
 
-      
       if (error) {
         console.error("Supabase insert error:", error);
         throw new Error("regular_club_notification_kakaopay 테이블에 데이터를 저장하는 중 오류가 발생했습니다.");
