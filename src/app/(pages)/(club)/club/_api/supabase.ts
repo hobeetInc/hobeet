@@ -118,7 +118,7 @@ export const getOneTimeMember = async (clubId: number) => {
 export const getRegularMember = async (clubId: number) => {
   const { data, error } = await browserClient
     .from("r_c_member")
-    .select(`*, regular_club!inner(*), user!inner(user_name, user_profile_img)`)
+    .select(`*, regular_club(*), user(user_name, user_profile_img)`)
     .eq("r_c_id", clubId);
   if (error) throw error;
   return data;
@@ -188,6 +188,16 @@ export const getParticipationStatus = async ({ userId, clubId }: GetParticipatio
 // 정기적 모임안의 공지 정보 가져오기
 export const getNotificationData = async (clubId: number) => {
   const { data, error } = await browserClient.from("r_c_notification").select("*").eq("r_c_id", clubId);
+  if (error) throw error;
+  return data;
+};
+
+// 정기적 모임 공지 맴버 가져오기
+export const getNotificationMember = async (notificationId: number | undefined) => {
+  const { data, error } = await browserClient
+    .from("r_c_notification_member")
+    .select(`*, user(user_name, user_profile_img)`)
+    .eq("r_c_notification_id", notificationId);
   if (error) throw error;
   return data;
 };

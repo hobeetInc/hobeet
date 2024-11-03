@@ -10,3 +10,13 @@ export interface NotificaitonInfo {
   r_c_id: number;
   r_c_notification_image: string;
 }
+
+export interface NotificationMember {
+  r_c_notification_id: number;
+  r_c_member_id: number;
+  user_id: string;
+  user: {
+    user_name: string;
+    user_profile_img: string;
+  };
+}

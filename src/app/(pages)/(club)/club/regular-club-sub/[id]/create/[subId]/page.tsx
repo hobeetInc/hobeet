@@ -1,9 +1,10 @@
 import Image from "next/image";
 import React from "react";
-import { getNotificationData } from "../../../../_api/supabase";
-import { NotificaitonInfo } from "./_types/notifictionInfo";
+import { getNotificationData, getNotificationMember } from "../../../../_api/supabase";
+import { NotificaitonInfo, NotificationMember } from "./_types/notifictionInfo";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
+import CrewList from "./_components/CrewList";
 
 type SubSubPageProps = {
   params: {
@@ -22,12 +23,16 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
   // 임시 확인용
   //   console.log("이거 확인해!!!!!:", params);
   //   console.log("이거 확인해!!!!!:", subId);
-  //   console.log("이거 확인해!!!!!:", data);
+  // console.log("이거 확인해!!!!!!!!!!!!!!!!!!!:", data);
 
   // 해당하는 클럽 정보 추출
   const clubInfo = data.find((club) => club.r_c_notification_id === secondId);
 
   console.log("해당 클럽!!", clubInfo);
+
+  const member: NotificationMember[] = await getNotificationMember(clubInfo?.r_c_notification_id);
+
+  console.log("유저!!!!!!!", member);
 
   // 날짜 커스텀
   const date = clubInfo?.r_c_notification_date_time;
@@ -64,21 +69,21 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
     }
   };
 
-  // 참여 크루 정보 추출
-  //   const crewMembers: CrewInfo[] = data.map((member) => ({
-  //     memberId: member.o_t_c_member_id,
-  //     userId: member.user_id,
-  //     userName: member.user.user_name,
-  //     userImage: member.user.user_profile_img
-  //   }));
+  //   참여 크루 정보 추출
+  const crewMembers = member.map((member) => ({
+    notificationId: member.r_c_notification_id,
+    userId: member.user_id,
+    userName: member.user.user_name,
+    userImage: member.user.user_profile_img
+  }));
 
   // 호스트 정보 추출
-  //   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
+  const hostInfo = crewMembers.find((member) => member.userId === clubInfo?.user_id);
 
   // 임시 확인용
   // console.log("클럽 정보 아이디", clubInfo.user_id);
   // console.log("참여 크루", crewMembers);
-  // console.log("호스트 정보", hostInfo);
+  console.log("호스트 정보", hostInfo);
 
   return (
     <div className="container">
@@ -109,7 +114,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
           <h1 className="font-bold text-[23px]">{clubInfo?.r_c_notification_name}</h1>
 
-          {/* <div className="flex justify-first items-center border-b-4 border-red-600 mb-7 pb-4">
+          <div className="flex justify-first items-center border-b-4 border-red-600 mb-7 pb-4">
             <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full">
               <Image
                 src={hostInfo?.userImage || ""}
@@ -126,7 +131,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
               </div>
               <p className="text-[13px]">참여도</p>
             </div>
-          </div> */}
+          </div>
 
           <div className="flex flex-col">
             <h1 className="text-lg font-semibold mb-2">상세 정보</h1>
@@ -141,7 +146,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
           </div>
         </div>
 
-        {/* <CrewList crewMembers={crewMembers} clubId={oneTimeClubId} clubHostId={clubInfo.user_id} /> */}
+        <CrewList crewMembers={crewMembers} clubId={secondId} clubHostId={clubInfo.user_id} />
       </div>
     </div>
   );

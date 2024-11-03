@@ -106,16 +106,16 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
         />
       </div>
 
-      <div className="flex flex-col p-4">
+      <div className="flex flex-col gap-10 p-4">
         <div className="flex flex-col mt-4">
           <p className="text-[13px]">에그팝</p>
 
           <div className="flex justify-between">
-            <h1 className="font-bold text-[23px]">{clubInfo.one_time_club_name}</h1>
+            <h1 className="font-bold text-[23px] mt-4">{clubInfo.one_time_club_name}</h1>
             <p>♡</p>
           </div>
 
-          <div className="flex justify-first items-center border-b-4 border-red-600 mb-7 pb-4">
+          <div className="flex justify-first items-center gap-2 mt-2 border-b-4 border-red-600 mb-7 pb-4">
             <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full">
               <Image
                 src={hostInfo?.userImage || ""}
@@ -125,8 +125,8 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="flex flex-col justify-center">
-              <div className="flex">
+            <div className="flex flex-col justify-center gap-1">
+              <div className="flex ">
                 <p>{hostInfo?.userName}</p>
                 <p className="text-[13px]">에그장</p>
               </div>
@@ -134,7 +134,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
             </div>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-1">
             <h1 className="text-lg font-semibold mb-2">상세 정보</h1>
             <p>일시: {formDate}</p>
             <p>장소: {currentLocation}</p>
@@ -144,7 +144,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
             <p>참가비: {currentTax}</p>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2 mt-10">
             <h1 className="text-[20px] font-semibold">모임 소개</h1>
             <p>{clubInfo.one_time_club_introduction}</p>
           </div>
