@@ -15,7 +15,7 @@ type HomeContentProps = {
   crewMembers: CrewInfo[];
   regularClubId: number;
   notificationData: InSertRegularClubNotification[];
-  stringCategory: string;
+  stringCategory: string | undefined;
 };
 
 const HomeContent = ({
@@ -51,8 +51,8 @@ const HomeContent = ({
 
         <p>이 모임의 호스트</p>
         <div className="flex flex-col gap-10">
-          <div className="flex justify-first items-center gap-4">
-            <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full">
+          <div className="flex justify-first items-center gap-4 pb-5 border-b-2 border-solid">
+            <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full ">
               <Image
                 src={hostInfo?.userImage || ""}
                 alt={hostInfo?.userName || "호스트"}

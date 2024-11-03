@@ -108,7 +108,7 @@ export const putOneTimeMember = async (member: OneTimeMember) => {
 export const getOneTimeMember = async (clubId: number) => {
   const { data, error } = await browserClient
     .from("o_t_c_member")
-    .select(`*, one_time_club!inner(*), user!inner(user_name, user_profile_img)`)
+    .select(`*, one_time_club(*), user(user_name, user_profile_img)`)
     .eq("o_t_c_id", clubId);
   if (error) throw error;
   return data;

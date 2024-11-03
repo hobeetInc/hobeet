@@ -17,7 +17,7 @@ type CrewInfo = {
 const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const regularClubId = Number(params.id);
 
-  const [memberData, notificationData, subcategories] = (await Promise.all([
+  const [memberData, notificationData, subCategories] = (await Promise.all([
     getRegularMember(regularClubId),
     getRegularClubNotification(regularClubId),
     fetchSubCategories()
@@ -35,7 +35,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   // console.log("클럽인포:", clubInfo);
 
   // 일치하는 카테고리 찾기
-  const matchCategory = subcategories.find((category) => category.s_c_id === clubInfo.s_c_id);
+  const matchCategory = subCategories.find((category) => category.s_c_id === clubInfo.s_c_id);
   const stringCategory = matchCategory?.s_c_name;
   console.log("일치 카테고리!!!!!!!", stringCategory);
 
@@ -55,7 +55,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   // console.log("참여 크루", crewMembers);
   // console.log("호스트 정보", hostInfo);
 
-  // console.log("클럽리스트:", notificationData);
+  console.log("클럽리스트:", notificationData);
 
   return (
     <div className="container">

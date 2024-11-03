@@ -17,7 +17,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const data: Member[] = await getOneTimeMember(oneTimeClubId);
 
   // 임시 확인용
-  // console.log("데이터:", data);
+  console.log("데이터:", data);
 
   // 클럽 정보만 추출
   const clubInfo: GetOneTimeClub = data[0]?.one_time_club;
@@ -45,7 +45,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const tax = clubInfo.one_time_tax;
   const currentTax = tax === 0 ? "X" : tax.toLocaleString() + "원";
 
-  // console.log("택스", tax);
+  console.log("택스", tax);
 
   // 성별 커스텀
   const gender = (gender: null | string) => {
