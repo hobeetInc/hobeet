@@ -104,6 +104,7 @@ section {
   display: block;
 }
 body {
+  font-family: "Pretendard", PretendardVariable;
   line-height: 1;
 }
 ol,

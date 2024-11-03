@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable}`}>
-      <body className={pretendard.variable}>
+      <body className="font-pretendard">
         <AuthProvider>
           <Providers>
             <div className="fixed flex flex-col w-[390px] h-[844px] bg-white">

@@ -26,7 +26,7 @@ const OneTimeClubList = () => {
 
   return (
     <div className="relative w-full max-w-[390px] mx-auto">
-      <div className="overflow-x-auto scrollbar-hide">
+      <div className="overflow-x-auto scrollbar-hide h-[330px]">
         <div className="inline-flex items-center  px-4 pt-4">
           {list?.map((club) => (
             <Link
@@ -53,7 +53,7 @@ const OneTimeClubList = () => {
                 <div className="flex w-[160px] h-[23px] flex-col items-start gap-1">
                   <div
                     className="flex py-[2px] px-[8px] justify-center items-center
-                 rounded-[128px] bg-[#fdb800]"
+                rounded-[128px] bg-[#fdb800]"
                   >
                     <p className="font-pretendard text-[10px] not-italic leading-[14.5px] font-normal">에그팝</p>
                   </div>
@@ -74,7 +74,7 @@ const OneTimeClubList = () => {
                   </p>
                 </div>
                 <div className="flex pt-[2px] items-center gap-[2px]">
-                  <img src="/asset/Icon/Icon-Location.png" alt="LocationIcon" width={16} height={16} />
+                  <Image src="/asset/Icon/Icon-Location.png" alt="LocationIcon" width={16} height={16} />
                   <p className="font-pretendard text-[14px] font-[500px] text-ellipsis	overflow-hidden leading-[20.3px]	text-[#8c8c8c]  ">
                     {CustomAddress(club.one_time_club_location)}
                   </p>

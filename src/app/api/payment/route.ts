@@ -56,7 +56,7 @@ export async function POST(req: Request) {
         quantity: 1,
         total_amount: amount,
         tax_free_amount: 0,
-        approval_url: `http://localhost:3000/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
+        approval_url: `http://localhost:3000/kakaopay/isSuccess?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
         cancel_url: "http://localhost:3000/",
         fail_url: "http://localhost:3000/"
       })
@@ -80,9 +80,6 @@ export async function POST(req: Request) {
         o_t_c_kakaopay_tid: tid
       });
       // 입장 시키는중@@@
-      const clubApi = new SupabaseClubAPI();
-      clubApi.insertMember(clubId, requestUserId);
-      console.log("여기는 왔다갔냐구 죄지민!!!!");
 
       if (error) {
         console.error("Supabase insert error:", error);
