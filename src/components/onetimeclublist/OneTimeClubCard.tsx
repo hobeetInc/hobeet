@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { createClient } from "@/utils/supabase/client";
 import { OneTimeClub } from "@/types/clubcardlist/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const supabase = createClient();
 
@@ -12,6 +13,7 @@ interface OneTimeClubCardProps {
 
 export const OneTimeClubCard = ({ club }: OneTimeClubCardProps) => {
   const [memberCount, setMemberCount] = useState<number>(0);
+  const router = useRouter();
 
   useEffect(() => {
     fetchMemberCount();
@@ -28,8 +30,12 @@ export const OneTimeClubCard = ({ club }: OneTimeClubCardProps) => {
 
   const currentLocation = club.one_time_club_location.split(" ").slice(1, 3).join(" ");
 
+  const handleClick = () => {
+    router.push(`/club/one-time-club-sub/${club.one_time_club_id}`);
+  };
+
   return (
-    <div className="flex items-start p-4 border rounded-lg shadow-sm">
+    <div onClick={handleClick} className="flex items-start p-4 border rounded-lg shadow-sm cursor-pointer">
       <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden">
         <Image
           src={club.one_time_image}

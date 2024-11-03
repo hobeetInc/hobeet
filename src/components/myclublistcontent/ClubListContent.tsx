@@ -177,16 +177,20 @@ export default function ClubListContent() {
   );
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4">
+    <div className="w-full max-w-2xl mx-auto p-4 border-b">
       <div className="flex gap-4 mb-6">
         <button
-          className={`flex-1 py-2 rounded ${activeTab === "created" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          className={`flex-1 py-2 rounded ${
+            activeTab === "created" ? "bg-blue-500 text-white border-b-4" : "bg-gray-200"
+          }`}
           onClick={() => setActiveTab("created")}
         >
           내가 만든 모임
         </button>
         <button
-          className={`flex-1 py-2 rounded ${activeTab === "joined" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          className={`flex-1 py-2 rounded ${
+            activeTab === "joined" ? "bg-blue-500 text-white border-b-4" : "bg-gray-200"
+          }`}
           onClick={() => setActiveTab("joined")}
         >
           내가 참여한 모임

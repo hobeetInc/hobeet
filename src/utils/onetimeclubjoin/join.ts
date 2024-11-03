@@ -108,7 +108,6 @@
 //   }
 // };
 
-import { useRouter } from "next/navigation";
 import { SupabaseClubAPI, ClubJoinError } from "./_api/supabase";
 
 type OneTimeClubJoinParams = {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { RegularClub, User } from "@/types/clubcardlist/types";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const supabase = createClient();
 
@@ -12,6 +13,7 @@ interface RegularClubCardProps {
 export const RegularClubCard = ({ club }: RegularClubCardProps) => {
   const [creator, setCreator] = useState<User | null>(null);
   const [memberCount, setMemberCount] = useState<number>(0);
+  const router = useRouter();
 
   useEffect(() => {
     fetchCreator();
@@ -38,8 +40,12 @@ export const RegularClubCard = ({ club }: RegularClubCardProps) => {
     setMemberCount(data?.length || 0);
   };
 
+  const handleClick = () => {
+    router.push(`/club/regular-club-sub/${club.regular_club_id}`);
+  };
+
   return (
-    <div className="flex items-start p-4 border rounded-lg shadow-sm">
+    <div onClick={handleClick} className="flex items-start p-4 border rounded-lg shadow-sm cursor-pointer">
       <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden">
         <Image
           src={club.regular_club_image}
