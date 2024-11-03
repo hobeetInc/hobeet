@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 
 interface FullScreenModalProps {
@@ -19,10 +20,11 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
   return (
     <div className="fixed inset-0 bg-white z-50">
       <div className="container h-screen flex flex-col">
-        <div className="h-[48px] bg-pink-100 flex items-center">
-          <button onClick={onClose} className="w-6 h-6 border-black border-2 ml-4">
-            ←
+        <div className="flex items-center justify-between h-[48px] p-4 relative">
+          <button onClick={onClose} className="absolute left-4">
+            <ChevronLeft />
           </button>
+          <h1 className="flex-1 text-center text-lg font-semibold">참여 에그즈</h1>
         </div>
 
         <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-10">
@@ -32,7 +34,7 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
           </div>
           <div>
             <h1 className="font-bold text-xl mb-4">{`참여 크루원 ${crewList.length}명`}</h1>
-            {crewList?.map((member) => (
+            {crewList?.map((member, index) => (
               <div key={member.userId} className="flex items-center gap-2 mb-4">
                 <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">
                   <Image
@@ -47,7 +49,7 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
                 <div className="flex flex-col gap-1 justify-center">
                   <div className="flex gap-2">
                     <p>{member.userName}</p>
-                    <p className="text-[13px]">에그즈</p>
+                    <p className="text-[13px]">{index === 0 ? "에그장" : "에그즈"}</p>
                   </div>
                   <p className="text-[13px]">참여도</p>
                 </div>

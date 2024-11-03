@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getOneTimeMember } from "../../../_api/supabase";
 import FullScreenModal from "./FullScreenModal";
 import { useAuth } from "@/app/store/AuthContext";
+import { ChevronRight } from "lucide-react";
 
 // 멤버 정보 타입 정의
 type MemberInfo = {
@@ -115,7 +116,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         <div className="flex justify-between">
           <h1 className="font-extrabold text-[20px]">{`참여중인 크루원 ${crewList.length}명`}</h1>
           <button onClick={() => setIsModalOpen(true)} className="text-gray-600 hover:text-black">
-            더보기 ➡️
+            <ChevronRight />
           </button>
         </div>
         <div className="grid grid-cols-8 grid-flow-col gap-2 w-full">{displaySlots}</div>

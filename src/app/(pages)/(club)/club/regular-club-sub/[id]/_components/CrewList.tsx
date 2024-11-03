@@ -8,6 +8,7 @@ import FullScreenModal from "./FullScreenModal";
 import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
+import { ChevronRight } from "lucide-react";
 
 // 유저 상태 정보
 type ParticipationS = "not_applied" | "pending" | "active";
@@ -168,7 +169,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         <div className="flex justify-between">
           <h1 className="font-extrabold text-[20px]">{`참여중인 에그즈 ${crewList.length}명`}</h1>
           <button onClick={() => setIsModalOpen(true)} className="text-gray-600 hover:text-black">
-            더보기 ➡️
+            <ChevronRight />
           </button>
         </div>
         <div className="grid grid-cols-8 grid-flow-col gap-2 w-full">{displaySlots}</div>

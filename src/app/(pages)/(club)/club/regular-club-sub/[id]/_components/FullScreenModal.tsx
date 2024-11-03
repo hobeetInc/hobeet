@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 
 interface FullScreenModalProps {
@@ -19,10 +20,11 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
   return (
     <div className="fixed inset-0 bg-white z-50">
       <div className="container h-screen flex flex-col">
-        <div className="h-[48px] bg-pink-100 flex items-center">
-          <button onClick={onClose} className="w-6 h-6 border-black border-2 ml-4">
-            ←
+        <div className="flex items-center justify-between h-[48px] p-4 relative">
+          <button onClick={onClose} className="absolute left-4">
+            <ChevronLeft />
           </button>
+          <h1 className="flex-1 text-center text-lg font-semibold">참여 에그즈</h1>
         </div>
 
         <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-10">
