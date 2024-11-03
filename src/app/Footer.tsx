@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "./store/AuthContext";
+import Image from "next/image";
 
 type FooterProps = {
   className?: string;
@@ -48,7 +49,7 @@ export default function Footer({ className }: FooterProps) {
       <div className="flex justify-around w-full">
         <Link href="/">
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
-            <img
+            <Image
               src={pathname === "/" ? "/asset/Bottom nav_Button_Home.png" : "/asset/Bottom nav_Button_Home_Default.png"}
               alt="Bottom nav_Button_Home_Defaul"
               width={48}
@@ -73,7 +74,7 @@ export default function Footer({ className }: FooterProps) {
         <button onClick={handleMyClubList}>
           {/* <Link href="/myclublist"> */}
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
-            <img
+            <Image
               src={
                 pathname === "/myclublist"
                   ? "/asset/Bottom nav_Button__My gathering.png"
@@ -88,7 +89,7 @@ export default function Footer({ className }: FooterProps) {
         </button>
         <button onClick={handleChattingRoom}>
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
-            <img
+            <Image
               src={
                 pathname === "/chat"
                   ? "/asset/Bottom nav_Button_My chat.png"
@@ -103,7 +104,7 @@ export default function Footer({ className }: FooterProps) {
         <button onClick={handleMyPage}>
           {/* <Link href="/mypage"> */}
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
-            <img
+            <Image
               src={
                 pathname === "/mypage"
                   ? "/asset/Bottom nav_Button_My page.png"
