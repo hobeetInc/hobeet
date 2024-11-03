@@ -63,6 +63,7 @@
 // }
 
 // import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
+import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { oneTimeClubJoin } from "@/utils/onetimeclubjoin/join";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter /*, useSearchParams */ } from "next/navigation";
@@ -150,12 +151,12 @@ export default function JoinClubButton({ clubId, /*onSuccess,*/ onError }: JoinC
         onError?.("로그인이 필요합니다.");
         return;
       }
-      console.log("여기는 어떤데? 죄지민@_@");
 
       const result = await oneTimeClubJoin({
         clubId: clubId,
         userId: user.id
       });
+
       if (result.success) {
         router.push(`/kakaopay/paymentConfirm?clubType=true&clubId=${clubId}`);
       } else {
@@ -164,8 +165,14 @@ export default function JoinClubButton({ clubId, /*onSuccess,*/ onError }: JoinC
         alert(result.message || "모임 가입에 실패했습니다.");
       }
     } catch (error) {
-      console.error("Error during join process:", error);
-      onError?.("예기치 않은 오류가 발생했습니다.");
+      if (error instanceof ClubJoinError) {
+        alert(error.message);
+        onError?.(error.message);
+      } else {
+        alert("예기치 않은 오류가 발생했습니다.");
+      }
+      // console.error("Error during join process:", error);
+      // onError?.("예기치 않은 오류가 발생했습니다.");
     } finally {
       setIsLoading(false);
     }

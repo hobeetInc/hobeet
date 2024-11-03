@@ -109,7 +109,7 @@ export class SupabaseClubAPI {
   }
 
   validateAgeRestriction(userAge: number, clubAge: number): void {
-    if (clubAge === null) {
+    if (clubAge === 100) {
       return; // 누구나 참여 가능
     }
 

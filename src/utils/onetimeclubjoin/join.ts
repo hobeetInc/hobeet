@@ -108,12 +108,19 @@
 //   }
 // };
 
-import { SupabaseClubAPI, ClubJoinError } from "./_api/supabase";
+import { ClubJoinError, SupabaseClubAPI } from "./_api/supabase";
 
 type OneTimeClubJoinParams = {
   clubId: number;
   userId: string;
 };
+
+// export class ClubJoinError extends Error {
+//   constructor(message: string) {
+//     super(message);
+//     this.name = "ClubJoinError";
+//   }
+// }
 
 export const oneTimeClubJoin = async ({ clubId, userId }: OneTimeClubJoinParams) => {
   const clubAPI = new SupabaseClubAPI();
@@ -128,9 +135,10 @@ export const oneTimeClubJoin = async ({ clubId, userId }: OneTimeClubJoinParams)
     // 이미 가입한 회원인지 확인
     const isExistingMember = await clubAPI.checkExistingMember(userId, clubId);
     if (isExistingMember) {
+      alert("이미 가입한 모임 입니다.");
       throw new ClubJoinError("이미 가입한 모임 입니다.");
     }
-
+    console.log(isExistingMember);
     // 현재 회원 수 확인
     const currentMembers = await clubAPI.getCurrentMemberCount(clubId);
     if (
@@ -138,21 +146,22 @@ export const oneTimeClubJoin = async ({ clubId, userId }: OneTimeClubJoinParams)
       currentMembers !== null &&
       currentMembers >= clubData.one_time_people_limited
     ) {
+      alert("모임 인원이 가득 찼습니다.");
       throw new ClubJoinError("모임 인원이 가득 찼습니다.");
     }
-
+    console.log(currentMembers);
+    console.log(userData.user_gender);
+    console.log(userData.user_age);
+    console.log(clubData.one_time_age);
     // 성별 제한 확인
     clubAPI.validateGenderRestriction(userData.user_gender, clubData.one_time_gender);
 
     // 나이 제한 확인
     clubAPI.validateAgeRestriction(userData.user_age, clubData.one_time_age);
-
     // 회원 추가
     // await clubAPI.insertMember(clubId, userId);
 
     // 결제 페이지로 이동
-    console.log("야야야 아줌마 죄있는 죄지민!!!");
-
     return {
       success: true,
       message: "모임 가입이 완료 되었습니다."
