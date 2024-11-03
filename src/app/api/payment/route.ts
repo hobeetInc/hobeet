@@ -1,3 +1,4 @@
+import { SupabaseClubAPI } from "@/utils/onetimeclubjoin/_api/supabase";
 import browserClient from "@/utils/supabase/client";
 
 const supabase = browserClient;
@@ -7,6 +8,7 @@ export async function POST(req: Request) {
     const { orderId, requestUserId, clubType, clubId } = await req.json();
 
     let amount, itemName;
+    console.log("야야야 장성현");
 
     if (clubType === true) {
       const { data: onePayData, error: onePayError } = await supabase
@@ -65,6 +67,7 @@ export async function POST(req: Request) {
       console.error(`Payment failed with status: ${response.status}`, errorData);
       throw new Error(`Payment failed with status: ${response.status}`);
     }
+    console.log("야야야 장성현!!!!! 야야야야!!");
 
     const paymentData = await response.json();
     const tid = paymentData.tid;
@@ -76,6 +79,10 @@ export async function POST(req: Request) {
         o_t_c_kakaopay_cid: "TC0ONETIME",
         o_t_c_kakaopay_tid: tid
       });
+      // 입장 시키는중@@@
+      const clubApi = new SupabaseClubAPI();
+      clubApi.insertMember(clubId, requestUserId);
+      console.log("여기는 왔다갔냐구 죄지민!!!!");
 
       if (error) {
         console.error("Supabase insert error:", error);

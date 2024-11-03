@@ -6,7 +6,7 @@ import Image from "next/image";
 import { addHours, format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-// import { PaymentButtonProps } from "../_components/KakaopayBtn";
+import { PaymentButtonProps } from "../_components/KakaopayBtn";
 
 type RegularLimited = {
   r_c_id: {
@@ -27,9 +27,9 @@ type Rcnotification = {
   r_c_notification_image: string;
 };
 
-const PaymentSummaryPage = (/*{ clubType, clubId }: PaymentButtonProps*/) => {
-  const [clubId] = useState(45); // 테스트용
-  const [clubType] = useState(true); // 테스트용
+const PaymentSummaryPage = ({ clubType, clubId }: PaymentButtonProps) => {
+  // const [clubId] = useState(45); // 테스트용
+  // const [clubType] = useState(true); // 테스트용
   const [ClubData, setClubData] = useState<OneTimeClubForm | Rcnotification | null>(null);
   const [memberCount, setMemberCount] = useState<number>(0);
   const [regularLimited, setRegularLimited] = useState<RegularLimited>();

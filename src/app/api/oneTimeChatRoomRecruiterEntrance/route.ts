@@ -5,19 +5,24 @@ export async function POST(req: Request) {
   const supabase = createClient();
 
   // 현재 로그인한 사용자 정보 가져오기
-  const { data: userData, error: userError } = await supabase.auth.getUser();
-  if (userError || !userData?.user) {
-    console.error("사용자 정보를 가져오는 데 실패했습니다: ", userError);
-    return NextResponse.json({ error: "사용자 정보를 가져오는 데 실패했습니다." }, { status: 401 });
-  }
+  // const { data: userData, error: userError } = await supabase.auth.getUser();
 
-  const userId = userData.user.id;
+  // if (userError || !userData?.user) {
+  //   console.error("사용자 정보를 가져오는 데 실패했습니다: ", userError);
+  //   return NextResponse.json({ error: "사용자 정보를 가져오는 데 실패했습니다." }, { status: 401 });
+  // }
+
+  // const userId = userData.user.id;
+  console.log("asjflkasjfglkasjglkajworjo", req);
+
+  const { user_id } = await req.json();
+  console.log("tlqkqkqkqkqkqkqkqkk", user_id);
 
   try {
     const { data: memberData, error: memberError } = await supabase
       .from("o_t_c_member")
       .select("o_t_c_member_id")
-      .eq("user_id", userId)
+      .eq("user_id", user_id)
       .single();
 
     if (memberError || !memberData) {

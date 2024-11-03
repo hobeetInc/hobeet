@@ -2,6 +2,10 @@ type clubId = {
   one_time_club_id: number;
 };
 
+type userId = {
+  user_id: string;
+};
+
 type oneTimeClubMember = {
   one_time_club_id: number;
   one_time_member_id: number;
@@ -18,23 +22,28 @@ type Chatting = {
 };
 
 // 일회성 모임 입장 함수
-export async function OneTimeClubChatRoomRecruiterEntrance(club: clubId) {
+export async function OneTimeClubChatRoomRecruiterEntrance({ one_time_club_id, user_Id }) {
+  console.log(one_time_club_id, "야야야 이재호 야야야 이재호");
+  console.log("tlqkftlqkftlqkf", { user_Id });
+
   try {
-    const response = await fetch(`/api/oneTimeClubChattingRoom?one_time_club_id=${club.one_time_club_id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
+    console.log("야양야야야 죄지민 여기 왔다가냐??");
+
+    const response = await fetch(
+      `http://localhost:3000/api/oneTimeClubChattingRoom?one_time_club_id=${one_time_club_id}`,
+      {
+        method: "GET"
       }
-    });
+    );
 
     if (!response.ok) {
       throw new Error("일회성 모임 정보를 가져오는 데 실패했습니다.");
     }
 
     const data: oneTimeClubMember = await response.json();
-    // console.log(data);
+    console.log("asfjkklajsflkhjasfoijqwoiryqiwyr9qy49127349872398457", data);
 
-    const postResponse = await fetch("/api/oneTimeChatRoomRecruiterEntrance", {
+    const postResponse = await fetch("http://localhost:3000/api/oneTimeChatRoomRecruiterEntrance", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
