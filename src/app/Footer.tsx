@@ -102,7 +102,7 @@ export default function Footer({ className }: FooterProps) {
           </div>
         </button>
         <button onClick={handleMyPage}>
-          {/* <Link href="/mypage"> */}
+        <Link href="/mypage/profile">
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
             <Image
               src={

@@ -13,6 +13,7 @@ const SignupSecondPage = () => {
   const [birthYear, setBirthYear] = useState("");
   const [birthMonth, setBirthMonth] = useState("");
   const [birthDay, setBirthDay] = useState("");
+  const [userBirth, setUserBirth] = useState("");
   const [profileFile, setProfileFile] = useState<File | null>(null);
   const [nameError, setNameError] = useState("");
   const [genderError, setGenderError] = useState("");
@@ -30,7 +31,6 @@ const SignupSecondPage = () => {
     setUserGender,
     setUserAge,
     setUserProfileImg,
-    setUserBirth,
     userId,
     userName,
     userGender,
@@ -182,7 +182,8 @@ const SignupSecondPage = () => {
         user_name: userName,
         user_gender: userGender,
         user_age: userAge,
-        user_profile_img: uploadedImageUrl
+        user_profile_img: uploadedImageUrl,
+        user_birth: userBirth
       })
       .eq("user_id", userId);
 
