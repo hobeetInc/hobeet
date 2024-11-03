@@ -29,12 +29,12 @@ export default function Home() {
           <p className="text-[18px] font-semibold leading-[24.3px]  font-pretendard">에그팝 신규 리스트</p>
         </div>
         <div className="w-[24px] h-[24px] flex items-center">
-          <img className="w-[24px] h-[24px]" src="/asset/Icon/Arrow-Right-Outline.png" alt="eggpop_new_list" />
+          <Image width={24} height={24} src="/asset/Icon/Arrow-Right-Outline.png" alt="eggpop_new_list" />
         </div>
       </div>
       <OneTimeClubList />
       <div className="relative flex flex-shrink-0 ml-[16px] mr-[16px] mt-[64px]">
-        <img className="w-[358px] h-[173px]" src="/asset/Rectangle 20.png" alt="Rectangle 20" />
+        <Image width={358} height={173} src="/asset/Rectangle 20.png" alt="Rectangle 20" />
         <p className="absolute inset-0 flex justify-start mt-[85px] ml-[14px] leading-[24.3px] text-white not-italic	 font-bold text-[18px]">
           Night Run🏃🏻‍♂️‍
         </p>
@@ -49,13 +49,13 @@ export default function Home() {
           <p className="text-[18px] font-semibold leading-[135%] font-pretendard">에그클럽 신규 리스트</p>
         </div>
         <div className="w-[24px] h-[24px] flex items-center">
-          <img className="w-[24px] h-[24px]" src="/asset/Icon/Arrow-Right-Outline.png" alt="eggpop_new_list" />
+          <Image width={24} height={24} src="/asset/Icon/Arrow-Right-Outline.png" alt="eggpop_new_list" />
         </div>
       </div>
       <RegularClubList />
 
       <div className="relative flex flex-shrink-0 ml-[16px] mr-[16px] mt-[64px]">
-        <img className="w-[358px] h-[226px]" src="/asset/Frame 2307.png" alt="Frame 2307" />
+        <Image width={358} height={226} src="/asset/Frame 2307.png" alt="Frame 2307" />
       </div>
       <p className="text-[#0d0d0d] font-pretendard text-[18px] font-semibold leading-[24.3px] mt-[20px] mx-4">
         가을 감성 충전! 지금 가기 좋은 여행지 5곳 🍂
