@@ -36,7 +36,7 @@ export default function Footer({ className }: FooterProps) {
     if (!userId) {
       router.push("/signin");
     } else {
-      router.push("/mypage");
+      router.push("/mypage/profile");
     }
   };
 
@@ -59,7 +59,7 @@ export default function Footer({ className }: FooterProps) {
         </Link>
         <Link href="/search">
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
-            <img
+            <Image
               src={
                 pathname === "/search"
                   ? "/asset/Bottom nav_Button_Search.png"
@@ -102,11 +102,11 @@ export default function Footer({ className }: FooterProps) {
           </div>
         </button>
         <button onClick={handleMyPage}>
-        <Link href="/mypage/profile">
+          {/* <Link href="/mypage/profile"> */}
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
             <Image
               src={
-                pathname === "/mypage"
+                pathname === "/mypage/profile"
                   ? "/asset/Bottom nav_Button_My page.png"
                   : "/asset/Bottom nav_Button_My page_Default.png"
               }
