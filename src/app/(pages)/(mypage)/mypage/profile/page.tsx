@@ -63,6 +63,9 @@ const ProfilePage = () => {
         <div>
           <h2 className="text-2xl font-semibold">{userName || "이름입니다"}</h2>
           <p className="text-gray-500">{`참여도 ${attend}`}</p>
+          <button className="bg-slate-400" onClick={() => router.push("/mypage/profileUpdate")}>
+            프로필수정
+          </button>
         </div>
       </div>
 
@@ -70,7 +73,10 @@ const ProfilePage = () => {
         <div onClick={() => router.push("/")} className="py-4 text-lg cursor-pointer hover:bg-gray-100">
           내가 찜한 모임
         </div>
-        <div onClick={() => router.push("/my-payments")} className="py-4 text-lg cursor-pointer hover:bg-gray-100">
+        <div
+          onClick={() => router.push("/mypage/paymentDetails")}
+          className="py-4 text-lg cursor-pointer hover:bg-gray-100"
+        >
           내 결제 모임
         </div>
         <div onClick={handleReadyAlert} className="py-4 text-lg cursor-pointer hover:bg-gray-100">

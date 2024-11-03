@@ -6,19 +6,6 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 
 const EggDayPayDetail = () => {
-  // const [eggDayPayData, setEggDayPayData] = useState<NotificationData | []>([]);
-
-  // useEffect(() => {
-  //   const fetchClubData = async () => {
-  //     const data = await getEggDayPayList();
-
-  //     setEggDayPayData(data as NotificationData | []);
-  //   };
-
-  //   fetchClubData();
-  // }, []);
-
-  // console.log(eggDayPayData);
   const { data, isLoading } = useQuery({
     queryKey: ["eggDayPayData"],
     queryFn: getEggDayPayList
