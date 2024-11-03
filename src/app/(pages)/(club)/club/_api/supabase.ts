@@ -72,7 +72,7 @@ export const getOneTimeClub = async () => {
 export const getRegularClubList = async () => {
   const { data, error } = await browserClient
     .from("regular_club")
-    .select(`*, user_id(user_name, user_profile_img), r_c_member(count)`)
+    .select(`*, user_id(user_name, user_profile_img), r_c_member(count) , wish_list(*)`)
     .order("regular_club_create_at", { ascending: false })
     .limit(10);
   if (error) throw error;

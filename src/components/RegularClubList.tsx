@@ -1,58 +1,69 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { RegularClubForm } from "@/app/(pages)/(club)/club/_types/ClubForm";
+
 import { getRegularClubList } from "@/app/(pages)/(club)/club/_api/supabase";
 import Image from "next/image";
+import { useAuth } from "@/app/store/AuthContext";
 
 const RegularClubList = () => {
-  const [list, setList] = useState<RegularClubForm[]>([]);
+  const {
+    data: list,
+    isLoading,
+    error
+  } = useQuery({
+    queryKey: ["regularClubs"],
+    queryFn: getRegularClubList
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getRegularClubList();
-        setList(data);
-      } catch (error) {
-        console.error("정기모임 리스트 가져오는 중 오류가 발생했습니다", error);
-      }
-    };
+  const { userId } = useAuth();
+  console.log(userId);
+  console.log(list);
 
-    fetchData();
-  }, []);
+  const renderHeartIcon = (club: RegularClubForm) => {
+    if (!userId) {
+      return <Image src="/asset/Icon/Heart.png" alt="Heart" width={24} height={24} />;
+    }
+
+    const isWished = club.wish_list?.some((wish) => wish.user_id === userId);
+
+    return (
+      <Image
+        src={isWished ? "/asset/Icon/Icon-Heart.png" : "/asset/Icon/Heart.png"}
+        alt="Heart"
+        width={24}
+        height={24}
+      />
+    );
+  };
+
+  if (isLoading) return <div>로딩 중...</div>;
+  if (error) return <div>에러가 발생했습니다.</div>;
 
   return (
     <div className="relative w-full max-w-[390px] mx-auto">
-      <div className="overflow-x-auto scrollbar-hide">
-        <div className="inline-flex items-center  px-4 pt-4">
+      <div className="overflow-x-auto scrollbar-hide h-[320px]">
+        <div className="inline-flex items-center px-4 pt-4">
           {list?.map((club) => (
             <Link
-              href={`/club/oregular-club-sub/${club.regular_club_id}`}
+              href={`/club/regular-club-sub/${club.regular_club_id}`}
               key={club.regular_club_id}
               className="w-[160px] h-[292px] mr-4"
             >
-              <div className="relative ">
+              <div className="relative w-[160px] h-[160px]">
                 <div
-                  className="relative flex justify-end items-center "
+                  className="w-full h-full rounded-xl"
                   style={{
-                    width: "160px",
-                    height: "160px",
-                    padding: "112px 0px 0px 112px",
-                    borderRadius: "12px",
-                    background: `url(${club.regular_club_image}) lightgray 50% / cover no-repeat`,
-                    display: "flex",
-                    alignItems: "center"
+                    background: `url(${club.regular_club_image}) lightgray 50% / cover no-repeat`
                   }}
                 />
+                <div className="absolute bottom-1 right-1">{renderHeartIcon(club)}</div>
               </div>
 
               <div className="flex w-[160px] flex-col items-start gap-[4px] mt-[8px]">
                 <div className="flex w-[160px] h-[23px] flex-col items-start gap-1">
-                  <div
-                    className="flex py-[2px] px-[8px] justify-center items-center
-                 rounded-[128px] bg-[#262626]"
-                  >
+                  <div className="flex py-[2px] px-[8px] justify-center items-center rounded-[128px] bg-[#262626]">
                     <p className="font-pretendard text-[10px] leading-[14.5px] not-italic font-normal text-[#ffffff]">
                       에그클럽
                     </p>
@@ -96,12 +107,16 @@ const RegularClubList = () => {
                   </div>
                 </div>
                 <div className="flex pt-[10.5px] items-center gap-[2px]">
-                  <img
+                  <Image
+                    width={16}
+                    height={16}
                     src="/asset/Icon/Icon-Heart.png"
                     alt="Heart"
                     className="flex w-4 h-4 justify-center items-center"
                   />
-                  <p className="text-[#8c8c8c] font-pretendard text-[12px] font-[400px] leading-[17.4px]">100</p>
+                  <p className="text-[#8c8c8c] font-pretendard text-[12px] font-[400px] leading-[17.4px]">
+                    {club.wish_list.length > 100 ? "100+" : club.wish_list.length}
+                  </p>
                 </div>
               </div>
             </Link>
