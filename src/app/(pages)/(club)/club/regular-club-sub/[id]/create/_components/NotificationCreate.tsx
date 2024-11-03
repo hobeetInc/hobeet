@@ -359,6 +359,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
             type="text"
             placeholder="모임 제목을 작성해주세요"
             value={formData.r_c_notification_name}
+            maxLength={36}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -367,6 +368,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
             }
             className="border-2 border-black mt-4 w-[358px] h-[48px] p-2"
           />
+          <div className="text-gray-500 text-sm">{formData.r_c_notification_name.length} / 36</div>
         </div>
 
         <div>
@@ -400,9 +402,11 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
           <textarea
             value={formData.r_c_notification_content}
+            maxLength={290}
             onChange={(e) => setFormData({ ...formData, r_c_notification_content: e.target.value })}
             className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
           />
+          <div className="text-gray-500 text-sm">{formData.r_c_notification_content.length} / 290</div>
         </div>
 
         <div>
@@ -444,7 +448,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
           <div className="flex flex-col gap-2">
             <div className="flex gap-2">
               <input
-                type="text"
+                type="hidden"
                 value={addressData.zonecode}
                 placeholder="우편번호"
                 className="border p-2 w-24"

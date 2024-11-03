@@ -29,11 +29,7 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
 
         <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-10">
           <div>
-            <h1 className="font-bold text-xl mb-4">결재 내역</h1>
-            <p>결재 내역 공간입니다</p>
-          </div>
-          <div>
-            <h1 className="font-bold text-xl mb-4">{`참여 크루원 ${crewList.length}명`}</h1>
+            <h1 className="font-bold text-xl mb-4">{`총 ${crewList.length}명`}</h1>
             {crewList?.map((member, index) => (
               <div key={member.userId} className="flex items-center gap-2 mb-4">
                 <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">

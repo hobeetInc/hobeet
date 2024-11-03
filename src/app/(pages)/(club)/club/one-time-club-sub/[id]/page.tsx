@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getOneTimeMember } from "../../_api/supabase";
+import { fetchSubCategories, getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import { GetOneTimeClub, Member } from "./_types/Crews";
 import Link from "next/link";
@@ -17,11 +17,11 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const data: Member[] = await getOneTimeMember(oneTimeClubId);
 
   // 임시 확인용
-  //   console.log("데이터:", data);
+  // console.log("데이터:", data);
 
   // 클럽 정보만 추출
   const clubInfo: GetOneTimeClub = data[0]?.one_time_club;
-  console.log("클럽인포:", clubInfo);
+  // console.log("클럽인포:", clubInfo);
 
   // 날짜 커스텀
   const date = clubInfo.one_time_club_date_time;
@@ -96,9 +96,9 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
   // 임시 확인용
-  console.log("클럽 정보 아이디", clubInfo.user_id);
-  console.log("참여 크루", crewMembers);
-  console.log("호스트 정보", hostInfo);
+  // console.log("클럽 정보 아이디", clubInfo.user_id);
+  // console.log("참여 크루", crewMembers);
+  // console.log("호스트 정보", hostInfo);
 
   return (
     <div className="container">

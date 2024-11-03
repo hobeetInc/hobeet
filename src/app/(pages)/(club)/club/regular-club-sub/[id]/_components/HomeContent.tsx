@@ -15,9 +15,17 @@ type HomeContentProps = {
   crewMembers: CrewInfo[];
   regularClubId: number;
   notificationData: InSertRegularClubNotification[];
+  stringCategory: string;
 };
 
-const HomeContent = ({ clubInfo, hostInfo, crewMembers, regularClubId, notificationData }: HomeContentProps) => (
+const HomeContent = ({
+  clubInfo,
+  hostInfo,
+  crewMembers,
+  regularClubId,
+  notificationData,
+  stringCategory
+}: HomeContentProps) => (
   <>
     <div className="flex flex-col w-full">
       <Image
@@ -31,7 +39,7 @@ const HomeContent = ({ clubInfo, hostInfo, crewMembers, regularClubId, notificat
 
     <div className="flex flex-col gap-10 p-4">
       <div className="flex flex-col gap-4 mt-4">
-        <p className="text-[13px]">에그클럽</p>
+        <p className="text-[13px]">{stringCategory}</p>
 
         <div className="flex justify-between">
           <h1 className="font-bold text-[23px]">{clubInfo.regular_club_name}</h1>

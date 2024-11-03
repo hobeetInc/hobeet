@@ -1,5 +1,5 @@
-import { getRegularClubNotification, getRegularMember } from "../../_api/supabase";
-import { getRegularClub, Member } from "./_types/Crews";
+import { fetchSubCategories, getRegularClubNotification, getRegularMember } from "../../_api/supabase";
+import { getRegularClub, Member, SCategory } from "./_types/Crews";
 import { InSertRegularClubNotification } from "./create/_types/subCreate";
 import TabLayout from "./_components/TabLayout";
 import HomeContent from "./_components/HomeContent";
@@ -17,10 +17,11 @@ type CrewInfo = {
 const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const regularClubId = Number(params.id);
 
-  const [memberData, notificationData] = (await Promise.all([
+  const [memberData, notificationData, subcategories] = (await Promise.all([
     getRegularMember(regularClubId),
-    getRegularClubNotification(regularClubId)
-  ])) as [Member[], InSertRegularClubNotification[]];
+    getRegularClubNotification(regularClubId),
+    fetchSubCategories()
+  ])) as [Member[], InSertRegularClubNotification[], SCategory[]];
 
   // const data: Member[] = await
 
@@ -32,6 +33,11 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   // 클럽 정보만 추출
   const clubInfo: getRegularClub = memberData[0]?.regular_club;
   // console.log("클럽인포:", clubInfo);
+
+  // 일치하는 카테고리 찾기
+  const matchCategory = subcategories.find((category) => category.s_c_id === clubInfo.s_c_id);
+  const stringCategory = matchCategory?.s_c_name;
+  console.log("일치 카테고리!!!!!!!", stringCategory);
 
   // 참여 크루 정보 추출
   const crewMembers: CrewInfo[] = memberData.map((member) => ({
@@ -73,6 +79,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
           crewMembers={crewMembers}
           regularClubId={regularClubId}
           notificationData={notificationData}
+          stringCategory={stringCategory}
         />
         <RegularNotification notificationData={notificationData} />
       </TabLayout>

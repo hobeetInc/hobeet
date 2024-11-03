@@ -29,3 +29,10 @@ export interface Member {
   regular_club: getRegularClub;
   user: User;
 }
+
+// 중분류 카테고리 타입
+export interface SCategory {
+  s_c_id: number;
+  m_c_id: number;
+  s_c_name: string;
+}
