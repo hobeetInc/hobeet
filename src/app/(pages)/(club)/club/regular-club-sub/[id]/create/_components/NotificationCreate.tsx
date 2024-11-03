@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
 import { useAuth } from "@/app/store/AuthContext";
 import { RegularClubNotification } from "../_types/subCreate";
-import { submitRegularClubNotification, uploadImage } from "../../../../_api/supabase";
+import { submitRegularClubNotification, submitRegularMember, uploadImage } from "../../../../_api/supabase";
 import { useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
 
@@ -323,10 +323,19 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
         }
       }
 
-      // 5. 데이터 저장
-      await submitRegularClubNotification(finalFormData);
+      //  데이터 저장
+      const data = await submitRegularClubNotification(finalFormData);
+      // console.log("이거 지금 생성함!!!!!!!!!", data);
+
+      const hostInfo = {
+        r_c_notification_id: data.r_c_notification_id,
+        user_id: data.user_id
+      };
+
+      const memberData = await submitRegularMember(hostInfo);
+
       alert("정기모임 안의 공지글을 생성하였습니다");
-      router.push(`/club/regular-club-sub/${params.id}`); // 성공 시 이동할 페이지
+      router.push(`/club/regular-club-sub/${params.id}/create/${data.r_c_notification_id}`); // 성공 시 이동할 페이지
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       const errorMessage = error instanceof Error ? error.message : "알 수 없는 오류가 발생했습니다";
@@ -336,6 +345,12 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
+      <div className="flex justify-between items-center h-[48px] p-4 relative">
+        <button onClick={() => router.back()} className="absolute left-4 text-lg">
+          ←
+        </button>
+        <h1 className="text-lg font-semibold flex-1 text-center">에그데이</h1>
+      </div>
       <div className="flex flex-col gap-20 p-2">
         <div>
           <h1 className="mb-4 text-[20px] font-semibold">모임 사진</h1>

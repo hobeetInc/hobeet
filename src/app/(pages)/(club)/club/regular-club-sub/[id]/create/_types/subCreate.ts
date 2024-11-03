@@ -24,9 +24,15 @@ export interface InSertRegularClubNotification {
   r_c_notification_member: Array<{ count: number }>;
 }
 
-// 공지 참여 맴버 정보
+// 공지 참여 맴버 정보 {get}
 export interface NotificationMember {
   r_c_member_id: number;
+  r_c_notification_id: number;
+  user_id: string;
+}
+
+// 공지 맴버 테이블 {insert}
+export interface InsertNotificationMember {
   r_c_notification_id: number;
   user_id: string;
 }
