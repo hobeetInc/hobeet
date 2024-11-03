@@ -78,7 +78,7 @@ const ProfileEditPage = () => {
       } else {
         uploadedImageUrl = supabase.storage.from("avatars").getPublicUrl(`public/${userId}/${sanitizedFileName}`)
           .data.publicUrl;
-        setUserProfileImg(uploadedImageUrl);
+        setUserProfileImg(uploadedImageUrl || "");
       }
     }
 
@@ -141,8 +141,9 @@ const ProfileEditPage = () => {
           <input
             type="email"
             value={email}
+            readOnly
             onChange={handleEmailChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border border-gray-300 rounded bg-gray-100"
           />
           {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
           <p className="text-sm text-gray-500 mt-1">{`${provider}로 가입한 계정이에요`}</p>

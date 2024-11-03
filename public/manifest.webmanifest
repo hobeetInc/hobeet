@@ -1,6 +1,6 @@
 {
-  "theme_color": "#8936FF",
-  "background_color": "#2EC6FE",
+  "theme_color": "#fdb700",
+  "background_color": "#ffffff",
   "icons": [
     { "purpose": "maskable", "sizes": "512x512", "src": "icon512_maskable.png", "type": "image/png" },
     { "purpose": "any", "sizes": "512x512", "src": "icon512_rounded.png", "type": "image/png" }
@@ -9,8 +9,8 @@
   "display": "standalone",
   "dir": "auto",
   "lang": "ko-KR",
-  "name": "hobeet",
-  "short_name": "hobeet",
+  "name": "에그프렌즈",
+  "short_name": "에그프렌즈",
   "start_url": "/",
   "scope": "/"
 }

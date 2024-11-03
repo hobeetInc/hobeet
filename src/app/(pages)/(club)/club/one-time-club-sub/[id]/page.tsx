@@ -156,7 +156,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
         <CrewList
           crewMembers={crewMembers}
           clubId={oneTimeClubId}
-          hostInfo={hostInfo || crewMembers[0]}
+          // hostInfo={hostInfo || crewMembers[0]}
           clubHostId={clubInfo.user_id}
         />
       </div>
