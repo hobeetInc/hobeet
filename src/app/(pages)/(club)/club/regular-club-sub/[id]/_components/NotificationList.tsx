@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import { format, parseISO } from "date-fns";
-import { ChevronRight } from "lucide-react";
 import ClubCard from "./ClubCard";
 import { ko } from "date-fns/locale";
 
@@ -12,15 +11,15 @@ type NotificationListProps = {
 };
 
 const NotificationList = ({ notificationData }: NotificationListProps) => {
-  const [selectedDate, setSelectedDate] = useState<string>("all");
+  const [selectedDate, setSelectedDate] = useState("all");
 
   // 날짜별로 그룹화하는 함수
   const groupDate = (notifications: InSertRegularClubNotification[]) => {
-    return notificationData.reduce((groups: { [key: string]: InSertRegularClubNotification[] }, notification) => {
+    return notifications.reduce((groups: { [key: string]: InSertRegularClubNotification[] }, notification) => {
       // 날짜는 "MM.dd" 형식으로 변환
       const date = format(parseISO(notification.r_c_notification_date_time), "MM.dd");
 
-      // 해달 날짜와 그 그룹이 없으면 새로 만든다
+      // 해당 날짜와 그 그룹이 없으면 새로 만든다
       if (!groups[date]) {
         groups[date] = [];
       }
@@ -46,13 +45,10 @@ const NotificationList = ({ notificationData }: NotificationListProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between">
-        <h1 className="text-[20px] font-semibold">모임 일정</h1>
-        <ChevronRight />
-      </div>
+      <h2 className="text-xl font-bold">모임 일정</h2>
 
       {/* 날짜 필터 버튼들 */}
-      <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
+      <div className="flex gap-2 overflow-x-auto pb-2">
         <button
           onClick={() => setSelectedDate("all")}
           className={`px-6 py-2 rounded-full border-2 ${
@@ -61,6 +57,7 @@ const NotificationList = ({ notificationData }: NotificationListProps) => {
         >
           전체
         </button>
+
         {dates.map((date) => (
           <button
             key={date}
@@ -76,7 +73,7 @@ const NotificationList = ({ notificationData }: NotificationListProps) => {
       </div>
 
       {/* 모임 카드 목록 */}
-      <div>
+      <div className="grid gap-4">
         {filteredNotification().map((notification) => (
           <ClubCard key={notification.r_c_notification_id} notification={notification} />
         ))}
