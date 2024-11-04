@@ -1,11 +1,10 @@
 import { fetchSubCategories, getRegularClubNotification, getRegularMember } from "../../_api/supabase";
 import { getRegularClub, Member, SCategory } from "./_types/Crews";
-import { InSertRegularClubNotification } from "./create/_types/subCreate";
 import TabLayout from "./_components/TabLayout";
+import ClubHeader from "./_components/ClubHeader";
 import HomeContent from "./_components/HomeContent";
 import RegularNotification from "./_components/RegularNotification";
-
-import ClubHeader from "./_components/ClubHeader";
+import { InSertRegularClubNotification } from "./create/_types/subCreate";
 
 type CrewInfo = {
   memberId: number;
@@ -23,13 +22,6 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
     fetchSubCategories()
   ])) as [Member[], InSertRegularClubNotification[], SCategory[]];
 
-  // const data: Member[] = await
-
-  // const clubList: RegularClubNotification[] =
-
-  // 임시 확인용
-  // console.log("데이터:", data);
-
   // 클럽 정보만 추출
   const clubInfo: getRegularClub = memberData[0]?.regular_club;
   // console.log("클럽인포:", clubInfo);
@@ -37,7 +29,6 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   // 일치하는 카테고리 찾기
   const matchCategory = subCategories.find((category) => category.s_c_id === clubInfo.s_c_id);
   const stringCategory = matchCategory?.s_c_name;
-  console.log("일치 카테고리!!!!!!!", stringCategory);
 
   // 참여 크루 정보 추출
   const crewMembers: CrewInfo[] = memberData.map((member) => ({
@@ -47,15 +38,9 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
     userImage: member.user.user_profile_img
   }));
 
+  console.log("Hmm...", crewMembers);
   // 호스트 정보 추출
   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
-
-  // 임시 확인용
-  // console.log("클럽 정보 아이디", clubInfo.user_id);
-  // console.log("참여 크루", crewMembers);
-  // console.log("호스트 정보", hostInfo);
-
-  console.log("클럽리스트:", notificationData);
 
   return (
     <div className="container">
@@ -71,7 +56,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
           notificationData={notificationData}
           stringCategory={stringCategory}
         />
-        <RegularNotification notificationData={notificationData} />
+        <RegularNotification notificationData={notificationData} crewMembers={crewMembers} />
       </TabLayout>
     </div>
   );
