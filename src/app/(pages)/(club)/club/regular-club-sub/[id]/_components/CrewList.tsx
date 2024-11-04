@@ -176,7 +176,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         </div>
         <div className="grid grid-cols-8 grid-flow-col gap-2 w-full">{displaySlots}</div>
       </div>
-      <NotificationList notificationData={notificationData} />
+      <NotificationList notificationData={notificationData} crewMembers={crewList} />
       {renderJoinButton()}
       <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>

@@ -22,7 +22,7 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
     console.log("ClubCard 렌더링 시 crewMembers:", crewMembers);
   }, []);
 
-  console.log("ClubCard 렌더링 시 노티피케이션:", notification);
+  console.log("객체:", { notification, crewMembers });
 
   // 날짜와 시간 커스텀
   const DateTimeCustom = (dateTime: string) => {
