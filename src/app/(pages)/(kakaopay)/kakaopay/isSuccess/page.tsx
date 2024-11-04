@@ -22,7 +22,7 @@ const Page = () => {
       setIsMemberInserted(true);
 
       router.push(
-        `https:/www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`
+        `http://localhost:3000/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`
       );
     };
 
