@@ -44,14 +44,6 @@ const DateTime = ({ formData, setFormData }: OneTimeProps) => {
             placeholderText="날짜를 선택해주세요"
             className="w-full p-4 bg-gray-50 rounded-lg pr-12"
           />
-          {/* <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-          <Image 
-            src="/asset/Icon/calendar-icon.png" 
-            alt="calendar"
-            width={20}
-            height={20}
-          />
-        </div> */}
         </div>
       </div>
 

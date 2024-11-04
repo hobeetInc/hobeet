@@ -13,7 +13,6 @@ const RegularClubList = () => {
   const [list, setList] = useState<RegularClubForm[]>([]);
 
   const settings = {
-    // dots: true,
     infinite: list.length > 3,
     speed: 500,
     slidesToShow: 2,
