@@ -42,11 +42,13 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError, clas
         onSuccess?.();
         RegularClubChatRoomRecruiterEntrance({ r_c_id: clubId }); // 모임원 채팅방 입장(자동 승인)
         alert(result.message);
+        location.reload();
       }
     } catch (error) {
       if (error instanceof ClubJoinError) {
         onError?.(error.message);
         alert(error.message);
+        location.reload();
       } else {
         onError?.("예기치 않은 오류가 발생했습니다.");
         alert("예기치 않은 오류가 발생했습니다.");

@@ -28,8 +28,8 @@ export const regularClubJoin = async ({ clubId, userId }: RegularClubJoinParams)
     return {
       success: true,
       message: clubData.regular_club_approval
-        ? "모임 가입이 완료 되었습니다."
-        : "가입 신청이 완료되었습니다. 모임장의 승인을 기다려주세요.",
+        ? "가입 신청이 완료되었습니다. 모임장의 승인을 기다려주세요."
+        : "모임 가입이 완료 되었습니다.",
       status: clubData.regular_club_approval ? "pending" : "active"
     };
   } catch (error) {

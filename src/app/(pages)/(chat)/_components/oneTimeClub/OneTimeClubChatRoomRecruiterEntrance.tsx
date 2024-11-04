@@ -25,7 +25,7 @@ export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: clu
     console.log("야양야야야 죄지민 여기 왔다가냐??");
 
     const response = await fetch(
-      `https:/www.eggfriends.site/api/oneTimeClubChattingRoom?one_time_club_id=${one_time_club_id.one_time_club_id}`,
+      `http://localhost:3000/api/oneTimeClubChattingRoom?one_time_club_id=${one_time_club_id.one_time_club_id}`,
       {
         method: "GET"
       }
@@ -38,7 +38,7 @@ export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: clu
     const data: oneTimeClubMember = await response.json();
     console.log("data!!!!", data);
 
-    const postResponse = await fetch("https:/www.eggfriends.site/api/oneTimeChatRoomRecruiterEntrance", {
+    const postResponse = await fetch("http://localhost:3000/api/oneTimeChatRoomRecruiterEntrance", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
