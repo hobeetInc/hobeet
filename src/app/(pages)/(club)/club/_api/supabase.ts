@@ -58,7 +58,7 @@ export const uploadImage = async (file: File) => {
   return publicUrl;
 };
 
-// 일회성 모임리스트 불러오기
+// 일회성 모임리스트 불러오기(10개씩)
 export const getOneTimeClub = async () => {
   const { data, error } = await browserClient
     .from("one_time_club")
@@ -75,13 +75,39 @@ export const getOneTimeClub = async () => {
   return data;
 };
 
-// 정기적 모임리스트 불러오기
+// 정기적 모임리스트 불러오기(10개씩)
 export const getRegularClubList = async () => {
   const { data, error } = await browserClient
     .from("regular_club")
     .select(`*, user_id(user_name, user_profile_img), r_c_member(count) , wish_list(*)`)
     .order("regular_club_create_at", { ascending: false })
     .limit(10);
+  if (error) throw error;
+  return data;
+};
+
+// 일회성 모임리스트 불러오기(전체)
+export const getAllOneTimeClub = async () => {
+  const { data, error } = await browserClient
+    .from("one_time_club")
+    .select(
+      `
+      *,
+      user_id(user_name, user_profile_img),
+      o_t_c_member(count)`
+    )
+    .order("one_time_create_at", { ascending: false });
+  if (error) throw error;
+
+  return data;
+};
+
+// 정기적 모임리스트 불러오기(전체)
+export const getAllRegularClubList = async () => {
+  const { data, error } = await browserClient
+    .from("regular_club")
+    .select(`*, user_id(user_name, user_profile_img), r_c_member(count) , wish_list(*)`)
+    .order("regular_club_create_at", { ascending: false });
   if (error) throw error;
   return data;
 };

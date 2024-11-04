@@ -3,8 +3,10 @@ import Image from "next/image";
 import CategorySlider from "@/components/CategorySlider";
 import OneTimeClubList from "@/components/OneTimeClubList";
 import RegularClubList from "@/components/RegularClubList";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <div className="w-full">
       <div className="flex justify-center items-center">
@@ -28,7 +30,7 @@ export default function Home() {
         <div className="flex w-[326px] h-[24px] flex-col items-start">
           <p className="text-[18px] font-semibold leading-[24.3px]  font-pretendard">에그팝 신규 리스트</p>
         </div>
-        <div className="w-[24px] h-[24px] flex items-center">
+        <div className="w-[24px] h-[24px] flex items-center" onClick={() => router.push("/club/list/onetime")}>
           <Image width={24} height={24} src="/asset/Icon/Arrow-Right-Outline.png" alt="eggpop_new_list" />
         </div>
       </div>
@@ -45,7 +47,10 @@ export default function Home() {
         </p>
       </div>
       <div className="flex w-[358px] h-[24px] items-center gap-[8px] mt-[64px] ml-[16px]">
-        <div className="flex w-[326px] h-[24px] flex-col items-start ">
+        <div
+          className="flex w-[326px] h-[24px] flex-col items-start "
+          onClick={() => router.push("/club/list/regular")}
+        >
           <p className="text-[18px] font-semibold leading-[135%] font-pretendard">에그클럽 신규 리스트</p>
         </div>
         <div className="w-[24px] h-[24px] flex items-center">

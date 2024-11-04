@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/app/store/AuthContext";
-import { useRouter } from "next/navigation";
+
 import { ChevronRight } from "lucide-react";
 import { getNotificationMember } from "@/app/(pages)/(club)/club/_api/supabase";
 import FullScreenModal from "./FullScreenModal";
@@ -31,7 +31,6 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
   // const [participationStatus, setParticipationStatus] = useState<ParticipationS>("not_applied");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { userId } = useAuth();
-  const router = useRouter();
 
   useEffect(() => {
     // console.log("useEffect 실행 시 userId:", userId);
