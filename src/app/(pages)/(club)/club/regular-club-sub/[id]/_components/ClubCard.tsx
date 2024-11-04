@@ -3,12 +3,27 @@ import Image from "next/image";
 import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/store/AuthContext";
+import { useEffect } from "react";
 
-type ClubCardProps = { notification: InSertRegularClubNotification };
+type CrewInfo = {
+  memberId: number;
+  userId: string;
+  userName: string;
+  userImage: string;
+};
 
-const ClubCard = ({ notification }: ClubCardProps) => {
+type ClubCardProps = { notification: InSertRegularClubNotification; crewMembers: CrewInfo[] };
+
+const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
   const router = useRouter();
   const { userId } = useAuth();
+
+  useEffect(() => {
+    console.log("ClubCard 렌더링 시 crewMembers:", crewMembers);
+  }, []);
+
+  console.log("ClubCard 렌더링 시 노티피케이션:", notification);
+
   // 날짜와 시간 커스텀
   const DateTimeCustom = (dateTime: string) => {
     const date = new Date(dateTime);
@@ -33,9 +48,16 @@ const ClubCard = ({ notification }: ClubCardProps) => {
     if (!userId) {
       alert("로그인이 필요한 서비스입니다");
       router.push("/signin");
-    } else {
-      router.push(`/club/regular-club-sub/${notification.r_c_id}/create/${notification.r_c_notification_id}`);
     }
+
+    const isMember = crewMembers.some((member) => member.userId === userId);
+
+    if (!isMember) {
+      alert("크루 맴버만 이용 가능합니다. 먼저 가입을 진행해주세요");
+      return;
+    }
+
+    router.push(`/club/regular-club-sub/${notification.r_c_id}/create/${notification.r_c_notification_id}`);
   };
 
   return (

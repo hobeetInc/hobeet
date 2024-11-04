@@ -45,6 +45,8 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
       try {
         const memberResult = await getRegularMember(clubId);
 
+        console.log("memberResult:", memberResult);
+
         const newCrewMemebers = memberResult.map((member) => ({
           memberId: member.r_c_member_id,
           userId: member.user_id,
@@ -57,7 +59,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         if (userId) {
           const statusResult = await getParticipationStatus({ userId, clubId });
 
-          setParticipationStatus(statusResult.r_c_participation_request_status);
+          setParticipationStatus(statusResult[0].r_c_participation_request_status);
         }
       } catch (error) {
         console.error("크루인원 가져오는 중 오류:", error);

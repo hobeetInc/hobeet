@@ -2,8 +2,6 @@ import Image from "next/image";
 import React from "react";
 import { getNotificationData, getNotificationMember } from "../../../../_api/supabase";
 import { NotificaitonInfo, NotificationMember } from "./_types/notifictionInfo";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
 import CrewList from "./_components/CrewList";
 import DayHeader from "./_components/DayHeader";
 

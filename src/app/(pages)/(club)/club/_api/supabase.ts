@@ -208,10 +208,8 @@ export const getParticipationStatus = async ({ userId, clubId }: GetParticipatio
     .from("r_c_participation_request")
     .select("*")
     .eq("user_id", userId)
-    .eq("r_c_id", clubId)
-    .single();
+    .eq("r_c_id", clubId);
   if (error) throw error;
-
   return data;
 };
 
@@ -229,7 +227,7 @@ export const getNotificationMember = async (notificationId: number | undefined) 
     .select(`*, user(user_name, user_profile_img)`)
     .eq("r_c_notification_id", notificationId);
 
-  console.log("이태연!!!!!!", notificationId);
+  // console.log("이태연!!!!!!", notificationId);
 
   if (error) throw error;
   return data;
