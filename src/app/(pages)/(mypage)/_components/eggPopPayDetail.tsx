@@ -26,7 +26,7 @@ const EggPopPayDetail = () => {
       const parsedDate = parseISO(dateString);
       return format(parsedDate, "yyyy. MM. dd");
     } catch (error) {
-      console.error("Invalid date format:", dateString, error);
+      console.error("날짜 포멧팅 실패:", dateString, error);
       return "유효하지 않은 날짜 형식";
     }
   };
@@ -41,7 +41,7 @@ const EggPopPayDetail = () => {
       const adjustedDate = addHours(parsedDate, 9);
       return format(adjustedDate, "MM월 dd일 HH:mm");
     } catch (error) {
-      console.error("Invalid date format:", dateString, error);
+      console.error("날짜 포멧팅 실패:", dateString, error);
       return "유효하지 않은 날짜 형식";
     }
   };

@@ -104,7 +104,7 @@ const PaymentConfirmPage = () => {
             r_c_notification_image: regularClubFetchData.r_c_notification_image,
             r_c_notification_tax: regularClubFetchData.r_c_notification_tax,
             r_c_id: Array.isArray(regularClubFetchData.r_c_id)
-              ? { m_c_id: regularClubFetchData.r_c_id[0].m_c_id || { m_c_name: "" } }
+              ? { m_c_id: regularClubFetchData.r_c_id[0].m_c_id }
               : regularClubFetchData.r_c_id
           };
 
