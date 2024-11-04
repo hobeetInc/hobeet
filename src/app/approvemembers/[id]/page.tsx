@@ -217,11 +217,14 @@ export default function ApproveMembersPage() {
       if (!error) {
         RegularClubChatRoomRecruiterEntrance({ r_c_id: clubId }); // 모임원 채팅방 입장(가입 승인 시)
         alert("가입이 승인되었습니다.");
+        location.reload();
       } else {
         alert("승인 처리 중 오류가 발생했습니다.");
+        location.reload();
       }
     } else {
       alert("승인 처리 중 오류가 발생했습니다.");
+      location.reload();
     }
   };
 
