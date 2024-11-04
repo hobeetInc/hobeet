@@ -32,7 +32,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
   const member: NotificationMember[] = await getNotificationMember(clubInfo?.r_c_notification_id);
 
-  console.log("유저!!!!!!!", member);
+  // console.log("유저!!!!!!!", member);
 
   // 날짜 커스텀
   const date = clubInfo?.r_c_notification_date_time;
@@ -57,17 +57,6 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
   const currentTax = tax === 0 ? "X" : tax.toLocaleString() + "원";
 
   //   console.log("택스", tax);
-
-  // 성별 커스텀
-  const gender = (gender: null | string) => {
-    if (gender === null) {
-      return "누구나";
-    } else if (gender === "남성") {
-      return "남성만";
-    } else {
-      return "여성만";
-    }
-  };
 
   //   참여 크루 정보 추출
   const crewMembers = member.map((member) => ({
@@ -146,7 +135,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
           </div>
         </div>
 
-        <CrewList crewMembers={crewMembers} clubId={secondId} clubHostId={clubInfo.user_id} />
+        <CrewList crewMembers={crewMembers} clubId={secondId} clubHostId={clubInfo.user_id} clubInfo={clubInfo} />
       </div>
     </div>
   );

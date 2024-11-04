@@ -147,7 +147,7 @@ export const getOneTimeMember = async (clubId: number) => {
   return data;
 };
 
-// 1. 정기 모임 멤버, 유저, 모임 정보 한 번에 가져오기
+// 정기 모임 멤버, 유저, 모임 정보 한 번에 가져오기
 export const getRegularMember = async (clubId: number) => {
   const { data, error } = await browserClient
     .from("r_c_member")
