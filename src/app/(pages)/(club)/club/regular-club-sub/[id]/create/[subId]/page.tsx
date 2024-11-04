@@ -5,6 +5,7 @@ import { NotificaitonInfo, NotificationMember } from "./_types/notifictionInfo";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import CrewList from "./_components/CrewList";
+import DayHeader from "./_components/DayHeader";
 
 type SubSubPageProps = {
   params: {
@@ -60,6 +61,8 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
     return (
       <div className="container">
+        <DayHeader clubInfo={clubInfo} />
+
         <div className="flex items-center justify-between h-[48px] p-4 relative">
           <Link href={"/"} className="absolute left-4">
             <ChevronLeft />
@@ -117,8 +120,12 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
               <p>{clubInfo.r_c_notification_content}</p>
             </div>
           </div>
-
-          <CrewList crewMembers={crewMembers} clubId={secondId} clubHostId={clubInfo.user_id} />
+          <CrewList
+            crewMembers={crewMembers}
+            clubId={clubId}
+            clubHostId={clubInfo.user_id}
+            clubInfo={clubInfo} // clubInfo가 올바르게 전달되고 있는지 확인
+          />{" "}
         </div>
       </div>
     );

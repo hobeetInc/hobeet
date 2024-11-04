@@ -4,8 +4,8 @@ import { InSertRegularClubNotification } from "./create/_types/subCreate";
 import TabLayout from "./_components/TabLayout";
 import HomeContent from "./_components/HomeContent";
 import RegularNotification from "./_components/RegularNotification";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+
+import ClubHeader from "./_components/ClubHeader";
 
 type CrewInfo = {
   memberId: number;
@@ -59,17 +59,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="container">
-      <div className="flex justify-between items-center h-[48px] p-4 relative">
-        <Link href={"/"} className="absolute left-4">
-          <ChevronLeft />
-        </Link>
-        <h1 className="flex-1 text-center text-lg font-semibold">
-          {clubInfo.regular_club_name.length > 8
-            ? `${clubInfo.regular_club_name.slice(0, 8)}...`
-            : clubInfo.regular_club_name}
-        </h1>
-        <Link href={`/club/regular-club-sub/${regularClubId}/create`}>+</Link>
-      </div>
+      <ClubHeader clubInfo={clubInfo} />
 
       <TabLayout>
         {/* props를 통해 데이터 전달 */}

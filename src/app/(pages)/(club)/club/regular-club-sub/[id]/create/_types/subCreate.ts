@@ -34,5 +34,5 @@ export interface NotificationMember {
 // 공지 맴버 테이블 {insert}
 export interface InsertNotificationMember {
   r_c_notification_id: number;
-  user_id: string;
+  user_id: string | null;
 }
