@@ -62,7 +62,7 @@ const CategoryPage = () => {
         >
           전체
         </button>
-        {subCategories.map((subCategory, index) => (
+        {subCategories.map((subCategory) => (
           <button
             key={subCategory.s_c_id}
             onClick={() => setSelectedCategory(subCategory.s_c_id)}

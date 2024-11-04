@@ -1,5 +1,12 @@
 import browserClient from "@/utils/supabase/client";
-import { OneTimeClubForm, OneTimeMember, RegularClubForm, RegularMember, RegularRequest } from "../_types/ClubForm";
+import {
+  InsertWishList,
+  OneTimeClubForm,
+  OneTimeMember,
+  RegularClubForm,
+  RegularMember,
+  RegularRequest
+} from "../_types/ClubForm";
 import { InsertNotificationMember, RegularClubNotification } from "../regular-club-sub/[id]/create/_types/subCreate";
 
 // supabase에 일회성 모임 제출
@@ -51,7 +58,7 @@ export const uploadImage = async (file: File) => {
   return publicUrl;
 };
 
-// 일회성 모임리스트 불러오기
+// 일회성 모임리스트 불러오기(10개씩)
 export const getOneTimeClub = async () => {
   const { data, error } = await browserClient
     .from("one_time_club")
@@ -68,13 +75,39 @@ export const getOneTimeClub = async () => {
   return data;
 };
 
-// 정기적 모임리스트 불러오기
+// 정기적 모임리스트 불러오기(10개씩)
 export const getRegularClubList = async () => {
   const { data, error } = await browserClient
     .from("regular_club")
     .select(`*, user_id(user_name, user_profile_img), r_c_member(count) , wish_list(*)`)
     .order("regular_club_create_at", { ascending: false })
     .limit(10);
+  if (error) throw error;
+  return data;
+};
+
+// 일회성 모임리스트 불러오기(전체)
+export const getAllOneTimeClub = async () => {
+  const { data, error } = await browserClient
+    .from("one_time_club")
+    .select(
+      `
+      *,
+      user_id(user_name, user_profile_img),
+      o_t_c_member(count)`
+    )
+    .order("one_time_create_at", { ascending: false });
+  if (error) throw error;
+
+  return data;
+};
+
+// 정기적 모임리스트 불러오기(전체)
+export const getAllRegularClubList = async () => {
+  const { data, error } = await browserClient
+    .from("regular_club")
+    .select(`*, user_id(user_name, user_profile_img), r_c_member(count) , wish_list(*)`)
+    .order("regular_club_create_at", { ascending: false });
   if (error) throw error;
   return data;
 };
@@ -114,7 +147,7 @@ export const getOneTimeMember = async (clubId: number) => {
   return data;
 };
 
-// 1. 정기 모임 멤버, 유저, 모임 정보 한 번에 가져오기
+// 정기 모임 멤버, 유저, 모임 정보 한 번에 가져오기
 export const getRegularMember = async (clubId: number) => {
   const { data, error } = await browserClient
     .from("r_c_member")
@@ -198,6 +231,34 @@ export const getNotificationMember = async (notificationId: number | undefined) 
     .from("r_c_notification_member")
     .select(`*, user(user_name, user_profile_img)`)
     .eq("r_c_notification_id", notificationId);
+  if (error) throw error;
+  return data;
+};
+
+// 위시리스트에 집어넣기
+export const submitWishList = async (wish: InsertWishList) => {
+  const { data, error } = await browserClient.from("wish_list").insert(wish).select("*").single();
+  if (error) throw error;
+  return data;
+};
+
+// 해당 위시리스트 가져오기
+export const getWishList = async (wish: InsertWishList) => {
+  const { data, error } = await browserClient
+    .from("wish_list")
+    .select("*")
+    .match({ r_c_id: wish.r_c_id, user_id: wish.user_id })
+    .single();
+  if (error) throw error;
+  return data;
+};
+
+// 위시리스트 삭제
+export const deleteWishList = async (wish: InsertWishList) => {
+  const { data, error } = await browserClient
+    .from("wish_list")
+    .delete()
+    .match({ r_c_id: wish.r_c_id, user_id: wish.user_id });
   if (error) throw error;
   return data;
 };

@@ -10,10 +10,13 @@ const SearchPage = () => {
   interface BaseClub {
     m_c_id: number;
     s_c_id: number;
-    user_id: string;
+    user_id: {
+      user_profile_img: string;
+      user_name: string;
+    };
   }
 
-  interface RegularClub extends BaseClub {
+  interface RegularClubList extends BaseClub {
     type: "regular";
     regular_club_id: number;
     regular_club_name: string;
@@ -24,11 +27,15 @@ const SearchPage = () => {
     regular_club_introduction: string;
     regular_club_create_at: string;
     regular_club_approval: boolean;
-    approved_members: any[];
-    pending_members: any[];
+    r_c_member: { count: number }[];
+    wish_list: {
+      r_c_id: number;
+      user_id: string;
+      wish_list_id: number;
+    }[];
   }
 
-  interface OneTimeClub extends BaseClub {
+  interface OneTimeClubList extends BaseClub {
     type: "oneTime";
     one_time_club_id: number;
     one_time_club_name: string;
@@ -43,11 +50,11 @@ const SearchPage = () => {
     one_time_tax: number;
   }
 
-  type Club = RegularClub | OneTimeClub;
+  type ClubList = RegularClubList | OneTimeClubList;
 
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<Club[]>([]);
+  const [searchResults, setSearchResults] = useState<ClubList[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
   const handleCreateClub = () => {

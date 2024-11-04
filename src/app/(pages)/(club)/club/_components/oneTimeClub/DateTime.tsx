@@ -7,51 +7,80 @@ import { ko } from "date-fns/locale";
 import { OneTimeProps } from "../../_types/ClubForm";
 
 const DateTime = ({ formData, setFormData }: OneTimeProps) => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [startTime, setStartTime] = useState<Date | null>(null);
 
-  const handleColor = (time: Date) => {
-    return time.getHours() > 12 ? "text-success" : "text-error";
-  };
-
-  // FormData에 선택된 날짜와 시간을 저장
   const handleDateChange = (date: Date | null) => {
     setStartDate(date);
+    updateDateTime(date, startTime);
+  };
 
-    if (date) {
-      // 9시간을 더해서 저장(시간 보정)
-      const utcDate = new Date(date.getTime());
-      setFormData({
-        ...formData,
-        one_time_club_date_time: utcDate.toISOString() // toISOString()하면 아홉시간 빠지게 됨
-      });
+  const handleTimeChange = (time: Date | null) => {
+    setStartTime(time);
+    updateDateTime(startDate, time);
+  };
+
+  // 날짜와 시간을 합쳐서 FormData에 저장
+  const updateDateTime = (date: Date | null, time: Date | null) => {
+    if (date && time) {
+      const combinedDate = new Date(date.setHours(time.getHours(), time.getMinutes()));
+
+      setFormData({ ...formData, one_time_club_date_time: combinedDate.toISOString() });
     }
   };
 
   return (
-    <div>
-      <h1 className="mb-4">언제 만날까요?</h1>
-      <DatePicker
-        selected={startDate}
-        onChange={handleDateChange}
-        showTimeSelect
-        timeFormat="HH:mm"
-        timeIntervals={30}
-        timeCaption="시간"
-        dateFormat="yyyy/MM/dd h:mm aa"
-        minDate={new Date()}
-        locale={ko}
-        className="border-2 border-black p-2 w-[358px]"
-        placeholderText="날짜와 시간을 선택하세요"
-        timeClassName={handleColor}
-      />
-      <br />
-      <br />
-      {startDate && (
-        <div className="flex flex-col gap-4">
-          <div className="next-box bg-gray-100">선택된 날짜: {startDate.toLocaleDateString()}</div>
-          <div className="next-box bg-gray-100">선택된 시간: {startDate.toLocaleTimeString()}</div>
+    <div className="flex flex-col gap-6">
+      <div>
+        <h1 className="text-xl font-bold mb-4">언제 만날까요?</h1>
+
+        <div className="relative">
+          <DatePicker
+            selected={startDate}
+            onChange={handleDateChange}
+            dateFormat={`yyyy년 MM월 dd일`}
+            minDate={new Date()}
+            locale={ko}
+            placeholderText="날짜를 선택해주세요"
+            className="w-full p-4 bg-gray-50 rounded-lg pr-12"
+          />
+          {/* <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+          <Image 
+            src="/asset/Icon/calendar-icon.png" 
+            alt="calendar"
+            width={20}
+            height={20}
+          />
+        </div> */}
         </div>
-      )}
+      </div>
+
+      <div>
+        <h2 className="text-xl font-bold mb-4">몇 시에 만날까요?</h2>
+
+        <div className="relative">
+          <DatePicker
+            selected={startTime}
+            onChange={handleTimeChange}
+            showTimeSelect
+            showTimeSelectOnly
+            timeIntervals={15}
+            timeCaption="시간"
+            dateFormat="aa h:mm"
+            locale={ko}
+            placeholderText="시간을 선택해주세요"
+            className="w-full p-4 bg-gray-50 rounded-lg pr-12"
+          />
+          {/* <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+          <Image 
+            src="/asset/Icon/time-icon.png" 
+            alt="time"
+            width={20}
+            height={20}
+          />
+        </div> */}
+        </div>
+      </div>
     </div>
   );
 };

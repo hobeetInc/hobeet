@@ -1,33 +1,14 @@
 // pages/mypage.js
 "use client";
 
-import { useEffect, useState } from "react";
 import { useAuth } from "@/app/store/AuthContext";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import browserClient from "@/utils/supabase/client";
 import { logOut } from "../../_components/logout";
 
 const ProfilePage = () => {
   const router = useRouter();
-  const { userId, userName, userProfileImg, setUserProfileImg } = useAuth();
-  const [attend, setAttend] = useState<number>();
-  const supabase = browserClient;
-  console.log(userId);
-
-  useEffect(() => {
-    const getUserAttend = async () => {
-      const { data, error } = await supabase.from("user_attend").select("user_attend").eq("user_id", userId).single();
-
-      if (error) {
-        console.log("참여도를 불러오는 중 오류가 발생했습니다.");
-      }
-
-      setAttend(data?.user_attend);
-    };
-
-    getUserAttend();
-  }, []);
+  const { userName, userProfileImg, setUserProfileImg } = useAuth();
 
   const handleReadyAlert = () => {
     alert("서비스 준비중입니다.");
@@ -62,7 +43,6 @@ const ProfilePage = () => {
         </div>
         <div>
           <h2 className="text-2xl font-semibold">{userName || "이름입니다"}</h2>
-          <p className="text-gray-500">{`참여도 ${attend}`}</p>
           <button className="bg-slate-400" onClick={() => router.push("/mypage/profileUpdate")}>
             프로필수정
           </button>

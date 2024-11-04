@@ -60,6 +60,8 @@ interface DaumPostcodeData {
 const NotificationCreate = ({ params }: { params: { id: string } }) => {
   const { userId } = useAuth();
   const router = useRouter();
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [startTime, setStartTime] = useState<Date | null>(null);
 
   const [formData, setFormData] = useState<RegularClubNotification>({
     user_id: userId,
@@ -73,7 +75,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
   });
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
 
   const [addressData, setAddressData] = useState<AddressData>({
     zonecode: "",
@@ -136,19 +137,41 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
     }
   };
 
-  const handleColor = (time: Date) => {
-    return time.getHours() > 12 ? "text-success" : "text-error";
-  };
+  // const handleColor = (time: Date) => {
+  //   return time.getHours() > 12 ? "text-success" : "text-error";
+  // };
 
-  // FormData에 선택된 날짜와 시간을 저장
+  // // FormData에 선택된 날짜와 시간을 저장
+  // const handleDateChange = (date: Date | null) => {
+  //   setStartDate(date);
+
+  //   if (date) {
+  //     const utcDate = new Date(date.getTime());
+  //     setFormData({
+  //       ...formData,
+  //       r_c_notification_date_time: utcDate.toISOString() // toISOString()하면 아홉시간 빠지게 됨
+  //     });
+  //   }
+  // };
+  // 날짜 변경 처리
   const handleDateChange = (date: Date | null) => {
     setStartDate(date);
+    updateDateTime(date, startTime);
+  };
 
-    if (date) {
-      const utcDate = new Date(date.getTime());
+  // 시간 변경 처리
+  const handleTimeChange = (time: Date | null) => {
+    setStartTime(time);
+    updateDateTime(startDate, time);
+  };
+
+  // 날짜와 시간을 합쳐서 FormData에 저장
+  const updateDateTime = (date: Date | null, time: Date | null) => {
+    if (date && time) {
+      const combinedDate = new Date(date.setHours(time.getHours(), time.getMinutes()));
       setFormData({
         ...formData,
-        r_c_notification_date_time: utcDate.toISOString() // toISOString()하면 아홉시간 빠지게 됨
+        r_c_notification_date_time: combinedDate.toISOString()
       });
     }
   };
@@ -332,7 +355,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
         user_id: data.user_id
       };
 
-      const memberData = await submitRegularMember(hostInfo);
+      await submitRegularMember(hostInfo);
 
       alert("정기모임 안의 공지글을 생성하였습니다");
       router.push(`/club/regular-club-sub/${params.id}/create/${data.r_c_notification_id}`); // 성공 시 이동할 페이지
@@ -386,7 +409,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
           <div className="text-gray-500 text-sm">{formData.r_c_notification_name.length} / 36</div>
         </div>
 
-        <div>
+        {/* <div>
           <h1 className="text-[20px] font-semibold mb-4">날짜 / 시간</h1>
           <DatePicker
             selected={startDate}
@@ -410,6 +433,40 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
               <div className="next-box bg-gray-100">선택된 시간: {startDate.toLocaleTimeString()}</div>
             </div>
           )}
+        </div> */}
+        <div>
+          <h1 className="text-[20px] font-semibold mb-4">모임 장소</h1>
+
+          <div className="relative">
+            <DatePicker
+              selected={startDate}
+              onChange={handleDateChange}
+              dateFormat={`yyyy년 MM월 dd일`}
+              minDate={new Date()}
+              locale={ko}
+              placeholderText="날짜를 선택해주세요"
+              className="w-full p-4 bg-gray-50 rounded-lg pr-12"
+            />
+          </div>
+
+          <div className="mt-6">
+            <h2 className="text-[20px] font-semibold mb-4">모임 시간</h2>
+
+            <div className="relative">
+              <DatePicker
+                selected={startTime}
+                onChange={handleTimeChange}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={15}
+                timeCaption="시간"
+                dateFormat="aa h:mm"
+                locale={ko}
+                placeholderText="시간을 선택해주세요"
+                className="w-full p-4 bg-gray-50 rounded-lg pr-12"
+              />
+            </div>
+          </div>
         </div>
 
         <div>

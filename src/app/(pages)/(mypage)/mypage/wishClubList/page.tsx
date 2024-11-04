@@ -22,13 +22,19 @@ type SupabaseWishListItem = {
     regular_club_name: string;
     regular_club_image: string;
     regular_club_people_limited: number;
-    r_c_member: { count: number }[];
-    wish_list: { count: number }[];
-    user_id: {
-      user_name: string;
-      user_profile_img: string;
-    } | null;
-  };
+    r_c_member: {
+      count: number;
+    }[];
+    wish_list: {
+      count: number;
+    }[];
+    user_id:
+      | {
+          user_name: string;
+          user_profile_img: string;
+        }[]
+      | null;
+  }[];
 };
 
 type ClubData = {
@@ -67,7 +73,11 @@ const WishClubListPage = () => {
       }
 
       const formattedData: ClubData[] = (data as SupabaseWishListItem[]).map((item) => {
-        const user = item.r_c_id.user_id || { user_name: "Unknown User", user_profile_img: "" };
+        // r_c_id가 배열일 경우 첫 번째 항목을 선택
+        const clubInfo = item.r_c_id[0];
+
+        // user_id가 배열일 경우 첫 번째 항목을 선택하거나 기본값 설정
+        const user = clubInfo.user_id?.[0] || { user_name: "Unknown User", user_profile_img: "" };
 
         return {
           user: {
@@ -75,11 +85,11 @@ const WishClubListPage = () => {
             user_profile_img: user.user_profile_img
           },
           club: {
-            regular_club_name: item.r_c_id.regular_club_name,
-            regular_club_image: item.r_c_id.regular_club_image,
-            regular_club_people_limited: item.r_c_id.regular_club_people_limited,
-            r_c_member: item.r_c_id.r_c_member,
-            wish_list: item.r_c_id.wish_list
+            regular_club_name: clubInfo.regular_club_name,
+            regular_club_image: clubInfo.regular_club_image,
+            regular_club_people_limited: clubInfo.regular_club_people_limited,
+            r_c_member: clubInfo.r_c_member,
+            wish_list: clubInfo.wish_list
           }
         };
       });
@@ -104,7 +114,7 @@ const WishClubListPage = () => {
                 height={150}
                 className="w-full h-32 object-cover rounded-md"
               />
-              <div className=" bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그클럽</div>
+              <div className="bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그클럽</div>
             </div>
 
             <div className="mt-3 text-sm font-semibold text-gray-800 leading-tight">

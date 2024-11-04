@@ -32,7 +32,7 @@ const PaymentHistory = () => {
         </button>
       </div>
 
-      <div className="p-4">{selectedTab === "eggpop" ? <EggPopPayDetail /> : <EggDayPayDetail />}</div>
+      <div className="p-4 mt-4">{selectedTab === "eggpop" ? <EggPopPayDetail /> : <EggDayPayDetail />}</div>
     </div>
   );
 };

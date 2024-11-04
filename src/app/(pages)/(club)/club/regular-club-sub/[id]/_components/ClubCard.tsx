@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { InSertRegularClubNotification } from "../create/_types/subCreate";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/store/AuthContext";
 
