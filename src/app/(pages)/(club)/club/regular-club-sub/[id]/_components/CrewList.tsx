@@ -54,16 +54,8 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
 
         setCrewList(newCrewMemebers);
 
-        // if (userId) {
-        //   const statusResult = await getParticipationStatus({ userId, clubId });
-
-        //   setParticipationStatus(statusResult);
-        // }
-
         if (userId) {
           const statusResult = await getParticipationStatus({ userId, clubId });
-
-          // console.log("스테이터스,", statusResult.r_c_participation_request_status);
 
           setParticipationStatus(statusResult.r_c_participation_request_status);
         }
@@ -105,8 +97,6 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         </div>
       );
     });
-
-  // console.log("참가인지 확인!!", participationStatus);
 
   // 로그인 페이지로 이동
   const handleLoginRedirect = () => {

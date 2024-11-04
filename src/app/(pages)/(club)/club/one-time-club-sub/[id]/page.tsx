@@ -15,12 +15,8 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const oneTimeClubId = Number(params.id);
   const data: Member[] = await getOneTimeMember(oneTimeClubId);
 
-  // 임시 확인용
-  console.log("데이터:", data);
-
   // 클럽 정보만 추출
   const clubInfo: GetOneTimeClub = data[0]?.one_time_club;
-  // console.log("클럽인포:", clubInfo);
 
   // 날짜 커스텀
   const date = clubInfo.one_time_club_date_time;
@@ -76,11 +72,6 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
 
   // 호스트 정보 추출
   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
-
-  // 임시 확인용
-  // console.log("클럽 정보 아이디", clubInfo.user_id);
-  // console.log("참여 크루", crewMembers);
-  // console.log("호스트 정보", hostInfo);
 
   return (
     <div className="container">
@@ -139,12 +130,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
           </div>
         </div>
 
-        <CrewList
-          crewMembers={crewMembers}
-          clubId={oneTimeClubId}
-          // hostInfo={hostInfo || crewMembers[0]}
-          clubHostId={clubInfo.user_id}
-        />
+        <CrewList crewMembers={crewMembers} clubId={oneTimeClubId} clubHostId={clubInfo.user_id} />
       </div>
     </div>
   );
