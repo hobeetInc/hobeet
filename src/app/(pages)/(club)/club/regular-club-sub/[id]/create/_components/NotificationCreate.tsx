@@ -10,6 +10,20 @@ import { submitRegularClubNotification, submitRegularMember, uploadImage } from 
 import { useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
 
+// 커스텀 스타일
+const customStyles = `
+  .react-datepicker {
+    font-size: 0.9rem;
+  }
+  .react-datepicker__header {
+    padding-top: 0.8em;
+  }
+  .react-datepicker__month {
+    margin: 0.4em 1em;
+  }
+  
+`;
+
 // 동적 임포트(필요한 시점에 불러오기)
 const loadDaumPostcodeScript = () => {
   return new Promise((resolve) => {
@@ -368,6 +382,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
+      <style>{customStyles}</style>
       <div className="flex justify-between items-center h-[48px] p-4 relative">
         <button onClick={() => router.back()} className="absolute left-4 text-lg">
           ←
@@ -421,6 +436,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
               locale={ko}
               placeholderText="날짜를 선택해주세요"
               className="w-full p-4 bg-gray-50 rounded-lg pr-12"
+              wrapperClassName="w-full"
             />
           </div>
 
@@ -439,6 +455,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
                 locale={ko}
                 placeholderText="시간을 선택해주세요"
                 className="w-full p-4 bg-gray-50 rounded-lg pr-12"
+                wrapperClassName="w-full"
               />
             </div>
           </div>
