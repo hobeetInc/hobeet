@@ -4,6 +4,7 @@ import CrewList from "./_components/CrewList";
 import { GetOneTimeClub, Member } from "./_types/Crews";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
+import PopHeader from "./_components/PopHeader";
 
 type CrewInfo = {
   memberId: number;
@@ -85,17 +86,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="container">
-      <div className="flex items-center justify-between h-[48px] p-4 relative">
-        <Link href={"/"} className="absolute left-4">
-          <ChevronLeft />
-        </Link>
-        <h1 className="flex-1 text-center text-lg font-semibold">
-          {clubInfo.one_time_club_name.length > 8
-            ? `${clubInfo.one_time_club_name.slice(0, 8)}...`
-            : clubInfo.one_time_club_name}
-        </h1>
-      </div>
-
+      <PopHeader clubInfo={clubInfo} />
       <div className="flex flex-col w-full">
         <Image
           src={clubInfo.one_time_image}

@@ -5,6 +5,7 @@ import { NotificaitonInfo, NotificationMember } from "./_types/notifictionInfo";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import CrewList from "./_components/CrewList";
+import DayHeader from "./_components/DayHeader";
 
 type SubSubPageProps = {
   params: {
@@ -32,7 +33,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
   const member: NotificationMember[] = await getNotificationMember(clubInfo?.r_c_notification_id);
 
-  console.log("유저!!!!!!!", member);
+  // console.log("유저!!!!!!!", member);
 
   // 날짜 커스텀
   const date = clubInfo?.r_c_notification_date_time;
@@ -58,17 +59,6 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
   //   console.log("택스", tax);
 
-  // 성별 커스텀
-  const gender = (gender: null | string) => {
-    if (gender === null) {
-      return "누구나";
-    } else if (gender === "남성") {
-      return "남성만";
-    } else {
-      return "여성만";
-    }
-  };
-
   //   참여 크루 정보 추출
   const crewMembers = member.map((member) => ({
     notificationId: member.r_c_notification_id,
@@ -87,16 +77,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
   return (
     <div className="container">
-      <div className="flex items-center justify-between h-[48px] p-4 relative">
-        <Link href={"/"} className="absolute left-4">
-          <ChevronLeft />
-        </Link>
-        <h1 className="flex-1 text-center text-lg font-semibold">
-          {clubInfo?.r_c_notification_name.length > 8
-            ? `${clubInfo?.r_c_notification_name.slice(0, 8)}...`
-            : clubInfo?.r_c_notification_name}
-        </h1>
-      </div>
+      <DayHeader clubInfo={clubInfo} />
 
       <div className="flex flex-col w-full">
         <Image
@@ -146,7 +127,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
           </div>
         </div>
 
-        <CrewList crewMembers={crewMembers} clubId={secondId} clubHostId={clubInfo.user_id} />
+        <CrewList crewMembers={crewMembers} clubId={secondId} clubHostId={clubInfo.user_id} clubInfo={clubInfo} />
       </div>
     </div>
   );
