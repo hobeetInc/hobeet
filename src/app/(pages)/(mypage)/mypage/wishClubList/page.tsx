@@ -59,7 +59,7 @@ const WishClubListPage = () => {
             )
           )`
         )
-        .eq("user_id", "82f2d8f5-2382-436c-bcd5-a0470d8c188d" /*userData.user?.id*/);
+        .eq("user_id", userData.user?.id);
 
       if (error) {
         console.error("Error fetching wish list:", error);
