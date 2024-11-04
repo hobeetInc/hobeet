@@ -70,7 +70,10 @@ const ProfilePage = () => {
       </div>
 
       <div className="divide-y divide-gray-200">
-        <div onClick={() => router.push("/")} className="py-4 text-lg cursor-pointer hover:bg-gray-100">
+        <div
+          onClick={() => router.push("/mypage/wishClubList")}
+          className="py-4 text-lg cursor-pointer hover:bg-gray-100"
+        >
           내가 찜한 모임
         </div>
         <div
