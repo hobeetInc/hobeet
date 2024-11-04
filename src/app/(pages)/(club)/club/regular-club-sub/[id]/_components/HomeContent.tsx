@@ -1,7 +1,7 @@
 import Image from "next/image";
-
-import CrewList from "../../_components/CrewList";
-import { getRegularClub } from "../../_types/Crews";
+import CrewList from "./CrewList";
+import { getRegularClub } from "../_types/Crews";
+import { InSertRegularClubNotification } from "../create/_types/subCreate";
 
 type CrewInfo = {
   memberId: number;
@@ -14,9 +14,18 @@ type HomeContentProps = {
   hostInfo: CrewInfo | undefined;
   crewMembers: CrewInfo[];
   regularClubId: number;
+  notificationData: InSertRegularClubNotification[];
+  stringCategory: string | undefined;
 };
 
-const HomeContent = ({ clubInfo, hostInfo, crewMembers, regularClubId }: HomeContentProps) => (
+const HomeContent = ({
+  clubInfo,
+  hostInfo,
+  crewMembers,
+  regularClubId,
+  notificationData,
+  stringCategory
+}: HomeContentProps) => (
   <>
     <div className="flex flex-col w-full">
       <Image
@@ -30,16 +39,20 @@ const HomeContent = ({ clubInfo, hostInfo, crewMembers, regularClubId }: HomeCon
 
     <div className="flex flex-col gap-10 p-4">
       <div className="flex flex-col gap-4 mt-4">
-        <p className="text-[13px]">에그클럽</p>
+        <p className="text-[13px]">{stringCategory}</p>
 
         <div className="flex justify-between">
           <h1 className="font-bold text-[23px]">{clubInfo.regular_club_name}</h1>
           <p>♡</p>
         </div>
+        <p>
+          맴버 {crewMembers.length} / {clubInfo.regular_club_people_limited}
+        </p>
 
+        <p>이 모임의 호스트</p>
         <div className="flex flex-col gap-10">
-          <div className="flex justify-first items-center gap-4">
-            <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full">
+          <div className="flex justify-first items-center gap-4 pb-5 border-b-2 border-solid">
+            <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full ">
               <Image
                 src={hostInfo?.userImage || ""}
                 alt={hostInfo?.userName || "호스트"}
@@ -68,8 +81,8 @@ const HomeContent = ({ clubInfo, hostInfo, crewMembers, regularClubId }: HomeCon
       <CrewList
         crewMembers={crewMembers}
         clubId={regularClubId}
-        // hostInfo={hostInfo || crewMembers[0]}
         clubHostId={clubInfo.user_id}
+        notificationData={notificationData}
       />
     </div>
   </>

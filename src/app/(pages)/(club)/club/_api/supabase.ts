@@ -1,6 +1,6 @@
 import browserClient from "@/utils/supabase/client";
 import { OneTimeClubForm, OneTimeMember, RegularClubForm, RegularMember, RegularRequest } from "../_types/ClubForm";
-import { RegularClubNotification } from "../regular-club-sub/[id]/create/_types/subCreate";
+import { InsertNotificationMember, RegularClubNotification } from "../regular-club-sub/[id]/create/_types/subCreate";
 
 // supabase에 일회성 모임 제출
 export const submitOneTimeClubData = async (finalFormData: OneTimeClubForm) => {
@@ -108,7 +108,7 @@ export const putOneTimeMember = async (member: OneTimeMember) => {
 export const getOneTimeMember = async (clubId: number) => {
   const { data, error } = await browserClient
     .from("o_t_c_member")
-    .select(`*, one_time_club!inner(*), user!inner(user_name, user_profile_img)`)
+    .select(`*, one_time_club(*), user(user_name, user_profile_img)`)
     .eq("o_t_c_id", clubId);
   if (error) throw error;
   return data;
@@ -118,7 +118,7 @@ export const getOneTimeMember = async (clubId: number) => {
 export const getRegularMember = async (clubId: number) => {
   const { data, error } = await browserClient
     .from("r_c_member")
-    .select(`*, regular_club!inner(*), user!inner(user_name, user_profile_img)`)
+    .select(`*, regular_club(*), user(user_name, user_profile_img)`)
     .eq("r_c_id", clubId);
   if (error) throw error;
   return data;
@@ -143,17 +143,61 @@ export const submitRegularClubNotification = async (finalData: RegularClubNotifi
   return data;
 };
 
+// 정기적 공지 맴버로 집어넣기
+export const submitRegularMember = async (member: InsertNotificationMember) => {
+  const { data, error } = await browserClient.from("r_c_notification_member").insert(member).select("*").single();
+  if (error) throw error;
+  return data;
+};
+
 // 정기모임의 공지 가져오기
 export const getRegularClubNotification = async (clubId: number) => {
   const currentDate = new Date().toISOString();
 
   const { data, error } = await browserClient
     .from("r_c_notification")
-    .select("*")
+    .select("*, r_c_notification_member(count)")
     .eq("r_c_id", clubId)
     .gte("r_c_notification_date_time", currentDate)
     .order("r_c_notification_date_time", { ascending: true });
 
+  // console.log("이거 지금 가져오!!!!!!!!!", data);
+
+  if (error) throw error;
+  return data;
+};
+
+type GetParticipationStatusProps = {
+  userId: string | null;
+  clubId: number;
+};
+
+//정기적모임 참여 요청 정보 가져오기
+export const getParticipationStatus = async ({ userId, clubId }: GetParticipationStatusProps) => {
+  const { data, error } = await browserClient
+    .from("r_c_participation_request")
+    .select("*")
+    .eq("user_id", userId)
+    .eq("r_c_id", clubId)
+    .single();
+  if (error) throw error;
+
+  return data;
+};
+
+// 정기적 모임안의 공지 정보 가져오기
+export const getNotificationData = async (clubId: number) => {
+  const { data, error } = await browserClient.from("r_c_notification").select("*").eq("r_c_id", clubId);
+  if (error) throw error;
+  return data;
+};
+
+// 정기적 모임 공지 맴버 가져오기
+export const getNotificationMember = async (notificationId: number | undefined) => {
+  const { data, error } = await browserClient
+    .from("r_c_notification_member")
+    .select(`*, user(user_name, user_profile_img)`)
+    .eq("r_c_notification_id", notificationId);
   if (error) throw error;
   return data;
 };

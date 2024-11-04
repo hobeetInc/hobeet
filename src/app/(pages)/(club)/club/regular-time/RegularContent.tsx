@@ -237,9 +237,11 @@ const RegularContent = () => {
               <h1>정기모임 소개</h1>
               <textarea
                 value={formData.regular_club_introduction}
+                maxLength={290}
                 onChange={(e) => setFormData({ ...formData, regular_club_introduction: e.target.value })}
                 className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
               />
+              <div className="text-sm text-gray-500">{formData.regular_club_introduction.length} / 290</div>
             </div>
           </div>
         );

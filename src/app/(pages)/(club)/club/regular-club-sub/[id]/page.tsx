@@ -1,10 +1,11 @@
-import { getRegularClubNotification, getRegularMember } from "../../_api/supabase";
-import { getRegularClub, Member } from "./_types/Crews";
+import { fetchSubCategories, getRegularClubNotification, getRegularMember } from "../../_api/supabase";
+import { getRegularClub, Member, SCategory } from "./_types/Crews";
 import { InSertRegularClubNotification } from "./create/_types/subCreate";
-import TabLayout from "./create/_components/TabLayout";
-import HomeContent from "./create/_components/HomeContent";
-import RegularNotification from "./create/_components/RegularNotification";
+import TabLayout from "./_components/TabLayout";
+import HomeContent from "./_components/HomeContent";
+import RegularNotification from "./_components/RegularNotification";
 import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 
 type CrewInfo = {
   memberId: number;
@@ -16,10 +17,11 @@ type CrewInfo = {
 const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const regularClubId = Number(params.id);
 
-  const [memberData, notificationData] = (await Promise.all([
+  const [memberData, notificationData, subCategories] = (await Promise.all([
     getRegularMember(regularClubId),
-    getRegularClubNotification(regularClubId)
-  ])) as [Member[], InSertRegularClubNotification[]];
+    getRegularClubNotification(regularClubId),
+    fetchSubCategories()
+  ])) as [Member[], InSertRegularClubNotification[], SCategory[]];
 
   // const data: Member[] = await
 
@@ -31,6 +33,11 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   // 클럽 정보만 추출
   const clubInfo: getRegularClub = memberData[0]?.regular_club;
   // console.log("클럽인포:", clubInfo);
+
+  // 일치하는 카테고리 찾기
+  const matchCategory = subCategories.find((category) => category.s_c_id === clubInfo.s_c_id);
+  const stringCategory = matchCategory?.s_c_name;
+  console.log("일치 카테고리!!!!!!!", stringCategory);
 
   // 참여 크루 정보 추출
   const crewMembers: CrewInfo[] = memberData.map((member) => ({
@@ -52,15 +59,28 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="container">
-      <div className="flex justify-between items-center h-[48px] p-4">
-        <Link href={"/"}>←</Link>
-        <h1 className="text-lg font-semibold">에그데이</h1>
+      <div className="flex justify-between items-center h-[48px] p-4 relative">
+        <Link href={"/"} className="absolute left-4">
+          <ChevronLeft />
+        </Link>
+        <h1 className="flex-1 text-center text-lg font-semibold">
+          {clubInfo.regular_club_name.length > 8
+            ? `${clubInfo.regular_club_name.slice(0, 8)}...`
+            : clubInfo.regular_club_name}
+        </h1>
         <Link href={`/club/regular-club-sub/${regularClubId}/create`}>+</Link>
       </div>
 
       <TabLayout>
         {/* props를 통해 데이터 전달 */}
-        <HomeContent clubInfo={clubInfo} hostInfo={hostInfo} crewMembers={crewMembers} regularClubId={regularClubId} />
+        <HomeContent
+          clubInfo={clubInfo}
+          hostInfo={hostInfo}
+          crewMembers={crewMembers}
+          regularClubId={regularClubId}
+          notificationData={notificationData}
+          stringCategory={stringCategory}
+        />
         <RegularNotification notificationData={notificationData} />
       </TabLayout>
     </div>

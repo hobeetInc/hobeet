@@ -137,9 +137,15 @@ const AddressSearch = ({ formData, setFormData }: OneTimeProps) => {
       <h1 className="mb-4">어디서 만날까요?</h1>
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
-          <input type="text" value={addressData.zonecode} placeholder="우편번호" className="border p-2 w-24" readOnly />
+          <input
+            type="hidden"
+            value={addressData.zonecode}
+            placeholder="우편번호"
+            className="border p-2 w-24 "
+            readOnly
+          />
           <button onClick={execDaumPostcode} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-            우편번호 찾기
+            주소 검색
           </button>
         </div>
 

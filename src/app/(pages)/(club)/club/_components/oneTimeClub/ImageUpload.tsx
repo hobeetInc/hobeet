@@ -69,9 +69,11 @@ const ImageUpload = ({ formData, setFormData }: OneTimeProps) => {
       </div>
       <textarea
         value={formData.one_time_club_introduction}
+        maxLength={290}
         onChange={(e) => setFormData({ ...formData, one_time_club_introduction: e.target.value })}
         className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
       />
+      <div className="text-sm text-gray-500">{formData.one_time_club_introduction.length} / 290</div>
     </div>
   );
 };
