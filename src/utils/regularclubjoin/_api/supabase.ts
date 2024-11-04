@@ -7,9 +7,9 @@ export interface RegularClub {
   user_id: string;
   regular_club_name: string;
   regular_club_introduction: string;
-  regular_club_people_limited: number | null;
+  regular_club_people_limited: number;
   regular_club_gender: string | null;
-  regular_club_age: number | null;
+  regular_club_age: number;
   regular_club_image: string;
   regular_club_approval: boolean;
   regular_club_create_at: string;
@@ -49,12 +49,12 @@ export class RegularClubAPI {
     ]);
 
     // 인원 제한 검증
-    if (club.regular_club_people_limited !== null && memberCount >= club.regular_club_people_limited) {
+    if (club.regular_club_people_limited !== 100 && memberCount >= club.regular_club_people_limited) {
       throw new ClubJoinError("모임 인원이 초과되었습니다.");
     }
 
     // 나이 제한 검증
-    if (club.regular_club_age !== null && user.user_age !== null) {
+    if (club.regular_club_age !== 100 && user.user_age !== 100) {
       if (club.regular_club_age === 50 && user.user_age < 50) {
         throw new ClubJoinError("50대 이상만 가입할 수 있는 모임입니다.");
       }

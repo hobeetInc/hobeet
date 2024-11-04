@@ -1,3 +1,4 @@
+import { SupabaseClubAPI } from "@/utils/onetimeclubjoin/_api/supabase";
 import browserClient from "@/utils/supabase/client";
 
 const supabase = browserClient;
@@ -7,6 +8,7 @@ export async function POST(req: Request) {
     const { orderId, requestUserId, clubType, clubId } = await req.json();
 
     let amount, itemName;
+    console.log("야야야 장성현");
 
     if (clubType === true) {
       const { data: onePayData, error: onePayError } = await supabase
@@ -54,9 +56,9 @@ export async function POST(req: Request) {
         quantity: 1,
         total_amount: amount,
         tax_free_amount: 0,
-        approval_url: `https://hobeet.vercel.app/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
-        cancel_url: "https://hobeet.vercel.app/",
-        fail_url: "https://hobeet.vercel.app/"
+        approval_url: `http://localhost:3000/kakaopay/isSuccess?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
+        cancel_url: "http://localhost:3000/",
+        fail_url: "http://localhost:3000/"
       })
     });
 
@@ -65,6 +67,7 @@ export async function POST(req: Request) {
       console.error(`Payment failed with status: ${response.status}`, errorData);
       throw new Error(`Payment failed with status: ${response.status}`);
     }
+    console.log("야야야 장성현!!!!! 야야야야!!");
 
     const paymentData = await response.json();
     const tid = paymentData.tid;
@@ -76,6 +79,7 @@ export async function POST(req: Request) {
         o_t_c_kakaopay_cid: "TC0ONETIME",
         o_t_c_kakaopay_tid: tid
       });
+      // 입장 시키는중@@@
 
       if (error) {
         console.error("Supabase insert error:", error);
@@ -102,7 +106,6 @@ export async function POST(req: Request) {
         r_c_notification_kakaopay_tid: tid
       });
 
-      
       if (error) {
         console.error("Supabase insert error:", error);
         throw new Error("regular_club_notification_kakaopay 테이블에 데이터를 저장하는 중 오류가 발생했습니다.");

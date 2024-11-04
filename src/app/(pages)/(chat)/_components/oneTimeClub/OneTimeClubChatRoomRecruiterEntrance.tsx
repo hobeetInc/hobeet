@@ -18,23 +18,27 @@ type Chatting = {
 };
 
 // 일회성 모임 입장 함수
-export async function OneTimeClubChatRoomRecruiterEntrance(club: clubId) {
+export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: clubId) {
+  console.log(one_time_club_id.one_time_club_id, "야야야 이재호 야야야 이재호");
+
   try {
-    const response = await fetch(`/api/oneTimeClubChattingRoom?one_time_club_id=${club.one_time_club_id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
+    console.log("야양야야야 죄지민 여기 왔다가냐??");
+
+    const response = await fetch(
+      `http://localhost:3000/api/oneTimeClubChattingRoom?one_time_club_id=${one_time_club_id.one_time_club_id}`,
+      {
+        method: "GET"
       }
-    });
+    );
 
     if (!response.ok) {
       throw new Error("일회성 모임 정보를 가져오는 데 실패했습니다.");
     }
 
     const data: oneTimeClubMember = await response.json();
-    // console.log(data);
+    console.log("data!!!!", data);
 
-    const postResponse = await fetch("/api/oneTimeChatRoomRecruiterEntrance", {
+    const postResponse = await fetch("http://localhost:3000/api/oneTimeChatRoomRecruiterEntrance", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

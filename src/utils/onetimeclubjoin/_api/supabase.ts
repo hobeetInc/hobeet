@@ -1,3 +1,4 @@
+import { OneTimeClubChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/oneTimeClub/OneTimeClubChatRoomRecruiterEntrance";
 import { createClient } from "@/utils/supabase/client";
 
 export class ClubJoinError extends Error {
@@ -94,19 +95,21 @@ export class SupabaseClubAPI {
     return count;
   }
 
-  async insertMember(clubId: number, userId: string): Promise<void> {
+  // 가입
+  async insertMember(clubId: string | null, userId: string | null): Promise<void> {
     const { error } = await this.supabase.from("o_t_c_member").insert({
       o_t_c_id: clubId,
       user_id: userId
     });
 
+    await OneTimeClubChatRoomRecruiterEntrance({ one_time_club_id: Number(clubId) });
     if (error) {
       throw new ClubJoinError("모임 가입 처리 중 오류가 발생했습니다.");
     }
   }
 
   validateAgeRestriction(userAge: number, clubAge: number): void {
-    if (clubAge === null) {
+    if (clubAge === 100) {
       return; // 누구나 참여 가능
     }
 

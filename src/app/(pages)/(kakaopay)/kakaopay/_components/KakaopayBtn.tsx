@@ -24,6 +24,8 @@ const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) =
       const orderId = `${clubId}`;
       const requestUserId = `${userId}`;
 
+      console.log(orderId, requestUserId, clubType, clubId);
+
       const response = await fetch("/api/payment", {
         method: "POST",
         headers: {
