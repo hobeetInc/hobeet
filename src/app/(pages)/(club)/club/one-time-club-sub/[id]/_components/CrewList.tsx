@@ -7,6 +7,8 @@ import FullScreenModal from "./FullScreenModal";
 import { useAuth } from "@/app/store/AuthContext";
 import { ChevronRight } from "lucide-react";
 import JoinClubButton from "@/components/oneTimeClubJoinButton";
+import browserClient from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 // 멤버 정보 타입 정의
 type MemberInfo = {
@@ -28,6 +30,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
   const [crewList, setCrewList] = useState(initialCrewMembers);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { userId } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     // 데이터 새로고침 함수
@@ -82,6 +85,24 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
       );
     });
 
+  // 채팅방으로 이동하는 함수
+  const handleChatClick = async () => {
+    try {
+      // 채팅방 아이디 가져오기
+      const { data: chatRoom } = await browserClient
+        .from("one_time_club_chatting_room")
+        .select("one_time_club_chatting_room_id")
+        .eq("one_time_club_id", clubId)
+        .single();
+
+      if (chatRoom) {
+        router.push(`/chat/onetimeChat/${chatRoom.one_time_club_chatting_room_id}`);
+      }
+    } catch (error) {
+      console.error("채팅방 이동 중 오류:", error);
+    }
+  };
+
   // 호스트일 때
   const isHost = userId === clubHostId;
 
@@ -103,7 +124,9 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
       return (
         <div className="flex justify-center items-center gap-2">
           <p className="flex-1 h-[50px] pt-4 font-semibold">참여 중인 에그팝이에요</p>
-          <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
+          <button onClick={handleChatClick} className="flex-1 bg-yellow-300  h-[50px] rounded-full">
+            에그팝 채팅방
+          </button>
         </div>
       );
     }

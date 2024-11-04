@@ -10,6 +10,7 @@ import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import { ChevronRight } from "lucide-react";
 import RegularClubJoinButton from "@/components/regularClubJoinButton";
+import browserClient from "@/utils/supabase/client";
 
 // 유저 상태 정보
 type ParticipationS = "not_applied" | "pending" | "active";
@@ -69,11 +70,6 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
     refreshData();
   }, [clubId, userId]);
 
-  // 상태 변경 감지를 위한 별도의 useEffect
-  useEffect(() => {
-    console.log("참여 상태 변경됨:", participationStatus);
-  }, [participationStatus]);
-
   // 8개의 고정 슬롯 생성
   const displaySlots = Array(8)
     .fill(null)
@@ -106,13 +102,33 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
     router.push("/signin");
   };
 
+  // 채팅방으로 이동하는 함수
+  const handleChatClick = async () => {
+    try {
+      // 채팅방 아이디 가져오기
+      const { data: chatRoom } = await browserClient
+        .from("r_c_n_chatting_room")
+        .select("r_c_n_chatting_room_id")
+        .eq("regular_club_id", clubId)
+        .single();
+
+      console.log("정기적모임 아이디", chatRoom);
+
+      if (chatRoom) {
+        router.push(`/chat/regularChat/${chatRoom.r_c_n_chatting_room_id}`);
+      }
+    } catch (error) {
+      console.error("채팅방 이동 중 오류:", error);
+    }
+  };
+
   // 버튼 렌더링 함수
   const renderJoinButton = () => {
     // 로그아웃 상태
     if (!userId) {
       return (
         <button
-          type="button" // 명시적으로 버튼 타입 지정
+          type="button"
           onClick={(e) => {
             e.preventDefault();
 
@@ -128,7 +144,12 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
     if (userId === clubHostId) {
       return (
         <div className="flex justify-center items-center gap-2">
-          <button className="flex-1 bg-yellow-100 h-[50px] rounded-full">에그즈 관리</button>
+          <button
+            onClick={() => router.push(`/approvemembers/${clubId}`)}
+            className="flex-1 bg-yellow-100 h-[50px] rounded-full"
+          >
+            에그즈 관리
+          </button>
           <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
         </div>
       );
@@ -139,7 +160,9 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         return (
           <div className="flex justify-center items-center gap-2">
             <p className="flex-1 h-[50px] pt-4 font-semibold">참여 중인 에그클럽이에요</p>
-            <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그데이 채팅방</button>
+            <button onClick={handleChatClick} className="flex-1 bg-yellow-300  h-[50px] rounded-full">
+              에그데이 채팅방
+            </button>
           </div>
         );
 
