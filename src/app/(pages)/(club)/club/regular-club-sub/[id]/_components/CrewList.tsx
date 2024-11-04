@@ -9,6 +9,7 @@ import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import { ChevronRight } from "lucide-react";
+import RegularClubJoinButton from "@/components/regularClubJoinButton";
 
 // 유저 상태 정보
 type ParticipationS = "not_applied" | "pending" | "active";
@@ -159,7 +160,16 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         );
 
       case "not_applied":
-        return <button className="w-full h-[50px] rounded-full bg-black text-white">참여하기</button>;
+        return (
+          <RegularClubJoinButton
+            clubId={clubId}
+            onSuccess={() => {}}
+            onError={(message) => {
+              alert(message);
+            }}
+            className="w-full h-[50px] rounded-full bg-black text-white"
+          />
+        );
     }
   };
 

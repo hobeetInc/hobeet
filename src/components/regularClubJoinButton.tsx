@@ -10,9 +10,10 @@ interface RegularClubJoinButtonProps {
   clubId: number;
   onSuccess?: (currentMembers?: number) => void;
   onError?: (message: string) => void;
+  className?: string;
 }
 
-export default function RegularClubJoinButton({ clubId, onSuccess, onError }: RegularClubJoinButtonProps) {
+export default function RegularClubJoinButton({ clubId, onSuccess, onError, className }: RegularClubJoinButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const supabase = createClient();
 
@@ -56,11 +57,7 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError }: Re
   };
 
   return (
-    <button
-      onClick={handleJoin}
-      disabled={isLoading}
-      className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
-    >
+    <button onClick={handleJoin} disabled={isLoading} className={className}>
       {isLoading ? "처리중..." : "참여하기"}
     </button>
   );
