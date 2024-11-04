@@ -1,5 +1,12 @@
 import browserClient from "@/utils/supabase/client";
-import { OneTimeClubForm, OneTimeMember, RegularClubForm, RegularMember, RegularRequest } from "../_types/ClubForm";
+import {
+  InsertWishList,
+  OneTimeClubForm,
+  OneTimeMember,
+  RegularClubForm,
+  RegularMember,
+  RegularRequest
+} from "../_types/ClubForm";
 import { InsertNotificationMember, RegularClubNotification } from "../regular-club-sub/[id]/create/_types/subCreate";
 
 // supabase에 일회성 모임 제출
@@ -198,6 +205,34 @@ export const getNotificationMember = async (notificationId: number | undefined) 
     .from("r_c_notification_member")
     .select(`*, user(user_name, user_profile_img)`)
     .eq("r_c_notification_id", notificationId);
+  if (error) throw error;
+  return data;
+};
+
+// 위시리스트에 집어넣기
+export const submitWishList = async (wish: InsertWishList) => {
+  const { data, error } = await browserClient.from("wish_list").insert(wish).select("*").single();
+  if (error) throw error;
+  return data;
+};
+
+// 해당 위시리스트 가져오기
+export const getWishList = async (wish: InsertWishList) => {
+  const { data, error } = await browserClient
+    .from("wish_list")
+    .select("*")
+    .match({ r_c_id: wish.r_c_id, user_id: wish.user_id })
+    .single();
+  if (error) throw error;
+  return data;
+};
+
+// 위시리스트 삭제
+export const deleteWishList = async (wish: InsertWishList) => {
+  const { data, error } = await browserClient
+    .from("wish_list")
+    .delete()
+    .match({ r_c_id: wish.r_c_id, user_id: wish.user_id });
   if (error) throw error;
   return data;
 };

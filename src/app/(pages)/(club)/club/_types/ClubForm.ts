@@ -82,3 +82,16 @@ export interface OneTimeMember {
   o_t_c_id: number;
   user_id: string;
 }
+
+// 위시리스트 타입(Get)
+export interface WishList {
+  wish_list_id: number;
+  user_id: string | null;
+  r_c_id: number;
+}
+
+// 위시리스트 타입(Insert)
+export interface InsertWishList {
+  user_id: string | null;
+  r_c_id: number;
+}
