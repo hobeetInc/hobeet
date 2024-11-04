@@ -3,7 +3,7 @@
 import { useAuth } from "@/app/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { addHours, format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
 
@@ -57,6 +57,7 @@ const PaymentSuccesspage = () => {
     pgToken: null
   });
   const supabase = browserClient;
+  const router = useRouter();
   const { userName } = useAuth();
   const searchParams = useSearchParams();
 
@@ -303,8 +304,25 @@ const PaymentSuccesspage = () => {
     }
   };
 
+  console.log(regularClubData?.r_c_id);
+
   const clubImageUrl =
     (queryParams.clubType === "true" ? oneTimeClubData?.one_time_image : regularClubData?.r_c_notification_image) || "";
+
+  const handleGoToMyClub = () => {
+    const { clubId, clubType } = queryParams;
+
+    if (!clubId) return;
+
+    if (clubType === "true") {
+      router.push(`/club/one-time-club-sub/${clubId}`);
+    } else {
+      const r_c_id = regularClubData?.r_c_id;
+      if (r_c_id) {
+        router.push(`/club/regular-club-sub/${r_c_id}/create/${clubId}`);
+      }
+    }
+  };
 
   return (
     <div className="font-sans p-5 max-w-md mx-auto">
@@ -350,7 +368,9 @@ const PaymentSuccesspage = () => {
         </div>
       </div>
       {/* TODO 내 모임으로 가기 연결해야함 */}
-      <button className="w-full py-3 bg-gray-300 text-gray-700 font-bold rounded-lg mt-5">내 모임으로 가기</button>
+      <button className="w-full py-3 bg-gray-300 text-gray-700 font-bold rounded-lg mt-5" onClick={handleGoToMyClub}>
+        내 모임으로 가기
+      </button>
     </div>
   );
 };

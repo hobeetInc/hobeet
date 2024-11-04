@@ -95,8 +95,9 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
-import { RegularClubChatRoomRecruiterEntrance } from "../(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
+import { RegularClubChatRoomRecruiterEntrance } from "../../(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 
 export interface ParticipationRequest {
   r_c_participation_request_id: number;
@@ -161,13 +162,16 @@ const PendingRequestsTab = ({
   );
 };
 
-export default function ApproveMembersPage({ params }: { params: { clubId: number } }) {
+export default function ApproveMembersPage() {
   const [requests, setRequests] = useState<ParticipationRequest[]>([]);
   const [activeMembers, setActiveMembers] = useState<ParticipationRequest[]>([]);
   const [activeTab, setActiveTab] = useState<"active" | "pending">("active");
   const supabase = createClient();
+  const params = useParams();
+  const clubId = Number(params.id);
+  console.log(clubId);
 
-  params.clubId = 29; // 상세페이지 생성 협의(어떻게 받아올 것인지 클럽아이디)
+  // params.clubId = 29; // 상세페이지 생성 협의(어떻게 받아올 것인지 클럽아이디)
 
   useEffect(() => {
     const fetchPendingAndActiveRequests = async () => {
@@ -175,13 +179,13 @@ export default function ApproveMembersPage({ params }: { params: { clubId: numbe
         .from("r_c_participation_request")
         .select(`*,user_id("*")`)
         .eq("r_c_participation_request_status", "pending")
-        .eq("r_c_id", params);
+        .eq("r_c_id", clubId);
 
       const { data: activeData, error: activeError } = await supabase
         .from("r_c_participation_request")
         .select(`*,user_id("*")`)
         .eq("r_c_participation_request_status", "active")
-        .eq("r_c_id", params.clubId);
+        .eq("r_c_id", clubId);
 
       if (pendingError || activeError) {
         console.error("Error fetching requests:", pendingError || activeError);
@@ -192,7 +196,7 @@ export default function ApproveMembersPage({ params }: { params: { clubId: numbe
     };
 
     fetchPendingAndActiveRequests();
-  }, [params.clubId]);
+  }, [clubId]);
 
   const approveMember = async (requestId: number) => {
     const { data, error } = await supabase
@@ -211,7 +215,7 @@ export default function ApproveMembersPage({ params }: { params: { clubId: numbe
         regular_club_request_status: "active"
       });
       if (!error) {
-        RegularClubChatRoomRecruiterEntrance({ r_c_id: params.clubId }); // 모임원 채팅방 입장(가입 승인 시)
+        RegularClubChatRoomRecruiterEntrance({ r_c_id: clubId }); // 모임원 채팅방 입장(가입 승인 시)
         alert("가입이 승인되었습니다.");
         location.reload();
       } else {
