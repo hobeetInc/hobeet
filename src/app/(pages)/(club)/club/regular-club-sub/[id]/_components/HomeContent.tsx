@@ -3,7 +3,6 @@ import CrewList from "./CrewList";
 import { getRegularClub } from "../_types/Crews";
 import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import WishListHeart from "./WishListHeart";
-import { useAuth } from "@/app/store/AuthContext";
 
 type CrewInfo = {
   memberId: number;

@@ -42,6 +42,7 @@ const WishListHeart = ({ regularClubId }: WishListHeartProps) => {
     if (!userId) {
       alert("로그인이 필요한 서비스입니다");
       router.push("/signin");
+      return;
     }
 
     if (isLoading) return;
