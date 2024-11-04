@@ -4,8 +4,7 @@ import { InSertRegularClubNotification } from "./create/_types/subCreate";
 import TabLayout from "./_components/TabLayout";
 import HomeContent from "./_components/HomeContent";
 import RegularNotification from "./_components/RegularNotification";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+
 import ClubHeader from "./_components/ClubHeader";
 
 type CrewInfo = {

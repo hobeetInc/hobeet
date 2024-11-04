@@ -20,6 +20,7 @@ type OneTimeClubData = {
   }[];
 };
 
+// API 함수들
 export const getEggDayPayList = async (): Promise<NotificationData[]> => {
   const { data: userData } = await browserClient.auth.getUser();
 
@@ -57,7 +58,7 @@ export const getEggPopPayList = async (): Promise<OneTimeClubData[]> => {
           one_time_club_date_time,
           one_time_club_location,
           one_time_image
-          )
+        )
       `
     )
     .order("o_t_c_kakaopay_create_at", { ascending: false })

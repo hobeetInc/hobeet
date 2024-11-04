@@ -3,11 +3,11 @@
 import { useAuth } from "@/app/store/AuthContext";
 import { useState } from "react";
 
-export interface PaymentButtonProps {
+type PaymentButtonProps = {
   clubType: boolean;
   clubId: number;
   agreeChecked: boolean;
-}
+};
 
 const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,8 +23,6 @@ const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) =
       setIsLoading(true);
       const orderId = `${clubId}`;
       const requestUserId = `${userId}`;
-
-      console.log(orderId, requestUserId, clubType, clubId);
 
       const response = await fetch("/api/payment", {
         method: "POST",
@@ -61,9 +59,13 @@ const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) =
     <button
       onClick={onClickKakaopayBtn}
       disabled={isLoading}
-      className="w-full py-3 bg-gray-300 text-gray-700 font-bold rounded-lg mt-5"
+      className={`w-full py-3 font-bold rounded-lg mt-5 ${
+        isLoading
+          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+          : "bg-yellow-400 text-gray-700 hover:bg-yellow-500 transition-colors"
+      }`}
     >
-      {isLoading ? "처리중..." : "결제하기"}
+      {isLoading ? "처리중..." : "카카오페이로 결제하기"}
     </button>
   );
 };

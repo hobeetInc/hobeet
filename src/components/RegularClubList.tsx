@@ -7,6 +7,29 @@ import { getRegularClubList } from "@/app/(pages)/(club)/club/_api/supabase";
 import Image from "next/image";
 import { useAuth } from "@/app/store/AuthContext";
 
+interface RegularClubForm {
+  m_c_id: number;
+  r_c_member: { count: number }[];
+  regular_club_age: number;
+  regular_club_approbval: boolean;
+  regular_club_create_at: string;
+  regular_club_id: number;
+  regular_club_image: string;
+  regular_club_introduction: string;
+  regular_clun_name: string;
+  regular_club_people_limited: number;
+  s_c_id: number;
+  user_id: {
+    user_name: string;
+    user_profile_img: string;
+  };
+  wish_list: {
+    r_c_id: number;
+    user_id: string;
+    wish_list_id: number;
+  }[];
+}
+
 const RegularClubList = () => {
   const {
     data: list,
@@ -22,6 +45,8 @@ const RegularClubList = () => {
   // console.log(list);
 
   const renderHeartIcon = (club: RegularClubForm) => {
+    console.log("club", club);
+
     if (!userId) {
       return <Image src="/asset/Icon/Heart.png" alt="Heart" width={24} height={24} />;
     }

@@ -2,8 +2,6 @@ import Image from "next/image";
 import { getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import { GetOneTimeClub, Member } from "./_types/Crews";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
 import PopHeader from "./_components/PopHeader";
 
 type CrewInfo = {

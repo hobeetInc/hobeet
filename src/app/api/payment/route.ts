@@ -55,9 +55,9 @@ export async function POST(req: Request) {
         quantity: 1,
         total_amount: amount,
         tax_free_amount: 0,
-        approval_url: `http://localhost:3000/kakaopay/isSuccess?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
-        cancel_url: "http://localhost:3000/",
-        fail_url: "http://localhost:3000/"
+        approval_url: `https:/www.eggfriends.site/kakaopay/isSuccess?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
+        cancel_url: "https:/www.eggfriends.site/",
+        fail_url: "https:/www.eggfriends.site/"
       })
     });
 
