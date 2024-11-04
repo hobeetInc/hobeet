@@ -56,7 +56,7 @@ const DateTime = ({ formData, setFormData }: OneTimeProps) => {
             onChange={handleTimeChange}
             showTimeSelect
             showTimeSelectOnly
-            timeIntervals={15}
+            timeIntervals={30}
             timeCaption="시간"
             dateFormat="aa h:mm"
             locale={ko}
