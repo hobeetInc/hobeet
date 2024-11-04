@@ -24,11 +24,17 @@ type RegularClubData = {
   r_c_notification_date_time: string;
   r_c_notification_image: string;
   r_c_notification_tax: number;
-  r_c_id: {
-    m_c_id: {
-      m_c_name: string;
-    };
-  };
+  r_c_id:
+    | {
+        m_c_id: {
+          m_c_name: string;
+        };
+      }
+    | {
+        m_c_id: Array<{
+          m_c_name: string;
+        }>;
+      };
 };
 
 const PaymentConfirmPage = () => {
@@ -85,6 +91,7 @@ const PaymentConfirmPage = () => {
             .eq("r_c_notification_id", parseInt(clubId))
             .single();
 
+          console.log(regularClubFetchData);
           if (regularClubFetchError || !regularClubFetchData) {
             console.error("모임 정보를 불러오는 중 오류가 발생했습니다.");
             return;
@@ -96,11 +103,9 @@ const PaymentConfirmPage = () => {
             r_c_notification_date_time: regularClubFetchData.r_c_notification_date_time,
             r_c_notification_image: regularClubFetchData.r_c_notification_image,
             r_c_notification_tax: regularClubFetchData.r_c_notification_tax,
-            r_c_id: {
-              m_c_id: {
-                m_c_name: regularClubFetchData.r_c_id[0]?.m_c_id[0]?.m_c_name || ""
-              }
-            }
+            r_c_id: Array.isArray(regularClubFetchData.r_c_id)
+              ? { m_c_id: regularClubFetchData.r_c_id[0].m_c_id || { m_c_name: "" } }
+              : regularClubFetchData.r_c_id
           };
 
           setRegularClubData(formattedData);
@@ -146,7 +151,11 @@ const PaymentConfirmPage = () => {
         <Image src={clubImageUrl} alt="모임 이미지" width={60} height={60} className="rounded-lg mr-4 object-cover" />
         <div>
           <span className="text-xs bg-gray-200 py-1 px-2 rounded-full">
-            {clubType === "true" ? oneTimeClubData?.m_category?.m_c_name : regularClubData?.r_c_id.m_c_id.m_c_name}
+            {clubType === "true"
+              ? oneTimeClubData?.m_category?.m_c_name
+              : Array.isArray(regularClubData?.r_c_id.m_c_id)
+              ? regularClubData?.r_c_id.m_c_id[0]?.m_c_name
+              : regularClubData?.r_c_id.m_c_id?.m_c_name}
           </span>
           <div className="text-lg font-semibold">
             {clubType === "true" ? oneTimeClubData?.one_time_club_name : regularClubData?.r_c_notification_name}

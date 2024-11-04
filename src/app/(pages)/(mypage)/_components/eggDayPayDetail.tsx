@@ -24,7 +24,7 @@ const EggDayPayDetail = () => {
 
     try {
       const parsedDate = parseISO(dateString);
-      return format(parsedDate, "yyyy. MM. dd"); // 원하는 형식으로 변환
+      return format(parsedDate, "yyyy. MM. dd");
     } catch (error) {
       console.error("Invalid date format:", dateString, error);
       return "유효하지 않은 날짜 형식";
