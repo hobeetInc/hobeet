@@ -18,8 +18,8 @@ const RegularClubList = () => {
   });
 
   const { userId } = useAuth();
-  console.log(userId);
-  console.log(list);
+  // console.log(userId);
+  // console.log(list);
 
   const renderHeartIcon = (club: RegularClubForm) => {
     if (!userId) {

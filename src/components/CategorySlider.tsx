@@ -1,6 +1,11 @@
+import Image from "next/image";
 import React from "react";
 
 const CategorySlider = () => {
+  const handleCategory = (categoryId: number) => {
+    window.location.href = `/category/${categoryId}`;
+  };
+
   return (
     <div className="relative w-full max-w-[390px] mx-auto">
       <div className="overflow-x-auto scrollbar-hide">
@@ -14,54 +19,108 @@ const CategorySlider = () => {
             </div>
           </div>
 
-          <div className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0">
+          <div
+            className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0"
+            onClick={() => handleCategory(1)}
+          >
             <div className="flex w-[67px] h-[64px] p-2 justify-center items-center rounded-[32px] bg-[#fff1cc]">
-              <img src="/asset/Category icon_airplane.png" alt="아웃도어/여행" className="w-12 h-12" />
+              <Image
+                width={12}
+                height={12}
+                src="/asset/Category icon_airplane.png"
+                alt="아웃도어/여행"
+                className="w-12 h-12"
+              />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
               <p className="font-pretendard">아웃도어/여행</p>
             </div>
           </div>
 
-          <div className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0">
+          <div
+            className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0"
+            onClick={() => handleCategory(2)}
+          >
             <div className="flex w-[67px] h-[64px] p-2 justify-center items-center rounded-[32px] bg-[#fff1cc]">
-              <img src="/asset/Category icon_tennis.png" alt="운동/스포츠관람" className="w-12 h-12" />
+              <Image
+                width={12}
+                height={12}
+                src="/asset/Category icon_tennis.png"
+                alt="운동/스포츠관람"
+                className="w-12 h-12"
+              />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
               <p className="font-pretendard">운동/스포츠관람</p>
             </div>
           </div>
 
-          <div className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0">
+          <div
+            className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0"
+            onClick={() => handleCategory(3)}
+          >
             <div className="flex w-[67px] h-[64px] p-2 justify-center items-center rounded-[32px] bg-[#fff1cc]">
-              <img src="/asset/Category icon_hot-beverage.png" alt="사교/인맥" className="w-12 h-12" />
+              <Image
+                width={12}
+                height={12}
+                src="/asset/Category icon_hot-beverage.png"
+                alt="사교/인맥"
+                className="w-12 h-12"
+              />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
               <p className="font-pretendard">사교/인맥</p>
             </div>
           </div>
 
-          <div className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0">
+          <div
+            className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0"
+            onClick={() => handleCategory(4)}
+          >
             <div className="flex w-[67px] h-[64px] p-2 justify-center items-center rounded-[32px] bg-[#fff1cc]">
-              <img src="/asset/Category icon_guitar.png" alt="문화/공연/축제" className="w-12 h-12" />
+              <Image
+                width={12}
+                height={12}
+                src="/asset/Category icon_guitar.png"
+                alt="문화/공연/축제"
+                className="w-12 h-12"
+              />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
               <p className="font-pretendard">문화/공연/축제</p>
             </div>
           </div>
 
-          <div className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0">
+          <div
+            className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0"
+            onClick={() => handleCategory(5)}
+          >
             <div className="flex w-[67px] h-[64px] p-2 justify-center items-center rounded-[32px] bg-[#fff1cc]">
-              <img src="/asset/Category icon_clapper-board.png" alt="사진/영상" className="w-12 h-12" />
+              <Image
+                width={12}
+                height={12}
+                src="/asset/Category icon_clapper-board.png"
+                alt="사진/영상"
+                className="w-12 h-12"
+              />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
               <p className="font-pretendard">사진/영상</p>
             </div>
           </div>
 
-          <div className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0">
+          <div
+            className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0"
+            onClick={() => handleCategory(6)}
+          >
             <div className="flex w-[67px] h-[64px] p-2 justify-center items-center rounded-[32px] bg-[#fff1cc]">
-              <img src="/asset/Category icon_woman-dancing.png" alt="댄스/무용" className="w-12 h-12" />
+              <Image
+                width={12}
+                height={12}
+                src="/asset/Category icon_woman-dancing.png"
+                alt="댄스/무용"
+                className="w-12 h-12"
+              />
             </div>
             <div className="self-stretch text-center text-xs leading-[135%]">
               <p className="font-pretendard">댄스/무용</p>
