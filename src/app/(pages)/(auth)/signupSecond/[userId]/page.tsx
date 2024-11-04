@@ -187,11 +187,7 @@ const SignupSecondPage = () => {
       })
       .eq("user_id", userId);
 
-    const { error: userAttendError } = await supabase.from("user_attend").insert({
-      user_id: userId
-    });
-
-    if (error || userAttendError) {
+    if (error) {
       console.log("정보 업데이트 실패", error);
     } else {
       console.log("정보 업데이트 성공");

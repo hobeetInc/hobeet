@@ -49,18 +49,31 @@ const SigninPage = () => {
       </div>
 
       <div className="space-y-4 w-full px-10">
-        <button className="w-full py-4 bg-gray-300 text-center rounded-lg" onClick={handleSignInWithGoogle}>
-          구글로 시작하기
+        <button
+          className="w-full py-4 bg-white text-center rounded-[27px] border border-gray-300 flex items-center justify-center space-x-2"
+          onClick={handleSignInWithGoogle}
+        >
+          <img src="/asset/icon-google.png" className="w-6 h-6" alt="Google Icon" />
+          <span className="text-gray-700">구글로 시작하기</span>
         </button>
-        <button className="w-full py-4 bg-gray-300 text-center rounded-lg" onClick={handleSignInWithKakao}>
-          카카오로 시작하기
+
+        <button
+          className="w-full py-4 bg-yellow-300 text-center rounded-[27px] flex items-center justify-center space-x-2"
+          onClick={handleSignInWithKakao}
+        >
+          <img src="/asset/icon-kakao.png" className="w-6 h-6" alt="Kakao Icon" />
+          <span className="text-black">카카오로 시작하기</span>
         </button>
-        <button className="w-full py-4 bg-gray-300 text-center rounded-lg">이메일로 시작하기</button>
-        <div className="flex flex-col items-center justify-center">
-          <Link href={"/"} className="mb-4">
-            회원가입하기
+
+        <button className="w-full py-4 bg-gray-200 text-center rounded-[27px] flex items-center justify-center space-x-2">
+          <img src="/asset/Message-Filled.png" className="w-6 h-6" alt="Email Icon" />
+          <span className="text-black">이메일로 시작하기</span>
+        </button>
+
+        <div className="flex flex-col items-center justify-center mt-4">
+          <Link href={"/"} className="text-sm text-gray-500">
+            이메일로 간편하게 회원가입👉
           </Link>
-          <Link href={"/"}>둘러보기</Link>
         </div>
       </div>
     </div>
