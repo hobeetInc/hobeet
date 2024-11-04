@@ -36,6 +36,7 @@ export const getEggDayPayList = async (): Promise<NotificationData[]> => {
         )
       `
     )
+    .order("r_c_notification_kakaopay_create_at", { ascending: false })
     .eq("user_id", userData.user?.id);
 
   if (error) throw error;
@@ -59,6 +60,7 @@ export const getEggPopPayList = async (): Promise<OneTimeClubData[]> => {
           )
       `
     )
+    .order("o_t_c_kakaopay_create_at", { ascending: false })
     .eq("user_id", userData.user?.id);
 
   if (error) throw error;
