@@ -6,11 +6,19 @@ import { format, parseISO } from "date-fns";
 import ClubCard from "./ClubCard";
 import { ko } from "date-fns/locale";
 
-type NotificationListProps = {
-  notificationData: InSertRegularClubNotification[];
+type CrewInfo = {
+  memberId: number;
+  userId: string;
+  userName: string;
+  userImage: string;
 };
 
-const NotificationList = ({ notificationData }: NotificationListProps) => {
+type NotificationListProps = {
+  notificationData: InSertRegularClubNotification[];
+  crewMembers: CrewInfo[];
+};
+
+const NotificationList = ({ notificationData, crewMembers }: NotificationListProps) => {
   const [selectedDate, setSelectedDate] = useState("all");
 
   // 날짜별로 그룹화하는 함수
@@ -75,7 +83,7 @@ const NotificationList = ({ notificationData }: NotificationListProps) => {
       {/* 모임 카드 목록 */}
       <div className="grid gap-4">
         {filteredNotification().map((notification) => (
-          <ClubCard key={notification.r_c_notification_id} notification={notification} />
+          <ClubCard key={notification.r_c_notification_id} notification={notification} crewMembers={crewMembers} />
         ))}
       </div>
     </div>

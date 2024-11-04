@@ -2,8 +2,6 @@ import Image from "next/image";
 import React from "react";
 import { getNotificationData, getNotificationMember } from "../../../../_api/supabase";
 import { NotificaitonInfo, NotificationMember } from "./_types/notifictionInfo";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
 import CrewList from "./_components/CrewList";
 import DayHeader from "./_components/DayHeader";
 
@@ -26,9 +24,11 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
     if (!clubInfo) {
       throw new Error("Club information not found");
     }
+    console.log("세컨드 아이디!!!!", secondId);
 
-    const member: NotificationMember[] = await getNotificationMember(clubInfo.r_c_notification_id);
+    const member: NotificationMember[] = await getNotificationMember(secondId);
 
+    console.log("맴버!!!", member);
     // 날짜 커스텀
     const date = clubInfo.r_c_notification_date_time;
     const currentDate = new Date(date);
@@ -62,18 +62,6 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
     return (
       <div className="container">
         <DayHeader clubInfo={clubInfo} />
-
-        <div className="flex items-center justify-between h-[48px] p-4 relative">
-          <Link href={"/"} className="absolute left-4">
-            <ChevronLeft />
-          </Link>
-          <h1 className="flex-1 text-center text-lg font-semibold">
-            {(clubInfo.r_c_notification_name?.length ?? 0) > 8
-              ? `${clubInfo.r_c_notification_name?.slice(0, 8)}...`
-              : clubInfo.r_c_notification_name}
-          </h1>
-        </div>
-
         <div className="flex flex-col w-full">
           <Image
             src={clubInfo.r_c_notification_image || defaultImage}
@@ -124,7 +112,8 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
             crewMembers={crewMembers}
             clubId={clubId}
             clubHostId={clubInfo.user_id}
-            clubInfo={clubInfo} // clubInfo가 올바르게 전달되고 있는지 확인
+            clubInfo={clubInfo}
+            secondId={secondId} // clubInfo가 올바르게 전달되고 있는지 확인
           />{" "}
         </div>
       </div>
