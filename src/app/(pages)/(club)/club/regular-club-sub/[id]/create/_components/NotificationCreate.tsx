@@ -409,31 +409,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
           <div className="text-gray-500 text-sm">{formData.r_c_notification_name.length} / 36</div>
         </div>
 
-        {/* <div>
-          <h1 className="text-[20px] font-semibold mb-4">날짜 / 시간</h1>
-          <DatePicker
-            selected={startDate}
-            onChange={handleDateChange}
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={30}
-            timeCaption="시간"
-            dateFormat="yyyy/MM/dd h:mm aa"
-            minDate={new Date()}
-            locale={ko}
-            className="border-2 border-black p-2 w-[358px]"
-            placeholderText="날짜와 시간을 선택하세요"
-            timeClassName={handleColor}
-          />
-          <br />
-          <br />
-          {startDate && (
-            <div className="flex flex-col gap-4">
-              <div className="next-box bg-gray-100">선택된 날짜: {startDate.toLocaleDateString()}</div>
-              <div className="next-box bg-gray-100">선택된 시간: {startDate.toLocaleTimeString()}</div>
-            </div>
-          )}
-        </div> */}
         <div>
           <h1 className="text-[20px] font-semibold mb-4">모임 장소</h1>
 
@@ -458,7 +433,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
                 onChange={handleTimeChange}
                 showTimeSelect
                 showTimeSelectOnly
-                timeIntervals={15}
+                timeIntervals={30}
                 timeCaption="시간"
                 dateFormat="aa h:mm"
                 locale={ko}
