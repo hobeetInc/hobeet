@@ -68,16 +68,15 @@ export default function Header({ className }: HeaderProps) {
         </Link>
       )}
 
-      <div className="flex w-[24px] h-[24px] items-center ml-auto space-x-[16px] mr-[12px] mt-[12px] mb-[12px]">
+      <div className="flex items-center ml-auto gap-4 mr-3 my-3">
         {pathname === "/" || pathname === "/search" ? (
-          <button onClick={handleCreateMeet}>
-            <Image src={"/asset/PlusIcon.png"} alt="PlusIcon" width={24} height={24} />
+          <button onClick={handleCreateMeet} className="w-6 h-6 flex items-center justify-center">
+            <Image src="/asset/PlusIcon.png" alt="PlusIcon" width={24} height={24} className="w-full h-full" />
           </button>
         ) : null}
-        <button onClick={handleAlarm}>
-          <Image src={"/asset/BellIcon.png"} alt="BellIcon" width={24} height={24} />
+        <button onClick={handleAlarm} className="w-6 h-6 flex items-center justify-center">
+          <Image src="/asset/BellIcon.png" alt="BellIcon" width={24} height={24} className="w-full h-full" />
         </button>
-        {/* <Image src={"/asset/MenuIcon.png"} alt="MenuIcon" width={24} height={24} /> */}
       </div>
     </header>
   );

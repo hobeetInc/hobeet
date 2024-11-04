@@ -24,8 +24,6 @@ const SearchPage = () => {
     regular_club_introduction: string;
     regular_club_create_at: string;
     regular_club_approval: boolean;
-    approved_members: any[];
-    pending_members: any[];
   }
 
   interface OneTimeClub extends BaseClub {

@@ -1,4 +1,3 @@
-import { SupabaseClubAPI } from "@/utils/onetimeclubjoin/_api/supabase";
 import browserClient from "@/utils/supabase/client";
 
 const supabase = browserClient;
