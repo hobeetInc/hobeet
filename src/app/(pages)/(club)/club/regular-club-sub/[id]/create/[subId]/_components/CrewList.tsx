@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/app/store/AuthContext";
 
 import { ChevronRight } from "lucide-react";
-import { getNotificationMember } from "@/app/(pages)/(club)/club/_api/supabase";
+import { getNotificationMember, submitRegularMember } from "@/app/(pages)/(club)/club/_api/supabase";
 import FullScreenModal from "./FullScreenModal";
+import { useRouter } from "next/navigation";
+import { NotificaitonInfo } from "../_types/notifictionInfo";
 
 // 유저 상태 정보
 // type ParticipationS = "not_applied" | "pending" | "active";
@@ -24,13 +26,15 @@ interface CrewListProps {
   crewMembers: MemberInfo[];
   clubId: number;
   clubHostId: string;
+  clubInfo: NotificaitonInfo | undefined;
 }
 
-const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
+const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInfo }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
   // const [participationStatus, setParticipationStatus] = useState<ParticipationS>("not_applied");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { userId } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     // console.log("useEffect 실행 시 userId:", userId);
@@ -72,7 +76,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
     refreshData();
   }, [clubId, userId]);
 
-  console.log("이거 확인 맴버!!", crewList);
+  // console.log("이거 확인 맴버!!", crewList);
 
   // 상태 변경 감지를 위한 별도의 useEffect
   // useEffect(() => {
@@ -129,6 +133,32 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         </div>
       );
     }
+
+    return (
+      <button
+        onClick={async () => {
+          try {
+            if (clubInfo?.r_c_notification_tax === 0) {
+              const addMember = {
+                r_c_notification_id: clubId,
+                user_id: userId
+              };
+
+              await submitRegularMember(addMember);
+              alert("에그데이에 참여되었습니다");
+              window.location.reload();
+            } else {
+              router.push(`/kakaopay/paymentConfirm?clubType=false&clubId=${clubId}`);
+            }
+          } catch (error) {
+            console.log("공지 맴버 추가 중 오류:", error);
+          }
+        }}
+        className="w-full h-[50px] bg-yellow-300 rounded-full"
+      >
+        참여하기
+      </button>
+    );
 
     // switch (participationStatus) {
     //   case "active":
