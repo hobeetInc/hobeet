@@ -115,20 +115,23 @@ export class RegularClubAPI {
     await this.validateJoinConditions(userId, clubId);
 
     const club = await this.getClubData(clubId);
+    console.log(club);
+
     if (!club) {
       throw new ClubJoinError("모임을 찾을 수 없습니다.");
     }
+    console.log("야 최지민 너 클럽이냐?", club);
 
     if (club.regular_club_approval) {
+      await this.insertMember(clubId, userId);
+    } else {
       // r_c_participation_request 테이블에 pending 상태로 추가
       await this.supabase.from("r_c_participation_request").insert({
         r_c_id: clubId,
         user_id: userId,
         r_c_participation_request_status: "pending",
-        r_c_participation_request_creat_at: new Date()
+        r_c_participation_request_create_at: new Date()
       });
-    } else {
-      throw new ClubJoinError("모임장의 승인이 필요한 모임입니다.");
     }
   }
 

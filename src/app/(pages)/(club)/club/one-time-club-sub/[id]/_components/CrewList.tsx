@@ -6,6 +6,7 @@ import { getOneTimeMember } from "../../../_api/supabase";
 import FullScreenModal from "./FullScreenModal";
 import { useAuth } from "@/app/store/AuthContext";
 import { ChevronRight } from "lucide-react";
+import JoinClubButton from "@/components/oneTimeClubJoinButton";
 
 // 멤버 정보 타입 정의
 type MemberInfo = {
@@ -107,7 +108,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
       );
     }
 
-    return <button className="w-full h-[50px] bg-yellow-300 rounded-full">참여하기</button>;
+    return <JoinClubButton clubId={clubId} onSuccess={() => {}} onError={() => {}} />;
   };
 
   return (

@@ -179,11 +179,7 @@ export default function JoinClubButton({ clubId, /*onSuccess,*/ onError }: JoinC
   };
 
   return (
-    <button
-      onClick={handleJoinRequest}
-      disabled={isLoading}
-      className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
-    >
+    <button onClick={handleJoinRequest} disabled={isLoading} className="w-full h-[50px] bg-yellow-300 rounded-full">
       {isLoading ? "처리중..." : "참여하기"}
     </button>
   );
