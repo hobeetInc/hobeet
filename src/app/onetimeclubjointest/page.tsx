@@ -11,7 +11,7 @@ export default function OneTimeClubJoinTest() {
 
   useEffect(() => {
     const fetchClubs = async () => {
-      const { data, error } = await supabase.from("one_time_club").select("*");
+      const { data, error } = await supabase.from("egg_pop").select("*");
       if (!error && data) {
         setClubs(data);
       }

@@ -32,9 +32,9 @@ const ChatPage: React.FC = () => {
     queryKey: ["o_t_c_id", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("one_time_club_chatting_room_member")
-        .select("one_time_club_id")
-        .eq("one_time_club_chatting_room_id", roomId)
+        .from("egg_pop_chatting_room_member")
+        .select("egg_pop_id")
+        .eq("egg_pop_chatting_room_id", roomId)
         .limit(1);
       if (error) throw error;
       return data ? data[0] : null;
@@ -46,10 +46,10 @@ const ChatPage: React.FC = () => {
     queryKey: ["oneTimeMemberData", currentUser?.id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("o_t_c_member")
-        .select("o_t_c_member_id")
+        .from("egg_pop_member")
+        .select("egg_pop_member_id")
         .eq("user_id", currentUser?.id)
-        .eq("o_t_c_id", rec?.one_time_club_id)
+        .eq("egg_pop_id", rec?.one_time_club_id)
         .single();
 
       if (error) throw error;
@@ -62,10 +62,10 @@ const ChatPage: React.FC = () => {
     queryKey: ["oneTimeChatInfo", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("one_time_club_chatting_room_member")
-        .select(`*, one_time_club_chatting_room (*)`)
-        .eq("one_time_club_chatting_room_id", roomId)
-        .eq("one_time_member_id", memberData?.o_t_c_member_id)
+        .from("egg_pop_chatting_room_member")
+        .select(`*, egg_pop_chatting_room (*)`)
+        .eq("egg_pop_chatting_room_id", roomId)
+        .eq("egg_pop_member_id", memberData?.o_t_c_member_id)
         .single();
 
       if (error) throw error;
@@ -84,9 +84,9 @@ const ChatPage: React.FC = () => {
       }
 
       const { data, error } = await supabase
-        .from("one_time_club_chatting_room_message")
+        .from("egg_pop_chatting_room_message")
         .select(`*, user:user_id(*)`)
-        .eq("one_time_club_chatting_room_id", roomId)
+        .eq("egg_pop_chatting_room_id", roomId)
         .gte("created_at", chatInfo.created_at)
         .order("created_at", { ascending: true });
 
@@ -111,7 +111,7 @@ const ChatPage: React.FC = () => {
     mutationFn: async (messageContent: string) => {
       if (!chatInfo || !currentUser) throw new Error("전송실패실패실패");
 
-      const { error } = await supabase.from("one_time_club_chatting_room_message").insert([
+      const { error } = await supabase.from("egg_pop_chatting_room_message").insert([
         {
           one_time_club_chatting_room_id: roomId,
           user_id: currentUser.id,
@@ -141,8 +141,8 @@ const ChatPage: React.FC = () => {
         {
           event: "INSERT",
           schema: "public",
-          table: "one_time_club_chatting_room_message",
-          filter: `one_time_club_chatting_room_id=eq.${roomId}`
+          table: "egg_pop_chatting_room_message",
+          filter: `egg_pop_chatting_room_id=eq.${roomId}`
         },
         () => {
           queryClient.invalidateQueries({ queryKey: ["messages", roomId] });

@@ -3,16 +3,16 @@ import browserClient from "@/utils/supabase/client";
 
 export const getPopularClubs = async (): Promise<PopularEggClub[]> => {
   const { data, error } = await browserClient.from("wish_list").select(`
-      r_c_id (
-        regular_club_id,
-        regular_club_name,
-        regular_club_image,
-        regular_club_people_limited,
+      egg_club_id (
+        egg_club_id,
+        egg_club_name,
+        egg_club_image,
+        egg_club_people_limited,
         user_id (
           user_name,
           user_profile_img
         ),
-        r_c_member (
+        egg_club_member (
           count
         ),
         wish_list(*)
@@ -43,20 +43,20 @@ export const getPopularClubs = async (): Promise<PopularEggClub[]> => {
 
 export const getSearchedClubs = async (searchTerm: string): Promise<Club[]> => {
   const { data: regularClubs, error: regularClubError } = await browserClient
-    .from("regular_club")
+    .from("egg_club")
     .select(
       `*, user_id(user_name,
-          user_profile_img), r_c_member(count),wish_list(*)`
+          user_profile_img), egg_club_member(count),wish_list(*)`
     )
-    .ilike("regular_club_name", `%${searchTerm}%`);
+    .ilike("egg_club_name", `%${searchTerm}%`);
 
   const { data: oneTimeClubs, error: oneTimeClubError } = await browserClient
-    .from("one_time_club")
+    .from("egg_pop")
     .select(
       `*,user_id(user_name,
           user_profile_img)`
     )
-    .ilike("one_time_club_name", `%${searchTerm}%`);
+    .ilike("egg_pop_name", `%${searchTerm}%`);
 
   if (regularClubError || oneTimeClubError) {
     console.error("검색 중 에러 발생:", { regularClubError, oneTimeClubError });

@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const { oneTimeClubName, userId, oneTimeClubId } = await req.json();
 
     const { data, error } = await supabase
-      .from("one_time_club_chatting_room")
+      .from("egg_pop_chatting_room")
       .insert([{ one_time_club_chatting_room_name: oneTimeClubName, user_id: userId, one_time_club_id: oneTimeClubId }])
       .select();
 

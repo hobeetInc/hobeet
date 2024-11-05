@@ -21,28 +21,28 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
     queryFn: async () => {
       try {
         const { data: roomData, error: roomError } = await supabase
-          .from("r_c_n_chatting_room")
+          .from("egg_day_chatting_room")
           .select("*")
-          .eq("r_c_n_chatting_room_id", roomId)
+          .eq("egg_day_chatting_room_id", roomId)
           .single();
 
         if (roomError) throw roomError;
         // console.log(roomData);
 
         const { data: chatMember, error: chatMemberError } = await supabase
-          .from("r_c_member")
-          .select("r_c_member_id")
+          .from("egg_club_member")
+          .select("egg_club_member_id")
           .eq("user_id", userId)
-          .eq("r_c_id", roomData.regular_club_id)
+          .eq("egg_club_id", roomData.regular_club_id)
           .single();
 
         if (chatMemberError) throw chatMemberError;
 
         const { data: chattingData, error: chattingError } = await supabase
-          .from("r_c_n_chatting")
+          .from("egg_day_chatting")
           .select("*")
-          .eq("r_c_n_chatting_room_id", roomId)
-          .eq("r_c_member_id", chatMember.r_c_member_id)
+          .eq("egg_day_chatting_room_id", roomId)
+          .eq("egg_club_member_id", chatMember.r_c_member_id)
           .single();
 
         if (chattingError) throw chattingError;

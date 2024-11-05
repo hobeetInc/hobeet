@@ -21,28 +21,28 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
     queryFn: async () => {
       try {
         const { data: roomData, error: roomError } = await supabase
-          .from("one_time_club_chatting_room")
+          .from("egg_pop_chatting_room")
           .select("*")
-          .eq("one_time_club_chatting_room_id", roomId)
+          .eq("egg_pop_chatting_room_id", roomId)
           .single();
 
         if (roomError) throw roomError;
         // console.log(roomData);
 
         const { data: chatMember, error: chatMemberError } = await supabase
-          .from("o_t_c_member")
-          .select("o_t_c_member_id")
+          .from("egg_pop_member")
+          .select("egg_pop_member_id")
           .eq("user_id", userId)
-          .eq("o_t_c_id", roomData.one_time_club_id)
+          .eq("egg_pop_id", roomData.one_time_club_id)
           .single();
 
         if (chatMemberError) throw chatMemberError;
 
         const { data: chattingData, error: chattingError } = await supabase
-          .from("one_time_club_chatting_room_member")
+          .from("egg_pop_chatting_room_member")
           .select("*")
-          .eq("one_time_club_chatting_room_id", roomId)
-          .eq("one_time_member_id", chatMember.o_t_c_member_id)
+          .eq("egg_pop_chatting_room_id", roomId)
+          .eq("egg_pop_member_id", chatMember.o_t_c_member_id)
           .single();
 
         if (chattingError) throw chattingError;

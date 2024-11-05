@@ -6,9 +6,9 @@ export async function ChatRoomExit(r_c_n_chatting_id: number, clubCheck: boolean
   if (clubCheck) {
     try {
       const { data } = await supabase
-        .from("r_c_n_chatting")
+        .from("egg_day_chatting")
         .select("admin")
-        .eq("r_c_n_chatting_id", r_c_n_chatting_id)
+        .eq("egg_day_chatting_id", r_c_n_chatting_id)
         .single();
       // console.log(data);
 
@@ -16,9 +16,9 @@ export async function ChatRoomExit(r_c_n_chatting_id: number, clubCheck: boolean
         return false;
       } else {
         const { data, error } = await supabase
-          .from("r_c_n_chatting")
+          .from("egg_day_chatting")
           .update({ active: false })
-          .eq("r_c_n_chatting_id", r_c_n_chatting_id)
+          .eq("egg_day_chatting_id", r_c_n_chatting_id)
           .single();
 
         if (error) throw error;

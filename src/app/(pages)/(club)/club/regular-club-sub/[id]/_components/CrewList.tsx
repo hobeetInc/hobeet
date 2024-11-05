@@ -84,9 +84,9 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
     try {
       // 채팅방 아이디 가져오기
       const { data: chatRoom } = await browserClient
-        .from("r_c_n_chatting_room")
-        .select("r_c_n_chatting_room_id")
-        .eq("regular_club_id", clubId)
+        .from("egg_day_chatting_room")
+        .select("egg_day_chatting_room_id")
+        .eq("egg_club_id", clubId)
         .single();
 
       // console.log("정기적모임 아이디", chatRoom);

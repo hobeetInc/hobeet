@@ -110,7 +110,7 @@ const OneTimeClubChattingRoomPage = () => {
         {
           event: "INSERT",
           schema: "public",
-          table: "one_time_club_chatting_room_message"
+          table: "egg_pop_chatting_room_message"
         },
         (payload) => {
           const newMessage = payload.new;

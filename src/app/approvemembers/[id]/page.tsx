@@ -83,16 +83,16 @@ export default function ApproveMembersPage() {
   useEffect(() => {
     const fetchPendingAndActiveRequests = async () => {
       const { data: pendingData, error: pendingError } = await supabase
-        .from("r_c_participation_request")
+        .from("egg_club_participation_request")
         .select(`*,user_id("*")`)
-        .eq("r_c_participation_request_status", "pending")
-        .eq("r_c_id", clubId);
+        .eq("egg_club_participation_request_status", "pending")
+        .eq("egg_club_id", clubId);
 
       const { data: activeData, error: activeError } = await supabase
-        .from("r_c_participation_request")
+        .from("egg_club_participation_request")
         .select(`*,user_id("*")`)
-        .eq("r_c_participation_request_status", "active")
-        .eq("r_c_id", clubId);
+        .eq("egg_club_participation_request_status", "active")
+        .eq("egg_club_id", clubId);
 
       if (pendingError || activeError) {
         console.error("Error fetching requests:", pendingError || activeError);
@@ -107,14 +107,14 @@ export default function ApproveMembersPage() {
 
   const approveMember = async (requestId: number) => {
     const { data, error } = await supabase
-      .from("r_c_participation_request")
+      .from("egg_club_participation_request")
       .update({ r_c_participation_request_status: "active" })
-      .eq("r_c_participation_request_id", requestId)
+      .eq("egg_club_participation_request_id", requestId)
       .select("*")
       .single();
     if (!error) {
       setRequests((prev) => prev.filter((req) => req.r_c_participation_request_id !== requestId));
-      const { error } = await supabase.from("r_c_member").insert({
+      const { error } = await supabase.from("egg_club_member").insert({
         user_id: data.user_id,
         r_c_id: data.r_c_id,
         r_c_participation_request_id: data.r_c_participation_request_id,

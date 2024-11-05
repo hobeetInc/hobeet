@@ -54,11 +54,7 @@ export class SupabaseClubAPI {
   }
 
   async getClubData(clubId: number): Promise<OneTimeClub> {
-    const { data, error } = await this.supabase
-      .from("one_time_club")
-      .select("*")
-      .eq("one_time_club_id", clubId)
-      .single();
+    const { data, error } = await this.supabase.from("egg_pop").select("*").eq("egg_pop_id", clubId).single();
 
     if (error) {
       throw new ClubJoinError("모임 정보를 찾을 수 없습니다.");
@@ -69,10 +65,10 @@ export class SupabaseClubAPI {
 
   async checkExistingMember(userId: string, clubId: number): Promise<boolean> {
     const { data, error } = await this.supabase
-      .from("o_t_c_member")
+      .from("egg_pop_member")
       .select("*")
       .eq("user_id", userId)
-      .eq("o_t_c_id", clubId)
+      .eq("egg_pop_id", clubId)
       .single();
 
     if (error) {
@@ -84,9 +80,9 @@ export class SupabaseClubAPI {
 
   async getCurrentMemberCount(clubId: number): Promise<number | null> {
     const { count, error } = await this.supabase
-      .from("o_t_c_member")
+      .from("egg_pop_member")
       .select("*", { count: "exact" })
-      .eq("o_t_c_id", clubId);
+      .eq("egg_pop_id", clubId);
 
     if (error) {
       throw new ClubJoinError("모임 인원 확인 중 오류가 발생 했습니다.");
@@ -97,7 +93,7 @@ export class SupabaseClubAPI {
 
   // 가입
   async insertMember(clubId: string | null, userId: string | null): Promise<void> {
-    const { error } = await this.supabase.from("o_t_c_member").insert({
+    const { error } = await this.supabase.from("egg_pop_member").insert({
       o_t_c_id: clubId,
       user_id: userId
     });

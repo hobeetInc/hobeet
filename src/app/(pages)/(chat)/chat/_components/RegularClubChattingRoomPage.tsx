@@ -108,7 +108,7 @@ const RegularClubChattingRoomPage = () => {
         {
           event: "INSERT",
           schema: "public",
-          table: "r_c_n_chatting_message"
+          table: "egg_day_chatting_message"
         },
         (payload) => {
           const newMessage = payload.new;
