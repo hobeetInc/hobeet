@@ -170,13 +170,31 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
   // 날짜 변경 처리
   const handleDateChange = (date: Date | null) => {
     setStartDate(date);
-    updateDateTime(date, startTime);
+    setStartTime(null);
+    updateDateTime(date, null);
   };
 
   // 시간 변경 처리
   const handleTimeChange = (time: Date | null) => {
     setStartTime(time);
     updateDateTime(startDate, time);
+  };
+
+  // 선택 가능한 시간 필터링
+  const filterTime = (time: Date) => {
+    const currentDate = new Date();
+    const selectedDate = startDate || new Date();
+
+    // 선택된 날짜가 오늘인 경우에만 시간 필터링 적용
+    if (
+      selectedDate.getDate() === currentDate.getDate() &&
+      selectedDate.getMonth() === currentDate.getMonth() &&
+      selectedDate.getFullYear() === currentDate.getFullYear()
+    ) {
+      return time >= currentDate;
+    }
+
+    return true;
   };
 
   // 날짜와 시간을 합쳐서 FormData에 저장
@@ -456,6 +474,8 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
                 placeholderText="시간을 선택해주세요"
                 className="w-full p-4 bg-gray-50 rounded-lg pr-12"
                 wrapperClassName="w-full"
+                filterTime={filterTime}
+                disabled={!startDate}
               />
             </div>
           </div>
