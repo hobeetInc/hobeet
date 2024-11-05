@@ -108,7 +108,7 @@ const PaymentSuccesspage = () => {
                 r_c_notification_name,
                 r_c_notification_location,
                 r_c_notification_date_time,
-                r_c_notification_image,
+                r_c_notification_image, 
                 r_c_id (
                   m_c_id (m_c_name)
                 )

@@ -194,8 +194,23 @@ const PaymentConfirmPage = () => {
         </div>
       </div>
       <div className="mb-4 flex items-center">
-        <input type="checkbox" id="agree" checked={agreeChecked} onChange={(e) => setAgreeChecked(e.target.checked)} />
-        <label htmlFor="agree" className="ml-2 text-sm">
+        <input
+          type="checkbox"
+          id="agree"
+          checked={agreeChecked}
+          onChange={(e) => setAgreeChecked(e.target.checked)}
+          className="hidden"
+        />
+
+        <div className="cursor-pointer" onClick={() => setAgreeChecked(!agreeChecked)}>
+          {agreeChecked ? (
+            <Image src={"/asset/Icon/checkbox-selected.png"} alt="checked" width={24} height={24} />
+          ) : (
+            <Image src={"/asset/Icon/checkbox-default.png"} alt="unChecked" width={24} height={24} />
+          )}
+        </div>
+
+        <label htmlFor="agree" className="ml-2 text-sm cursor-pointer" onClick={() => setAgreeChecked(!agreeChecked)}>
           주문 내용을 확인했으며, 결제에 동의합니다
         </label>
       </div>
