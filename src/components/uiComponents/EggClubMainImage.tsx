@@ -1,5 +1,5 @@
-import HeartImage from "./Heart";
 import Image from "next/image";
+import { HeartImage } from "./HeartImage";
 
 // 에그 클럽 메인 이미지 컴포넌트(하트 아이콘 포함)
 // imageURL : 이미지 URL
