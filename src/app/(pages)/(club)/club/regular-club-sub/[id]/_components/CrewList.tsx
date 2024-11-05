@@ -39,14 +39,14 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
   const router = useRouter();
 
   useEffect(() => {
-    console.log("useEffect 실행 시 userId:", userId);
+    // console.log("useEffect 실행 시 userId:", userId);
 
     // 데이터 새로고침 함수
     const refreshData = async () => {
       try {
         const memberResult = await getRegularMember(clubId);
 
-        console.log("memberResult:", memberResult);
+        // console.log("memberResult:", memberResult);
 
         const newCrewMemebers = memberResult.map((member) => ({
           memberId: member.r_c_member_id,
@@ -112,7 +112,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         .eq("regular_club_id", clubId)
         .single();
 
-      console.log("정기적모임 아이디", chatRoom);
+      // console.log("정기적모임 아이디", chatRoom);
 
       if (chatRoom) {
         router.push(`/chat/regularChat/${chatRoom.r_c_n_chatting_room_id}`);

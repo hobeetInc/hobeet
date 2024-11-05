@@ -47,8 +47,8 @@ export async function RegularClubChatRoomRecruiterEntrance(club: clubId) {
       throw new Error("채팅방 입장 처리 중 오류가 발생했습니다.");
     }
 
-    const chatRoomRecruiterEntrance = await postResponse.json();
-    console.log(chatRoomRecruiterEntrance);
+    await postResponse.json();
+    // console.log(chatRoomRecruiterEntrance);
   } catch (error) {
     console.error("처리 중 오류가 발생했습니다: ", error);
   }
@@ -90,8 +90,8 @@ export async function RegularClubApproveChatRoomRecruiterEntrance(params: ClubPa
       throw new Error("채팅방 입장 처리 중 오류가 발생했습니다.");
     }
 
-    const chatRoomRecruiterEntrance = await postResponse.json();
-    console.log(chatRoomRecruiterEntrance);
+    await postResponse.json();
+    // console.log(chatRoomRecruiterEntrance);
   } catch (error) {
     console.error("처리 중 오류가 발생했습니다: ", error);
   }

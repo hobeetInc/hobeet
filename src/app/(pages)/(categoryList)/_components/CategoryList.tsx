@@ -18,7 +18,7 @@ const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) =
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  console.log(data);
+  // console.log(data);
 
   if (error) {
     return <div>Error: {error.toString()}</div>;

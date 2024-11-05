@@ -10,7 +10,7 @@ export async function ChatRoomExit(r_c_n_chatting_id: number, clubCheck: boolean
         .select("admin")
         .eq("r_c_n_chatting_id", r_c_n_chatting_id)
         .single();
-      console.log(data);
+      // console.log(data);
 
       if (data?.admin) {
         return false;
@@ -22,7 +22,7 @@ export async function ChatRoomExit(r_c_n_chatting_id: number, clubCheck: boolean
           .single();
 
         if (error) throw error;
-        console.log(data);
+        // console.log(data);
 
         return data;
       }

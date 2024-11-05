@@ -24,11 +24,11 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
     if (!clubInfo) {
       throw new Error("Club information not found");
     }
-    console.log("세컨드 아이디!!!!", secondId);
+    // console.log("세컨드 아이디!!!!", secondId);
 
     const member: NotificationMember[] = await getNotificationMember(secondId);
 
-    console.log("맴버!!!", member);
+    // console.log("맴버!!!", member);
     // 날짜 커스텀
     const date = clubInfo.r_c_notification_date_time;
     const currentDate = new Date(date);

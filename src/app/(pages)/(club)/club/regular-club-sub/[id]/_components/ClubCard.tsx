@@ -18,11 +18,11 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
   const router = useRouter();
   const { userId } = useAuth();
 
-  useEffect(() => {
-    console.log("ClubCard 렌더링 시 crewMembers:", crewMembers);
-  }, []);
+  // useEffect(() => {
+  //   console.log("ClubCard 렌더링 시 crewMembers:", crewMembers);
+  // }, []);
 
-  console.log("객체:", { notification, crewMembers });
+  // console.log("객체:", { notification, crewMembers });
 
   // 날짜와 시간 커스텀
   const DateTimeCustom = (dateTime: string) => {

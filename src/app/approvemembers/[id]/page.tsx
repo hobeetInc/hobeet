@@ -169,7 +169,7 @@ export default function ApproveMembersPage() {
   const supabase = createClient();
   const params = useParams();
   const clubId = Number(params.id);
-  console.log(clubId);
+  // console.log(clubId);
 
   // params.clubId = 29; // 상세페이지 생성 협의(어떻게 받아올 것인지 클럽아이디)
 
@@ -214,8 +214,8 @@ export default function ApproveMembersPage() {
         regular_club_request_status: "active"
       });
       const user_id = data.user_id as string;
-      console.log("나는 나는 나는 ", user_id);
-      debugger;
+      // console.log("나는 나는 나는 ", user_id);
+
       await RegularClubApproveChatRoomRecruiterEntrance({ r_c_id: clubId, user_id: user_id }); // 모임원 채팅방 입장(가입 승인 시)
 
       if (!error) {

@@ -26,7 +26,7 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError, clas
         error: authError
       } = await supabase.auth.getUser();
 
-      console.log("User data:", user);
+      // console.log("User data:", user);
 
       if (authError || !user) {
         onError?.("로그인이 필요합니다.");

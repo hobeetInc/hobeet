@@ -73,9 +73,9 @@ const OneTimeContent = () => {
   const [formData, setFormData] = useState<OneTimeClubForm>(initialData.formData);
 
   // 폼데이터 확인용
-  useEffect(() => {
-    console.log("폼:", formData);
-  }, [formData]);
+  // useEffect(() => {
+  //   console.log("폼:", formData);
+  // }, [formData]);
 
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
@@ -224,7 +224,7 @@ const OneTimeContent = () => {
         o_t_c_id: data.one_time_club_id,
         user_id: data.user_id
       };
-      console.log("맴버", member);
+      // console.log("맴버", member);
 
       await putOneTimeMember(member);
       // 모임장 채팅방 생성 및 입장

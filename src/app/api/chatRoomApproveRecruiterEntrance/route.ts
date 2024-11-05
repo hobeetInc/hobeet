@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const supabase = createClient();
   const { regularClubMember, user_id } = await req.json();
-  console.log("user_id", user_id);
+  // console.log("user_id", user_id);
 
   try {
     const { data: memberData, error: memberError } = await supabase
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     debugger;
     const r_c_member_id = memberData.r_c_member_id;
 
-    console.log("채팅방 정보: ", regularClubMember);
+    // console.log("채팅방 정보: ", regularClubMember);
     const chatRoomData = regularClubMember.data[0];
 
     const { error: insertError } = await supabase.from("r_c_n_chatting").insert({

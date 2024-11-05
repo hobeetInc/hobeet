@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     const r_c_member_id = memberData.r_c_member_id;
 
     const { regularClubMember } = await req.json();
-    console.log("채팅방 정보: ", regularClubMember);
+    // console.log("채팅방 정보: ", regularClubMember);
     const chatRoomData = regularClubMember.data[0];
 
     const { error: insertError } = await supabase.from("r_c_n_chatting").insert({

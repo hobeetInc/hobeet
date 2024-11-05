@@ -72,7 +72,7 @@ const PaymentConfirmPage = () => {
           }
 
           setOneTimeClubData(Array.isArray(oneTimeClubFetchData) ? oneTimeClubFetchData[0] : oneTimeClubFetchData);
-          console.log(oneTimeClubFetchData);
+          // console.log(oneTimeClubFetchData);
         } else {
           const { data: regularClubFetchData, error: regularClubFetchError } = await supabase
             .from("r_c_notification")
@@ -91,7 +91,7 @@ const PaymentConfirmPage = () => {
             .eq("r_c_notification_id", parseInt(clubId))
             .single();
 
-          console.log(regularClubFetchData);
+          // console.log(regularClubFetchData);
           if (regularClubFetchError || !regularClubFetchData) {
             console.error("모임 정보를 불러오는 중 오류가 발생했습니다.");
             return;

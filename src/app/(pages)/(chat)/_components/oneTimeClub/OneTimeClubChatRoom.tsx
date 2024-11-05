@@ -19,7 +19,7 @@ export async function OneTimeClubChatRoom(oneTimeClubName: string, oneTimeClubId
 
       // 모임장 채팅방에 입장
       await OneTimeClubChatRoomMeetingPlace(OneTimeChatRoom);
-      console.log("채팅방 생성 완료:", OneTimeChatRoom);
+      // console.log("채팅방 생성 완료:", OneTimeChatRoom);
     } else {
       console.error("채팅방 생성 실패:", error || "Unknown error");
     }

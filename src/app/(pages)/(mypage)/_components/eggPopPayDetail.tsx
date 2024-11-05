@@ -53,7 +53,7 @@ const EggPopPayDetail = () => {
   if (isError) {
     return <div>에러 발생</div>;
   }
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="egg-day-pay-list">
