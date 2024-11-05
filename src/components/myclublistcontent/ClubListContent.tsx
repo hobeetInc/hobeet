@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { OneTimeClubCard } from "@/components/onetimeclublist/OneTimeClubCard";
 import { RegularClubCard } from "@/components/regularclublist/RegularClubCard";
-import { OneTimeClub, RegularClub } from "@/types/cardlist.types";
+import { EggClub, EggPop } from "@/types/cardlist.types";
 import { createClient } from "@/utils/supabase/client";
 import { fetchCreatedClubs, fetchJoinedClubs } from "./_api/ClubListContentApi";
 
@@ -11,8 +11,8 @@ const supabase = createClient();
 
 export default function ClubListContent() {
   const [activeTab, setActiveTab] = useState<"created" | "joined">("created");
-  const [oneTimeClubs, setOneTimeClubs] = useState<OneTimeClub[]>([]);
-  const [regularClubs, setRegularClubs] = useState<RegularClub[]>([]);
+  const [oneTimeClubs, setOneTimeClubs] = useState<EggPop[]>([]);
+  const [regularClubs, setRegularClubs] = useState<EggClub[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
