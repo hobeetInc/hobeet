@@ -3,46 +3,46 @@ const supabase = createClient();
 
 export const fetchCreatedClubs = async (userId: string) => {
   const { data: oneTime } = await supabase
-    .from("one_time_club")
+    .from("egg_pop")
     .select("*")
     .eq("user_id", userId)
-    .order("one_time_club_date_time", { ascending: false });
+    .order("egg_pop_date_time", { ascending: false });
 
   const { data: regular } = await supabase
-    .from("regular_club")
+    .from("egg_club")
     .select("*")
     .eq("user_id", userId)
-    .order("regular_club_create_at", { ascending: false });
+    .order("egg_club_create_at", { ascending: false });
 
   return { oneTime: oneTime || [], regular: regular || [] };
 };
 
 export const fetchJoinedClubs = async (userId: string) => {
-  const { data: oneTimeMemberships } = await supabase.from("o_t_c_member").select("o_t_c_id").eq("user_id", userId);
+  const { data: oneTimeMemberships } = await supabase.from("egg_pop_member").select("egg_pop_id").eq("user_id", userId);
 
   const { data: regularMemberships } = await supabase
-    .from("r_c_member")
-    .select("r_c_id")
+    .from("egg_club_member")
+    .select("egg_club_id")
     .eq("user_id", userId)
-    .eq("regular_club_request_status", "active");
+    .eq("egg_club_request_status", "active");
 
   const oneTimeIds = oneTimeMemberships?.map((m) => m.o_t_c_id) || [];
   const regularIds = regularMemberships?.map((m) => m.r_c_id) || [];
 
   const oneTimeData = oneTimeIds.length
     ? await supabase
-        .from("one_time_club")
+        .from("egg_pop")
         .select("*")
-        .in("one_time_club_id", oneTimeIds)
-        .order("one_time_club_date_time", { ascending: false })
+        .in("egg_pop_id", oneTimeIds)
+        .order("egg_pop_date_time", { ascending: false })
     : { data: [] };
 
   const regularData = regularIds.length
     ? await supabase
-        .from("regular_club")
+        .from("egg_club")
         .select("*")
-        .in("regular_club_id", regularIds)
-        .order("regular_club_create_at", { ascending: false })
+        .in("egg_club_id", regularIds)
+        .order("egg_club_create_at", { ascending: false })
     : { data: [] };
 
   return { oneTime: oneTimeData.data || [], regular: regularData.data || [] };

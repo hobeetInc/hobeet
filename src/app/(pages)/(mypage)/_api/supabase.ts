@@ -35,19 +35,19 @@ export const getEggDayPayList = async (): Promise<NotificationResponse[]> => {
   const { data: userData } = await browserClient.auth.getUser();
 
   const { data, error } = await browserClient
-    .from("r_c_notification_kakaopay")
+    .from("egg_day_kakaopay")
     .select(
       `
-        r_c_notification_kakaopay_create_at,
-        r_c_notification_id (
-          r_c_notification_name,
-          r_c_notification_date_time,
-          r_c_notification_location,
-          r_c_notification_image
+        egg_day_kakaopay_create_at,
+        egg_day_id (
+          egg_day_name,
+          egg_day_date_time,
+          egg_day_location,
+          egg_day_image
         )
       `
     )
-    .order("r_c_notification_kakaopay_create_at", { ascending: false })
+    .order("egg_day_kakaopay_create_at", { ascending: false })
     .eq("user_id", userData.user?.id);
 
   if (error) throw error;
@@ -59,19 +59,19 @@ export const getEggPopPayList = async (): Promise<OneTimeClubResponse[]> => {
   const { data: userData } = await browserClient.auth.getUser();
 
   const { data, error } = await browserClient
-    .from("o_t_c_kakaopay")
+    .from("egg_pop_kakaopay")
     .select(
       `
-        o_t_c_kakaopay_create_at,
-        o_t_c_id(
-          one_time_club_name,
-          one_time_club_date_time,
-          one_time_club_location,
-          one_time_image
+        egg_pop_kakaopay_create_at,
+        egg_pop_id(
+          egg_pop_name,
+          egg_pop_date_time,
+          egg_pop_location,
+          egg_pop_image
         )
       `
     )
-    .order("o_t_c_kakaopay_create_at", { ascending: false })
+    .order("egg_pop_kakaopay_create_at", { ascending: false })
     .eq("user_id", userData.user?.id);
 
   if (error) throw error;

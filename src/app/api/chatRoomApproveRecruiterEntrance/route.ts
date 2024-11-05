@@ -8,8 +8,8 @@ export async function POST(req: Request) {
 
   try {
     const { data: memberData, error: memberError } = await supabase
-      .from("r_c_member")
-      .select("r_c_member_id")
+      .from("egg_club_member")
+      .select("egg_club_member_id")
       .eq("user_id", user_id)
       .single();
 
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     // console.log("채팅방 정보: ", regularClubMember);
     const chatRoomData = regularClubMember.data[0];
 
-    const { error: insertError } = await supabase.from("r_c_n_chatting").insert({
+    const { error: insertError } = await supabase.from("egg_day_chatting").insert({
       r_c_n_chatting_room_id: chatRoomData.r_c_n_chatting_room_id,
       r_c_member_id: r_c_member_id,
       r_c_id: chatRoomData.r_c_id,

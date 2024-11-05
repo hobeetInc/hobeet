@@ -124,7 +124,7 @@ export class RegularClubAPI {
 
     if (club.regular_club_approval) {
       // r_c_participation_request 테이블에 pending 상태로 추가
-      await this.supabase.from("r_c_participation_request").insert({
+      await this.supabase.from("egg_club_participation_request").insert({
         r_c_id: clubId,
         user_id: userId,
         r_c_participation_request_status: "pending",
@@ -137,9 +137,9 @@ export class RegularClubAPI {
 
   async approveMembership(clubId: number, userId: string): Promise<void> {
     const { data: club, error } = await this.supabase
-      .from("regular_club")
+      .from("egg_club")
       .select("user_id")
-      .eq("regular_club_id", clubId)
+      .eq("egg_club_id", clubId)
       .single();
     if (error || !club) {
       throw new ClubJoinError("모임 정보를 찾을 수 없습니다.");
@@ -166,7 +166,7 @@ export class RegularClubAPI {
     const koreaTimeDiff = 9 * 60 * 60 * 1000;
     const koreaTime = new Date(utc + koreaTimeDiff);
     const { data } = await this.supabase
-      .from("r_c_participation_request")
+      .from("egg_club_participation_request")
       .insert({
         r_c_id: clubId,
         user_id: userId,
@@ -176,7 +176,7 @@ export class RegularClubAPI {
       .select("*")
       .single();
     // console.log("data", data);
-    const { error } = await this.supabase.from("r_c_member").insert({
+    const { error } = await this.supabase.from("egg_club_member").insert({
       r_c_id: clubId,
       user_id: userId,
       regular_club_request_status: "active",
@@ -197,9 +197,9 @@ export class RegularClubAPI {
 
   async getClubData(clubId: number): Promise<RegularClub> {
     const { data, error } = await this.supabase
-      .from("regular_club")
+      .from("egg_club")
       .select("*, user:user_id")
-      .eq("regular_club_id", clubId)
+      .eq("egg_club_id", clubId)
       .single();
     if (error) throw new ClubJoinError("모임 정보를 찾을 수 없습니다.");
     return data;
@@ -207,10 +207,10 @@ export class RegularClubAPI {
 
   async getCurrentMemberCount(clubId: number): Promise<number> {
     const { count, error } = await this.supabase
-      .from("r_c_member")
+      .from("egg_club_member")
       .select("*", { count: "exact" })
-      .eq("r_c_id", clubId)
-      .eq("regular_club_request_status", "active");
+      .eq("egg_club_id", clubId)
+      .eq("egg_club_request_status", "active");
 
     if (error) {
       console.error("멤버 수 조회 오류:", error);
@@ -222,10 +222,10 @@ export class RegularClubAPI {
 
   async checkExistingMember(userId: string, clubId: number): Promise<boolean> {
     const { data, error } = await this.supabase
-      .from("r_c_member")
+      .from("egg_club_member")
       .select("*")
       .eq("user_id", userId)
-      .eq("r_c_id", clubId)
+      .eq("egg_club_id", clubId)
       .single();
 
     return !error && !!data;

@@ -41,11 +41,11 @@ const WishClubListPage = () => {
         const { data: rawData, error: fetchError } = await supabase
           .from("wish_list")
           .select(
-            `r_c_id(
-              regular_club_name,
-              regular_club_image, 
-              regular_club_people_limited,
-              r_c_member(count),
+            `egg_club_id(
+              egg_club_name,
+              egg_club_image, 
+              egg_club_people_limited,
+              egg_club_member(count),
               wish_list(count),
               user_id(
                 user_name, 

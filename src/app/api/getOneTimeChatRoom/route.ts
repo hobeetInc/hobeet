@@ -9,15 +9,15 @@ export async function POST(req: Request) {
     const { userId } = await req.json();
 
     const { data: memberData, error: memberError } = await supabase
-      .from("o_t_c_member")
+      .from("egg_pop_member")
       .select(
         `
         *,
-        one_time_club_chatting_room_member (
+        egg_pop_chatting_room_member (
           *,
-          one_time_club_chatting_room (*)
+          egg_pop_chatting_room (*)
         ),
-        one_time_club (*)
+        egg_pop (*)
         `
       )
       .eq("user_id", userId);
@@ -31,14 +31,14 @@ export async function POST(req: Request) {
         const chattingWithMessages: OneTimeChatting[] = await Promise.all(
           member.one_time_club_chatting_room_member.map(async (chatting) => {
             const { data: messages, error: messageError } = await supabase
-              .from("one_time_club_chatting_room_message")
+              .from("egg_pop_chatting_room_message")
               .select(
                 `
-                one_time_club_chatting_room_message_content,
+                egg_pop_chatting_room_message_content,
                 created_at
                 `
               )
-              .eq("one_time_club_chatting_room_id", chatting.one_time_club_chatting_room_id)
+              .eq("egg_pop_chatting_room_id", chatting.one_time_club_chatting_room_id)
               .order("created_at", { ascending: true });
 
             if (messageError) {

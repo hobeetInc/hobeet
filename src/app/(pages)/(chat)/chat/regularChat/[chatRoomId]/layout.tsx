@@ -48,9 +48,9 @@ function ChatHeader() {
     if (regular_club_id) {
       const fetchRegularClubId = async () => {
         const { data, error } = await supabase
-          .from("r_c_n_chatting")
-          .select(`* , r_c_member_id(* , user_id(*))`)
-          .eq("r_c_id", regular_club_id)
+          .from("egg_day_chatting")
+          .select(`* , egg_club_member_id(* , user_id(*))`)
+          .eq("egg_club_id", regular_club_id)
           .eq("active", true);
         if (error) {
           console.error(error);

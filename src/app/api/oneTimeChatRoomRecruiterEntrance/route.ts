@@ -20,10 +20,10 @@ export async function POST(req: Request) {
     // console.log(userId);
 
     const { data: memberData, error: memberError } = await supabase
-      .from("o_t_c_member")
-      .select("o_t_c_member_id")
+      .from("egg_pop_member")
+      .select("egg_pop_member_id")
       .eq("user_id", userId)
-      .eq("o_t_c_id", oneTimeClubMember.data[0].one_time_club_id)
+      .eq("egg_pop_id", oneTimeClubMember.data[0].one_time_club_id)
       .single();
     // console.log("memberData", memberData);
 
@@ -33,14 +33,14 @@ export async function POST(req: Request) {
     }
 
     const o_t_c_member_id = memberData.o_t_c_member_id;
-    console.log("o_t_c_member_id", o_t_c_member_id);
+    console.log("egg_pop_member_id", o_t_c_member_id);
 
     // const { regularClubMember } = await req.json();
     // console.log("채팅방 정보: ", regularClubMember);
     // const chatRoomData = oneTimeClubMember.data[0].one_time_club_chatting_room_id;
     // console.log("chatRoomData", chatRoomData);
 
-    const { error: insertError } = await supabase.from("one_time_club_chatting_room_member").insert({
+    const { error: insertError } = await supabase.from("egg_pop_chatting_room_member").insert({
       one_time_club_chatting_room_id: oneTimeClubMember.data[0].one_time_club_chatting_room_id,
       one_time_member_id: o_t_c_member_id,
       one_time_club_id: oneTimeClubMember.data[0].one_time_club_id,

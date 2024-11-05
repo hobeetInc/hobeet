@@ -57,9 +57,9 @@ const ChatPage: React.FC = () => {
     queryKey: ["r_c_id", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("r_c_n_chatting")
-        .select("r_c_id")
-        .eq("r_c_n_chatting_room_id", roomId)
+        .from("egg_day_chatting")
+        .select("egg_club_id")
+        .eq("egg_day_chatting_room_id", roomId)
         .limit(1);
       if (error) throw error;
       return data ? data[0] : null;
@@ -72,10 +72,10 @@ const ChatPage: React.FC = () => {
     queryKey: ["memberData", currentUser?.id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("r_c_member")
-        .select("r_c_member_id")
+        .from("egg_club_member")
+        .select("egg_club_member_id")
         .eq("user_id", currentUser?.id)
-        .eq("r_c_id", rec?.r_c_id)
+        .eq("egg_club_id", rec?.r_c_id)
         .single();
 
       if (error) throw error;
@@ -89,10 +89,10 @@ const ChatPage: React.FC = () => {
     queryKey: ["chatInfo", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("r_c_n_chatting")
-        .select(`*, r_c_n_chatting_room (*)`)
-        .eq("r_c_n_chatting_room_id", roomId)
-        .eq("r_c_member_id", memberData?.r_c_member_id)
+        .from("egg_day_chatting")
+        .select(`*, egg_day_chatting_room (*)`)
+        .eq("egg_day_chatting_room_id", roomId)
+        .eq("egg_club_member_id", memberData?.r_c_member_id)
         .single();
 
       if (error) throw error;
@@ -111,11 +111,11 @@ const ChatPage: React.FC = () => {
       }
 
       const { data, error } = await supabase
-        .from("r_c_n_chatting_message")
+        .from("egg_day_chatting_message")
         .select(`*, user:user_id(*)`)
-        .eq("r_c_n_chatting_room_id", roomId)
-        .gte("r_c_n_chatting_message_create_at", chatInfo.chat_room_entry_time)
-        .order("r_c_n_chatting_message_create_at", { ascending: true });
+        .eq("egg_day_chatting_room_id", roomId)
+        .gte("egg_day_chatting_message_create_at", chatInfo.chat_room_entry_time)
+        .order("egg_day_chatting_message_create_at", { ascending: true });
 
       if (error) throw error;
       return data || [];
@@ -138,7 +138,7 @@ const ChatPage: React.FC = () => {
     mutationFn: async (messageContent: string) => {
       if (!chatInfo || !currentUser) throw new Error("전송실패실패실패");
 
-      const { error } = await supabase.from("r_c_n_chatting_message").insert([
+      const { error } = await supabase.from("egg_day_chatting_message").insert([
         {
           r_c_n_chatting_room_id: roomId,
           user_id: currentUser.id,
@@ -168,8 +168,8 @@ const ChatPage: React.FC = () => {
         {
           event: "INSERT",
           schema: "public",
-          table: "r_c_n_chatting_message",
-          filter: `r_c_n_chatting_room_id=eq.${roomId}`
+          table: "egg_day_chatting_message",
+          filter: `egg_day_chatting_room_id=eq.${roomId}`
         },
         () => {
           queryClient.invalidateQueries({ queryKey: ["messages", roomId] });

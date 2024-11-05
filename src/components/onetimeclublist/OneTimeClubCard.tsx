@@ -21,9 +21,9 @@ export const OneTimeClubCard = ({ club }: OneTimeClubCardProps) => {
 
   const fetchMemberCount = async () => {
     const { count } = await supabase
-      .from("o_t_c_member")
+      .from("egg_pop_member")
       .select("*", { count: "exact" })
-      .eq("o_t_c_id", club.one_time_club_id);
+      .eq("egg_pop_id", club.one_time_club_id);
 
     setMemberCount(count || 0);
   };

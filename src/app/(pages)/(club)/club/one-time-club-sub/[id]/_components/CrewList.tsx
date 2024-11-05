@@ -90,9 +90,9 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
     try {
       // 채팅방 아이디 가져오기
       const { data: chatRoom } = await browserClient
-        .from("one_time_club_chatting_room")
-        .select("one_time_club_chatting_room_id")
-        .eq("one_time_club_id", clubId)
+        .from("egg_pop_chatting_room")
+        .select("egg_pop_chatting_room_id")
+        .eq("egg_pop_id", clubId)
         .single();
 
       if (chatRoom) {

@@ -47,9 +47,9 @@ function ChatHeader() {
     if (one_time_club_id) {
       const fetchRegularClubId = async () => {
         const { data, error } = await supabase
-          .from("one_time_club_chatting_room_member")
-          .select(`* , one_time_member_id(* , user_id(*))`)
-          .eq("one_time_club_id", one_time_club_id)
+          .from("egg_pop_chatting_room_member")
+          .select(`* , egg_pop_member_id(* , user_id(*))`)
+          .eq("egg_pop_id", one_time_club_id)
           .eq("active", true);
         if (error) {
           console.error(error);

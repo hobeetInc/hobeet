@@ -86,11 +86,11 @@ const PaymentSuccesspage = () => {
 
         if (isOneTimeClub) {
           const { data: oneTimeClubFetchData, error: oneTimeClubFetchError } = await supabase
-            .from("one_time_club")
+            .from("egg_pop")
             .select(
-              "one_time_club_name, one_time_club_location, one_time_club_date_time, one_time_image, m_c_id, m_category:m_c_id(m_c_name)"
+              "egg_pop_name, egg_pop_location, egg_pop_date_time, egg_pop_image, main_category_id, main_category:main_category_id(main_category_name)"
             )
-            .eq("one_time_club_id", parseInt(clubId))
+            .eq("egg_pop_id", parseInt(clubId))
             .single();
 
           if (oneTimeClubFetchError || !oneTimeClubFetchData) {
@@ -102,19 +102,19 @@ const PaymentSuccesspage = () => {
           // console.log(oneTimeClubFetchData);
         } else {
           const { data: regularClubFetchData, error: regularClubFetchError } = await supabase
-            .from("r_c_notification")
+            .from("egg_day")
             .select(
               `
-                r_c_notification_name,
-                r_c_notification_location,
-                r_c_notification_date_time,
-                r_c_notification_image,
-                r_c_id (
-                  m_c_id (m_c_name)
+                egg_day_name,
+                egg_day_location,
+                egg_day_date_time,
+                egg_day_image,
+                egg_club_id (
+                  main_category_id (main_category_name)
                 )
               `
             )
-            .eq("r_c_notification_id", parseInt(clubId))
+            .eq("egg_day_id", parseInt(clubId))
             .single();
 
           if (regularClubFetchError || !regularClubFetchData) {
@@ -161,10 +161,10 @@ const PaymentSuccesspage = () => {
 
         if (isOneTimeClub) {
           const { data, error } = await supabase
-            .from("o_t_c_kakaopay")
-            .select("o_t_c_kakaopay_cid, o_t_c_kakaopay_tid")
+            .from("egg_pop_kakaopay")
+            .select("egg_pop_kakaopay_cid, egg_pop_kakaopay_tid")
             .eq("user_id", requestUserId)
-            .eq("o_t_c_id", parseInt(clubId))
+            .eq("egg_pop_id", parseInt(clubId))
             .limit(1)
             .single();
 
@@ -176,10 +176,10 @@ const PaymentSuccesspage = () => {
           setOneTimeClubPayData(data);
         } else {
           const { data, error } = await supabase
-            .from("r_c_notification_kakaopay")
-            .select("r_c_notification_kakaopay_cid, r_c_notification_kakaopay_tid")
+            .from("egg_day_kakaopay")
+            .select("egg_day_kakaopay_cid, egg_day_kakaopay_tid")
             .eq("user_id", requestUserId)
-            .eq("r_c_id", parseInt(clubId))
+            .eq("egg_club_id", parseInt(clubId))
             .limit(1)
             .single();
 
