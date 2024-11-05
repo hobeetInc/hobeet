@@ -1,12 +1,7 @@
+import { SubCategory } from "@/types/category.types";
 import { createClient } from "@/utils/supabase/client";
 
 const supabase = createClient();
-
-type Category = {
-  s_c_id: number;
-  m_c_id: number;
-  s_c_name: string;
-};
 
 export const getSubCategory = async (m_c_id: number) => {
   try {
@@ -17,7 +12,7 @@ export const getSubCategory = async (m_c_id: number) => {
     }
     // console.log(data);
 
-    return data as Category[];
+    return data as SubCategory[];
   } catch (error) {
     console.error("getSubCategory 함수 에러:", error);
     throw error;

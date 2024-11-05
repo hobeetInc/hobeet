@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import { RegularClub, User } from "@/types/clubcardlist/types";
+import { EggClub } from "@/types/cardlist.types";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { User } from "@/types/user.types";
 
 const supabase = createClient();
 
-interface RegularClubCardProps {
-  club: RegularClub;
-}
-
-export const RegularClubCard = ({ club }: RegularClubCardProps) => {
+export const RegularClubCard = ({ club }: { club: EggClub }) => {
   const [creator, setCreator] = useState<User | null>(null);
   const [memberCount, setMemberCount] = useState<number>(0);
   const router = useRouter();

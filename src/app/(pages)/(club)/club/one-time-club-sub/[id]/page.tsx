@@ -1,22 +1,15 @@
 import Image from "next/image";
 import { getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
-import { GetOneTimeClub, Member } from "./_types/Crews";
 import PopHeader from "./_components/PopHeader";
-
-type CrewInfo = {
-  memberId: number;
-  userId: string;
-  userName: string;
-  userImage: string;
-};
+import { EggMember, GetEggPop, MemberInfo } from "@/types/eggpop.types";
 
 const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const oneTimeClubId = Number(params.id);
-  const data: Member[] = await getOneTimeMember(oneTimeClubId);
+  const data: EggMember[] = await getOneTimeMember(oneTimeClubId);
 
   // 클럽 정보만 추출
-  const clubInfo: GetOneTimeClub = data[0]?.one_time_club;
+  const clubInfo: GetEggPop = data[0]?.one_time_club;
 
   // 날짜 커스텀
   const date = clubInfo.one_time_club_date_time;
@@ -63,7 +56,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   };
 
   // 참여 크루 정보 추출
-  const crewMembers: CrewInfo[] = data.map((member) => ({
+  const crewMembers: MemberInfo[] = data.map((member) => ({
     memberId: member.o_t_c_member_id,
     userId: member.user_id,
     userName: member.user.user_name,

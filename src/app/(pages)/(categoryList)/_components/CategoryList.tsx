@@ -2,11 +2,7 @@ import { FC } from "react";
 import { getCategoryList } from "../_api/supabase";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-
-interface CategoryListProps {
-  categoryId: number;
-  selectedCategory: number;
-}
+import { CategoryListProps } from "@/types/category.types";
 
 const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) => {
   const { data, isLoading, error } = useQuery({

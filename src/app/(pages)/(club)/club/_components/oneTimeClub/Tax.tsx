@@ -1,8 +1,8 @@
 "use client";
+import { EggPopProps } from "@/types/eggpop.types";
 import { useState } from "react";
-import { OneTimeProps } from "../../_types/ClubForm";
 
-const Tax = ({ formData, setFormData }: OneTimeProps) => {
+const Tax = ({ formData, setFormData }: EggPopProps) => {
   const [showTaxInput, setShowTaxInput] = useState<boolean>(false);
   const [inputError, setInputError] = useState<string>("");
 

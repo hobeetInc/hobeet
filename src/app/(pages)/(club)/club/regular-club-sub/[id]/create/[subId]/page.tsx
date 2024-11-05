@@ -1,16 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import { getNotificationData, getNotificationMember } from "../../../../_api/supabase";
-import { NotificaitonInfo, NotificationMember } from "./_types/notifictionInfo";
 import CrewList from "./_components/CrewList";
 import DayHeader from "./_components/DayHeader";
-
-type SubSubPageProps = {
-  params: {
-    id: string;
-    subId: string;
-  };
-};
+import { EggDayInfo, EggDayMember, SubSubPageProps } from "@/types/eggday.types";
 
 const SubSubPage = async ({ params }: SubSubPageProps) => {
   const { id, subId } = params;
@@ -18,17 +11,15 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
   const clubId = Number(id);
 
   try {
-    const data: NotificaitonInfo[] = await getNotificationData(clubId);
+    const data: EggDayInfo[] = await getNotificationData(clubId);
     const clubInfo = data.find((club) => club.r_c_notification_id === secondId);
 
     if (!clubInfo) {
       throw new Error("Club information not found");
     }
-    // console.log("세컨드 아이디!!!!", secondId);
 
-    const member: NotificationMember[] = await getNotificationMember(secondId);
+    const member: EggDayMember[] = await getNotificationMember(secondId);
 
-    // console.log("맴버!!!", member);
     // 날짜 커스텀
     const date = clubInfo.r_c_notification_date_time;
     const currentDate = new Date(date);
@@ -57,7 +48,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
     const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
-    const defaultImage = "/default-profile-image.jpg"; // 실제 기본 이미지 경로로 변경하세요
+    const defaultImage = "/default-profile-image.jpg";
 
     return (
       <div className="container">
@@ -113,7 +104,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
             clubId={clubId}
             clubHostId={clubInfo.user_id}
             clubInfo={clubInfo}
-            secondId={secondId} // clubInfo가 올바르게 전달되고 있는지 확인
+            secondId={secondId}
           />{" "}
         </div>
       </div>

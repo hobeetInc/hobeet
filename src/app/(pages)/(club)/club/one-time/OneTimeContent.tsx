@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/app/store/AuthContext";
 import { OneTimeClubChatRoom } from "@/app/(pages)/(chat)/_components/oneTimeClub/OneTimeClubChatRoom";
 import { ONETIME_CLUB_CREATE } from "../_utils/localStorage";
-import { OneTimeClubForm } from "../_types/ClubForm";
 import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../_api/supabase";
 import Category from "../_components/oneTimeClub/Category";
 import ClubTitle from "../_components/oneTimeClub/ClubTitle";
@@ -14,6 +13,7 @@ import DateTime from "../_components/oneTimeClub/DateTime";
 import AddressSearch from "../_components/oneTimeClub/AddressSearch";
 import MemberType from "../_components/oneTimeClub/MemberType";
 import Tax from "../_components/oneTimeClub/Tax";
+import { EggPopForm } from "@/types/eggpop.types";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -70,7 +70,7 @@ const OneTimeContent = () => {
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(currentStep);
   const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedGender);
-  const [formData, setFormData] = useState<OneTimeClubForm>(initialData.formData);
+  const [formData, setFormData] = useState<EggPopForm>(initialData.formData);
 
   // 폼데이터 확인용
   // useEffect(() => {

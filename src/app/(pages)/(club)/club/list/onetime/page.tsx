@@ -6,33 +6,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDate } from "@/utils/CustomDate";
-
-interface User {
-  user_id: string;
-  user_name: string;
-  user_profile_img: string;
-}
-
-interface OTCMember {
-  count: number;
-}
-
-interface OneTimeClub {
-  one_time_club_id: string;
-  one_time_club_name: string;
-  one_time_image: string;
-  one_time_club_location: string;
-  one_time_club_date_time: string;
-  one_time_people_limited: number;
-  user_id: User;
-  o_t_c_member: OTCMember[];
-  created_at: string;
-  updated_at: string;
-}
+import { StringEggPopForm } from "@/types/eggpop.types";
 
 const AllOneTimeClubListPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [allOneTimeClubList, setAllOneTimeClubList] = useState<OneTimeClub[]>([]);
+  const [allOneTimeClubList, setAllOneTimeClubList] = useState<StringEggPopForm[]>([]);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
@@ -41,7 +19,7 @@ const AllOneTimeClubListPage = () => {
         setLoading(true);
         const res = await getAllOneTimeClub();
         if (res) {
-          setAllOneTimeClubList(res as OneTimeClub[]);
+          setAllOneTimeClubList(res as StringEggPopForm[]);
         } else {
           setError("정기적 모임리스트를 불러오지 못했습니다.");
         }
@@ -67,7 +45,7 @@ const AllOneTimeClubListPage = () => {
       <div className="flex w-[390px] py-2 px-4 items-center gap-[10px]">
         <p className="text-[14px] font-[500px] leading-[145%]">총 {allOneTimeClubList?.length}개</p>
       </div>
-      {allOneTimeClubList.map((club: OneTimeClub) => (
+      {allOneTimeClubList.map((club: StringEggPopForm) => (
         <div key={club.one_time_club_id} className="flex items-start gap-2 self-stretch mb-4">
           <Link
             href={`/club/one-time-club-sub/${club.one_time_club_id}`}

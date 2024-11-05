@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { OneTimeClubForm } from "@/app/(pages)/(club)/club/_types/ClubForm";
 import { getOneTimeClub } from "@/app/(pages)/(club)/club/_api/supabase";
 import Image from "next/image";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDate } from "@/utils/CustomDate";
+import { EggPopForm } from "@/types/eggpop.types";
 
 const OneTimeClubList = () => {
-  const [list, setList] = useState<OneTimeClubForm[]>([]);
+  const [list, setList] = useState<EggPopForm[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {

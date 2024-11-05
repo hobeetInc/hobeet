@@ -8,24 +8,7 @@ import { ChevronRight } from "lucide-react";
 import { getNotificationMember, submitRegularMember } from "@/app/(pages)/(club)/club/_api/supabase";
 import FullScreenModal from "./FullScreenModal";
 import { useRouter } from "next/navigation";
-import { NotificaitonInfo } from "../_types/notifictionInfo";
-
-// 멤버 정보 타입 정의
-type MemberInfo = {
-  notificationId: number;
-  userId: string;
-  userName: string;
-  userImage: string;
-};
-
-// CrewList 컴포넌트 props 타입
-interface CrewListProps {
-  crewMembers: MemberInfo[];
-  clubId: number;
-  clubHostId: string;
-  clubInfo: NotificaitonInfo | undefined;
-  secondId: number;
-}
+import { CrewListProps } from "@/types/eggday.types";
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInfo, secondId }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
@@ -53,7 +36,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
     };
 
     refreshData();
-  }, [clubId, userId]);
+  }, [clubId, userId, secondId]);
 
   // 8개의 고정 슬롯 생성
   const displaySlots = Array(8)

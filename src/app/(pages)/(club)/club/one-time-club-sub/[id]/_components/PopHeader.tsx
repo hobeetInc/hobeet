@@ -1,12 +1,8 @@
 "use client";
 
 import { ChevronLeft } from "lucide-react";
-import { GetOneTimeClub } from "../_types/Crews";
 import { useRouter } from "next/navigation";
-
-type PopHeaderProps = {
-  clubInfo: GetOneTimeClub;
-};
+import { PopHeaderProps } from "@/types/eggpop.types";
 
 const PopHeader = ({ clubInfo }: PopHeaderProps) => {
   const router = useRouter();

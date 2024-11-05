@@ -5,31 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-
-type User = {
-  user_id: string;
-  user_name: string;
-  user_profile_img: string;
-};
-
-type Message = {
-  one_time_club_chatting_room_message_id: number;
-  one_time_club_chatting_room_member_id: number;
-  one_time_club_chatting_room_id: number;
-  one_time_club_member_id: number;
-  one_time_club_id: number;
-  user: User;
-  user_id: string;
-  one_time_club_chatting_room_message_content: string;
-  created_at: string;
-};
-
-type ChatInfo = {
-  one_time_club_chatting_room_member_id: number;
-  one_time_member_id: number;
-  one_time_club_id: number;
-  created_at: string;
-};
+import { EggPopChatInfo, ExtendEggPopMessage } from "@/types/eggpopchat.types";
 
 const supabase = createClient();
 
@@ -82,7 +58,7 @@ const ChatPage: React.FC = () => {
     enabled: !!currentUser?.id && isRecFetched
   });
 
-  const { data: chatInfo } = useQuery<ChatInfo>({
+  const { data: chatInfo } = useQuery<EggPopChatInfo>({
     queryKey: ["oneTimeChatInfo", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -100,7 +76,7 @@ const ChatPage: React.FC = () => {
   // console.log(chatInfo?.chat_room_entry_time);
 
   // 메시지 목록 조회
-  const { data: oneTimeMessages = [], isLoading: isLoadingMessages } = useQuery<Message[]>({
+  const { data: oneTimeMessages = [], isLoading: isLoadingMessages } = useQuery<ExtendEggPopMessage[]>({
     queryKey: ["oneTimeMessages", roomId, chatInfo?.created_at],
     queryFn: async () => {
       if (!chatInfo?.created_at) {
@@ -188,8 +164,8 @@ const ChatPage: React.FC = () => {
     }
   }, [newMessage]);
 
-  const groupMessagesByDate = (messages: Message[]) => {
-    return messages.reduce((acc: { [date: string]: Message[] }, message) => {
+  const groupMessagesByDate = (messages: ExtendEggPopMessage[]) => {
+    return messages.reduce((acc: { [date: string]: ExtendEggPopMessage[] }, message) => {
       const date = new Date(message.created_at);
       const dateString = date.toLocaleDateString("ko-KR", {
         year: "numeric",
@@ -227,7 +203,7 @@ const ChatPage: React.FC = () => {
             Object.keys(groupedMessages).map((dateString) => (
               <div key={dateString} className="mb-6">
                 <div className="text-[10px] mb-2 text-center">{dateString}</div>
-                {groupedMessages[dateString].map((message: Message) => {
+                {groupedMessages[dateString].map((message: ExtendEggPopMessage) => {
                   const date = new Date(message.created_at);
                   const isCurrentUser = message.user.user_id === currentUser?.id;
 

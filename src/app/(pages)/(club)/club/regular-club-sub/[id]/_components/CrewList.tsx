@@ -5,48 +5,25 @@ import { useEffect, useState } from "react";
 import { getParticipationStatus, getRegularMember } from "../../../_api/supabase";
 import { useAuth } from "@/app/store/AuthContext";
 import FullScreenModal from "./FullScreenModal";
-import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import { ChevronRight } from "lucide-react";
 import RegularClubJoinButton from "@/components/regularClubJoinButton";
 import browserClient from "@/utils/supabase/client";
-
-// 유저 상태 정보
-type ParticipationS = "not_applied" | "pending" | "active";
-
-// 멤버 정보 타입 정의
-type MemberInfo = {
-  memberId: number;
-  userId: string;
-  userName: string;
-  userImage: string;
-};
-
-// CrewList 컴포넌트 props 타입
-interface CrewListProps {
-  crewMembers: MemberInfo[];
-  clubId: number;
-  clubHostId: string;
-  notificationData: InSertRegularClubNotification[];
-}
+import { CrewListProps, UserStatus } from "@/types/eggclub.types";
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notificationData }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
-  const [participationStatus, setParticipationStatus] = useState<ParticipationS>("not_applied");
+  const [participationStatus, setParticipationStatus] = useState<UserStatus>("not_applied");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { userId } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    // console.log("useEffect 실행 시 userId:", userId);
-
     // 데이터 새로고침 함수
     const refreshData = async () => {
       try {
         const memberResult = await getRegularMember(clubId);
-
-        // console.log("memberResult:", memberResult);
 
         const newCrewMemebers = memberResult.map((member) => ({
           memberId: member.r_c_member_id,

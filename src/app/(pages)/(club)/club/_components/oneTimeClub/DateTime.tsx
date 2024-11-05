@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { ko } from "date-fns/locale";
-import { OneTimeProps } from "../../_types/ClubForm";
+import { EggPopProps } from "@/types/eggpop.types";
 
 // 커스텀 스타일
 const customStyles = `
@@ -20,7 +20,7 @@ const customStyles = `
   
 `;
 
-const DateTime = ({ formData, setFormData }: OneTimeProps) => {
+const DateTime = ({ formData, setFormData }: EggPopProps) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<Date | null>(null);
 

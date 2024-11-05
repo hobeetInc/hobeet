@@ -6,44 +6,13 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { addHours, format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
-
-type OneTimeClubPay = {
-  o_t_c_kakaopay_cid: string;
-  o_t_c_kakaopay_tid: string;
-};
-
-type RegularClubPay = {
-  r_c_notification_kakaopay_cid: string;
-  r_c_notification_kakaopay_tid: string;
-};
-
-type OneTimeClubData = {
-  one_time_club_name: string;
-  one_time_club_location: string;
-  one_time_club_date_time: string;
-  one_time_image: string | null;
-  m_category: {
-    m_c_name: string;
-  };
-};
-
-type RegularClubData = {
-  r_c_notification_name: string;
-  r_c_notification_location: string;
-  r_c_notification_date_time: string;
-  r_c_notification_image: string;
-  r_c_id: {
-    m_c_id: {
-      m_c_name: string;
-    };
-  };
-};
+import { EggClubDataNoTax, EggClubPay, EggPopDataNoTax, EggPopPay } from "@/types/payment.types";
 
 const PaymentSuccesspage = () => {
-  const [oneTimeClubPayData, setOneTimeClubPayData] = useState<OneTimeClubPay | null>(null);
-  const [regularClubPayData, setRegularClubPayData] = useState<RegularClubPay | null>(null);
-  const [oneTimeClubData, setOneTimeClubData] = useState<OneTimeClubData | null>();
-  const [regularClubData, setRegularClubData] = useState<RegularClubData | null>();
+  const [oneTimeClubPayData, setOneTimeClubPayData] = useState<EggPopPay | null>(null);
+  const [regularClubPayData, setRegularClubPayData] = useState<EggClubPay | null>(null);
+  const [oneTimeClubData, setOneTimeClubData] = useState<EggPopDataNoTax | null>();
+  const [regularClubData, setRegularClubData] = useState<EggClubDataNoTax | null>();
   const [paymentAmount, setPaymentAmount] = useState(null);
   const [queryParams, setQueryParams] = useState<{
     requestUserId: string | null;
@@ -122,7 +91,7 @@ const PaymentSuccesspage = () => {
             return;
           }
 
-          const formattedData: RegularClubData = {
+          const formattedData: EggClubDataNoTax = {
             r_c_notification_name: regularClubFetchData.r_c_notification_name,
             r_c_notification_location: regularClubFetchData.r_c_notification_location,
             r_c_notification_date_time: regularClubFetchData.r_c_notification_date_time,

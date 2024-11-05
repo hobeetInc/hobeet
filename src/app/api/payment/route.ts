@@ -6,7 +6,8 @@ export async function POST(req: Request) {
   try {
     const { orderId, requestUserId, clubType, clubId } = await req.json();
 
-    let amount, itemName;
+    let amount = 0;
+    let itemName = "";
     // console.log("야야야 장성현");
 
     if (clubType === true) {

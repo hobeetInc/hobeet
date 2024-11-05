@@ -3,15 +3,9 @@ import { createContext, useContext } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/app/store/AuthContext";
+import { EggClubChatContextType } from "@/types/eggclubchat.types";
 
-interface ChatContextType {
-  roomName: string;
-  isLoading: boolean;
-  r_c_n_chatting_id?: number;
-  regular_club_id?: number;
-}
-
-const ChatContext = createContext<ChatContextType>({
+const ChatContext = createContext<EggClubChatContextType>({
   roomName: "",
   isLoading: true
 });
