@@ -95,9 +95,9 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
-import { RegularClubChatRoomRecruiterEntrance } from "../../(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import { RegularClubApproveChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
 
 export interface ParticipationRequest {
   r_c_participation_request_id: number;
@@ -205,7 +205,6 @@ export default function ApproveMembersPage() {
       .eq("r_c_participation_request_id", requestId)
       .select("*")
       .single();
-
     if (!error) {
       setRequests((prev) => prev.filter((req) => req.r_c_participation_request_id !== requestId));
       const { error } = await supabase.from("r_c_member").insert({
@@ -214,8 +213,12 @@ export default function ApproveMembersPage() {
         r_c_participation_request_id: data.r_c_participation_request_id,
         regular_club_request_status: "active"
       });
+      const user_id = data.user_id as string;
+      console.log("나는 나는 나는 ", user_id);
+      debugger;
+      await RegularClubApproveChatRoomRecruiterEntrance({ r_c_id: clubId, user_id: user_id }); // 모임원 채팅방 입장(가입 승인 시)
+
       if (!error) {
-        RegularClubChatRoomRecruiterEntrance({ r_c_id: clubId }); // 모임원 채팅방 입장(가입 승인 시)
         alert("가입이 승인되었습니다.");
         location.reload();
       } else {
