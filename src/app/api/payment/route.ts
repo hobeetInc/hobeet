@@ -81,14 +81,24 @@ export async function POST(req: Request) {
       // 입장 시키는중@@@
 
       if (error) {
-        console.error("Supabase insert error:", error);
+        console.error("에그팝 결제 테이블에 정보 추가 실패:", error);
         throw new Error("one_time_club_kakaopay 테이블에 데이터를 저장하는 중 오류가 발생했습니다.");
       }
     } else if (clubType === false) {
-      const { data: rcmId, error: rcmError } = await supabase
+      const { data: rcIdData, error: rcIdError } = await supabase
+        .from("r_c_notification")
+        .select("r_c_id")
+        .eq("r_c_notification_id", clubId)
+        .single();
+
+      if (rcIdError) {
+        console.error("@@@@@@나오냐이거");
+      }
+
+      const { data: rcmIdData, error: rcmError } = await supabase
         .from("r_c_member")
         .select("r_c_member_id")
-        .eq("r_c_id", clubId)
+        .eq("r_c_id", rcIdData.r_c_id)
         .eq("user_id", requestUserId)
         .single();
 
@@ -98,8 +108,9 @@ export async function POST(req: Request) {
       }
 
       const { error } = await supabase.from("r_c_notification_kakaopay").insert({
-        r_c_member_id: rcmId,
-        r_c_id: clubId,
+        r_c_member_id: rcmIdData.r_c_member_id,
+        r_c_notification_id: clubId,
+        r_c_id: rcIdData.r_c_id,
         user_id: requestUserId,
         r_c_notification_kakaopay_cid: "TC0ONETIME",
         r_c_notification_kakaopay_tid: tid
