@@ -1,4 +1,4 @@
-import { OneTimeChatRoom } from "../../types/chat";
+import { EggPopChatRoom } from "@/types/eggpopchat.types";
 import { OneTimeClubChatRoomMeetingPlace } from "./OneTimeClubChatRoomMeetingPlace";
 
 // 모임 채팅방 생성
@@ -12,7 +12,7 @@ export async function OneTimeClubChatRoom(oneTimeClubName: string, oneTimeClubId
       body: JSON.stringify({ oneTimeClubName, userId, oneTimeClubId })
     });
 
-    const { data, error }: { data: OneTimeChatRoom[] | null; error?: string } = await response.json();
+    const { data, error }: { data: EggPopChatRoom[] | null; error?: string } = await response.json();
 
     if (response.ok && data && data.length > 0) {
       const [OneTimeChatRoom] = data;

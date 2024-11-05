@@ -3,37 +3,11 @@ import { useEffect, useState } from "react";
 import { getAllRegularClubList } from "../../_api/supabase";
 import Link from "next/link";
 import Image from "next/image";
-
-interface User {
-  user_id: string;
-  user_name: string;
-  user_profile_img: string;
-}
-
-interface RCMember {
-  count: number;
-}
-
-interface WishList {
-  regular_club_id: string;
-  user_id: string;
-}
-
-interface RegularClub {
-  regular_club_id: string;
-  regular_club_name: string;
-  regular_club_image: string;
-  regular_club_people_limited: number;
-  user_id: User;
-  r_c_member: RCMember[];
-  wish_list: WishList[];
-  created_at: string;
-  updated_at: string;
-}
+import { StringEggClubForm } from "@/types/eggclub.types";
 
 const AllRegularClubListPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [allRegularClubList, setAllRegularClubList] = useState<RegularClub[]>([]);
+  const [allRegularClubList, setAllRegularClubList] = useState<StringEggClubForm[]>([]);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
@@ -42,7 +16,7 @@ const AllRegularClubListPage = () => {
         setLoading(true);
         const res = await getAllRegularClubList();
         if (res) {
-          setAllRegularClubList(res as RegularClub[]);
+          setAllRegularClubList(res as StringEggClubForm[]);
         } else {
           setError("정기적 모임리스트를 불러오지 못했습니다.");
         }
@@ -68,7 +42,7 @@ const AllRegularClubListPage = () => {
       <div className="flex w-[390px] py-2 px-4 items-center gap-[10px]">
         <p className="text-[14px] font-[500px] leading-[145%]">총 {allRegularClubList?.length}개</p>
       </div>
-      {allRegularClubList.map((club: RegularClub) => (
+      {allRegularClubList.map((club: StringEggClubForm) => (
         <div key={club.regular_club_id} className="flex items-start gap-2 self-stretch mb-4">
           <Link
             href={`/club/regular-club-sub/${club.regular_club_id}`}

@@ -1,67 +1,12 @@
 "use client";
+import { ApiResponse, EggClubChattingRoom } from "@/types/eggclubchat.types";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-interface ChatMessage {
-  r_c_n_chatting_message_content: string;
-  r_c_n_chatting_message_create_at: string;
-}
-
-interface ChattingRoom {
-  user_id: string;
-  regular_club_id: number;
-  r_c_n_chatting_room_id: number;
-  r_c_n_chatting_room_name: string;
-  regular_club_image: string;
-  regular_club_name: string;
-  last_message: string;
-  last_message_time: string;
-  last_message_time_value: string;
-  active: boolean;
-}
-
-interface Chatting {
-  admin: boolean;
-  active: boolean;
-  r_c_id: number;
-  r_c_member_id: number;
-  r_c_n_chatting_id: number;
-  r_c_n_chatting_room: ChattingRoom;
-  r_c_n_chatting_message: ChatMessage[];
-  r_c_n_chatting_room_id: number;
-}
-
-interface RegularClub {
-  m_c_id: number;
-  s_c_id: number;
-  user_id: string;
-  regular_club_id: number;
-  regular_club_age?: number | null;
-  regular_club_name: string;
-  regular_club_image: string;
-  regular_club_gender?: string | null;
-  regular_club_approval: boolean;
-  regular_club_create_at: string;
-  regular_club_introduction: string;
-  regular_club_people_limited?: number | null;
-}
-
-interface Member {
-  r_c_member_id: number;
-  user_id: string;
-  r_c_id: number;
-  r_c_n_chatting: Chatting[];
-  regular_club: RegularClub;
-}
-
-interface ApiResponse {
-  data: Member[];
-}
-
 const RegularClubChattingRoomPage = () => {
-  const [chatRooms, setChatRooms] = useState<ChattingRoom[]>([]);
+  const [chatRooms, setChatRooms] = useState<EggClubChattingRoom[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -114,7 +59,7 @@ const RegularClubChattingRoomPage = () => {
           return;
         }
 
-        const rooms: ChattingRoom[] = chatData.data.flatMap((member) =>
+        const rooms: EggClubChattingRoom[] = chatData.data.flatMap((member) =>
           member.r_c_n_chatting
             .filter((chatting) => chatting.active)
             .map((chatting) => {
@@ -163,7 +108,7 @@ const RegularClubChattingRoomPage = () => {
         {
           event: "INSERT",
           schema: "public",
-          table: "r_c_n_chatting_message"
+          table: "egg_day_chatting_message"
         },
         (payload) => {
           const newMessage = payload.new;
@@ -211,7 +156,7 @@ const RegularClubChattingRoomPage = () => {
       <div className="flex flex-col w-full h-[calc(100%-91px)]">
         <div className="flex flex-col w-full overflow-y-auto">
           {chatRooms.length > 0 ? (
-            chatRooms.map((room: ChattingRoom) => (
+            chatRooms.map((room: EggClubChattingRoom) => (
               <div
                 key={room.r_c_n_chatting_room_id}
                 className="p-4 border-b flex content-between items-center w-[390px]"

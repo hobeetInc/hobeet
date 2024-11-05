@@ -5,31 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-
-type User = {
-  user_id: string;
-  user_name: string;
-  user_profile_img: string;
-};
-
-type Message = {
-  r_c_n_chatting_message_id: number;
-  r_c_n_chatting_id: number;
-  r_c_n_chatting_room_id: number;
-  r_c_member_id: number;
-  r_c_id: number;
-  user: User;
-  user_id: string;
-  r_c_n_chatting_message_content: string;
-  r_c_n_chatting_message_create_at: string;
-};
-
-type ChatInfo = {
-  r_c_n_chatting_id: number;
-  r_c_member_id: number;
-  r_c_id: number;
-  chat_room_entry_time: string;
-};
+import { EggClubChatInfo, ExtendEggClubMessage } from "@/types/eggclubchat.types";
 
 const supabase = createClient();
 
@@ -57,9 +33,9 @@ const ChatPage: React.FC = () => {
     queryKey: ["r_c_id", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("r_c_n_chatting")
-        .select("r_c_id")
-        .eq("r_c_n_chatting_room_id", roomId)
+        .from("egg_day_chatting")
+        .select("egg_club_id")
+        .eq("egg_day_chatting_room_id", roomId)
         .limit(1);
       if (error) throw error;
       return data ? data[0] : null;
@@ -72,10 +48,10 @@ const ChatPage: React.FC = () => {
     queryKey: ["memberData", currentUser?.id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("r_c_member")
-        .select("r_c_member_id")
+        .from("egg_club_member")
+        .select("egg_club_member_id")
         .eq("user_id", currentUser?.id)
-        .eq("r_c_id", rec?.r_c_id)
+        .eq("egg_club_id", rec?.r_c_id)
         .single();
 
       if (error) throw error;
@@ -85,14 +61,14 @@ const ChatPage: React.FC = () => {
   });
 
   // 채팅방 정보 조회
-  const { data: chatInfo } = useQuery<ChatInfo>({
+  const { data: chatInfo } = useQuery<EggClubChatInfo>({
     queryKey: ["chatInfo", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("r_c_n_chatting")
-        .select(`*, r_c_n_chatting_room (*)`)
-        .eq("r_c_n_chatting_room_id", roomId)
-        .eq("r_c_member_id", memberData?.r_c_member_id)
+        .from("egg_day_chatting")
+        .select(`*, egg_day_chatting_room (*)`)
+        .eq("egg_day_chatting_room_id", roomId)
+        .eq("egg_club_member_id", memberData?.r_c_member_id)
         .single();
 
       if (error) throw error;
@@ -103,7 +79,7 @@ const ChatPage: React.FC = () => {
   // console.log(chatInfo?.chat_room_entry_time);
 
   // 메시지 목록 조회
-  const { data: messages = [], isLoading: isLoadingMessages } = useQuery<Message[]>({
+  const { data: messages = [], isLoading: isLoadingMessages } = useQuery<ExtendEggClubMessage[]>({
     queryKey: ["messages", roomId, chatInfo?.chat_room_entry_time],
     queryFn: async () => {
       if (!chatInfo?.chat_room_entry_time) {
@@ -111,11 +87,11 @@ const ChatPage: React.FC = () => {
       }
 
       const { data, error } = await supabase
-        .from("r_c_n_chatting_message")
+        .from("egg_day_chatting_message")
         .select(`*, user:user_id(*)`)
-        .eq("r_c_n_chatting_room_id", roomId)
-        .gte("r_c_n_chatting_message_create_at", chatInfo.chat_room_entry_time)
-        .order("r_c_n_chatting_message_create_at", { ascending: true });
+        .eq("egg_day_chatting_room_id", roomId)
+        .gte("egg_day_chatting_message_create_at", chatInfo.chat_room_entry_time)
+        .order("egg_day_chatting_message_create_at", { ascending: true });
 
       if (error) throw error;
       return data || [];
@@ -138,7 +114,7 @@ const ChatPage: React.FC = () => {
     mutationFn: async (messageContent: string) => {
       if (!chatInfo || !currentUser) throw new Error("전송실패실패실패");
 
-      const { error } = await supabase.from("r_c_n_chatting_message").insert([
+      const { error } = await supabase.from("egg_day_chatting_message").insert([
         {
           r_c_n_chatting_room_id: roomId,
           user_id: currentUser.id,
@@ -168,8 +144,8 @@ const ChatPage: React.FC = () => {
         {
           event: "INSERT",
           schema: "public",
-          table: "r_c_n_chatting_message",
-          filter: `r_c_n_chatting_room_id=eq.${roomId}`
+          table: "egg_day_chatting_message",
+          filter: `egg_day_chatting_room_id=eq.${roomId}`
         },
         () => {
           queryClient.invalidateQueries({ queryKey: ["messages", roomId] });
@@ -191,8 +167,8 @@ const ChatPage: React.FC = () => {
     }
   }, [newMessage]);
 
-  const groupMessagesByDate = (messages: Message[]) => {
-    return messages.reduce((acc: { [date: string]: Message[] }, message) => {
+  const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
+    return messages.reduce((acc: { [date: string]: ExtendEggClubMessage[] }, message) => {
       const date = new Date(message.r_c_n_chatting_message_create_at);
       const dateString = date.toLocaleDateString("ko-KR", {
         year: "numeric",
@@ -230,7 +206,7 @@ const ChatPage: React.FC = () => {
             Object.keys(groupedMessages).map((dateString) => (
               <div key={dateString} className="mb-6">
                 <div className="text-[10px] mb-2 text-center">{dateString}</div>
-                {groupedMessages[dateString].map((message: Message) => {
+                {groupedMessages[dateString].map((message: ExtendEggClubMessage) => {
                   const date = new Date(message.r_c_n_chatting_message_create_at);
                   const isCurrentUser = message.user.user_id === currentUser?.id;
 

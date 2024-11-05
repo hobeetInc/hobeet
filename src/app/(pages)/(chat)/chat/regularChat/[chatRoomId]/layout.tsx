@@ -6,51 +6,22 @@ import { ChatProvider, useChatContext } from "./_components/ChatContext";
 import { ChatRoomExit } from "@/app/api/_ChatRoomExit/ChatRoomExit";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
-
-interface LayoutProps {
-  children: React.ReactNode;
-  params: {
-    chatRoomId: string;
-  };
-}
-
-type ChattingMember = {
-  active: boolean;
-  admin: boolean;
-  r_c_id: number;
-  r_c_member_id: {
-    r_c_id: number;
-    r_c_member_id: number;
-    regular_club_request_status: string;
-    user_id: {
-      user_age: number;
-      user_create_at: string;
-      user_email: string;
-      user_gender: string;
-      user_id: string;
-      user_name: string;
-      user_profile_img: string;
-      user_roletype: boolean;
-    };
-    r_c_n_chatting_id: number;
-    r_c_n_chatting_room_id: number;
-  };
-};
+import { EggClubChattingMemberInfo, LayoutProps } from "@/types/eggclubchat.types";
 
 function ChatHeader() {
   const { roomName, isLoading, r_c_n_chatting_id, regular_club_id } = useChatContext();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [ChattingMember, setChattingMember] = useState<ChattingMember[]>();
+  const [ChattingMember, setChattingMember] = useState<EggClubChattingMemberInfo[]>();
   // console.log(regular_club_id);
   useEffect(() => {
     const supabase = createClient();
     if (regular_club_id) {
       const fetchRegularClubId = async () => {
         const { data, error } = await supabase
-          .from("r_c_n_chatting")
-          .select(`* , r_c_member_id(* , user_id(*))`)
-          .eq("r_c_id", regular_club_id)
+          .from("egg_day_chatting")
+          .select(`* , egg_club_member_id(* , user_id(*))`)
+          .eq("egg_club_id", regular_club_id)
           .eq("active", true);
         if (error) {
           console.error(error);

@@ -1,18 +1,8 @@
 "use client";
 
+import { FullScreenModalProps } from "@/types/eggclub.types";
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
-
-interface FullScreenModalProps {
-  crewList: {
-    memberId: number;
-    userId: string;
-    userName: string;
-    userImage: string;
-  }[];
-  isOpen: boolean;
-  onClose: () => void;
-}
 
 const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) => {
   if (!isOpen) return null;

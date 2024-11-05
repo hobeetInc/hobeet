@@ -6,14 +6,15 @@ export async function POST(req: Request) {
   try {
     const { orderId, requestUserId, clubType, clubId } = await req.json();
 
-    let amount, itemName;
+    let amount = 0;
+    let itemName = "";
     // console.log("야야야 장성현");
 
     if (clubType === true) {
       const { data: onePayData, error: onePayError } = await supabase
-        .from("one_time_club")
-        .select("one_time_club_name, one_time_tax")
-        .eq("one_time_club_id", clubId)
+        .from("egg_pop")
+        .select("egg_pop_name, egg_pop_tax")
+        .eq("egg_pop_id", clubId)
         .single();
 
       if (onePayError || !onePayData) {
@@ -25,9 +26,9 @@ export async function POST(req: Request) {
       itemName = onePayData.one_time_club_name;
     } else if (clubType === false) {
       const { data: regularPayData, error: regularPayError } = await supabase
-        .from("r_c_notification")
-        .select("r_c_notification_name, r_c_notification_tax")
-        .eq("r_c_notification_id", clubId)
+        .from("egg_day")
+        .select("egg_day_name, egg_day_tax")
+        .eq("egg_day_id", clubId)
         .single();
 
       if (regularPayError || !regularPayData) {
@@ -72,7 +73,7 @@ export async function POST(req: Request) {
     const tid = paymentData.tid;
 
     if (clubType === true) {
-      const { error } = await supabase.from("o_t_c_kakaopay").insert({
+      const { error } = await supabase.from("egg_pop_kakaopay").insert({
         o_t_c_id: clubId,
         user_id: requestUserId,
         o_t_c_kakaopay_cid: "TC0ONETIME",
@@ -82,13 +83,13 @@ export async function POST(req: Request) {
 
       if (error) {
         console.error("에그팝 결제 테이블에 정보 추가 실패:", error);
-        throw new Error("one_time_club_kakaopay 테이블에 데이터를 저장하는 중 오류가 발생했습니다.");
+        throw new Error("egg_pop_kakaopay 테이블에 데이터를 저장하는 중 오류가 발생했습니다.");
       }
     } else if (clubType === false) {
       const { data: rcIdData, error: rcIdError } = await supabase
-        .from("r_c_notification")
-        .select("r_c_id")
-        .eq("r_c_notification_id", clubId)
+        .from("egg_day")
+        .select("egg_club_id")
+        .eq("egg_day_id", clubId)
         .single();
 
       if (rcIdError) {
@@ -96,18 +97,18 @@ export async function POST(req: Request) {
       }
 
       const { data: rcmIdData, error: rcmError } = await supabase
-        .from("r_c_member")
-        .select("r_c_member_id")
-        .eq("r_c_id", rcIdData.r_c_id)
+        .from("egg_club_member")
+        .select("egg_club_member_id")
+        .eq("egg_club_id", rcIdData.r_c_id)
         .eq("user_id", requestUserId)
         .single();
 
       if (rcmError) {
-        console.error("r_c_member_id fetch error:", rcmError);
-        throw new Error("r_c_member 테이블에서 r_c_member_id를 가져오는 중 오류가 발생했습니다.");
+        console.error("egg_club_member_id fetch error:", rcmError);
+        throw new Error("egg_club_member 테이블에서 egg_club_member_id를 가져오는 중 오류가 발생했습니다.");
       }
 
-      const { error } = await supabase.from("r_c_notification_kakaopay").insert({
+      const { error } = await supabase.from("egg_day_kakaopay").insert({
         r_c_member_id: rcmIdData.r_c_member_id,
         r_c_notification_id: clubId,
         r_c_id: rcIdData.r_c_id,
@@ -118,7 +119,7 @@ export async function POST(req: Request) {
 
       if (error) {
         console.error("Supabase insert error:", error);
-        throw new Error("regular_club_notification_kakaopay 테이블에 데이터를 저장하는 중 오류가 발생했습니다.");
+        throw new Error("egg_day_kakaopay 테이블에 데이터를 저장하는 중 오류가 발생했습니다.");
       }
     }
 

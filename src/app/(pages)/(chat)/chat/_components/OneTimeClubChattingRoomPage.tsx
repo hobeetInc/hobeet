@@ -1,65 +1,12 @@
 "use client";
+import { ApiResponse, EggPopChattingRoom } from "@/types/eggpopchat.types";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-interface ChatMessage {
-  one_time_club_chatting_room_message_content: string;
-  created_at: string;
-}
-
-interface ChattingRoom {
-  user_id: string;
-  one_time_club_id: number;
-  one_time_club_chatting_room_id: number;
-  one_time_club_chatting_room_name: string;
-  one_time_image: string;
-  one_time_club_name: string;
-  last_message: string;
-  last_message_time: string;
-  last_message_time_value: string;
-  active: boolean;
-}
-
-interface Chatting {
-  admin: boolean;
-  active: boolean;
-  one_time_club_id: number;
-  one_time_club_member_id: number;
-  one_time_club_chatting_room_member_id: number;
-  one_time_club_chatting_room: ChattingRoom;
-  one_time_club_chatting_room_message: ChatMessage[];
-  one_time_club_chatting_room_id: number;
-}
-
-interface OneTimeClub {
-  m_c_id: number;
-  s_c_id: number;
-  user_id: string;
-  one_time_club_id: number;
-  one_time_age?: number | null;
-  one_time_club_name: string;
-  one_time_image: string;
-  one_time_gender?: string | null;
-  one_time_create_at: string;
-  one_time_club_introduction: string;
-  one_time_people_limited?: number | null;
-}
-
-interface Member {
-  one_time_member_id: number;
-  user_id: string;
-  one_time_club_id: number;
-  one_time_club_chatting_room_member: Chatting[];
-  one_time_club: OneTimeClub;
-}
-
-interface ApiResponse {
-  data: Member[];
-}
 const OneTimeClubChattingRoomPage = () => {
-  const [chatRooms, setChatRooms] = useState<ChattingRoom[]>([]);
+  const [chatRooms, setChatRooms] = useState<EggPopChattingRoom[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -112,7 +59,7 @@ const OneTimeClubChattingRoomPage = () => {
           return;
         }
 
-        const rooms: ChattingRoom[] = chatData.data.flatMap((member) =>
+        const rooms: EggPopChattingRoom[] = chatData.data.flatMap((member) =>
           member.one_time_club_chatting_room_member
             .filter((chatting) => chatting.active)
             .map((chatting) => {
@@ -163,7 +110,7 @@ const OneTimeClubChattingRoomPage = () => {
         {
           event: "INSERT",
           schema: "public",
-          table: "one_time_club_chatting_room_message"
+          table: "egg_pop_chatting_room_message"
         },
         (payload) => {
           const newMessage = payload.new;
@@ -211,7 +158,7 @@ const OneTimeClubChattingRoomPage = () => {
       <div className="flex flex-col w-full h-[calc(100%-91px)]">
         <div className="flex flex-col w-full overflow-y-auto">
           {chatRooms.length > 0 ? (
-            chatRooms.map((room: ChattingRoom) => (
+            chatRooms.map((room: EggPopChattingRoom) => (
               <div
                 key={room.one_time_club_chatting_room_id}
                 className="p-4 border-b flex content-between items-center w-[390px]"

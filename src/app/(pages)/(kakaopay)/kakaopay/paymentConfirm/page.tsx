@@ -6,40 +6,11 @@ import { addHours, format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import PaymentButton from "../_components/KakaopayBtn";
-
-type OneTimeClubData = {
-  one_time_club_name: string;
-  one_time_club_location: string;
-  one_time_club_date_time: string;
-  one_time_image: string | null;
-  one_time_tax: number;
-  m_category: {
-    m_c_name: string;
-  };
-};
-
-type RegularClubData = {
-  r_c_notification_name: string;
-  r_c_notification_location: string;
-  r_c_notification_date_time: string;
-  r_c_notification_image: string;
-  r_c_notification_tax: number;
-  r_c_id:
-    | {
-        m_c_id: {
-          m_c_name: string;
-        };
-      }
-    | {
-        m_c_id: Array<{
-          m_c_name: string;
-        }>;
-      };
-};
+import { EggClubData, EggPopData } from "@/types/payment.types";
 
 const PaymentConfirmPage = () => {
-  const [oneTimeClubData, setOneTimeClubData] = useState<OneTimeClubData | null>();
-  const [regularClubData, setRegularClubData] = useState<RegularClubData | null>();
+  const [oneTimeClubData, setOneTimeClubData] = useState<EggPopData | null>();
+  const [regularClubData, setRegularClubData] = useState<EggClubData | null>();
   const [agreeChecked, setAgreeChecked] = useState(false);
   const searchParams = useSearchParams();
   const supabase = browserClient;
@@ -59,11 +30,11 @@ const PaymentConfirmPage = () => {
 
         if (isOneTimeClub) {
           const { data: oneTimeClubFetchData, error: oneTimeClubFetchError } = await supabase
-            .from("one_time_club")
+            .from("egg_pop")
             .select(
-              "one_time_club_name, one_time_club_location, one_time_club_date_time, one_time_tax, one_time_image, m_c_id, m_category:m_c_id(m_c_name)"
+              "egg_pop_name, egg_pop_location, egg_pop_date_time, egg_pop_tax, egg_pop_image, main_category_id, main_category:main_category_id(main_category_name)"
             )
-            .eq("one_time_club_id", parseInt(clubId))
+            .eq("egg_pop_id", parseInt(clubId))
             .single();
 
           if (oneTimeClubFetchError || !oneTimeClubFetchData) {
@@ -75,20 +46,20 @@ const PaymentConfirmPage = () => {
           // console.log(oneTimeClubFetchData);
         } else {
           const { data: regularClubFetchData, error: regularClubFetchError } = await supabase
-            .from("r_c_notification")
+            .from("egg_day")
             .select(
               `
-                r_c_notification_name,
-                r_c_notification_location,
-                r_c_notification_date_time,
-                r_c_notification_image,
-                r_c_notification_tax,
-                r_c_id (
-                  m_c_id (m_c_name)
+                egg_day_name,
+                egg_day_location,
+                egg_day_date_time,
+                egg_day_image,
+                egg_day_tax,
+                egg_club_id (
+                  main_category_id (main_category_name)
                 )
               `
             )
-            .eq("r_c_notification_id", parseInt(clubId))
+            .eq("egg_day_id", parseInt(clubId))
             .single();
 
           // console.log(regularClubFetchData);
@@ -97,7 +68,7 @@ const PaymentConfirmPage = () => {
             return;
           }
 
-          const formattedData: RegularClubData = {
+          const formattedData: EggClubData = {
             r_c_notification_name: regularClubFetchData.r_c_notification_name,
             r_c_notification_location: regularClubFetchData.r_c_notification_location,
             r_c_notification_date_time: regularClubFetchData.r_c_notification_date_time,

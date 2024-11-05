@@ -3,27 +3,7 @@
 import React, { useEffect, useState } from "react";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
-
-// 기본 타입 정의
-type User = {
-  user_name: string;
-  user_profile_img: string;
-};
-
-// 클럽 정보 타입
-type ClubInfo = {
-  regular_club_name: string;
-  regular_club_image: string;
-  regular_club_people_limited: number;
-  r_c_member: Array<{ count: number }>;
-  wish_list: Array<{ count: number }>;
-  user_id: User; // 단일 객체로 변경
-};
-
-// Supabase 응답 타입 정의
-interface WishListResponse {
-  r_c_id: ClubInfo; // 단일 객체로 변경
-}
+import { WishListResponse } from "@/types/mypage.types";
 
 const WishClubListPage = () => {
   const supabase = browserClient;
@@ -41,11 +21,11 @@ const WishClubListPage = () => {
         const { data: rawData, error: fetchError } = await supabase
           .from("wish_list")
           .select(
-            `r_c_id(
-              regular_club_name,
-              regular_club_image, 
-              regular_club_people_limited,
-              r_c_member(count),
+            `egg_club_id(
+              egg_club_name,
+              egg_club_image, 
+              egg_club_people_limited,
+              egg_club_member(count),
               wish_list(count),
               user_id(
                 user_name, 

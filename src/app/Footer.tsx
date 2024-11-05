@@ -5,11 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "./store/AuthContext";
 import Image from "next/image";
 
-type FooterProps = {
-  className?: string;
-};
-
-export default function Footer({ className }: FooterProps) {
+export default function Footer({ className }: { className: string }) {
   const pathname = usePathname();
 
   const { userId } = useAuth();

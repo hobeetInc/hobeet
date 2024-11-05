@@ -11,7 +11,7 @@ export default function RegularClubJoinTest() {
 
   useEffect(() => {
     const fetchClubs = async () => {
-      const { data, error } = await supabase.from("regular_club").select("*");
+      const { data, error } = await supabase.from("egg_club").select("*");
       if (!error && data) {
         setClubs(data);
       }

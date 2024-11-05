@@ -1,45 +1,50 @@
 import browserClient from "@/utils/supabase/client";
-import {
-  InsertWishList,
-  OneTimeClubForm,
-  OneTimeMember,
-  RegularClubForm,
-  RegularMember,
-  RegularRequest
-} from "../_types/ClubForm";
-import { InsertNotificationMember, RegularClubNotification } from "../regular-club-sub/[id]/create/_types/subCreate";
+
+import { EggDay, InsertEggDayMember } from "@/types/eggday.types";
+import { EggPopForm, EggPopMember } from "@/types/eggpop.types";
+import { EggClubForm, EggClubMember, EggClubRequest, InsertWishList } from "@/types/eggclub.types";
 
 // supabase에 일회성 모임 제출
+
 export const submitOneTimeClubData = async (finalFormData: OneTimeClubForm) => {
-  const { data, error } = await browserClient.from("one_time_club").insert([finalFormData]).select("*").single();
+  const { data, error } = await browserClient.from("egg_pop").insert([finalFormData]).select("*").single();
   if (error) throw error;
   return data;
 };
 
 // supabase에 정기적 모임 제출
+
 export const submitRegularClubData = async (finalFormData: RegularClubForm) => {
-  const { data, error } = await browserClient.from("regular_club").insert([finalFormData]).select("*").single();
+  const { data, error } = await browserClient.from("egg_club").insert([finalFormData]).select("*").single();
+
   if (error) throw error;
   return data;
 };
 
 // 대분류 카테고리 조회
 export const fetchMainCategories = async () => {
-  const { data, error } = await browserClient.from("m_category").select("*").order("m_c_id");
+  const { data, error } = await browserClient.from("main_category").select("*").order("main_category_id");
   if (error) throw error;
   return data;
 };
 
 // 중분류 카테고리 조회
 export const fetchSubCategories = async () => {
-  const { data, error } = await browserClient.from("s_category").select("*").order("m_c_id, s_c_id");
+  const { data, error } = await browserClient
+    .from("sub_category")
+    .select("*")
+    .order("main_category_id, sub_category_id");
   if (error) throw error;
   return data;
 };
 
 // 특정 대분류에 속한 소분류 카테고리만 조회
 export const fetchNeedSubCategories = async (mainId: number) => {
-  const { data, error } = await browserClient.from("s_category").select("*").eq("m_c_id", mainId).order("s_c_id");
+  const { data, error } = await browserClient
+    .from("sub_category")
+    .select("*")
+    .eq("main_category_id", mainId)
+    .order("sub_category_id");
   if (error) throw error;
   return data;
 };
@@ -61,14 +66,14 @@ export const uploadImage = async (file: File) => {
 // 일회성 모임리스트 불러오기(10개씩)
 export const getOneTimeClub = async () => {
   const { data, error } = await browserClient
-    .from("one_time_club")
+    .from("egg_pop")
     .select(
       `
       *,
       user_id(user_name, user_profile_img),
-      o_t_c_member(count)`
+      egg_pop_member(count)`
     )
-    .order("one_time_create_at", { ascending: false })
+    .order("egg_pop_create_at", { ascending: false })
     .limit(10);
   if (error) throw error;
 
@@ -78,9 +83,9 @@ export const getOneTimeClub = async () => {
 // 정기적 모임리스트 불러오기(10개씩)
 export const getRegularClubList = async () => {
   const { data, error } = await browserClient
-    .from("regular_club")
-    .select(`*, user_id(user_name, user_profile_img), r_c_member(count) , wish_list(*)`)
-    .order("regular_club_create_at", { ascending: false })
+    .from("egg_club")
+    .select(`*, user_id(user_name, user_profile_img), egg_club_member(count) , wish_list(*)`)
+    .order("egg_club_create_at", { ascending: false })
     .limit(10);
   if (error) throw error;
   return data;
@@ -89,14 +94,14 @@ export const getRegularClubList = async () => {
 // 일회성 모임리스트 불러오기(전체)
 export const getAllOneTimeClub = async () => {
   const { data, error } = await browserClient
-    .from("one_time_club")
+    .from("egg_pop")
     .select(
       `
       *,
       user_id(user_name, user_profile_img),
-      o_t_c_member(count)`
+      egg_pop_member(count)`
     )
-    .order("one_time_create_at", { ascending: false });
+    .order("egg_pop_create_at", { ascending: false });
   if (error) throw error;
 
   return data;
@@ -105,17 +110,17 @@ export const getAllOneTimeClub = async () => {
 // 정기적 모임리스트 불러오기(전체)
 export const getAllRegularClubList = async () => {
   const { data, error } = await browserClient
-    .from("regular_club")
-    .select(`*, user_id(user_name, user_profile_img), r_c_member(count) , wish_list(*)`)
-    .order("regular_club_create_at", { ascending: false });
+    .from("egg_club")
+    .select(`*, user_id(user_name, user_profile_img), egg_club_member(count) , wish_list(*)`)
+    .order("egg_club_create_at", { ascending: false });
   if (error) throw error;
   return data;
 };
 
 // 모임장 정기적 모임 승인 테이블에 집어넣기
-export const putRepresentative = async (representative: RegularRequest) => {
+export const putRepresentative = async (representative: EggClubRequest) => {
   const { data, error } = await browserClient
-    .from("r_c_participation_request")
+    .from("egg_club_participation_request")
     .insert([representative])
     .select("*")
     .single();
@@ -124,15 +129,19 @@ export const putRepresentative = async (representative: RegularRequest) => {
 };
 
 // 모임장 정기적 모임 맴버 테이블에 집어넣기
+
 export const putRegularMember = async (member: RegularMember) => {
-  const { data, error } = await browserClient.from("r_c_member").insert([member]).select("*").single();
+  const { data, error } = await browserClient.from("egg_club_member").insert([member]).select("*").single();
+
   if (error) throw error;
   return data;
 };
 
 // 모임장 일회성 모임 맴버 테이블에 집어넣기
+
 export const putOneTimeMember = async (member: OneTimeMember) => {
-  const { data, error } = await browserClient.from("o_t_c_member").insert([member]).select("*").single();
+  const { data, error } = await browserClient.from("egg_pop_member").insert([member]).select("*").single();
+
   if (error) throw error;
   return data;
 };
@@ -140,9 +149,9 @@ export const putOneTimeMember = async (member: OneTimeMember) => {
 // 일회성 모임 상세 페이지 불러오기
 export const getOneTimeMember = async (clubId: number) => {
   const { data, error } = await browserClient
-    .from("o_t_c_member")
-    .select(`*, one_time_club(*), user(user_name, user_profile_img)`)
-    .eq("o_t_c_id", clubId);
+    .from("egg_pop_member")
+    .select(`*, egg_pop(*), user(user_name, user_profile_img)`)
+    .eq("egg_pop_id", clubId);
   if (error) throw error;
   return data;
 };
@@ -150,9 +159,9 @@ export const getOneTimeMember = async (clubId: number) => {
 // 정기 모임 멤버, 유저, 모임 정보 한 번에 가져오기
 export const getRegularMember = async (clubId: number) => {
   const { data, error } = await browserClient
-    .from("r_c_member")
-    .select(`*, regular_club(*), user(user_name, user_profile_img)`)
-    .eq("r_c_id", clubId);
+    .from("egg_club_member")
+    .select(`*, egg_club(*), user(user_name, user_profile_img)`)
+    .eq("egg_club_id", clubId);
   if (error) throw error;
   return data;
 };
@@ -160,10 +169,10 @@ export const getRegularMember = async (clubId: number) => {
 // 정기 모임 공지사항 가져오기
 export const getRegularNotification = async (clubId: number) => {
   const { data, error } = await browserClient
-    .from("r_c_notification")
+    .from("egg_day")
     .select("*")
-    .eq("r_c_id", clubId)
-    .order("r_c_notification_create_at", { ascending: false });
+    .eq("egg_club_id", clubId)
+    .order("egg_day_create_at", { ascending: false });
 
   if (error) throw error;
   return data;
@@ -171,14 +180,17 @@ export const getRegularNotification = async (clubId: number) => {
 
 // 정기모임의 공지 집어넣기
 export const submitRegularClubNotification = async (finalData: RegularClubNotification) => {
-  const { data, error } = await browserClient.from("r_c_notification").insert([finalData]).select("*").single();
+  const { data, error } = await browserClient.from("egg_day").insert([finalData]).select("*").single();
+
   if (error) throw error;
   return data;
 };
 
 // 정기적 공지 맴버로 집어넣기
+
 export const submitRegularMember = async (member: InsertNotificationMember) => {
-  const { data, error } = await browserClient.from("r_c_notification_member").insert(member).select("*").single();
+  const { data, error } = await browserClient.from("egg_day_member").insert(member).select("*").single();
+
   if (error) throw error;
   return data;
 };
@@ -188,11 +200,11 @@ export const getRegularClubNotification = async (clubId: number) => {
   const currentDate = new Date().toISOString();
 
   const { data, error } = await browserClient
-    .from("r_c_notification")
-    .select("*, r_c_notification_member(count)")
-    .eq("r_c_id", clubId)
-    .gte("r_c_notification_date_time", currentDate)
-    .order("r_c_notification_date_time", { ascending: true });
+    .from("egg_day")
+    .select("*, egg_day_member(count)")
+    .eq("egg_club_id", clubId)
+    .gte("egg_day_date_time", currentDate)
+    .order("egg_day_date_time", { ascending: true });
   if (error) throw error;
   return data;
 };
@@ -205,17 +217,17 @@ type GetParticipationStatusProps = {
 //정기적모임 참여 요청 정보 가져오기
 export const getParticipationStatus = async ({ userId, clubId }: GetParticipationStatusProps) => {
   const { data, error } = await browserClient
-    .from("r_c_participation_request")
+    .from("egg_club_participation_request")
     .select("*")
     .eq("user_id", userId)
-    .eq("r_c_id", clubId);
+    .eq("egg_club_id", clubId);
   if (error) throw error;
   return data;
 };
 
 // 정기적 모임안의 공지 정보 가져오기
 export const getNotificationData = async (clubId: number) => {
-  const { data, error } = await browserClient.from("r_c_notification").select("*").eq("r_c_id", clubId);
+  const { data, error } = await browserClient.from("egg_day").select("*").eq("egg_club_id", clubId);
   if (error) throw error;
   return data;
 };
@@ -223,11 +235,9 @@ export const getNotificationData = async (clubId: number) => {
 // 정기적 모임 공지 맴버 가져오기
 export const getNotificationMember = async (notificationId: number | undefined) => {
   const { data, error } = await browserClient
-    .from("r_c_notification_member")
+    .from("egg_day_member")
     .select(`*, user(user_name, user_profile_img)`)
-    .eq("r_c_notification_id", notificationId);
-
-  // console.log("이태연!!!!!!", notificationId);
+    .eq("egg_day_id", notificationId);
 
   if (error) throw error;
   return data;

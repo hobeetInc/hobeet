@@ -4,11 +4,7 @@ import { useAuth } from "./store/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 
-type HeaderProps = {
-  className?: string;
-};
-
-export default function Header({ className }: HeaderProps) {
+export default function Header({ className }: { className: string }) {
   const { userId } = useAuth();
   const pathname = usePathname();
 

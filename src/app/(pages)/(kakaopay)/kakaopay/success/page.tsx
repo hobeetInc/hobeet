@@ -6,44 +6,13 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { addHours, format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
-
-type OneTimeClubPay = {
-  o_t_c_kakaopay_cid: string;
-  o_t_c_kakaopay_tid: string;
-};
-
-type RegularClubPay = {
-  r_c_notification_kakaopay_cid: string;
-  r_c_notification_kakaopay_tid: string;
-};
-
-type OneTimeClubData = {
-  one_time_club_name: string;
-  one_time_club_location: string;
-  one_time_club_date_time: string;
-  one_time_image: string | null;
-  m_category: {
-    m_c_name: string;
-  };
-};
-
-type RegularClubData = {
-  r_c_notification_name: string;
-  r_c_notification_location: string;
-  r_c_notification_date_time: string;
-  r_c_notification_image: string;
-  r_c_id: {
-    m_c_id: {
-      m_c_name: string;
-    };
-  };
-};
+import { EggClubDataNoTax, EggClubPay, EggPopDataNoTax, EggPopPay } from "@/types/payment.types";
 
 const PaymentSuccesspage = () => {
-  const [oneTimeClubPayData, setOneTimeClubPayData] = useState<OneTimeClubPay | null>(null);
-  const [regularClubPayData, setRegularClubPayData] = useState<RegularClubPay | null>(null);
-  const [oneTimeClubData, setOneTimeClubData] = useState<OneTimeClubData | null>();
-  const [regularClubData, setRegularClubData] = useState<RegularClubData | null>();
+  const [oneTimeClubPayData, setOneTimeClubPayData] = useState<EggPopPay | null>(null);
+  const [regularClubPayData, setRegularClubPayData] = useState<EggClubPay | null>(null);
+  const [oneTimeClubData, setOneTimeClubData] = useState<EggPopDataNoTax | null>();
+  const [regularClubData, setRegularClubData] = useState<EggClubDataNoTax | null>();
   const [paymentAmount, setPaymentAmount] = useState(null);
   const [queryParams, setQueryParams] = useState<{
     requestUserId: string | null;
@@ -86,11 +55,11 @@ const PaymentSuccesspage = () => {
 
         if (isOneTimeClub) {
           const { data: oneTimeClubFetchData, error: oneTimeClubFetchError } = await supabase
-            .from("one_time_club")
+            .from("egg_pop")
             .select(
-              "one_time_club_name, one_time_club_location, one_time_club_date_time, one_time_image, m_c_id, m_category:m_c_id(m_c_name)"
+              "egg_pop_name, egg_pop_location, egg_pop_date_time, egg_pop_image, main_category_id, main_category:main_category_id(main_category_name)"
             )
-            .eq("one_time_club_id", parseInt(clubId))
+            .eq("egg_pop_id", parseInt(clubId))
             .single();
 
           if (oneTimeClubFetchError || !oneTimeClubFetchData) {
@@ -102,19 +71,19 @@ const PaymentSuccesspage = () => {
           // console.log(oneTimeClubFetchData);
         } else {
           const { data: regularClubFetchData, error: regularClubFetchError } = await supabase
-            .from("r_c_notification")
+            .from("egg_day")
             .select(
               `
-                r_c_notification_name,
-                r_c_notification_location,
-                r_c_notification_date_time,
-                r_c_notification_image, 
-                r_c_id (
-                  m_c_id (m_c_name)
+                egg_day_name,
+                egg_day_location,
+                egg_day_date_time,
+                egg_day_image,
+                egg_club_id (
+                  main_category_id (main_category_name)
                 )
               `
             )
-            .eq("r_c_notification_id", parseInt(clubId))
+            .eq("egg_day_id", parseInt(clubId))
             .single();
 
           if (regularClubFetchError || !regularClubFetchData) {
@@ -122,7 +91,7 @@ const PaymentSuccesspage = () => {
             return;
           }
 
-          const formattedData: RegularClubData = {
+          const formattedData: EggClubDataNoTax = {
             r_c_notification_name: regularClubFetchData.r_c_notification_name,
             r_c_notification_location: regularClubFetchData.r_c_notification_location,
             r_c_notification_date_time: regularClubFetchData.r_c_notification_date_time,
@@ -161,10 +130,10 @@ const PaymentSuccesspage = () => {
 
         if (isOneTimeClub) {
           const { data, error } = await supabase
-            .from("o_t_c_kakaopay")
-            .select("o_t_c_kakaopay_cid, o_t_c_kakaopay_tid")
+            .from("egg_pop_kakaopay")
+            .select("egg_pop_kakaopay_cid, egg_pop_kakaopay_tid")
             .eq("user_id", requestUserId)
-            .eq("o_t_c_id", parseInt(clubId))
+            .eq("egg_pop_id", parseInt(clubId))
             .limit(1)
             .single();
 
@@ -176,10 +145,10 @@ const PaymentSuccesspage = () => {
           setOneTimeClubPayData(data);
         } else {
           const { data, error } = await supabase
-            .from("r_c_notification_kakaopay")
-            .select("r_c_notification_kakaopay_cid, r_c_notification_kakaopay_tid")
+            .from("egg_day_kakaopay")
+            .select("egg_day_kakaopay_cid, egg_day_kakaopay_tid")
             .eq("user_id", requestUserId)
-            .eq("r_c_id", parseInt(clubId))
+            .eq("egg_club_id", parseInt(clubId))
             .limit(1)
             .single();
 

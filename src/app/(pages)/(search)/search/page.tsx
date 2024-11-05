@@ -5,56 +5,12 @@ import OverallPopularMeetings from "../_components/OverallPopularMeetings";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { getSearchedClubs } from "../_api/supabase";
 import Link from "next/link";
+import { Club } from "@/types/search.types";
 
 const SearchPage = () => {
-  interface BaseClub {
-    m_c_id: number;
-    s_c_id: number;
-    user_id: {
-      user_profile_img: string;
-      user_name: string;
-    };
-  }
-
-  interface RegularClubList extends BaseClub {
-    type: "regular";
-    regular_club_id: number;
-    regular_club_name: string;
-    regular_club_age: number;
-    regular_club_gender: string;
-    regular_club_people_limited: number;
-    regular_club_image: string;
-    regular_club_introduction: string;
-    regular_club_create_at: string;
-    regular_club_approval: boolean;
-    r_c_member: { count: number }[];
-    wish_list: {
-      r_c_id: number;
-      user_id: string;
-      wish_list_id: number;
-    }[];
-  }
-
-  interface OneTimeClubList extends BaseClub {
-    type: "oneTime";
-    one_time_club_id: number;
-    one_time_club_name: string;
-    one_time_age: number;
-    one_time_gender: string | null;
-    one_time_people_limited: number;
-    one_time_image: string;
-    one_time_club_introduction: string;
-    one_time_create_at: string;
-    one_time_club_date_time: string;
-    one_time_club_location: string;
-    one_time_tax: number;
-  }
-
-  type ClubList = RegularClubList | OneTimeClubList;
-
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<ClubList[]>([]);
+  const [searchResults, setSearchResults] = useState<Club[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
   const handleCreateClub = () => {

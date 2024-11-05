@@ -6,50 +6,22 @@ import { ChatProvider, useChatContext } from "./_components/ChatContext";
 import { ChatRoomExit } from "@/app/api/_ChatRoomExit/ChatRoomExit";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
-
-interface LayoutProps {
-  children: React.ReactNode;
-  params: {
-    chatRoomId: string;
-  };
-}
-
-type ChattingMember = {
-  active: boolean;
-  admin: boolean;
-  one_time_club_id: number;
-  one_time_member_id: {
-    o_t_c_id: number;
-    o_t_c_member_id: number;
-    user_id: {
-      user_age: number;
-      user_create_at: string;
-      user_email: string;
-      user_gender: string;
-      user_id: string;
-      user_name: string;
-      user_profile_img: string;
-      user_roletype: boolean;
-    };
-    one_time_club_chatting_room_member_id: number;
-    one_time_club_chatting_room_id: number;
-  };
-};
+import { EggPopChattingMemberInfo, LayoutProps } from "@/types/eggpopchat.types";
 
 function ChatHeader() {
   const { roomName, isLoading, one_time_club_chatting_room_id, one_time_club_id } = useChatContext();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [ChattingMember, setChattingMember] = useState<ChattingMember[]>();
+  const [ChattingMember, setChattingMember] = useState<EggPopChattingMemberInfo[]>();
   // console.log(regular_club_id);
   useEffect(() => {
     const supabase = createClient();
     if (one_time_club_id) {
       const fetchRegularClubId = async () => {
         const { data, error } = await supabase
-          .from("one_time_club_chatting_room_member")
-          .select(`* , one_time_member_id(* , user_id(*))`)
-          .eq("one_time_club_id", one_time_club_id)
+          .from("egg_pop_chatting_room_member")
+          .select(`* , egg_pop_member_id(* , user_id(*))`)
+          .eq("egg_pop_id", one_time_club_id)
           .eq("active", true);
         if (error) {
           console.error(error);

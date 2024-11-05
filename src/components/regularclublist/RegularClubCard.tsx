@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import { RegularClub, User } from "@/types/clubcardlist/types";
+import { EggClub } from "@/types/cardlist.types";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { User } from "@/types/user.types";
 
 const supabase = createClient();
 
-interface RegularClubCardProps {
-  club: RegularClub;
-}
-
-export const RegularClubCard = ({ club }: RegularClubCardProps) => {
+export const RegularClubCard = ({ club }: { club: EggClub }) => {
   const [creator, setCreator] = useState<User | null>(null);
   const [memberCount, setMemberCount] = useState<number>(0);
   const router = useRouter();
@@ -32,10 +29,10 @@ export const RegularClubCard = ({ club }: RegularClubCardProps) => {
 
   const fetchMemberCount = async () => {
     const { data } = await supabase
-      .from("r_c_member")
+      .from("egg_club_member")
       .select("*", { count: "exact" })
-      .eq("r_c_id", club.regular_club_id)
-      .eq("regular_club_request_status", "active");
+      .eq("egg_club_id", club.regular_club_id)
+      .eq("egg_club_request_status", "active");
 
     setMemberCount(data?.length || 0);
   };

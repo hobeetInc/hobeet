@@ -1,13 +1,7 @@
 "use client";
+import { Category } from "@/types/category.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-interface Category {
-  id: number;
-  name: string;
-  icon: string;
-  alt: string;
-}
 
 const categories: Category[] = [
   { id: 0, name: "에그팝", icon: "/asset/Category icon_voltage.png", alt: "에그팝" },

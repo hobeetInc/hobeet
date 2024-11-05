@@ -1,14 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RegularProps } from "../../_types/ClubForm";
-
-type MemeberTypeProps = RegularProps & {
-  selectedGender: string;
-  setSelectedGender: (value: string) => void;
-  selectedAge: string;
-  setSelectedAge: (value: string) => void;
-};
+import { MemeberTypeProps } from "@/types/eggclub.types";
 
 const MemberType = ({
   formData,

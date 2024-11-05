@@ -164,6 +164,8 @@ export const oneTimeClubJoin = async ({ clubId, userId }: OneTimeClubJoinParams)
     // 결제 금액이 0원인 경우 바로 가입 처리
     if (clubData.one_time_tax === 0) {
       await clubAPI.insertMember(String(clubId), userId);
+      alert("모임 가입이 완료 되었습니다.");
+      location.reload();
       return {
         message: "모임 가입이 완료 되었습니다."
       };

@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { createClient } from "@/utils/supabase/client";
-import { OneTimeClub } from "@/types/clubcardlist/types";
+import { EggPop } from "@/types/cardlist.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const supabase = createClient();
 
-interface OneTimeClubCardProps {
-  club: OneTimeClub;
-}
-
-export const OneTimeClubCard = ({ club }: OneTimeClubCardProps) => {
+export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
   const [memberCount, setMemberCount] = useState<number>(0);
   const router = useRouter();
 
@@ -21,9 +17,9 @@ export const OneTimeClubCard = ({ club }: OneTimeClubCardProps) => {
 
   const fetchMemberCount = async () => {
     const { count } = await supabase
-      .from("o_t_c_member")
+      .from("egg_pop_member")
       .select("*", { count: "exact" })
-      .eq("o_t_c_id", club.one_time_club_id);
+      .eq("egg_pop_id", club.one_time_club_id);
 
     setMemberCount(count || 0);
   };

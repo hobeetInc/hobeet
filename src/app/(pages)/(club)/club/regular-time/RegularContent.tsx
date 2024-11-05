@@ -5,13 +5,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/app/store/AuthContext";
 import { RegularClubChatRoom } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoom";
 import { REGULAR_CLUB_CREATE } from "../_utils/localStorage";
-import { RegularClubForm } from "../_types/ClubForm";
 import Category from "../_components/regularClub/Category";
 import ImageUpload from "../_components/regularClub/ImageUpload";
 import ClubTitle from "../_components/regularClub/ClubTitle";
 import ApplicationMethod from "../_components/regularClub/ApplicationMethod";
 import MemberType from "../_components/regularClub/MemberType";
 import { putRegularMember, putRepresentative, submitRegularClubData, uploadImage } from "../_api/supabase";
+import { EggClubForm } from "@/types/eggclub.types";
 
 const RegularContent = () => {
   const router = useRouter();
@@ -66,7 +66,7 @@ const RegularContent = () => {
   const [step, setStep] = useState<1 | 2 | 3>(currentStep);
   const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedAge);
-  const [formData, setFormData] = useState<RegularClubForm>(initialData.formData);
+  const [formData, setFormData] = useState<EggClubForm>(initialData.formData);
 
   // 폼데이터 확인용
   useEffect(() => {

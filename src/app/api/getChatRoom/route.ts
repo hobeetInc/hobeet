@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { ChatMessage, Chatting, Member } from "@/app/(pages)/(chat)/types/chat";
+import { Chatting, EggClubChatMessage, Member } from "@/types/eggclubchat.types";
 
 export async function POST(req: Request) {
   const supabase = createClient();
@@ -9,15 +9,15 @@ export async function POST(req: Request) {
     const { userId } = await req.json();
 
     const { data: memberData, error: memberError } = await supabase
-      .from("r_c_member")
+      .from("egg_club_member")
       .select(
         `
         *,
-        r_c_n_chatting (
+        egg_day_chatting (
           *,
-          r_c_n_chatting_room (*)
+          egg_day_chatting_room (*)
         ),
-        regular_club (*)
+        egg_club (*)
         `
       )
       .eq("user_id", userId);
@@ -31,15 +31,15 @@ export async function POST(req: Request) {
         const chattingWithMessages: Chatting[] = await Promise.all(
           member.r_c_n_chatting.map(async (chatting) => {
             const { data: messages, error: messageError } = await supabase
-              .from("r_c_n_chatting_message")
+              .from("egg_day_chatting_message")
               .select(
                 `
-                r_c_n_chatting_message_content,
-                r_c_n_chatting_message_create_at
+                egg_day_chatting_message_content,
+                egg_day_chatting_message_create_at
                 `
               )
-              .eq("r_c_n_chatting_room_id", chatting.r_c_n_chatting_room_id)
-              .order("r_c_n_chatting_message_create_at", { ascending: true });
+              .eq("egg_day_chatting_room_id", chatting.r_c_n_chatting_room_id)
+              .order("egg_day_chatting_message_create_at", { ascending: true });
 
             if (messageError) {
               console.error("메시지 조회 오류:", messageError);
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
 
             return {
               ...chatting,
-              r_c_n_chatting_message: (messages as ChatMessage[]) || []
+              r_c_n_chatting_message: (messages as EggClubChatMessage[]) || []
             };
           })
         );
