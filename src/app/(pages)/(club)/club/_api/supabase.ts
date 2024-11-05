@@ -6,7 +6,7 @@ import { EggClubForm, EggClubMember, EggClubRequest, InsertWishList } from "@/ty
 
 // supabase에 일회성 모임 제출
 
-export const submitOneTimeClubData = async (finalFormData: OneTimeClubForm) => {
+export const submitOneTimeClubData = async (finalFormData: EggPopForm) => {
   const { data, error } = await browserClient.from("egg_pop").insert([finalFormData]).select("*").single();
   if (error) throw error;
   return data;
@@ -14,7 +14,7 @@ export const submitOneTimeClubData = async (finalFormData: OneTimeClubForm) => {
 
 // supabase에 정기적 모임 제출
 
-export const submitRegularClubData = async (finalFormData: RegularClubForm) => {
+export const submitRegularClubData = async (finalFormData: EggClubForm) => {
   const { data, error } = await browserClient.from("egg_club").insert([finalFormData]).select("*").single();
 
   if (error) throw error;
@@ -130,7 +130,7 @@ export const putRepresentative = async (representative: EggClubRequest) => {
 
 // 모임장 정기적 모임 맴버 테이블에 집어넣기
 
-export const putRegularMember = async (member: RegularMember) => {
+export const putRegularMember = async (member: EggClubForm) => {
   const { data, error } = await browserClient.from("egg_club_member").insert([member]).select("*").single();
 
   if (error) throw error;
@@ -139,7 +139,7 @@ export const putRegularMember = async (member: RegularMember) => {
 
 // 모임장 일회성 모임 맴버 테이블에 집어넣기
 
-export const putOneTimeMember = async (member: OneTimeMember) => {
+export const putOneTimeMember = async (member: EggPopMember) => {
   const { data, error } = await browserClient.from("egg_pop_member").insert([member]).select("*").single();
 
   if (error) throw error;
@@ -179,7 +179,7 @@ export const getRegularNotification = async (clubId: number) => {
 };
 
 // 정기모임의 공지 집어넣기
-export const submitRegularClubNotification = async (finalData: RegularClubNotification) => {
+export const submitRegularClubNotification = async (finalData: EggDay) => {
   const { data, error } = await browserClient.from("egg_day").insert([finalData]).select("*").single();
 
   if (error) throw error;
@@ -188,7 +188,7 @@ export const submitRegularClubNotification = async (finalData: RegularClubNotifi
 
 // 정기적 공지 맴버로 집어넣기
 
-export const submitRegularMember = async (member: InsertNotificationMember) => {
+export const submitRegularMember = async (member: InsertEggDayMember) => {
   const { data, error } = await browserClient.from("egg_day_member").insert(member).select("*").single();
 
   if (error) throw error;
