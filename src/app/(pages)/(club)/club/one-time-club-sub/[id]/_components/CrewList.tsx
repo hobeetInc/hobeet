@@ -9,22 +9,7 @@ import { ChevronRight } from "lucide-react";
 import JoinClubButton from "@/components/oneTimeClubJoinButton";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
-
-// 멤버 정보 타입 정의
-type MemberInfo = {
-  memberId: number;
-  userId: string;
-  userName: string;
-  userImage: string;
-};
-
-// CrewList 컴포넌트 props 타입
-interface CrewListProps {
-  crewMembers: MemberInfo[];
-  clubId: number;
-  // hostInfo: MemberInfo;
-  clubHostId: string;
-}
+import { CrewListProps } from "@/types/eggpop.types";
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);

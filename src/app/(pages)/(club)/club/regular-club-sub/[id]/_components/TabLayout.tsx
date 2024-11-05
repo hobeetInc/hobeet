@@ -1,10 +1,7 @@
 "use client";
 
-import { ReactNode, useState } from "react";
-
-type TabLayoutProps = {
-  children: [ReactNode, ReactNode];
-};
+import { TabLayoutProps } from "@/types/eggclub.types";
+import { useState } from "react";
 
 const TabLayout = ({ children }: TabLayoutProps) => {
   const [activeTab, setActiveTab] = useState<string>("home");

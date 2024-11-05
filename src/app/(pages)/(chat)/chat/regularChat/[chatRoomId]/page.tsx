@@ -5,31 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-
-type User = {
-  user_id: string;
-  user_name: string;
-  user_profile_img: string;
-};
-
-type Message = {
-  r_c_n_chatting_message_id: number;
-  r_c_n_chatting_id: number;
-  r_c_n_chatting_room_id: number;
-  r_c_member_id: number;
-  r_c_id: number;
-  user: User;
-  user_id: string;
-  r_c_n_chatting_message_content: string;
-  r_c_n_chatting_message_create_at: string;
-};
-
-type ChatInfo = {
-  r_c_n_chatting_id: number;
-  r_c_member_id: number;
-  r_c_id: number;
-  chat_room_entry_time: string;
-};
+import { EggClubChatInfo, ExtendEggClubMessage } from "@/types/eggclubchat.types";
 
 const supabase = createClient();
 
@@ -85,7 +61,7 @@ const ChatPage: React.FC = () => {
   });
 
   // 채팅방 정보 조회
-  const { data: chatInfo } = useQuery<ChatInfo>({
+  const { data: chatInfo } = useQuery<EggClubChatInfo>({
     queryKey: ["chatInfo", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -103,7 +79,7 @@ const ChatPage: React.FC = () => {
   // console.log(chatInfo?.chat_room_entry_time);
 
   // 메시지 목록 조회
-  const { data: messages = [], isLoading: isLoadingMessages } = useQuery<Message[]>({
+  const { data: messages = [], isLoading: isLoadingMessages } = useQuery<ExtendEggClubMessage[]>({
     queryKey: ["messages", roomId, chatInfo?.chat_room_entry_time],
     queryFn: async () => {
       if (!chatInfo?.chat_room_entry_time) {
@@ -191,8 +167,8 @@ const ChatPage: React.FC = () => {
     }
   }, [newMessage]);
 
-  const groupMessagesByDate = (messages: Message[]) => {
-    return messages.reduce((acc: { [date: string]: Message[] }, message) => {
+  const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
+    return messages.reduce((acc: { [date: string]: ExtendEggClubMessage[] }, message) => {
       const date = new Date(message.r_c_n_chatting_message_create_at);
       const dateString = date.toLocaleDateString("ko-KR", {
         year: "numeric",
@@ -230,7 +206,7 @@ const ChatPage: React.FC = () => {
             Object.keys(groupedMessages).map((dateString) => (
               <div key={dateString} className="mb-6">
                 <div className="text-[10px] mb-2 text-center">{dateString}</div>
-                {groupedMessages[dateString].map((message: Message) => {
+                {groupedMessages[dateString].map((message: ExtendEggClubMessage) => {
                   const date = new Date(message.r_c_n_chatting_message_create_at);
                   const isCurrentUser = message.user.user_id === currentUser?.id;
 

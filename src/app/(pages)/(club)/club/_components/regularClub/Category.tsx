@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MainCategory, RegularProps, SubCategory } from "../../_types/ClubForm";
 import { fetchMainCategories, fetchSubCategories } from "../../_api/supabase";
+import { EggClubProps } from "@/types/eggclub.types";
+import { MainCategory, SubCategory } from "@/types/category.types";
 
-const Category = ({ formData, setFormData }: RegularProps) => {
+const Category = ({ formData, setFormData }: EggClubProps) => {
   const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [openCategoryId, setOpenCategoryId] = useState<number | null>(null);
@@ -15,10 +16,6 @@ const Category = ({ formData, setFormData }: RegularProps) => {
       setIsLoading(true);
       const mainData = await fetchMainCategories();
       const subData = await fetchSubCategories();
-
-      // 확인용
-      // console.log("수퍼베이스!!", mainData);
-      // console.log("수퍼베이스!!", subData);
 
       setMainCategories(mainData);
       setSubCategories(subData);

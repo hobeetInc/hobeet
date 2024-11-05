@@ -1,12 +1,8 @@
 "use client";
 
+import { DayHeaderProps } from "@/types/eggday.types";
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { NotificaitonInfo } from "../_types/notifictionInfo";
-
-type DayHeaderProps = {
-  clubInfo: NotificaitonInfo | undefined;
-};
 
 const DayHeader = ({ clubInfo }: DayHeaderProps) => {
   const router = useRouter();

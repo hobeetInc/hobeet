@@ -1,13 +1,8 @@
 "use client";
 
 import { useAuth } from "@/app/store/AuthContext";
+import { PaymentButtonProps } from "@/types/payment.types";
 import { useState } from "react";
-
-type PaymentButtonProps = {
-  clubType: boolean;
-  clubId: number;
-  agreeChecked: boolean;
-};
 
 const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);

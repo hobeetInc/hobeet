@@ -1,23 +1,7 @@
 import Image from "next/image";
 import CrewList from "./CrewList";
-import { getRegularClub } from "../_types/Crews";
-import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import WishListHeart from "./WishListHeart";
-
-type CrewInfo = {
-  memberId: number;
-  userId: string;
-  userName: string;
-  userImage: string;
-};
-type HomeContentProps = {
-  clubInfo: getRegularClub;
-  hostInfo: CrewInfo | undefined;
-  crewMembers: CrewInfo[];
-  regularClubId: number;
-  notificationData: InSertRegularClubNotification[];
-  stringCategory: string | undefined;
-};
+import { HomeContentProps } from "@/types/eggclub.types";
 
 const HomeContent = ({
   clubInfo,

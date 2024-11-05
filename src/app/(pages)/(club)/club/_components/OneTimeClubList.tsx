@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { getOneTimeClub } from "../_api/supabase";
-import { OneTimeClubForm } from "../_types/ClubForm";
 import { format, parseISO } from "date-fns";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
+import { EggPopForm } from "@/types/eggpop.types";
 
 // 주소 커스텀 함수
 const customAddress = (address: string) => {
@@ -28,7 +28,7 @@ const customDate = (date: string) => {
 };
 
 const OneTimeClubList = () => {
-  const [list, setList] = useState<OneTimeClubForm[]>([]);
+  const [list, setList] = useState<EggPopForm[]>([]);
 
   const settings = {
     // dots: true,

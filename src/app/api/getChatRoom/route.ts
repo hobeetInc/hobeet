@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { ChatMessage, Chatting, Member } from "@/app/(pages)/(chat)/types/chat";
+import { Chatting, EggClubChatMessage, Member } from "@/types/eggclubchat.types";
 
 export async function POST(req: Request) {
   const supabase = createClient();
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
 
             return {
               ...chatting,
-              r_c_n_chatting_message: (messages as ChatMessage[]) || []
+              r_c_n_chatting_message: (messages as EggClubChatMessage[]) || []
             };
           })
         );

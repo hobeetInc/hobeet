@@ -6,40 +6,11 @@ import { addHours, format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import PaymentButton from "../_components/KakaopayBtn";
-
-type OneTimeClubData = {
-  one_time_club_name: string;
-  one_time_club_location: string;
-  one_time_club_date_time: string;
-  one_time_image: string | null;
-  one_time_tax: number;
-  m_category: {
-    m_c_name: string;
-  };
-};
-
-type RegularClubData = {
-  r_c_notification_name: string;
-  r_c_notification_location: string;
-  r_c_notification_date_time: string;
-  r_c_notification_image: string;
-  r_c_notification_tax: number;
-  r_c_id:
-    | {
-        m_c_id: {
-          m_c_name: string;
-        };
-      }
-    | {
-        m_c_id: Array<{
-          m_c_name: string;
-        }>;
-      };
-};
+import { EggClubData, EggPopData } from "@/types/payment.types";
 
 const PaymentConfirmPage = () => {
-  const [oneTimeClubData, setOneTimeClubData] = useState<OneTimeClubData | null>();
-  const [regularClubData, setRegularClubData] = useState<RegularClubData | null>();
+  const [oneTimeClubData, setOneTimeClubData] = useState<EggPopData | null>();
+  const [regularClubData, setRegularClubData] = useState<EggClubData | null>();
   const [agreeChecked, setAgreeChecked] = useState(false);
   const searchParams = useSearchParams();
   const supabase = browserClient;
@@ -97,7 +68,7 @@ const PaymentConfirmPage = () => {
             return;
           }
 
-          const formattedData: RegularClubData = {
+          const formattedData: EggClubData = {
             r_c_notification_name: regularClubFetchData.r_c_notification_name,
             r_c_notification_location: regularClubFetchData.r_c_notification_location,
             r_c_notification_date_time: regularClubFetchData.r_c_notification_date_time,

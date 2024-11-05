@@ -1,27 +1,12 @@
 "use client";
 import Image from "next/image";
-import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/store/AuthContext";
-
-type CrewInfo = {
-  memberId: number;
-  userId: string;
-  userName: string;
-  userImage: string;
-};
-
-type ClubCardProps = { notification: InSertRegularClubNotification; crewMembers: CrewInfo[] };
+import { ClubCardProps } from "@/types/eggclub.types";
 
 const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
   const router = useRouter();
   const { userId } = useAuth();
-
-  // useEffect(() => {
-  //   console.log("ClubCard 렌더링 시 crewMembers:", crewMembers);
-  // }, []);
-
-  // console.log("객체:", { notification, crewMembers });
 
   // 날짜와 시간 커스텀
   const DateTimeCustom = (dateTime: string) => {

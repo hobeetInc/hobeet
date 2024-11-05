@@ -1,29 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import { format, parseISO } from "date-fns";
 import ClubCard from "./ClubCard";
 import { ko } from "date-fns/locale";
-
-type CrewInfo = {
-  memberId: number;
-  userId: string;
-  userName: string;
-  userImage: string;
-};
-
-type NotificationListProps = {
-  notificationData: InSertRegularClubNotification[];
-  crewMembers: CrewInfo[];
-};
+import { NotificationListProps } from "@/types/eggclub.types";
+import { InSertEggDay } from "@/types/eggday.types";
 
 const NotificationList = ({ notificationData, crewMembers }: NotificationListProps) => {
   const [selectedDate, setSelectedDate] = useState("all");
 
   // 날짜별로 그룹화하는 함수
-  const groupDate = (notifications: InSertRegularClubNotification[]) => {
-    return notifications.reduce((groups: { [key: string]: InSertRegularClubNotification[] }, notification) => {
+  const groupDate = (notifications: InSertEggDay[]) => {
+    return notifications.reduce((groups: { [key: string]: InSertEggDay[] }, notification) => {
       // 날짜는 "MM.dd" 형식으로 변환
       const date = format(parseISO(notification.r_c_notification_date_time), "MM.dd");
 

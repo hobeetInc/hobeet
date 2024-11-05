@@ -1,6 +1,6 @@
-import { RegularProps } from "../../_types/ClubForm";
+import { EggClubProps } from "@/types/eggclub.types";
 
-const ApplicationMethod = ({ formData, setFormData }: RegularProps) => {
+const ApplicationMethod = ({ formData, setFormData }: EggClubProps) => {
   const methods = [
     {
       id: "approval",

@@ -1,15 +1,11 @@
 import browserClient from "@/utils/supabase/client";
-import {
-  InsertWishList,
-  OneTimeClubForm,
-  OneTimeMember,
-  RegularClubForm,
-  RegularMember,
-  RegularRequest
-} from "../_types/ClubForm";
-import { InsertNotificationMember, RegularClubNotification } from "../regular-club-sub/[id]/create/_types/subCreate";
+
+import { EggDay, InsertEggDayMember } from "@/types/eggday.types";
+import { EggPopForm, EggPopMember } from "@/types/eggpop.types";
+import { EggClubForm, EggClubMember, EggClubRequest, InsertWishList } from "@/types/eggclub.types";
 
 // supabase에 일회성 모임 제출
+
 export const submitOneTimeClubData = async (finalFormData: OneTimeClubForm) => {
   const { data, error } = await browserClient.from("egg_pop").insert([finalFormData]).select("*").single();
   if (error) throw error;
@@ -17,8 +13,10 @@ export const submitOneTimeClubData = async (finalFormData: OneTimeClubForm) => {
 };
 
 // supabase에 정기적 모임 제출
+
 export const submitRegularClubData = async (finalFormData: RegularClubForm) => {
   const { data, error } = await browserClient.from("egg_club").insert([finalFormData]).select("*").single();
+
   if (error) throw error;
   return data;
 };
@@ -120,7 +118,7 @@ export const getAllRegularClubList = async () => {
 };
 
 // 모임장 정기적 모임 승인 테이블에 집어넣기
-export const putRepresentative = async (representative: RegularRequest) => {
+export const putRepresentative = async (representative: EggClubRequest) => {
   const { data, error } = await browserClient
     .from("egg_club_participation_request")
     .insert([representative])
@@ -131,15 +129,19 @@ export const putRepresentative = async (representative: RegularRequest) => {
 };
 
 // 모임장 정기적 모임 맴버 테이블에 집어넣기
+
 export const putRegularMember = async (member: RegularMember) => {
   const { data, error } = await browserClient.from("egg_club_member").insert([member]).select("*").single();
+
   if (error) throw error;
   return data;
 };
 
 // 모임장 일회성 모임 맴버 테이블에 집어넣기
+
 export const putOneTimeMember = async (member: OneTimeMember) => {
   const { data, error } = await browserClient.from("egg_pop_member").insert([member]).select("*").single();
+
   if (error) throw error;
   return data;
 };
@@ -179,13 +181,16 @@ export const getRegularNotification = async (clubId: number) => {
 // 정기모임의 공지 집어넣기
 export const submitRegularClubNotification = async (finalData: RegularClubNotification) => {
   const { data, error } = await browserClient.from("egg_day").insert([finalData]).select("*").single();
+
   if (error) throw error;
   return data;
 };
 
 // 정기적 공지 맴버로 집어넣기
+
 export const submitRegularMember = async (member: InsertNotificationMember) => {
   const { data, error } = await browserClient.from("egg_day_member").insert(member).select("*").single();
+
   if (error) throw error;
   return data;
 };
@@ -233,8 +238,6 @@ export const getNotificationMember = async (notificationId: number | undefined) 
     .from("egg_day_member")
     .select(`*, user(user_name, user_profile_img)`)
     .eq("egg_day_id", notificationId);
-
-  // console.log("이태연!!!!!!", notificationId);
 
   if (error) throw error;
   return data;

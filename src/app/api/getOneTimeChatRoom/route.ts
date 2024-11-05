@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { OneTimeChatMessage, OneTimeChatting, OneTimeMember } from "@/app/(pages)/(chat)/types/chat";
+import { OneTimeChatMessage, OneTimeChatting, OneTimeMember } from "@/types/eggpopchat.types";
 
 export async function POST(req: Request) {
   const supabase = createClient();

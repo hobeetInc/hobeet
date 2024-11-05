@@ -1,8 +1,8 @@
 // 모임 채팅 생성후 모임장 채팅에 입장 시키기
 
-import { chattingRoom } from "../../types/r_c_n_chatting_room";
+import { EggClubChatRoom } from "@/types/eggclubchat.types";
 
-export async function RegularClubChatRoomMeetingPlace(chattingRoom: chattingRoom) {
+export async function RegularClubChatRoomMeetingPlace(chattingRoom: EggClubChatRoom) {
   try {
     await fetch("/api/chatRoomMeetingPlace", {
       method: "POST",

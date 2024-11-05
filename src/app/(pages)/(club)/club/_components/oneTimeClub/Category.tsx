@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { OneTimeProps, MainCategory, SubCategory } from "../../_types/ClubForm";
 import { fetchMainCategories, fetchSubCategories } from "../../_api/supabase";
+import { EggPopProps } from "@/types/eggpop.types";
+import { MainCategory, SubCategory } from "@/types/category.types";
 
-const Category = ({ formData, setFormData }: OneTimeProps) => {
+const Category = ({ formData, setFormData }: EggPopProps) => {
   const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [openCategoryId, setOpenCategoryId] = useState<number | null>(null);
