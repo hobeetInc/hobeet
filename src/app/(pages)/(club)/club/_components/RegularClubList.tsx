@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { getRegularClubList } from "../_api/supabase";
-import { RegularClubForm } from "../_types/ClubForm";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
+import { EggClubForm } from "@/types/eggclub.types";
 
 const RegularClubList = () => {
-  const [list, setList] = useState<RegularClubForm[]>([]);
+  const [list, setList] = useState<EggClubForm[]>([]);
 
   const settings = {
     infinite: list.length > 3,

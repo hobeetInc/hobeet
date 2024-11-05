@@ -1,6 +1,6 @@
-import { RegularProps } from "../../_types/ClubForm";
+import { EggClubProps } from "@/types/eggclub.types";
 
-const ClubTitle = ({ formData, setFormData }: RegularProps) => {
+const ClubTitle = ({ formData, setFormData }: EggClubProps) => {
   return (
     <div>
       <h1>모임의 제목을 작성해 주세요</h1>

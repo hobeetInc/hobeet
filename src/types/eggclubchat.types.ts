@@ -155,7 +155,7 @@ export interface EggClubChatRoom {
 export interface Chatting {
   r_c_n_chatting_id: number;
   r_c_n_chatting_room_id: number;
-  r_c_n_chatting_room: ChatRoom;
+  r_c_n_chatting_room: EggClubChatRoom;
   r_c_n_chatting_message: ChatMessage[];
 }
 

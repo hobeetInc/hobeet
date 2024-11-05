@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { RegularProps } from "../../_types/ClubForm";
+import { EggClubProps } from "@/types/eggclub.types";
 
-const ImageUpload = ({ formData, setFormData }: RegularProps) => {
+const ImageUpload = ({ formData, setFormData }: EggClubProps) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

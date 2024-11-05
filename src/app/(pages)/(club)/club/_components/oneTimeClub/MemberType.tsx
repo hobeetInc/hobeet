@@ -1,14 +1,7 @@
 "use client";
 
+import { MemeberTypeProps } from "@/types/eggpop.types";
 import { useState } from "react";
-import { OneTimeProps } from "../../_types/ClubForm";
-
-type MemeberTypeProps = OneTimeProps & {
-  selectedGender: string;
-  setSelectedGender: (value: string) => void;
-  selectedAge: string;
-  setSelectedAge: (value: string) => void;
-};
 
 const MemberType = ({
   formData,

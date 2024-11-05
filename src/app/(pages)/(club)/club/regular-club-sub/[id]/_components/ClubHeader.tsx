@@ -2,12 +2,8 @@
 
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getRegularClub } from "../_types/Crews";
 import { useAuth } from "@/app/store/AuthContext";
-
-type ClubHeaderProps = {
-  clubInfo: getRegularClub;
-};
+import { ClubHeaderProps } from "@/types/eggclub.types";
 
 const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   const router = useRouter();

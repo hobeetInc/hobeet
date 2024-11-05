@@ -4,12 +4,8 @@ import { useEffect, useState } from "react";
 import { deleteWishList, getWishList, submitWishList } from "../../../_api/supabase";
 import Image from "next/image";
 import { useAuth } from "@/app/store/AuthContext";
-import { WishList } from "../../../_types/ClubForm";
 import { useRouter } from "next/navigation";
-
-type WishListHeartProps = {
-  regularClubId: number;
-};
+import { WishList, WishListHeartProps } from "@/types/eggclub.types";
 
 const WishListHeart = ({ regularClubId }: WishListHeartProps) => {
   const [isWished, setIsWished] = useState<boolean>(false);

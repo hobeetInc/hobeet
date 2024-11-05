@@ -5,10 +5,11 @@ import Image from "next/image";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
 import { useAuth } from "@/app/store/AuthContext";
-import { RegularClubNotification } from "../_types/subCreate";
 import { submitRegularClubNotification, submitRegularMember, uploadImage } from "../../../../_api/supabase";
 import { useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
+import { EggDay } from "@/types/eggday.types";
+import { AddressData, DaumPostcodeData } from "@/types/address.types";
 
 // 커스텀 스타일
 const customStyles = `
@@ -35,49 +36,13 @@ const loadDaumPostcodeScript = () => {
   });
 };
 
-declare global {
-  interface Window {
-    daum: {
-      Postcode: new (config: {
-        oncomplete: (data: {
-          userSelectedType: string;
-          roadAddress: string;
-          jibunAddress: string;
-          bname: string;
-          buildingName: string;
-          apartment: string;
-          zonecode: string;
-        }) => void;
-      }) => {
-        open: () => void;
-      };
-    };
-  }
-}
-
-interface AddressData {
-  zonecode: string; // 우편주소
-  address: string; // 기본주소
-  detailAddress: string; // 상세주소
-}
-
-interface DaumPostcodeData {
-  userSelectedType: string; // 사용자가 선택한 주소 타입
-  roadAddress: string; // 도로명 주소
-  jibunAddress: string; // 지번 주소
-  bname: string; // 법정동/법정리 이름
-  buildingName: string; // 건물명
-  apartment: string; // 아파트 여부
-  zonecode: string; // 우편번호
-}
-
 const NotificationCreate = ({ params }: { params: { id: string } }) => {
   const { userId } = useAuth();
   const router = useRouter();
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<Date | null>(null);
 
-  const [formData, setFormData] = useState<RegularClubNotification>({
+  const [formData, setFormData] = useState<EggDay>({
     user_id: userId,
     r_c_notification_name: "",
     r_c_notification_content: "",
