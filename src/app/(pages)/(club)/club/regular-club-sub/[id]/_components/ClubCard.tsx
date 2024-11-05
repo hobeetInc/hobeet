@@ -3,7 +3,6 @@ import Image from "next/image";
 import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/store/AuthContext";
-import { useEffect } from "react";
 
 type CrewInfo = {
   memberId: number;
