@@ -2,7 +2,7 @@ import browserClient from "@/utils/supabase/client";
 
 import { EggDay, InsertEggDayMember } from "@/types/eggday.types";
 import { EggPopForm, EggPopMember } from "@/types/eggpop.types";
-import { EggClubForm, EggClubMember, EggClubRequest, InsertWishList } from "@/types/eggclub.types";
+import { EggClubForm, EggClubRequest, InsertWishList } from "@/types/eggclub.types";
 
 // supabase에 일회성 모임 제출
 
