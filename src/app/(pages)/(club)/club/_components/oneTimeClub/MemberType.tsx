@@ -73,6 +73,13 @@ const MemberType = ({
     });
   };
 
+  const handleKeyDown = (e) => {
+    // 소수점(.) 입력 방지
+    if (e.key === ".") {
+      e.preventDefault();
+    }
+  };
+
   return (
     <div>
       <h1 className="mb-4">어떤 맴버와 함께하고 싶나요?</h1>
@@ -121,6 +128,9 @@ const MemberType = ({
             className="w-[328px] h-8 rounded-lg p-2"
             value={peopleLimit}
             onChange={handlePeopleLimit}
+            onKeyDown={handleKeyDown}
+            min="0"
+            step="1"
           />
         </div>
       </div>

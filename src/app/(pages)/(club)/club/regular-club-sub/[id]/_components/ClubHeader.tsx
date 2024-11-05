@@ -3,6 +3,7 @@
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getRegularClub } from "../_types/Crews";
+import { useAuth } from "@/app/store/AuthContext";
 
 type ClubHeaderProps = {
   clubInfo: getRegularClub;
@@ -10,6 +11,7 @@ type ClubHeaderProps = {
 
 const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   const router = useRouter();
+  const { userId } = useAuth();
 
   const handleBack = () => {
     router.back();
@@ -29,7 +31,7 @@ const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
           ? `${clubInfo.regular_club_name.slice(0, 8)}...`
           : clubInfo.regular_club_name}
       </h1>
-      <button onClick={handleCreate}>+</button>
+      {clubInfo.user_id === userId ? <button onClick={handleCreate}>+</button> : null}
     </div>
   );
 };
