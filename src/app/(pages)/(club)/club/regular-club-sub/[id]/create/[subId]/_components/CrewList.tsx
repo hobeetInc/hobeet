@@ -110,7 +110,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
           try {
             if (clubInfo?.r_c_notification_tax === 0) {
               const addMember = {
-                r_c_notification_id: clubId,
+                r_c_notification_id: secondId,
                 user_id: userId
               };
 
@@ -118,7 +118,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
               alert("에그데이에 참여되었습니다");
               window.location.reload();
             } else {
-              router.push(`/kakaopay/paymentConfirm?clubType=false&clubId=${clubId}`);
+              router.push(`/kakaopay/paymentConfirm?clubType=false&clubId=${secondId}`);
             }
           } catch (error) {
             console.log("공지 맴버 추가 중 오류:", error);
