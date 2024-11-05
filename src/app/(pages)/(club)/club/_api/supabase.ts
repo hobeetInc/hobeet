@@ -2,7 +2,7 @@ import browserClient from "@/utils/supabase/client";
 
 import { EggDay, InsertEggDayMember } from "@/types/eggday.types";
 import { EggPopForm, EggPopMember } from "@/types/eggpop.types";
-import { EggClubForm, EggClubMember, EggClubRequest, InsertWishList } from "@/types/eggclub.types";
+import { EggClubForm, EggClubRequest, InsertWishList } from "@/types/eggclub.types";
 
 // supabase에 일회성 모임 제출
 
@@ -130,7 +130,7 @@ export const putRepresentative = async (representative: EggClubRequest) => {
 
 // 모임장 정기적 모임 맴버 테이블에 집어넣기
 
-export const putRegularMember = async (member: EggClubMember) => {
+export const putRegularMember = async (member: EggClubForm) => {
   const { data, error } = await browserClient.from("egg_club_member").insert([member]).select("*").single();
 
   if (error) throw error;
