@@ -1,4 +1,4 @@
-import { chattingRoom } from "../../types/r_c_n_chatting_room";
+import { EggClubChatRoom } from "@/types/eggclubchat.types";
 import { RegularClubChatRoomMeetingPlace } from "./RegularClubChatRoomMeetingPlace";
 
 // 모임 채팅방 생성
@@ -12,7 +12,7 @@ export async function RegularClubChatRoom(regularClubName: string, clubId: numbe
       body: JSON.stringify({ regularClubName, userId, clubId })
     });
 
-    const { data, error }: { data: chattingRoom[] | null; error?: string } = await response.json();
+    const { data, error }: { data: EggClubChatRoom[] | null; error?: string } = await response.json();
 
     if (response.ok && data && data.length > 0) {
       const [chatRoom] = data;

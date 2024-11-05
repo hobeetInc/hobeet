@@ -1,25 +1,7 @@
-type clubId = {
-  r_c_id: number;
-};
-
-type regularClubMember = {
-  r_c_id: number;
-  r_c_member_id: number;
-  r_c_participation_request_id: number;
-  user_id: string;
-  r_c_n_chatting: Chatting[];
-};
-
-type Chatting = {
-  admin: boolean;
-  r_c_id: number;
-  r_c_member_id: number;
-  r_c_n_chatting_id: number;
-  r_c_n_chatting_room_id: number;
-};
+import { EggClubChattingMember, EggClubId } from "@/types/eggclubchat.types";
 
 // 정기 모임 입장 함수(자동 가입시)
-export async function RegularClubChatRoomRecruiterEntrance(club: clubId) {
+export async function RegularClubChatRoomRecruiterEntrance(club: EggClubId) {
   try {
     const response = await fetch(`/api/regularClubChattingRoom?r_c_id=${club.r_c_id}`, {
       method: "GET",
@@ -32,7 +14,7 @@ export async function RegularClubChatRoomRecruiterEntrance(club: clubId) {
       throw new Error("정기 모임 정보를 가져오는 데 실패했습니다.");
     }
 
-    const data: regularClubMember = await response.json();
+    const data: EggClubChattingMember = await response.json();
     // console.log(data);
 
     const postResponse = await fetch("/api/chatRoomRecruiterEntrance", {
@@ -72,7 +54,7 @@ export async function RegularClubApproveChatRoomRecruiterEntrance(params: ClubPa
       throw new Error("정기 모임 정보를 가져오는 데 실패했습니다.");
     }
 
-    const data: regularClubMember = await response.json();
+    const data: EggClubChattingMember = await response.json();
     // console.log(data);
 
     const postResponse = await fetch("/api/chatRoomApproveRecruiterEntrance", {

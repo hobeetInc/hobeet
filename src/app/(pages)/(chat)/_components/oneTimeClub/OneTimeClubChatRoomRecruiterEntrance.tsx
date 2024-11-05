@@ -1,24 +1,7 @@
-type clubId = {
-  one_time_club_id: number;
-};
-
-type oneTimeClubMember = {
-  one_time_club_id: number;
-  one_time_member_id: number;
-  user_id: string;
-  one_time_club_chatting_member: Chatting[];
-};
-
-type Chatting = {
-  admin: boolean;
-  one_time_club_id: number;
-  one_time_member_id: number;
-  one_time_club_chatting_room_member_id: number;
-  one_time_club_chatting_room_id: number;
-};
+import { EggPopChattingMember, EggPopId } from "@/types/eggpopchat.types";
 
 // 일회성 모임 입장 함수
-export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: clubId) {
+export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: EggPopId) {
   // console.log(one_time_club_id.one_time_club_id, "야야야 이재호 야야야 이재호");
 
   try {
@@ -35,7 +18,7 @@ export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: clu
       throw new Error("일회성 모임 정보를 가져오는 데 실패했습니다.");
     }
 
-    const data: oneTimeClubMember = await response.json();
+    const data: EggPopChattingMember = await response.json();
     // console.log("data!!!!", data);
 
     const postResponse = await fetch("https://www.eggfriends.site/api/oneTimeChatRoomRecruiterEntrance", {

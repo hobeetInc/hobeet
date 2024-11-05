@@ -4,18 +4,13 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getSubCategory } from "../../_api/supabase";
 import CategoryList from "../../_components/CategoryList";
-
-type Category = {
-  s_c_id: number;
-  m_c_id: number;
-  s_c_name: string;
-};
+import { SubCategory } from "@/types/category.types";
 
 const CategoryPage = () => {
   const params = useParams();
   const categoryId = Number(params.categoryId);
 
-  const [subCategories, setSubCategories] = useState<Category[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(0);
