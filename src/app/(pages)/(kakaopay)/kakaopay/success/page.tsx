@@ -99,7 +99,7 @@ const PaymentSuccesspage = () => {
           }
 
           setOneTimeClubData(Array.isArray(oneTimeClubFetchData) ? oneTimeClubFetchData[0] : oneTimeClubFetchData);
-          console.log(oneTimeClubFetchData);
+          // console.log(oneTimeClubFetchData);
         } else {
           const { data: regularClubFetchData, error: regularClubFetchError } = await supabase
             .from("r_c_notification")
@@ -235,8 +235,8 @@ const PaymentSuccesspage = () => {
           return;
         }
 
-        const approveData = await response.json();
-        console.log(approveData);
+        // const approveData = await response.json();
+        // console.log(approveData);
       } catch (err) {
         console.error("결제 정보를 불러오는 중 오류가 발생했습니다.", err);
       }
@@ -274,7 +274,7 @@ const PaymentSuccesspage = () => {
 
         const orderData = await response.json();
         setPaymentAmount(orderData.amount.total);
-        console.log(orderData);
+        // console.log(orderData);
       } catch (err) {
         console.error("결제 정보를 불러오는 중 오류가 발생했습니다.", err);
       }
@@ -304,7 +304,7 @@ const PaymentSuccesspage = () => {
     }
   };
 
-  console.log(regularClubData?.r_c_id);
+  // console.log(regularClubData?.r_c_id);
 
   const clubImageUrl =
     (queryParams.clubType === "true" ? oneTimeClubData?.one_time_image : regularClubData?.r_c_notification_image) || "";

@@ -3,7 +3,6 @@ import Image from "next/image";
 import { InSertRegularClubNotification } from "../create/_types/subCreate";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/store/AuthContext";
-import { useEffect } from "react";
 
 type CrewInfo = {
   memberId: number;
@@ -18,11 +17,11 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
   const router = useRouter();
   const { userId } = useAuth();
 
-  useEffect(() => {
-    console.log("ClubCard 렌더링 시 crewMembers:", crewMembers);
-  }, []);
+  // useEffect(() => {
+  //   console.log("ClubCard 렌더링 시 crewMembers:", crewMembers);
+  // }, []);
 
-  console.log("객체:", { notification, crewMembers });
+  // console.log("객체:", { notification, crewMembers });
 
   // 날짜와 시간 커스텀
   const DateTimeCustom = (dateTime: string) => {

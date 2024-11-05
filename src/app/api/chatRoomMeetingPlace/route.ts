@@ -7,8 +7,8 @@ export async function POST(req: Request) {
   try {
     const { chattingRoom } = await req.json();
 
-    console.log("받은 채팅방 정보:", chattingRoom);
-    console.log("받은 사용자 정보:", chattingRoom.user_id);
+    // console.log("받은 채팅방 정보:", chattingRoom);
+    // console.log("받은 사용자 정보:", chattingRoom.user_id);
 
     const { data, error } = await supabase
       .from("r_c_member")
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
     const [adminUser] = data;
     const r_c_member_id = adminUser.r_c_member_id;
-    console.log("모임장 ID:", adminUser);
+    // console.log("모임장 ID:", adminUser);
 
     const { error: insertError } = await supabase.from("r_c_n_chatting").insert({
       r_c_n_chatting_room_id: chattingRoom.r_c_n_chatting_room_id,

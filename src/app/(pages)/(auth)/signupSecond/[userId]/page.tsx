@@ -130,7 +130,7 @@ const SignupSecondPage = () => {
         setUserGender(userData.user_gender || "");
         setUserProfileImg(userData.user_profile_img || "");
       }
-      console.log(userData);
+      // console.log(userData);
     };
 
     fetchUser();

@@ -58,7 +58,7 @@ const WishClubListPage = () => {
         if (fetchError) throw fetchError;
         if (!rawData) throw new Error("데이터를 가져올 수 없습니다");
 
-        console.log("Fetched data:", rawData); // 데이터 구조 확인
+        // console.log("Fetched data:", rawData); // 데이터 구조 확인
 
         // 타입 안전성을 위해 unknown으로 먼저 변환
         const data = rawData as unknown as WishListResponse[];

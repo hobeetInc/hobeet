@@ -20,11 +20,11 @@ export const regularClubJoin = async ({ clubId, userId }: RegularClubJoinParams)
 
     // 가입 조건 검증 (나이, 성별 등)
     await clubAPI.validateJoinConditions(userId, clubId);
-    console.log("모임 승인 상태에 따라 가입 신청!!!");
+    // console.log("모임 승인 상태에 따라 가입 신청!!!");
 
     // 모임 승인 상태에 따라 가입 신청
     await clubAPI.applyForMembership(clubId, userId);
-    console.log("클럽 데이터", clubData);
+    // console.log("클럽 데이터", clubData);
     return {
       success: true,
       message: clubData.regular_club_approval

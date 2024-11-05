@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     const { orderId, requestUserId, clubType, clubId } = await req.json();
 
     let amount, itemName;
-    console.log("야야야 장성현");
+    // console.log("야야야 장성현");
 
     if (clubType === true) {
       const { data: onePayData, error: onePayError } = await supabase
@@ -55,9 +55,9 @@ export async function POST(req: Request) {
         quantity: 1,
         total_amount: amount,
         tax_free_amount: 0,
-        approval_url: `http://localhost:3000/kakaopay/isSuccess?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
-        cancel_url: "http://localhost:3000/",
-        fail_url: "http://localhost:3000/"
+        approval_url: `https://www.eggfriends.site/kakaopay/isSuccess?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
+        cancel_url: "https://www.eggfriends.site/",
+        fail_url: "https://www.eggfriends.site/"
       })
     });
 
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
       console.error(`Payment failed with status: ${response.status}`, errorData);
       throw new Error(`Payment failed with status: ${response.status}`);
     }
-    console.log("야야야 장성현!!!!! 야야야야!!");
+    // console.log("야야야 장성현!!!!! 야야야야!!");
 
     const paymentData = await response.json();
     const tid = paymentData.tid;
@@ -81,14 +81,24 @@ export async function POST(req: Request) {
       // 입장 시키는중@@@
 
       if (error) {
-        console.error("Supabase insert error:", error);
+        console.error("에그팝 결제 테이블에 정보 추가 실패:", error);
         throw new Error("one_time_club_kakaopay 테이블에 데이터를 저장하는 중 오류가 발생했습니다.");
       }
     } else if (clubType === false) {
-      const { data: rcmId, error: rcmError } = await supabase
+      const { data: rcIdData, error: rcIdError } = await supabase
+        .from("r_c_notification")
+        .select("r_c_id")
+        .eq("r_c_notification_id", clubId)
+        .single();
+
+      if (rcIdError) {
+        console.error("@@@@@@나오냐이거");
+      }
+
+      const { data: rcmIdData, error: rcmError } = await supabase
         .from("r_c_member")
         .select("r_c_member_id")
-        .eq("r_c_id", clubId)
+        .eq("r_c_id", rcIdData.r_c_id)
         .eq("user_id", requestUserId)
         .single();
 
@@ -98,8 +108,9 @@ export async function POST(req: Request) {
       }
 
       const { error } = await supabase.from("r_c_notification_kakaopay").insert({
-        r_c_member_id: rcmId,
-        r_c_id: clubId,
+        r_c_member_id: rcmIdData.r_c_member_id,
+        r_c_notification_id: clubId,
+        r_c_id: rcIdData.r_c_id,
         user_id: requestUserId,
         r_c_notification_kakaopay_cid: "TC0ONETIME",
         r_c_notification_kakaopay_tid: tid

@@ -6,13 +6,28 @@ import { useState } from "react";
 import { ko } from "date-fns/locale";
 import { OneTimeProps } from "../../_types/ClubForm";
 
+// 커스텀 스타일
+const customStyles = `
+  .react-datepicker {
+    font-size: 0.9rem;
+  }
+  .react-datepicker__header {
+    padding-top: 0.8em;
+  }
+  .react-datepicker__month {
+    margin: 0.4em 1em;
+  }
+  
+`;
+
 const DateTime = ({ formData, setFormData }: OneTimeProps) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<Date | null>(null);
 
   const handleDateChange = (date: Date | null) => {
     setStartDate(date);
-    updateDateTime(date, startTime);
+    setStartTime(null);
+    updateDateTime(date, null);
   };
 
   const handleTimeChange = (time: Date | null) => {
@@ -29,8 +44,27 @@ const DateTime = ({ formData, setFormData }: OneTimeProps) => {
     }
   };
 
+  // 선택 가능한 시간 필터링
+  const filterTime = (time: Date) => {
+    const currentDate = new Date();
+    const selectedDate = startDate || new Date();
+
+    // 선택된 날짜가 오늘인 경우에만 시간 필터링 적용
+    if (
+      selectedDate.getDate() === currentDate.getDate() &&
+      selectedDate.getMonth() === currentDate.getMonth() &&
+      selectedDate.getFullYear() === currentDate.getFullYear()
+    ) {
+      return time >= currentDate;
+    }
+
+    return true;
+  };
+
   return (
     <div className="flex flex-col gap-6">
+      <style>{customStyles}</style>
+
       <div>
         <h1 className="text-xl font-bold mb-4">언제 만날까요?</h1>
 
@@ -43,6 +77,7 @@ const DateTime = ({ formData, setFormData }: OneTimeProps) => {
             locale={ko}
             placeholderText="날짜를 선택해주세요"
             className="w-full p-4 bg-gray-50 rounded-lg pr-12"
+            wrapperClassName="w-full"
           />
         </div>
       </div>
@@ -62,15 +97,10 @@ const DateTime = ({ formData, setFormData }: OneTimeProps) => {
             locale={ko}
             placeholderText="시간을 선택해주세요"
             className="w-full p-4 bg-gray-50 rounded-lg pr-12"
+            wrapperClassName="w-full"
+            filterTime={filterTime}
+            disabled={!startDate}
           />
-          {/* <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-          <Image 
-            src="/asset/Icon/time-icon.png" 
-            alt="time"
-            width={20}
-            height={20}
-          />
-        </div> */}
         </div>
       </div>
     </div>

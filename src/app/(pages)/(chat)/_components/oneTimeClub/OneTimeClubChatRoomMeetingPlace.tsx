@@ -4,14 +4,14 @@ import { OneTimeChatRoom } from "../../types/chat";
 
 export async function OneTimeClubChatRoomMeetingPlace(OneTimeChatRoom: OneTimeChatRoom) {
   try {
-    const response = await fetch("/api/oneTimeChatRoomMeetingPlace", {
+    await fetch("/api/oneTimeChatRoomMeetingPlace", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ OneTimeChatRoom })
     });
-    console.log(response);
+    // console.log(response);
   } catch (error) {
     console.log(error);
   }

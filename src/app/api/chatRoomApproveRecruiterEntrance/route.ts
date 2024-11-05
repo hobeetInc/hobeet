@@ -3,31 +3,23 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const supabase = createClient();
-
-  // 현재 로그인한 사용자 정보 가져오기
-  const { data: userData, error: userError } = await supabase.auth.getUser();
-  if (userError || !userData?.user) {
-    console.error("사용자 정보를 가져오는 데 실패했습니다: ", userError);
-    return NextResponse.json({ error: "사용자 정보를 가져오는 데 실패했습니다." }, { status: 401 });
-  }
-
-  const userId = userData.user.id;
+  const { regularClubMember, user_id } = await req.json();
+  // console.log("user_id", user_id);
 
   try {
     const { data: memberData, error: memberError } = await supabase
       .from("r_c_member")
       .select("r_c_member_id")
-      .eq("user_id", userId)
+      .eq("user_id", user_id)
       .single();
 
     if (memberError || !memberData) {
       console.error("멤버 정보를 가져오는 데 실패했습니다: ", memberError);
       return NextResponse.json({ error: "멤버 정보를 찾을 수 없습니다." }, { status: 404 });
     }
-
+    debugger;
     const r_c_member_id = memberData.r_c_member_id;
 
-    const { regularClubMember } = await req.json();
     // console.log("채팅방 정보: ", regularClubMember);
     const chatRoomData = regularClubMember.data[0];
 

@@ -19,13 +19,13 @@ type Chatting = {
 
 // 일회성 모임 입장 함수
 export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: clubId) {
-  console.log(one_time_club_id.one_time_club_id, "야야야 이재호 야야야 이재호");
+  // console.log(one_time_club_id.one_time_club_id, "야야야 이재호 야야야 이재호");
 
   try {
-    console.log("야양야야야 죄지민 여기 왔다가냐??");
+    // console.log("야양야야야 죄지민 여기 왔다가냐??");
 
     const response = await fetch(
-      `http://localhost:3000/api/oneTimeClubChattingRoom?one_time_club_id=${one_time_club_id.one_time_club_id}`,
+      `https://www.eggfriends.site/api/oneTimeClubChattingRoom?one_time_club_id=${one_time_club_id.one_time_club_id}`,
       {
         method: "GET"
       }
@@ -36,9 +36,9 @@ export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: clu
     }
 
     const data: oneTimeClubMember = await response.json();
-    console.log("data!!!!", data);
+    // console.log("data!!!!", data);
 
-    const postResponse = await fetch("http://localhost:3000/api/oneTimeChatRoomRecruiterEntrance", {
+    const postResponse = await fetch("https://www.eggfriends.site/api/oneTimeChatRoomRecruiterEntrance", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -50,8 +50,7 @@ export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: clu
       throw new Error("채팅방 입장 처리 중 오류가 발생했습니다.");
     }
 
-    const oneTimeChatRoomRecruiterEntrance = await postResponse.json();
-    console.log(oneTimeChatRoomRecruiterEntrance);
+    await postResponse.json();
   } catch (error) {
     console.error("처리 중 오류가 발생했습니다: ", error);
   }

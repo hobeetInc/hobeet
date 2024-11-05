@@ -10,6 +10,20 @@ import { submitRegularClubNotification, submitRegularMember, uploadImage } from 
 import { useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
 
+// 커스텀 스타일
+const customStyles = `
+  .react-datepicker {
+    font-size: 0.9rem;
+  }
+  .react-datepicker__header {
+    padding-top: 0.8em;
+  }
+  .react-datepicker__month {
+    margin: 0.4em 1em;
+  }
+  
+`;
+
 // 동적 임포트(필요한 시점에 불러오기)
 const loadDaumPostcodeScript = () => {
   return new Promise((resolve) => {
@@ -87,9 +101,9 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    console.log("폼데이터 =>", formData);
-  }, [formData]);
+  // useEffect(() => {
+  //   console.log("폼데이터 =>", formData);
+  // }, [formData]);
 
   // 컴포넌트 마운트 시 또는 formData의 이미지가 변경될 때 미리보기 생성
   useEffect(() => {
@@ -156,13 +170,31 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
   // 날짜 변경 처리
   const handleDateChange = (date: Date | null) => {
     setStartDate(date);
-    updateDateTime(date, startTime);
+    setStartTime(null);
+    updateDateTime(date, null);
   };
 
   // 시간 변경 처리
   const handleTimeChange = (time: Date | null) => {
     setStartTime(time);
     updateDateTime(startDate, time);
+  };
+
+  // 선택 가능한 시간 필터링
+  const filterTime = (time: Date) => {
+    const currentDate = new Date();
+    const selectedDate = startDate || new Date();
+
+    // 선택된 날짜가 오늘인 경우에만 시간 필터링 적용
+    if (
+      selectedDate.getDate() === currentDate.getDate() &&
+      selectedDate.getMonth() === currentDate.getMonth() &&
+      selectedDate.getFullYear() === currentDate.getFullYear()
+    ) {
+      return time >= currentDate;
+    }
+
+    return true;
   };
 
   // 날짜와 시간을 합쳐서 FormData에 저장
@@ -368,6 +400,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
+      <style>{customStyles}</style>
       <div className="flex justify-between items-center h-[48px] p-4 relative">
         <button onClick={() => router.back()} className="absolute left-4 text-lg">
           ←
@@ -421,6 +454,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
               locale={ko}
               placeholderText="날짜를 선택해주세요"
               className="w-full p-4 bg-gray-50 rounded-lg pr-12"
+              wrapperClassName="w-full"
             />
           </div>
 
@@ -439,6 +473,9 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
                 locale={ko}
                 placeholderText="시간을 선택해주세요"
                 className="w-full p-4 bg-gray-50 rounded-lg pr-12"
+                wrapperClassName="w-full"
+                filterTime={filterTime}
+                disabled={!startDate}
               />
             </div>
           </div>
