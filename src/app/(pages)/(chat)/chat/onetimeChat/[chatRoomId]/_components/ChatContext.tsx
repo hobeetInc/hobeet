@@ -42,7 +42,7 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
           .from("egg_pop_chatting_room_member")
           .select("*")
           .eq("egg_pop_chatting_room_id", roomId)
-          .eq("egg_pop_member_id", chatMember.o_t_c_member_id)
+          .eq("egg_pop_member_id", chatMember.egg_pop_member_id)
           .single();
 
         if (chattingError) throw chattingError;
