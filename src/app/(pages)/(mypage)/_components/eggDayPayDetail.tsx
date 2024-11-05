@@ -54,25 +54,18 @@ const EggDayPayDetail = () => {
     <div className="egg-day-pay-list">
       {data?.map((notification, index) => (
         <div key={index} className="notification-card my-4">
-          <div>{customDateFormat(notification.r_c_id.r_c_notification_kakaopay_create_at)}</div>
+          <div>{customDateFormat(notification.egg_club_id.egg_day_kakaopay_create_at)}</div>
           <div>
             <div className="notification-image">
-              <Image
-                src={notification.r_c_id.r_c_notification_id.r_c_notification_image}
-                alt="payList"
-                width={100}
-                height={100}
-              />
+              <Image src={notification.egg_club_id.egg_day_id.egg_day_image} alt="payList" width={100} height={100} />
             </div>
             <div className="notification-content">
               <div className=" bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그데이</div>
-              <h3 className="notification-title">{notification.r_c_id.r_c_notification_id.r_c_notification_name}</h3>
+              <h3 className="notification-title">{notification.egg_club_id.egg_day_id.egg_day_name}</h3>
               <p className="notification-location">
-                {customAddress(notification.r_c_id.r_c_notification_id.r_c_notification_location)}
+                {customAddress(notification.egg_club_id.egg_day_id.egg_day_location)}
               </p>
-              <p className="notification-date">
-                {customDate(notification.r_c_id.r_c_notification_id.r_c_notification_date_time)}
-              </p>
+              <p className="notification-date">{customDate(notification.egg_club_id.egg_day_id.egg_day_date_time)}</p>
             </div>
           </div>
         </div>

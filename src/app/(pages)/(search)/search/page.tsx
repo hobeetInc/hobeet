@@ -69,15 +69,15 @@ const SearchPage = () => {
         <div className="w-full mt-4">
           {searchResults.map((club) => (
             <div
-              key={club.type === "regular" ? club.regular_club_id : club.one_time_club_id}
+              key={club.type === "eggClub" ? club.egg_club_id : club.egg_pop_id}
               className="p-4 bg-white rounded-lg mb-2 shadow-sm"
             >
-              {club.type === "regular" ? (
+              {club.type === "eggClub" ? (
                 // 정규 모임 표시
                 <div>
                   <Link
-                    key={club.regular_club_id}
-                    href={`/club/regular-club-sub/${club.regular_club_id}`}
+                    key={club.egg_club_id}
+                    href={`/club/regular-club-sub/${club.egg_club_id}`}
                     className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4"
                   >
                     <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
@@ -85,8 +85,8 @@ const SearchPage = () => {
                         <Image
                           width={88}
                           height={88}
-                          src={club.regular_club_image}
-                          alt={club.regular_club_name}
+                          src={club.egg_club_image}
+                          alt={club.egg_club_name}
                           className="w-[88px] h-[88px] object-cover"
                         />
                       </div>
@@ -97,7 +97,7 @@ const SearchPage = () => {
                           </p>
                         </div>
                         <p className="text-[14px] leading-[18.9px] font-[600] overflow-hidden text-overflow-ellipsis">
-                          {club.regular_club_name}
+                          {club.egg_club_name}
                         </p>
                         <div className="flex items-center gap-2">
                           <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
@@ -117,7 +117,7 @@ const SearchPage = () => {
                               멤버
                             </p>
                             <p className="font-pretendard text-[14px] ml-[2px] leading-[20.3px] text-[#8c8c8c] font-[500px]">
-                              {club.r_c_member[0].count} / {club.regular_club_people_limited}
+                              {club.egg_club_member[0].count} / {club.egg_club_people_limited}
                             </p>
                           </div>
                         </div>
@@ -141,8 +141,8 @@ const SearchPage = () => {
                 // 일회성 모임 표시
                 <div>
                   <Link
-                    href={`/club/one-time-club-sub/${club.one_time_club_id}`}
-                    key={club.one_time_club_id}
+                    href={`/club/one-time-club-sub/${club.egg_pop_id}`}
+                    key={club.egg_pop_id}
                     className="w-[160px] h-[311px] mr-4"
                   >
                     <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
@@ -150,8 +150,8 @@ const SearchPage = () => {
                         <Image
                           width={88}
                           height={88}
-                          src={club.one_time_image}
-                          alt={club.one_time_club_name}
+                          src={club.egg_pop_image}
+                          alt={club.egg_pop_name}
                           className="w-[88px] h-[88px] object-cover"
                         />
                       </div>
@@ -162,7 +162,7 @@ const SearchPage = () => {
                         <p className="font-pretendard text-[10px] not-italic leading-[14.5px] font-normal">에그팝</p>
                       </div>
                       <p className="text-[14px] leading-[18.9px] font-[600] overflow-hidden text-overflow-ellipsis">
-                        {club.one_time_club_name}
+                        {club.egg_pop_name}
                       </p>
                       <div className="flex items-center gap-2">
                         <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">

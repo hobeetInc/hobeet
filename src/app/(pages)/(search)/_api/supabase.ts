@@ -24,10 +24,10 @@ export const getPopularClubs = async (): Promise<PopularEggClub[]> => {
   const wishes = data as unknown as WishItem[];
 
   const grouped = wishes.reduce<Record<number, PopularEggClub>>((acc, curr) => {
-    const clubId = curr.r_c_id.regular_club_id;
+    const clubId = curr.egg_club_id.egg_club_id;
     if (!acc[clubId]) {
       acc[clubId] = {
-        ...curr.r_c_id,
+        ...curr.egg_club_id,
         count: 1
       };
     } else {
@@ -65,12 +65,12 @@ export const getSearchedClubs = async (searchTerm: string): Promise<Club[]> => {
 
   const typedRegularClubs: EggClub[] = (regularClubs || []).map((club) => ({
     ...club,
-    type: "regular" as const
+    type: "eggClub" as const
   }));
 
   const typedOneTimeClubs: EggPop[] = (oneTimeClubs || []).map((club) => ({
     ...club,
-    type: "oneTime" as const
+    type: "eggPop" as const
   }));
 
   return [...typedRegularClubs, ...typedOneTimeClubs];

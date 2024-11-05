@@ -17,9 +17,7 @@ const DayHeader = ({ clubInfo }: DayHeaderProps) => {
         <ChevronLeft />
       </button>
       <h1 className="flex-1 text-center text-lg font-semibold">
-        {clubInfo?.r_c_notification_name.length > 8
-          ? `${clubInfo?.r_c_notification_name.slice(0, 8)}...`
-          : clubInfo?.r_c_notification_name}
+        {clubInfo?.egg_day_name.length > 8 ? `${clubInfo?.egg_day_name.slice(0, 8)}...` : clubInfo?.egg_day_name}
       </h1>
     </div>
   );

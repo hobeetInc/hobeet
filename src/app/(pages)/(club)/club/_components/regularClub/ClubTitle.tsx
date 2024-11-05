@@ -7,16 +7,16 @@ const ClubTitle = ({ formData, setFormData }: EggClubProps) => {
       <input
         type="text"
         maxLength={36}
-        value={formData.regular_club_name}
+        value={formData.egg_club_name}
         onChange={(e) =>
           setFormData({
             ...formData,
-            regular_club_name: e.target.value
+            egg_club_name: e.target.value
           })
         }
         className="border-2 border-black mt-4 w-[358px] h-[48px] p-2"
       />
-      <div className="text-sm text-gray-500">{formData.regular_club_name.length} / 36</div>
+      <div className="text-sm text-gray-500">{formData.egg_club_name.length} / 36</div>
     </div>
   );
 };

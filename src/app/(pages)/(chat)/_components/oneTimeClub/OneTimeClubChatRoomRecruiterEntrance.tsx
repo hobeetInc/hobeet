@@ -1,14 +1,14 @@
 import { EggPopChattingMember, EggPopId } from "@/types/eggpopchat.types";
 
 // 일회성 모임 입장 함수
-export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: EggPopId) {
+export async function OneTimeClubChatRoomRecruiterEntrance(egg_pop_id: EggPopId) {
   // console.log(one_time_club_id.one_time_club_id, "야야야 이재호 야야야 이재호");
 
   try {
     // console.log("야양야야야 죄지민 여기 왔다가냐??");
 
     const response = await fetch(
-      `https://www.eggfriends.site/api/oneTimeClubChattingRoom?one_time_club_id=${one_time_club_id.one_time_club_id}`,
+      `https://www.eggfriends.site/api/oneTimeClubChattingRoom?one_time_club_id=${egg_pop_id.egg_pop_id}`,
       {
         method: "GET"
       }
@@ -26,7 +26,7 @@ export async function OneTimeClubChatRoomRecruiterEntrance(one_time_club_id: Egg
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ oneTimeClubMember: data })
+      body: JSON.stringify({ EggPopChattingMember: data })
     });
 
     if (!postResponse.ok) {

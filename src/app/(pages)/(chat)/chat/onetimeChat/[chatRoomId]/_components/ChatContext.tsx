@@ -33,7 +33,7 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
           .from("egg_pop_member")
           .select("egg_pop_member_id")
           .eq("user_id", userId)
-          .eq("egg_pop_id", roomData.one_time_club_id)
+          .eq("egg_pop_id", roomData.egg_pop_id)
           .single();
 
         if (chatMemberError) throw chatMemberError;
@@ -49,8 +49,8 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
 
         return {
           ...roomData,
-          one_time_club_chatting_room_member_id: chattingData.one_time_club_chatting_room_member_id,
-          one_time_member_id: chatMember.o_t_c_member_id
+          egg_pop_chatting_room_member_id: chattingData.egg_pop_chatting_room_member_id,
+          egg_pop_member_id: chatMember.egg_pop_member_id
         };
       } catch (error) {
         console.error("Error fetching chat data: ", error);
@@ -65,8 +65,8 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
       value={{
         roomName: chatData?.one_time_club_chatting_room_name || "",
         isLoading,
-        one_time_club_chatting_room_id: chatData?.one_time_club_chatting_room_id,
-        one_time_club_id: chatData?.one_time_club_id
+        egg_pop_chatting_room_id: chatData?.egg_pop_chatting_room_id,
+        egg_pop_id: chatData?.egg_pop_id
       }}
     >
       {children}

@@ -7,20 +7,14 @@ const HomeContent = ({
   clubInfo,
   hostInfo,
   crewMembers,
-  regularClubId,
+  egg_club_id,
   notificationData,
   stringCategory
 }: HomeContentProps) => {
   return (
     <>
       <div className="flex flex-col w-full">
-        <Image
-          src={clubInfo.regular_club_image}
-          alt={clubInfo.regular_club_name}
-          width={100}
-          height={100}
-          className="w-full"
-        />
+        <Image src={clubInfo.egg_club_image} alt={clubInfo.egg_club_name} width={100} height={100} className="w-full" />
       </div>
 
       <div className="flex flex-col gap-10 p-4">
@@ -28,11 +22,11 @@ const HomeContent = ({
           <p className="text-[13px]">{stringCategory}</p>
 
           <div className="flex justify-between">
-            <h1 className="font-bold text-[23px]">{clubInfo.regular_club_name}</h1>
-            <WishListHeart regularClubId={clubInfo.regular_club_id} />
+            <h1 className="font-bold text-[23px]">{clubInfo.egg_club_name}</h1>
+            <WishListHeart egg_club_id={clubInfo.egg_club_id} />
           </div>
           <p>
-            맴버 {crewMembers.length} / {clubInfo.regular_club_people_limited}
+            맴버 {crewMembers.length} / {clubInfo.egg_club_people_limited}
           </p>
 
           <p>이 모임의 호스트</p>
@@ -59,14 +53,14 @@ const HomeContent = ({
 
             <div className="flex flex-col gap-2">
               <h1 className="text-[20px] font-semibold">모임 소개</h1>
-              <p>{clubInfo.regular_club_introduction}</p>
+              <p>{clubInfo.egg_club_introduction}</p>
             </div>
           </div>
         </div>
 
         <CrewList
           crewMembers={crewMembers}
-          clubId={regularClubId}
+          clubId={egg_club_id}
           clubHostId={clubInfo.user_id}
           notificationData={notificationData}
         />

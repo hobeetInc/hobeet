@@ -1,5 +1,9 @@
 //에그팝 세로 리스트 컴포넌트
-export const EggPopVerticalContentsList = () => {
+export const EggPopVerticalContentsList = (
+  {
+    /*eggPop*/
+  }
+) => {
   return (
     <div className="h-[311px] flex-col justify-start items-start gap-2 inline-flex">
       <div className="w-40 h-40 relative bg-[#d9d9d9] rounded-xl"></div>

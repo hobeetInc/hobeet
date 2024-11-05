@@ -13,7 +13,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "사용자 정보를 가져오는 데 실패했습니다." }, { status: 401 });
     }
     const body = await req.json();
-    const oneTimeClubMember = body.oneTimeClubMember;
+    const eggPopChattingMember = body.EggPopChattingMember;
     // console.log("oneTimeClubMember", oneTimeClubMember.data[0].one_time_club_id);
 
     const userId = userData.user.id;
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       .from("egg_pop_member")
       .select("egg_pop_member_id")
       .eq("user_id", userId)
-      .eq("egg_pop_id", oneTimeClubMember.data[0].one_time_club_id)
+      .eq("egg_pop_id", eggPopChattingMember.data[0].egg_pop_id)
       .single();
     // console.log("memberData", memberData);
 
@@ -32,8 +32,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "멤버 정보를 찾을 수 없습니다." }, { status: 404 });
     }
 
-    const o_t_c_member_id = memberData.o_t_c_member_id;
-    console.log("egg_pop_member_id", o_t_c_member_id);
+    const egg_pop_member_id = memberData.egg_pop_member_id;
+    // console.log("egg_pop_member_id", o_t_c_member_id);
 
     // const { regularClubMember } = await req.json();
     // console.log("채팅방 정보: ", regularClubMember);
@@ -41,9 +41,9 @@ export async function POST(req: Request) {
     // console.log("chatRoomData", chatRoomData);
 
     const { error: insertError } = await supabase.from("egg_pop_chatting_room_member").insert({
-      one_time_club_chatting_room_id: oneTimeClubMember.data[0].one_time_club_chatting_room_id,
-      one_time_member_id: o_t_c_member_id,
-      one_time_club_id: oneTimeClubMember.data[0].one_time_club_id,
+      egg_pop_chatting_room_id: eggPopChattingMember.data[0].egg_pop_chatting_room_id,
+      egg_pop_member_id: egg_pop_member_id,
+      egg_pop_id: eggPopChattingMember.data[0].egg_pop_id,
       admin: false
     });
 

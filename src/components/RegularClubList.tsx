@@ -50,15 +50,15 @@ const RegularClubList = () => {
         <div className="inline-flex items-center px-4 pt-4">
           {list?.map((club) => (
             <Link
-              href={`/club/regular-club-sub/${club.regular_club_id}`}
-              key={club.regular_club_id}
+              href={`/club/regular-club-sub/${club.egg_club_id}`}
+              key={club.egg_club_id}
               className="w-[160px] h-[292px] mr-4"
             >
               <div className="relative w-[160px] h-[160px]">
                 <div
                   className="w-full h-full rounded-xl"
                   style={{
-                    background: `url(${club.regular_club_image}) lightgray 50% / cover no-repeat`
+                    background: `url(${club.egg_club_image}) lightgray 50% / cover no-repeat`
                   }}
                 />
                 <div className="absolute bottom-1 right-1">{renderHeartIcon(club)}</div>
@@ -84,7 +84,7 @@ const RegularClubList = () => {
                       lineHeight: "135%"
                     }}
                   >
-                    {club.regular_club_name}
+                    {club.egg_club_name}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 self-stretch">
@@ -105,7 +105,7 @@ const RegularClubList = () => {
                       멤버
                     </p>
                     <p className="font-pretendard text-[14px] ml-[2px] leading-[20.3px] text-[#8c8c8c] font-[500px]">
-                      {club.r_c_member[0].count} / {club.regular_club_people_limited}
+                      {club.egg_club_member[0].count} / {club.egg_club_people_limited}
                     </p>
                   </div>
                 </div>

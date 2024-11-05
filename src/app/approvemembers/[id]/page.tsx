@@ -108,7 +108,7 @@ export default function ApproveMembersPage() {
   const approveMember = async (requestId: number) => {
     const { data, error } = await supabase
       .from("egg_club_participation_request")
-      .update({ r_c_participation_request_status: "active" })
+      .update({ egg_club_request_status: "active" })
       .eq("egg_club_participation_request_id", requestId)
       .select("*")
       .single();
@@ -116,14 +116,14 @@ export default function ApproveMembersPage() {
       setRequests((prev) => prev.filter((req) => req.r_c_participation_request_id !== requestId));
       const { error } = await supabase.from("egg_club_member").insert({
         user_id: data.user_id,
-        r_c_id: data.r_c_id,
-        r_c_participation_request_id: data.r_c_participation_request_id,
-        regular_club_request_status: "active"
+        egg_club_id: data.egg_club_id,
+        egg_club_participation_request_id: data.egg_club_participation_request_id,
+        egg_club_request_status: "active"
       });
       const user_id = data.user_id as string;
       // console.log("나는 나는 나는 ", user_id);
 
-      await RegularClubApproveChatRoomRecruiterEntrance({ r_c_id: clubId, user_id: user_id }); // 모임원 채팅방 입장(가입 승인 시)
+      await RegularClubApproveChatRoomRecruiterEntrance({ egg_club_id: clubId, user_id: user_id }); // 모임원 채팅방 입장(가입 승인 시)
 
       if (!error) {
         alert("가입이 승인되었습니다.");

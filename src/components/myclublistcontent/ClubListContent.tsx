@@ -79,10 +79,10 @@ export default function ClubListContent() {
         ) : (
           <>
             {oneTimeClubs.map((club) => (
-              <OneTimeClubCard key={club.one_time_club_id} club={club} />
+              <OneTimeClubCard key={club.egg_pop_id} club={club} />
             ))}
             {regularClubs.map((club) => (
-              <RegularClubCard key={club.regular_club_id} club={club} />
+              <RegularClubCard key={club.egg_club_id} club={club} />
             ))}
           </>
         )}

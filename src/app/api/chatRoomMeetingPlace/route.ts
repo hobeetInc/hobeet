@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     }
 
     const [adminUser] = data;
-    const r_c_member_id = adminUser.r_c_member_id;
+    const r_c_member_id = adminUser.egg_club_member_id;
     // console.log("모임장 ID:", adminUser);
 
     const { error: insertError } = await supabase.from("egg_day_chatting").insert({

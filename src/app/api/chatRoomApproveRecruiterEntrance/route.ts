@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "멤버 정보를 찾을 수 없습니다." }, { status: 404 });
     }
     debugger;
-    const r_c_member_id = memberData.r_c_member_id;
+    const r_c_member_id = memberData.egg_club_member_id;
 
     // console.log("채팅방 정보: ", regularClubMember);
     const chatRoomData = regularClubMember.data[0];

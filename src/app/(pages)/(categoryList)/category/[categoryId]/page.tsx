@@ -59,13 +59,13 @@ const CategoryPage = () => {
         </button>
         {subCategories.map((subCategory) => (
           <button
-            key={subCategory.s_c_id}
-            onClick={() => setSelectedCategory(subCategory.s_c_id)}
+            key={subCategory.sub_category_id}
+            onClick={() => setSelectedCategory(subCategory.sub_category_id)}
             className={`flex-shrink-0 py-2 px-3 rounded-lg transition-colors ${
-              selectedCategory === subCategory.s_c_id ? "bg-[#FDB800] text-white" : "bg-[#F2F2F2] "
+              selectedCategory === subCategory.sub_category_id ? "bg-[#FDB800] text-white" : "bg-[#F2F2F2] "
             }`}
           >
-            {subCategory.s_c_name}
+            {subCategory.sub_category_name}
           </button>
         ))}
       </div>

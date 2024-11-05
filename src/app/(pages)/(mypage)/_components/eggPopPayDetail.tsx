@@ -59,17 +59,17 @@ const EggPopPayDetail = () => {
     <div className="egg-day-pay-list">
       {data?.map((oneTimeClub, index) => (
         <div key={index} className="oneTimeClub-card my-4">
-          <div>{customDateFormat(oneTimeClub.o_t_c_id.one_time_club_date_time)}</div>
+          <div>{customDateFormat(oneTimeClub.egg_pop_id.egg_pop_date_time)}</div>
 
           <div>
             <div className="oneTimeClub-image">
-              <Image src={oneTimeClub.o_t_c_id.one_time_image} alt="payList" width={100} height={100} />
+              <Image src={oneTimeClub.egg_pop_id.egg_pop_image} alt="payList" width={100} height={100} />
             </div>
             <div className="oneTimeClub-content">
               <div className=" bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그팝</div>
-              <h3 className="oneTimeClub-title">{oneTimeClub.o_t_c_id.one_time_club_name}</h3>
-              <p className="oneTimeClub-location">{customAddress(oneTimeClub.o_t_c_id.one_time_club_location)}</p>
-              <p className="oneTimeClub-date">{customDate(oneTimeClub.o_t_c_id.one_time_club_date_time)}</p>
+              <h3 className="oneTimeClub-title">{oneTimeClub.egg_pop_id.egg_pop_name}</h3>
+              <p className="oneTimeClub-location">{customAddress(oneTimeClub.egg_pop_id.egg_pop_location)}</p>
+              <p className="oneTimeClub-date">{customDate(oneTimeClub.egg_pop_id.egg_pop_date_time)}</p>
             </div>
           </div>
         </div>

@@ -27,11 +27,11 @@ const MemberType = ({
     setSelectedGender(gender);
 
     if (gender === "누구나") {
-      setFormData({ ...formData, one_time_gender: null });
+      setFormData({ ...formData, egg_pop_gender: null });
     } else if (gender === "여자만") {
-      setFormData({ ...formData, one_time_gender: "여성" });
+      setFormData({ ...formData, egg_pop_gender: "여성" });
     } else if (gender === "남자만") {
-      setFormData({ ...formData, one_time_gender: "남성" });
+      setFormData({ ...formData, egg_pop_gender: "남성" });
     }
   };
 
@@ -41,17 +41,17 @@ const MemberType = ({
     setSelectedAge(age);
 
     if (age === "누구나") {
-      setFormData({ ...formData, one_time_age: 100 });
+      setFormData({ ...formData, egg_pop_age: 100 });
     } else if (age === "10대") {
-      setFormData({ ...formData, one_time_age: 19 });
+      setFormData({ ...formData, egg_pop_age: 19 });
     } else if (age === "20대") {
-      setFormData({ ...formData, one_time_age: 29 });
+      setFormData({ ...formData, egg_pop_age: 29 });
     } else if (age === "30대") {
-      setFormData({ ...formData, one_time_age: 39 });
+      setFormData({ ...formData, egg_pop_age: 39 });
     } else if (age === "40대") {
-      setFormData({ ...formData, one_time_age: 49 });
+      setFormData({ ...formData, egg_pop_age: 49 });
     } else if (age === "50대 이상") {
-      setFormData({ ...formData, one_time_age: 50 });
+      setFormData({ ...formData, egg_pop_age: 50 });
     }
   };
 
@@ -62,7 +62,7 @@ const MemberType = ({
     // formData 업데이트
     setFormData({
       ...formData,
-      one_time_people_limited: value === "" ? 100 : parseInt(value)
+      egg_pop_people_limited: value === "" ? 100 : parseInt(value)
     });
   };
 

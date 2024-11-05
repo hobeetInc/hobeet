@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     const { data, error } = await supabase
       .from("egg_pop_member")
       .select("egg_pop_member_id")
-      .eq("egg_pop_id", OneTimeChatRoom.one_time_club_id)
+      .eq("egg_pop_id", OneTimeChatRoom.egg_pop_id)
       .eq("user_id", OneTimeChatRoom.user_id);
     if (error) {
       console.error("데이터베이스 조회 오류:", error);
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     }
 
     const [adminUser] = data;
-    const one_time_club_member_id = adminUser.o_t_c_member_id;
+    const one_time_club_member_id = adminUser.egg_pop_member_id;
     // console.log("모임장 ID:", adminUser);
 
     const { error: insertError } = await supabase.from("egg_pop_chatting_room_member").insert({

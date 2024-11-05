@@ -60,30 +60,28 @@ const OneTimeClubChattingRoomPage = () => {
         }
 
         const rooms: EggPopChattingRoom[] = chatData.data.flatMap((member) =>
-          member.one_time_club_chatting_room_member
+          member.egg_pop_chatting_room_member
             .filter((chatting) => chatting.active)
             .map((chatting) => {
               const lastMessageInfo =
-                chatting.one_time_club_chatting_room_message.length > 0
+                chatting.egg_pop_chatting_room_message.length > 0
                   ? formatDateTime(
-                      chatting.one_time_club_chatting_room_message[
-                        chatting.one_time_club_chatting_room_message.length - 1
-                      ].created_at
+                      chatting.egg_pop_chatting_room_message[chatting.egg_pop_chatting_room_message.length - 1]
+                        .created_at
                     )
                   : { date: "", time: "" };
 
               return {
                 user_id: member.user_id,
-                one_time_club_id: member.one_time_club_id,
-                one_time_club_chatting_room_id: chatting.one_time_club_chatting_room.one_time_club_chatting_room_id,
-                one_time_club_chatting_room_name: chatting.one_time_club_chatting_room.one_time_club_chatting_room_name,
-                one_time_image: member.one_time_club.one_time_image,
-                one_time_club_name: member.one_time_club.one_time_club_name,
+                egg_pop_id: member.egg_pop_id,
+                egg_pop_chatting_room_id: chatting.egg_pop_chatting_room.egg_pop_chatting_room_id,
+                egg_pop_chatting_room_name: chatting.egg_pop_chatting_room.egg_pop_chatting_room_name,
+                egg_pop_image: member.egg_pop.egg_pop_image,
+                egg_pop_name: member.egg_pop.egg_pop_name,
                 last_message:
-                  chatting.one_time_club_chatting_room_message.length > 0
-                    ? chatting.one_time_club_chatting_room_message[
-                        chatting.one_time_club_chatting_room_message.length - 1
-                      ].one_time_club_chatting_room_message_content
+                  chatting.egg_pop_chatting_room_message.length > 0
+                    ? chatting.egg_pop_chatting_room_message[chatting.egg_pop_chatting_room_message.length - 1]
+                        .egg_pop_chatting_room_message_content
                     : "새 메시지가 없습니다.",
                 last_message_time: lastMessageInfo.date,
                 last_message_time_value: lastMessageInfo.time,
@@ -118,10 +116,10 @@ const OneTimeClubChattingRoomPage = () => {
 
           setChatRooms((prevRooms) => {
             return prevRooms.map((room) => {
-              if (room.one_time_club_chatting_room_id === newMessage.one_time_club_chatting_room_id) {
+              if (room.egg_pop_chatting_room_id === newMessage.egg_pop_chatting_room_id) {
                 return {
                   ...room,
-                  last_message: newMessage.one_time_club_chatting_room_message_content,
+                  last_message: newMessage.egg_pop_chatting_room_message_content,
                   last_message_time: messageTime.date,
                   last_message_time_value: messageTime.time
                 };
@@ -160,17 +158,17 @@ const OneTimeClubChattingRoomPage = () => {
           {chatRooms.length > 0 ? (
             chatRooms.map((room: EggPopChattingRoom) => (
               <div
-                key={room.one_time_club_chatting_room_id}
+                key={room.egg_pop_chatting_room_id}
                 className="p-4 border-b flex content-between items-center w-[390px]"
               >
                 <Link
-                  href={`/chat/onetimeChat/${room.one_time_club_chatting_room_id}`}
+                  href={`/chat/onetimeChat/${room.egg_pop_chatting_room_id}`}
                   className="flex items-center p-4 border-b w-full"
                 >
                   <div className="w-[63px] h-[63px] rounded-full overflow-hidden border border-solid">
                     <Image
-                      src={room.one_time_image || ""}
-                      alt={room.one_time_club_name || "기본 이미지"}
+                      src={room.egg_pop_image || ""}
+                      alt={room.egg_pop_name || "기본 이미지"}
                       width={63}
                       height={63}
                       className="w-full h-full object-cover"
@@ -178,7 +176,7 @@ const OneTimeClubChattingRoomPage = () => {
                   </div>
 
                   <div className="flex flex-col ml-4">
-                    <div className="text-[16px] font-medium mb-3">{room.one_time_club_chatting_room_name}</div>
+                    <div className="text-[16px] font-medium mb-3">{room.egg_pop_chatting_room_name}</div>
                     <div className="text-[12px] text-[#808080]">{room.last_message}</div>
                   </div>
                   <div className="flex flex-col text-[12px] text-[#808080] ml-auto">

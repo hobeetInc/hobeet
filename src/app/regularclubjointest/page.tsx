@@ -32,13 +32,9 @@ export default function RegularClubJoinTest() {
     <div className="p-4">
       <div className="mb-4">정기 모임 테스트 페이지입니다.</div>
       {clubs.map((club) => (
-        <div key={club.regular_club_id} className="mb-4">
-          <h3 className="text-lg">{club.regular_club_name}</h3>
-          <RegularClubJoinButton
-            clubId={club.regular_club_id}
-            onSuccess={() => {}}
-            onError={(message) => alert(message)}
-          />
+        <div key={club.egg_club_id} className="mb-4">
+          <h3 className="text-lg">{club.egg_club_name}</h3>
+          <RegularClubJoinButton clubId={club.egg_club_id} onSuccess={() => {}} onError={(message) => alert(message)} />
         </div>
       ))}
       <button onClick={handleLogin}>로그인</button>

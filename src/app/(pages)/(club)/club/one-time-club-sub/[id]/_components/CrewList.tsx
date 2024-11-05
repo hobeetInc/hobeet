@@ -81,7 +81,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         .single();
 
       if (chatRoom) {
-        router.push(`/chat/onetimeChat/${chatRoom.one_time_club_chatting_room_id}`);
+        router.push(`/chat/onetimeChat/${chatRoom.egg_pop_chatting_room_id}`);
       }
     } catch (error) {
       console.error("채팅방 이동 중 오류:", error);

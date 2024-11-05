@@ -17,9 +17,7 @@ const PopHeader = ({ clubInfo }: PopHeaderProps) => {
         <ChevronLeft />
       </button>
       <h1 className="flex-1 text-center text-lg font-semibold">
-        {clubInfo.one_time_club_name.length > 8
-          ? `${clubInfo.one_time_club_name.slice(0, 8)}...`
-          : clubInfo.one_time_club_name}
+        {clubInfo.egg_pop_name.length > 8 ? `${clubInfo.egg_pop_name.slice(0, 8)}...` : clubInfo.egg_pop_name}
       </h1>
     </div>
   );

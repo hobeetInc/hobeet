@@ -17,16 +17,16 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   ])) as [Member[], InSertEggDay[], SubCategory[]];
 
   // 클럽 정보만 추출
-  const clubInfo: getEggClub = memberData[0]?.regular_club;
+  const clubInfo: getEggClub = memberData[0]?.egg_club;
   // console.log("클럽인포:", clubInfo);
 
   // 일치하는 카테고리 찾기
-  const matchCategory = subCategories.find((category) => category.s_c_id === clubInfo.s_c_id);
-  const stringCategory = matchCategory?.s_c_name;
+  const matchCategory = subCategories.find((category) => category.sub_category_id === clubInfo.sub_category_id);
+  const stringCategory = matchCategory?.sub_category_name;
 
   // 참여 크루 정보 추출
   const crewMembers: MemberInfo[] = memberData.map((member) => ({
-    memberId: member.r_c_member_id,
+    memberId: member.egg_club_member_id,
     userId: member.user_id,
     userName: member.user.user_name,
     userImage: member.user.user_profile_img
@@ -46,7 +46,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
           clubInfo={clubInfo}
           hostInfo={hostInfo}
           crewMembers={crewMembers}
-          regularClubId={regularClubId}
+          egg_club_id={regularClubId}
           notificationData={notificationData}
           stringCategory={stringCategory}
         />

@@ -14,7 +14,7 @@ const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   };
 
   const handleCreate = () => {
-    router.push(`/club/regular-club-sub/${clubInfo.regular_club_id}/create`);
+    router.push(`/club/regular-club-sub/${clubInfo.egg_club_id}/create`);
   };
 
   return (
@@ -23,9 +23,7 @@ const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
         <ChevronLeft />
       </button>
       <h1 className="flex-1 text-center text-lg font-semibold">
-        {clubInfo.regular_club_name.length > 8
-          ? `${clubInfo.regular_club_name.slice(0, 8)}...`
-          : clubInfo.regular_club_name}
+        {clubInfo.egg_club_name.length > 8 ? `${clubInfo.egg_club_name.slice(0, 8)}...` : clubInfo.egg_club_name}
       </h1>
       {clubInfo.user_id === userId ? <button onClick={handleCreate}>+</button> : null}
     </div>

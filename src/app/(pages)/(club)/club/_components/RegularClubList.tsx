@@ -40,12 +40,12 @@ const RegularClubList = () => {
       <Slider {...settings}>
         {list?.map((club) => (
           <Link
-            href={`/club/regular-club-sub/${club.regular_club_id}`}
-            key={club.regular_club_name}
+            href={`/club/regular-club-sub/${club.egg_club_id}`}
+            key={club.egg_club_name}
             className="w-[380px] h-[240px]"
           >
             <div className="relative">
-              {typeof club.regular_club_image === "string" && (
+              {typeof club.egg_club_image === "string" && (
                 <div
                   className="relative flex justify-end items-center"
                   style={{
@@ -53,14 +53,14 @@ const RegularClubList = () => {
                     height: "160px",
                     padding: "112px 0px 0px 112px",
                     borderRadius: "12px",
-                    background: `url(${club.regular_club_image}) lightgray 50% / cover no-repeat`,
+                    background: `url(${club.egg_club_image}) lightgray 50% / cover no-repeat`,
                     display: "flex",
                     alignItems: "center"
                   }}
                 ></div>
               )}
               <div className="mt-4 flex flex-col justify-center items-center">
-                <h1 className="font-bold text-[13px]">{club.regular_club_name}</h1>
+                <h1 className="font-bold text-[13px]">{club.egg_club_name}</h1>
                 {/* <div className="mt-2">
                 <p className="text-[11px]">{customAddress(club.regular)}</p>
                 <p className="text-[11px]">{customDate(club.one_time_club_date_time)}</p>

@@ -112,37 +112,37 @@ const OneTimeContent = () => {
 
   // 다음단계 버튼 (유효성 검사 함수)
   const handleNext = () => {
-    if (step === 1 && formData.s_c_id === 0) {
+    if (step === 1 && formData.sub_category_id === 0) {
       alert("카테고리를 선택해주세요");
       return;
     }
 
     if (step === 2) {
-      if (!formData.one_time_club_name.trim()) {
+      if (!formData.egg_pop_name.trim()) {
         alert("모임 제목을 입력해주세요");
         return;
       }
     }
 
     if (step === 3) {
-      if (!formData.one_time_image) {
+      if (!formData.egg_pop_image) {
         alert("이미지를 선택해주세요");
         return;
       }
-      if (!formData.one_time_club_introduction.trim()) {
+      if (!formData.egg_pop_introduction.trim()) {
         alert("모임 소개글을 입력해주세요");
         return;
       }
     }
     if (step === 4) {
-      if (!formData.one_time_club_date_time) {
+      if (!formData.egg_pop_date_time) {
         alert("날짜와 시간을 선택해주세요");
         return;
       }
     }
 
     if (step === 5) {
-      if (!formData.one_time_club_location) {
+      if (!formData.egg_pop_location) {
         alert("모임 장소를 정해주세요");
         return;
       }
@@ -159,27 +159,27 @@ const OneTimeContent = () => {
         return;
       }
 
-      if (formData.one_time_people_limited !== null && formData.one_time_people_limited >= 101) {
+      if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited >= 101) {
         alert("인원제한은 100명 이하로 해주세요");
         return;
       }
 
-      if (formData.one_time_people_limited !== null && formData.one_time_people_limited === 0) {
+      if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited === 0) {
         alert("0명 이상 적어주세요");
         return;
       }
 
-      if (formData.one_time_people_limited === null) {
+      if (formData.egg_pop_people_limited === null) {
         setFormData({
           ...formData,
-          one_time_people_limited: 100
+          egg_pop_people_limited: 100
         });
         return alert("정말로 인원제한을 주지 않겠습니까?");
       }
     }
 
     if (step === 7) {
-      if (formData.one_time_tax === null) {
+      if (formData.egg_pop_tax === null) {
         alert("금액을 입력해주세요");
         return;
       }
@@ -209,11 +209,11 @@ const OneTimeContent = () => {
       let finalFormData = { ...formData };
 
       // File 객체인 경우에만 업로드 처리
-      if (formData.one_time_image instanceof File) {
-        const imageUrl = await uploadImage(formData.one_time_image);
+      if (formData.egg_pop_image instanceof File) {
+        const imageUrl = await uploadImage(formData.egg_pop_image);
         finalFormData = {
           ...finalFormData,
-          one_time_image: imageUrl
+          egg_pop_image: imageUrl
         };
       }
 
@@ -221,7 +221,7 @@ const OneTimeContent = () => {
       const data = await submitOneTimeClubData(finalFormData);
 
       const member = {
-        o_t_c_id: data.one_time_club_id,
+        egg_pop_id: data.egg_pop_id,
         user_id: data.user_id
       };
       // console.log("맴버", member);

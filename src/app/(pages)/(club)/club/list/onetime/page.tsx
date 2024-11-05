@@ -46,9 +46,9 @@ const AllOneTimeClubListPage = () => {
         <p className="text-[14px] font-[500px] leading-[145%]">총 {allOneTimeClubList?.length}개</p>
       </div>
       {allOneTimeClubList.map((club: StringEggPopForm) => (
-        <div key={club.one_time_club_id} className="flex items-start gap-2 self-stretch mb-4">
+        <div key={club.egg_pop_id} className="flex items-start gap-2 self-stretch mb-4">
           <Link
-            href={`/club/one-time-club-sub/${club.one_time_club_id}`}
+            href={`/club/one-time-club-sub/${club.egg_pop_id}`}
             className="w-[358px] h-[102px] flex items-center gap-[8px] mx-4"
           >
             <div className="w-[358px] h-[102px] flex items-center gap-[8px] mx-4">
@@ -56,8 +56,8 @@ const AllOneTimeClubListPage = () => {
                 <Image
                   width={102}
                   height={102}
-                  src={club.one_time_image}
-                  alt={club.one_time_club_name}
+                  src={club.egg_pop_image}
+                  alt={club.egg_pop_name}
                   className="w-[102px] h-[102px] object-cover"
                 />
               </div>
@@ -82,18 +82,14 @@ const AllOneTimeClubListPage = () => {
                       } as React.CSSProperties
                     }
                   >
-                    {club.one_time_club_name}
+                    {club.egg_pop_name}
                   </p>
                 </div>
                 <div className="flex pt-[2px] items-center gap-[2px]">
                   <Image src="/asset/Icon/Icon-Location.png" alt="LocationIcon" width={16} height={16} />
-                  <p className="text-[12px] font-[400px] leading-[145%]">
-                    {CustomAddress(club.one_time_club_location)}
-                  </p>
+                  <p className="text-[12px] font-[400px] leading-[145%]">{CustomAddress(club.egg_pop_location)}</p>
                   <div className="flex items-center gap-2 w-[125px] h-[20px]">
-                    <p className="text-[12px] font-[400px] leading-[145%]">
-                      {CustomDate(club.one_time_club_date_time)}
-                    </p>
+                    <p className="text-[12px] font-[400px] leading-[145%]">{CustomDate(club.egg_pop_date_time)}</p>
                   </div>
                 </div>
 
@@ -102,7 +98,7 @@ const AllOneTimeClubListPage = () => {
                     멤버
                   </p>
                   <p className="font-pretendard leading-[20.3px] text-[14px] ml-[2px] text-[#8c8c8c] font-[500px]">
-                    {club.o_t_c_member[0].count} / {club.one_time_people_limited}
+                    {club.egg_pop_member[0].count} / {club.egg_pop_people_limited}
                   </p>
                 </div>
               </div>

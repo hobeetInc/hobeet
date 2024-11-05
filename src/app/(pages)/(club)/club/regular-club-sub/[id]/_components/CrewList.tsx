@@ -92,7 +92,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
       // console.log("정기적모임 아이디", chatRoom);
 
       if (chatRoom) {
-        router.push(`/chat/regularChat/${chatRoom.r_c_n_chatting_room_id}`);
+        router.push(`/chat/regularChat/${chatRoom.egg_day_chatting_room_id}`);
       }
     } catch (error) {
       console.error("채팅방 이동 중 오류:", error);

@@ -69,14 +69,14 @@ const PaymentConfirmPage = () => {
           }
 
           const formattedData: EggClubData = {
-            r_c_notification_name: regularClubFetchData.r_c_notification_name,
-            r_c_notification_location: regularClubFetchData.r_c_notification_location,
-            r_c_notification_date_time: regularClubFetchData.r_c_notification_date_time,
-            r_c_notification_image: regularClubFetchData.r_c_notification_image,
-            r_c_notification_tax: regularClubFetchData.r_c_notification_tax,
-            r_c_id: Array.isArray(regularClubFetchData.r_c_id)
-              ? { m_c_id: regularClubFetchData.r_c_id[0].m_c_id }
-              : regularClubFetchData.r_c_id
+            egg_day_name: regularClubFetchData.egg_day_name,
+            egg_day_location: regularClubFetchData.egg_day_location,
+            egg_day_date_time: regularClubFetchData.egg_day_date_time,
+            egg_day_image: regularClubFetchData.egg_day_image,
+            egg_day_tax: regularClubFetchData.egg_day_tax,
+            egg_club_id: Array.isArray(regularClubFetchData.egg_club_id)
+              ? { main_category_id: regularClubFetchData.egg_club_id[0].main_category_id }
+              : regularClubFetchData.egg_club_id
           };
 
           setRegularClubData(formattedData);
@@ -110,8 +110,7 @@ const PaymentConfirmPage = () => {
     }
   };
 
-  const clubImageUrl =
-    (clubType === "true" ? oneTimeClubData?.one_time_image : regularClubData?.r_c_notification_image) || "";
+  const clubImageUrl = (clubType === "true" ? oneTimeClubData?.egg_pop_image : regularClubData?.egg_day_image) || "";
 
   return (
     <div className="p-5 max-w-md mx-auto">
@@ -123,30 +122,30 @@ const PaymentConfirmPage = () => {
         <div>
           <span className="text-xs bg-gray-200 py-1 px-2 rounded-full">
             {clubType === "true"
-              ? oneTimeClubData?.m_category?.m_c_name
-              : Array.isArray(regularClubData?.r_c_id.m_c_id)
-              ? regularClubData?.r_c_id.m_c_id[0]?.m_c_name
-              : regularClubData?.r_c_id.m_c_id?.m_c_name}
+              ? oneTimeClubData?.main_category?.main_category_name
+              : Array.isArray(regularClubData?.egg_club_id.main_category_id)
+              ? regularClubData?.egg_club_id.main_category_id[0]?.main_category_name
+              : regularClubData?.egg_club_id.main_category_id?.main_category_name}
           </span>
           <div className="text-lg font-semibold">
-            {clubType === "true" ? oneTimeClubData?.one_time_club_name : regularClubData?.r_c_notification_name}
+            {clubType === "true" ? oneTimeClubData?.egg_pop_name : regularClubData?.egg_day_name}
           </div>
           <div className="text-sm text-gray-600">
             {clubType === "true"
-              ? customAddress(oneTimeClubData?.one_time_club_location || "")
-              : customAddress(regularClubData?.r_c_notification_location || "")}
+              ? customAddress(oneTimeClubData?.egg_pop_location || "")
+              : customAddress(regularClubData?.egg_day_location || "")}
           </div>
           <div className="text-sm text-gray-600">
             {clubType === "true"
-              ? customDate(oneTimeClubData?.one_time_club_date_time)
-              : customDate(regularClubData?.r_c_notification_date_time)}
+              ? customDate(oneTimeClubData?.egg_pop_date_time)
+              : customDate(regularClubData?.egg_day_date_time)}
           </div>
         </div>
       </div>
       <div className="border-t border-b py-4 mb-4">
         <div className="flex justify-between text-lg font-semibold">
           <span>결제 금액</span>
-          <span>{clubType === "true" ? oneTimeClubData?.one_time_tax : regularClubData?.r_c_notification_tax}원</span>
+          <span>{clubType === "true" ? oneTimeClubData?.egg_pop_tax : regularClubData?.egg_day_tax}원</span>
         </div>
       </div>
       <div className="mb-4">

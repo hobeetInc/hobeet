@@ -17,8 +17,8 @@ const OverallPopularMeetings = () => {
     <div className="flex w-[390px] px-4 flex-col items-start gap-4">
       {data?.map((club, index) => (
         <Link
-          key={club.regular_club_id}
-          href={`/club/regular-club-sub/${club.regular_club_id}`}
+          key={club.egg_club_id}
+          href={`/club/regular-club-sub/${club.egg_club_id}`}
           className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4"
         >
           <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
@@ -29,8 +29,8 @@ const OverallPopularMeetings = () => {
               <Image
                 width={88}
                 height={88}
-                src={club.regular_club_image}
-                alt={club.regular_club_name}
+                src={club.egg_club_image}
+                alt={club.egg_club_name}
                 className="w-[88px] h-[88px] object-cover"
               />
             </div>
@@ -41,7 +41,7 @@ const OverallPopularMeetings = () => {
                 </p>
               </div>
               <p className="text-[14px] leading-[18.9px] font-[600] overflow-hidden text-overflow-ellipsis">
-                {club.regular_club_name}
+                {club.egg_club_name}
               </p>
               <div className="flex items-center gap-2">
                 <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
@@ -61,7 +61,7 @@ const OverallPopularMeetings = () => {
                     멤버
                   </p>
                   <p className="font-pretendard text-[14px] ml-[2px] leading-[20.3px] text-[#8c8c8c] font-[500px]">
-                    {club.r_c_member[0].count} / {club.regular_club_people_limited}
+                    {club.egg_club_member[0].count} / {club.egg_club_people_limited}
                   </p>
                 </div>
               </div>

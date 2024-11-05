@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     const enrichedData: Member[] = await Promise.all(
       (memberData as Member[]).map(async (member) => {
         const chattingWithMessages: Chatting[] = await Promise.all(
-          member.r_c_n_chatting.map(async (chatting) => {
+          member.egg_day_chatting.map(async (chatting) => {
             const { data: messages, error: messageError } = await supabase
               .from("egg_day_chatting_message")
               .select(
@@ -38,27 +38,27 @@ export async function POST(req: Request) {
                 egg_day_chatting_message_create_at
                 `
               )
-              .eq("egg_day_chatting_room_id", chatting.r_c_n_chatting_room_id)
+              .eq("egg_day_chatting_room_id", chatting.egg_day_chatting_id)
               .order("egg_day_chatting_message_create_at", { ascending: true });
 
             if (messageError) {
               console.error("메시지 조회 오류:", messageError);
               return {
                 ...chatting,
-                r_c_n_chatting_message: []
+                egg_day_chatting_message: []
               };
             }
 
             return {
               ...chatting,
-              r_c_n_chatting_message: (messages as EggClubChatMessage[]) || []
+              egg_day_chatting_message: (messages as EggClubChatMessage[]) || []
             };
           })
         );
 
         return {
           ...member,
-          r_c_n_chatting: chattingWithMessages
+          egg_day_chatting: chattingWithMessages
         };
       })
     );

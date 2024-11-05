@@ -32,9 +32,9 @@ export default function OneTimeClubJoinTest() {
     <div className="p-4">
       <div className="mb-4">원타임 클럽 테스트 페이지입니다.</div>
       {clubs.map((club) => (
-        <div key={club.one_time_club_id} className="mb-4">
-          <h3 className="text-lg">{club.one_time_club_name}</h3>
-          <JoinClubButton clubId={club.one_time_club_id} onSuccess={() => {}} onError={() => {}} />
+        <div key={club.egg_pop_id} className="mb-4">
+          <h3 className="text-lg">{club.egg_pop_name}</h3>
+          <JoinClubButton clubId={club.egg_pop_id} onSuccess={() => {}} onError={() => {}} />
         </div>
       ))}
       <button onClick={handleLogin}>로그인</button>

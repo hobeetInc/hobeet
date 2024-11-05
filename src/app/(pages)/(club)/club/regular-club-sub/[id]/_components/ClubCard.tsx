@@ -41,27 +41,22 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
       return;
     }
 
-    router.push(`/club/regular-club-sub/${notification.r_c_id}/create/${notification.r_c_notification_id}`);
+    router.push(`/club/regular-club-sub/${notification.egg_club_id}/create/${notification.egg_day_id}`);
   };
 
   return (
     <div onClick={handleClick} className="flex m-4 bg-yellow-200 rounded-lg p-4 gap-4">
-      <Image
-        src={notification.r_c_notification_image}
-        alt={notification.r_c_notification_name}
-        width={80}
-        height={80}
-      />
+      <Image src={notification.egg_day_image} alt={notification.egg_day_name} width={80} height={80} />
 
       <div>
         <p>에그데이</p>
-        <p>{notification.r_c_notification_name}</p>
+        <p>{notification.egg_day_name}</p>
 
         <div>
-          <p>{addressCustom(notification.r_c_notification_location)}</p>
-          <p>{DateTimeCustom(notification.r_c_notification_date_time)}</p>
+          <p>{addressCustom(notification.egg_day_location)}</p>
+          <p>{DateTimeCustom(notification.egg_day_date_time)}</p>
         </div>
-        <p>맴버 {notification.r_c_notification_member[0].count}명</p>
+        <p>맴버 {notification.egg_day_member[0].count}명</p>
       </div>
     </div>
   );

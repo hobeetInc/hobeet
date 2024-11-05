@@ -22,8 +22,8 @@ export async function POST(req: Request) {
         throw new Error("해당 에그팝 모임을 불러오는 중 오류가 발생했습니다.");
       }
 
-      amount = onePayData.one_time_tax;
-      itemName = onePayData.one_time_club_name;
+      amount = onePayData.egg_pop_tax;
+      itemName = onePayData.egg_pop_name;
     } else if (clubType === false) {
       const { data: regularPayData, error: regularPayError } = await supabase
         .from("egg_day")
@@ -36,8 +36,8 @@ export async function POST(req: Request) {
         throw new Error("해당 에그데이 모임을 불러오는 중 오류가 발생했습니다.");
       }
 
-      amount = regularPayData.r_c_notification_tax;
-      itemName = regularPayData.r_c_notification_name;
+      amount = regularPayData.egg_day_tax;
+      itemName = regularPayData.egg_day_name;
     } else {
       throw new Error("모임 유형을 찾을 수 없습니다.");
     }
@@ -74,10 +74,10 @@ export async function POST(req: Request) {
 
     if (clubType === true) {
       const { error } = await supabase.from("egg_pop_kakaopay").insert({
-        o_t_c_id: clubId,
+        egg_pop_id: clubId,
         user_id: requestUserId,
-        o_t_c_kakaopay_cid: "TC0ONETIME",
-        o_t_c_kakaopay_tid: tid
+        egg_pop_kakaopay_cid: "TC0ONETIME",
+        egg_pop_kakaopay_tid: tid
       });
       // 입장 시키는중@@@
 
@@ -99,7 +99,7 @@ export async function POST(req: Request) {
       const { data: rcmIdData, error: rcmError } = await supabase
         .from("egg_club_member")
         .select("egg_club_member_id")
-        .eq("egg_club_id", rcIdData.r_c_id)
+        .eq("egg_club_id", rcIdData.egg_club_id)
         .eq("user_id", requestUserId)
         .single();
 
@@ -109,12 +109,12 @@ export async function POST(req: Request) {
       }
 
       const { error } = await supabase.from("egg_day_kakaopay").insert({
-        r_c_member_id: rcmIdData.r_c_member_id,
-        r_c_notification_id: clubId,
-        r_c_id: rcIdData.r_c_id,
+        egg_club_member_id: rcmIdData.egg_club_member_id,
+        // r_c_notification_id: clubId,
+        egg_club_id: rcIdData.egg_club_id,
         user_id: requestUserId,
-        r_c_notification_kakaopay_cid: "TC0ONETIME",
-        r_c_notification_kakaopay_tid: tid
+        egg_day_kakaopay_cid: "TC0ONETIME",
+        egg_day_kakaopay_tid: tid
       });
 
       if (error) {

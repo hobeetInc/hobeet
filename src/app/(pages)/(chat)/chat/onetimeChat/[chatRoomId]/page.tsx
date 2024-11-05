@@ -49,7 +49,7 @@ const ChatPage: React.FC = () => {
         .from("egg_pop_member")
         .select("egg_pop_member_id")
         .eq("user_id", currentUser?.id)
-        .eq("egg_pop_id", rec?.one_time_club_id)
+        .eq("egg_pop_id", rec?.egg_pop_id)
         .single();
 
       if (error) throw error;
@@ -65,7 +65,7 @@ const ChatPage: React.FC = () => {
         .from("egg_pop_chatting_room_member")
         .select(`*, egg_pop_chatting_room (*)`)
         .eq("egg_pop_chatting_room_id", roomId)
-        .eq("egg_pop_member_id", memberData?.o_t_c_member_id)
+        .eq("egg_pop_member_id", memberData?.egg_pop_member_id)
         .single();
 
       if (error) throw error;
@@ -113,12 +113,12 @@ const ChatPage: React.FC = () => {
 
       const { error } = await supabase.from("egg_pop_chatting_room_message").insert([
         {
-          one_time_club_chatting_room_id: roomId,
+          egg_pop_chatting_room_id: roomId,
           user_id: currentUser.id,
-          one_time_club_chatting_room_member_id: chatInfo.one_time_club_chatting_room_member_id,
-          one_time_club_member_id: chatInfo.one_time_member_id,
-          one_time_club_id: chatInfo.one_time_club_id,
-          one_time_club_chatting_room_message_content: messageContent
+          egg_pop_chatting_room_member_id: chatInfo.egg_pop_chatting_room_member_id,
+          egg_pop_member_id: chatInfo.egg_pop_member_id,
+          egg_pop_id: chatInfo.egg_pop_id,
+          egg_pop_chatting_room_message_content: messageContent
         }
       ]);
 
@@ -209,7 +209,7 @@ const ChatPage: React.FC = () => {
 
                   return (
                     <div
-                      key={message.one_time_club_chatting_room_message_id}
+                      key={message.egg_pop_chatting_room_message_id}
                       className={`flex items-start mb-4 ${isCurrentUser ? "justify-end" : "justify-start"}`}
                     >
                       <div className={`flex flex-col ${isCurrentUser ? "items-end" : "items-start"}`}>
@@ -243,7 +243,7 @@ const ChatPage: React.FC = () => {
                               isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2]"
                             } text-gray-900`}
                           >
-                            <p className="max-w-[150px]">{message.one_time_club_chatting_room_message_content}</p>
+                            <p className="max-w-[150px]">{message.egg_pop_chatting_room_message_content}</p>
                           </div>
                           {!isCurrentUser && (
                             <span className="text-xs text-gray-500 block self-end ml-1	">

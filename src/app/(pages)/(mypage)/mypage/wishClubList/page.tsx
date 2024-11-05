@@ -68,8 +68,8 @@ const WishClubListPage = () => {
             <div key={index} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 relative">
               <div className="relative">
                 <Image
-                  src={item.r_c_id.regular_club_image}
-                  alt={item.r_c_id.regular_club_name}
+                  src={item.egg_club_id.egg_club_image}
+                  alt={item.egg_club_id.egg_club_name}
                   width={150}
                   height={150}
                   className="w-full h-32 object-cover rounded-md"
@@ -78,25 +78,25 @@ const WishClubListPage = () => {
               </div>
 
               <div className="mt-3 text-sm font-semibold text-gray-800 leading-tight">
-                {item.r_c_id.regular_club_name}
+                {item.egg_club_id.egg_club_name}
               </div>
 
               <div className="flex items-center mt-2">
                 <Image
-                  src={item.r_c_id.user_id.user_profile_img}
-                  alt={item.r_c_id.user_id.user_name}
+                  src={item.egg_club_id.user_id.user_profile_img}
+                  alt={item.egg_club_id.user_id.user_name}
                   width={24}
                   height={24}
                   className="w-6 h-6 rounded-full mr-2"
                 />
                 <p className="text-xs text-gray-500">
-                  {item.r_c_id.user_id.user_name} 멤버 {item.r_c_id.r_c_member[0]?.count || 0}/
-                  {item.r_c_id.regular_club_people_limited}
+                  {item.egg_club_id.user_id.user_name} 멤버 {item.egg_club_id.egg_club_member[0]?.count || 0}/
+                  {item.egg_club_id.egg_club_people_limited}
                 </p>
               </div>
 
               <div className="flex items-center mt-2 text-xs text-gray-500">
-                찜수+ {item.r_c_id.wish_list[0]?.count || 0}
+                찜수+ {item.egg_club_id.wish_list[0]?.count || 0}
               </div>
             </div>
           ))}

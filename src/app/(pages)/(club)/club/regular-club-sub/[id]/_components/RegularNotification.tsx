@@ -8,9 +8,7 @@ const RegularNotification = ({ notificationData, crewMembers }: EggClubNotificat
 
       <div>
         {notificationData.map((notification) => {
-          return (
-            <ClubCard key={notification.r_c_notification_id} notification={notification} crewMembers={crewMembers} />
-          );
+          return <ClubCard key={notification.egg_day_id} notification={notification} crewMembers={crewMembers} />;
         })}
       </div>
     </>
