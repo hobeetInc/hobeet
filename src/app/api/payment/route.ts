@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     const { orderId, requestUserId, clubType, clubId } = await req.json();
 
     let amount, itemName;
-    console.log("야야야 장성현");
+    // console.log("야야야 장성현");
 
     if (clubType === true) {
       const { data: onePayData, error: onePayError } = await supabase
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
       console.error(`Payment failed with status: ${response.status}`, errorData);
       throw new Error(`Payment failed with status: ${response.status}`);
     }
-    console.log("야야야 장성현!!!!! 야야야야!!");
+    // console.log("야야야 장성현!!!!! 야야야야!!");
 
     const paymentData = await response.json();
     const tid = paymentData.tid;

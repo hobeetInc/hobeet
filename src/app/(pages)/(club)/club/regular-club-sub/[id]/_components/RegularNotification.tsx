@@ -14,7 +14,7 @@ type RegularNotificationProps = {
 };
 
 const RegularNotification = ({ notificationData, crewMembers }: RegularNotificationProps) => {
-  console.log("Hmm...2", crewMembers);
+  // console.log("Hmm...2", crewMembers);
 
   return (
     <>
@@ -22,8 +22,8 @@ const RegularNotification = ({ notificationData, crewMembers }: RegularNotificat
 
       <div>
         {notificationData.map((notification) => {
-          console.log("각 notification의 정보:", notification);
-          console.log("전달되는 crewMembers:", crewMembers);
+          // console.log("각 notification의 정보:", notification);
+          // console.log("전달되는 crewMembers:", crewMembers);
 
           return (
             <ClubCard

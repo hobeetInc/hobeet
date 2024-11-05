@@ -45,7 +45,7 @@ const RegularClubList = () => {
   // console.log(list);
 
   const renderHeartIcon = (club: RegularClubForm) => {
-    console.log("club", club);
+    // console.log("club", club);
 
     if (!userId) {
       return <Image src="/asset/Icon/Heart.png" alt="Heart" width={24} height={24} />;

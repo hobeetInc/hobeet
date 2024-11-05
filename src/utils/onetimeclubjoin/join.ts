@@ -138,7 +138,7 @@ export const oneTimeClubJoin = async ({ clubId, userId }: OneTimeClubJoinParams)
       alert("이미 가입한 모임 입니다.");
       throw new ClubJoinError("이미 가입한 모임 입니다.");
     }
-    console.log(isExistingMember);
+    // console.log(isExistingMember);
     // 현재 회원 수 확인
     const currentMembers = await clubAPI.getCurrentMemberCount(clubId);
     if (
@@ -149,10 +149,10 @@ export const oneTimeClubJoin = async ({ clubId, userId }: OneTimeClubJoinParams)
       alert("모임 인원이 가득 찼습니다.");
       throw new ClubJoinError("모임 인원이 가득 찼습니다.");
     }
-    console.log(currentMembers);
-    console.log(userData.user_gender);
-    console.log(userData.user_age);
-    console.log(clubData.one_time_age);
+    // console.log(currentMembers);
+    // console.log(userData.user_gender);
+    // console.log(userData.user_age);
+    // console.log(clubData.one_time_age);
     // 성별 제한 확인
     clubAPI.validateGenderRestriction(userData.user_gender, clubData.one_time_gender);
 

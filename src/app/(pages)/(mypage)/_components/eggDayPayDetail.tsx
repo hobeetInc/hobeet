@@ -49,7 +49,7 @@ const EggDayPayDetail = () => {
   if (isLoading) {
     return <div>로딩중...</div>;
   }
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="egg-day-pay-list">

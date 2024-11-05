@@ -40,7 +40,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const tax = clubInfo.one_time_tax;
   const currentTax = tax === 0 ? "X" : tax.toLocaleString() + "원";
 
-  console.log("택스", tax);
+  // console.log("택스", tax);
 
   // 성별 커스텀
   const gender = (gender: null | string) => {

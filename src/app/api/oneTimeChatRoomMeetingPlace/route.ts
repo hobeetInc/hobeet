@@ -7,8 +7,8 @@ export async function POST(req: Request) {
   try {
     const { OneTimeChatRoom } = await req.json();
 
-    console.log("받은 채팅방 정보:", OneTimeChatRoom);
-    console.log("받은 사용자 정보:", OneTimeChatRoom.user_id);
+    // console.log("받은 채팅방 정보:", OneTimeChatRoom);
+    // console.log("받은 사용자 정보:", OneTimeChatRoom.user_id);
 
     const { data, error } = await supabase
       .from("o_t_c_member")
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
     const [adminUser] = data;
     const one_time_club_member_id = adminUser.o_t_c_member_id;
-    console.log("모임장 ID:", adminUser);
+    // console.log("모임장 ID:", adminUser);
 
     const { error: insertError } = await supabase.from("one_time_club_chatting_room_member").insert({
       one_time_club_chatting_room_id: OneTimeChatRoom.one_time_club_chatting_room_id,

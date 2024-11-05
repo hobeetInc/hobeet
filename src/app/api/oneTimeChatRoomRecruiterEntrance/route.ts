@@ -14,10 +14,10 @@ export async function POST(req: Request) {
     }
     const body = await req.json();
     const oneTimeClubMember = body.oneTimeClubMember;
-    console.log("oneTimeClubMember", oneTimeClubMember.data[0].one_time_club_id);
+    // console.log("oneTimeClubMember", oneTimeClubMember.data[0].one_time_club_id);
 
     const userId = userData.user.id;
-    console.log(userId);
+    // console.log(userId);
 
     const { data: memberData, error: memberError } = await supabase
       .from("o_t_c_member")
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       .eq("user_id", userId)
       .eq("o_t_c_id", oneTimeClubMember.data[0].one_time_club_id)
       .single();
-    console.log("memberData", memberData);
+    // console.log("memberData", memberData);
 
     if (memberError || !memberData) {
       console.error("멤버 정보를 가져오는 데 실패했습니다: ", memberError);
@@ -37,8 +37,8 @@ export async function POST(req: Request) {
 
     // const { regularClubMember } = await req.json();
     // console.log("채팅방 정보: ", regularClubMember);
-    const chatRoomData = oneTimeClubMember.data[0].one_time_club_chatting_room_id;
-    console.log("chatRoomData", chatRoomData);
+    // const chatRoomData = oneTimeClubMember.data[0].one_time_club_chatting_room_id;
+    // console.log("chatRoomData", chatRoomData);
 
     const { error: insertError } = await supabase.from("one_time_club_chatting_room_member").insert({
       one_time_club_chatting_room_id: oneTimeClubMember.data[0].one_time_club_chatting_room_id,

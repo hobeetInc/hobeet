@@ -116,7 +116,7 @@ export class RegularClubAPI {
     await this.validateJoinConditions(userId, clubId);
 
     const club = await this.getClubData(clubId);
-    console.log(club);
+    // console.log(club);
 
     if (!club) {
       throw new ClubJoinError("모임을 찾을 수 없습니다.");
@@ -175,7 +175,7 @@ export class RegularClubAPI {
       })
       .select("*")
       .single();
-    console.log("data", data);
+    // console.log("data", data);
     const { error } = await this.supabase.from("r_c_member").insert({
       r_c_id: clubId,
       user_id: userId,

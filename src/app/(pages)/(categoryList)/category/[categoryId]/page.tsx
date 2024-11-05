@@ -41,7 +41,7 @@ const CategoryPage = () => {
       fetchSubCategory();
     }
   }, [categoryId]);
-  console.log(subCategories);
+  // console.log(subCategories);
 
   if (loading) {
     return <div className="flex items-center justify-center w-full h-36">로딩 중...</div>;
