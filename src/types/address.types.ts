@@ -1,3 +1,4 @@
+// 윈도우 데이터 타입
 declare global {
   interface Window {
     daum: {
@@ -18,12 +19,14 @@ declare global {
   }
 }
 
+// 주소 데이터 타입
 export interface AddressData {
   zonecode: string; // 우편주소
   address: string; // 기본주소
   detailAddress: string; // 상세주소
 }
 
+// 다음 우편주소 데이터 타입
 export interface DaumPostcodeData {
   userSelectedType: string; // 사용자가 선택한 주소 타입
   roadAddress: string; // 도로명 주소

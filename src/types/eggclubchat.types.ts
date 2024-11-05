@@ -24,7 +24,7 @@ export interface EggClubChattingMember {
 }
 
 // 에그클럽 메세지 타입
-interface EggClubChatMessage {
+export interface EggClubChatMessage {
   r_c_n_chatting_message_content: string;
   r_c_n_chatting_message_create_at: string;
 }
@@ -141,22 +141,17 @@ export type ExtendEggClubMessage = {
   r_c_n_chatting_message_create_at: string;
 };
 
-//정기적 모임
-export interface ChatMessage {
-  r_c_n_chatting_message_content: string;
-  r_c_n_chatting_message_create_at: string;
-}
-
 export interface EggClubChatRoom {
   r_c_n_chatting_room_id: number;
   r_c_n_chatting_room_name: string;
 }
 
+// 에그클럽 타입들...(아직 이름 못바꿈)
 export interface Chatting {
   r_c_n_chatting_id: number;
   r_c_n_chatting_room_id: number;
   r_c_n_chatting_room: EggClubChatRoom;
-  r_c_n_chatting_message: ChatMessage[];
+  r_c_n_chatting_message: EggClubChatMessage[];
 }
 
 export interface RegularClub {
@@ -173,7 +168,7 @@ export interface Member {
   regular_club: RegularClub;
 }
 
-export type chattingRoom = {
-  r_c_n_chatting_room_id: number;
-  r_c_n_chatting_room_name: string;
-};
+// export type chattingRoom = {
+//   r_c_n_chatting_room_id: number;
+//   r_c_n_chatting_room_name: string;
+// };

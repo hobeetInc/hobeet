@@ -16,3 +16,11 @@ export type CategoryListProps = {
   categoryId: number;
   selectedCategory: number;
 };
+
+// 대분류 카테고리 타입
+export interface Category {
+  id: number;
+  name: string;
+  icon: string;
+  alt: string;
+}

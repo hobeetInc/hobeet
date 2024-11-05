@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { createClient } from "@/utils/supabase/client";
-import { OneTimeClub } from "@/types/clubcardlist/types";
+import { EggPop } from "@/types/cardlist.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const supabase = createClient();
 
-interface OneTimeClubCardProps {
-  club: OneTimeClub;
-}
-
-export const OneTimeClubCard = ({ club }: OneTimeClubCardProps) => {
+export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
   const [memberCount, setMemberCount] = useState<number>(0);
   const router = useRouter();
 

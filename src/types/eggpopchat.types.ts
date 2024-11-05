@@ -138,11 +138,12 @@ export type ExtendEggPopMessage = {
   created_at: string;
 };
 
-//일회성 모임
 export type EggPopChatRoom = {
   one_time_club_chatting_room_id: number;
   one_time_club_chatting_room_name: string;
 };
+
+// 에그팝 타입들...(아직 이름 못바꿈)
 export interface OneTimeClub {
   one_time_club_id: number;
   one_time_club_name: string;
@@ -160,7 +161,7 @@ export interface OneTimeMember {
 export interface OneTimeChatting {
   one_time_club_chatting_room_member_id: number;
   one_time_club_chatting_room_id: number;
-  one_time_club_chatting_room: OneTimeChatRoom;
+  one_time_club_chatting_room: EggPopChatRoom;
   one_time_club_chatting_room_message: OneTimeChatMessage[];
 }
 export interface OneTimeChatMessage {
