@@ -92,8 +92,8 @@ export class SupabaseClubAPI {
 
   // 가입
   async insertMember(clubId: string | null, userId: string | null): Promise<void> {
-    const { error } = await this.supabase.from("egg_day_member").insert({
-      egg_day_id: clubId,
+    const { error } = await this.supabase.from("egg_pop_member").insert({
+      egg_pop_id: clubId,
       user_id: userId
     });
 
