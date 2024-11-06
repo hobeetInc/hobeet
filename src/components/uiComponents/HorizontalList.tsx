@@ -91,6 +91,7 @@ export const EggDayHorizontalList = ({ eggDay }) => {
     <div className="w-[248px] h-[91px] py-0.5 flex-col justify-start items-start gap-0.5 inline-flex">
       <Tag tagName="에그데이" />
       <div className="self-stretch text-gray-900 text-subtitle-14">{eggDay.egg_day_name}</div>
+      <div className="self-stretch text-gray-900 text-subtitle-14">{eggDay.egg_day_name}</div>
       <div className="pt-[3px] justify-start items-center gap-2 inline-flex">
         <div className="justify-start items-center gap-1 flex">
           <div className="w-4 h-4 justify-center items-center flex">
