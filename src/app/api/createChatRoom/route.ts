@@ -5,11 +5,11 @@ export async function POST(req: Request) {
   const supabase = createClient();
 
   try {
-    const { regularClubName, userId, clubId } = await req.json();
+    const { egg_club_name, userId, clubId } = await req.json();
 
     const { data, error } = await supabase
       .from("egg_day_chatting_room")
-      .insert([{ r_c_n_chatting_room_name: regularClubName, user_id: userId, regular_club_id: clubId }])
+      .insert([{ egg_day_chatting_room_name: egg_club_name, user_id: userId, egg_club_id: clubId }])
       .select();
 
     if (error) {

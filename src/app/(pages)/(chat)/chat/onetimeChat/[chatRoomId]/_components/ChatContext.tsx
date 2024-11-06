@@ -63,7 +63,7 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
   return (
     <ChatContext.Provider
       value={{
-        roomName: chatData?.one_time_club_chatting_room_name || "",
+        roomName: chatData?.egg_pop_chatting_room_name || "",
         isLoading,
         egg_pop_chatting_room_id: chatData?.egg_pop_chatting_room_id,
         egg_pop_id: chatData?.egg_pop_id

@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     const { data, error } = await supabase
       .from("egg_club_member")
       .select("egg_club_member_id")
-      .eq("egg_club_id", chattingRoom.regular_club_id)
+      .eq("egg_club_id", chattingRoom.egg_club_id)
       .eq("user_id", chattingRoom.user_id);
     if (error) {
       console.error("데이터베이스 조회 오류:", error);
@@ -21,13 +21,13 @@ export async function POST(req: Request) {
     }
 
     const [adminUser] = data;
-    const r_c_member_id = adminUser.egg_club_member_id;
+    const egg_club_member_id = adminUser.egg_club_member_id;
     // console.log("모임장 ID:", adminUser);
 
     const { error: insertError } = await supabase.from("egg_day_chatting").insert({
-      r_c_n_chatting_room_id: chattingRoom.r_c_n_chatting_room_id,
-      r_c_member_id: r_c_member_id,
-      r_c_id: chattingRoom.regular_club_id,
+      egg_day_chatting_room_id: chattingRoom.egg_day_chatting_room_id,
+      egg_club_member_id: egg_club_member_id,
+      egg_club_id: chattingRoom.egg_club_id,
       admin: true
     });
 

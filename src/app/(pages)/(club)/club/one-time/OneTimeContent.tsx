@@ -40,20 +40,20 @@ const OneTimeContent = () => {
     return {
       formData: {
         // 필수값이면서 null이 허용되지 않는 필드들
-        m_c_id: 0,
-        s_c_id: 0,
+        main_category_id: 0,
+        sub_category_id: 0,
         user_id: userId,
-        one_time_club_name: "",
-        one_time_club_location: "",
-        one_time_club_introduction: "",
-        one_time_image: "",
-        one_time_club_date_time: "",
-        one_time_tax: 0,
+        egg_pop_name: "",
+        egg_pop_location: "",
+        egg_pop_introduction: "",
+        egg_pop_image: "",
+        egg_pop_date_time: "",
+        egg_pop_tax: 0,
 
         // null이 허용되는 선택적 필드들
-        one_time_gender: null,
-        one_time_age: null,
-        one_time_people_limited: null
+        egg_pop_gender: null,
+        egg_pop_age: null,
+        egg_pop_people_limited: null
       },
       selectedGender: "",
       selectedAge: ""
@@ -228,12 +228,12 @@ const OneTimeContent = () => {
 
       await putOneTimeMember(member);
       // 모임장 채팅방 생성 및 입장
-      await OneTimeClubChatRoom(data.one_time_club_name, data.one_time_club_id, userId);
+      await OneTimeClubChatRoom(data.egg_pop_name, data.egg_pop_id, userId);
       alert("일회성 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(ONETIME_CLUB_CREATE);
       // 다른 페이지로 이동
-      router.push(`/club/one-time-club-sub/${data.one_time_club_id}`);
+      router.push(`/club/one-time-club-sub/${data.egg_pop_id}`);
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       alert("일회성 모임 생성 중 오류가 발생했습니다.");

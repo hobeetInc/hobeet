@@ -2,14 +2,14 @@
 
 import { EggPopChatRoom } from "@/types/eggpopchat.types";
 
-export async function OneTimeClubChatRoomMeetingPlace(OneTimeChatRoom: EggPopChatRoom) {
+export async function OneTimeClubChatRoomMeetingPlace(EggPopChatRoom: EggPopChatRoom) {
   try {
     await fetch("/api/oneTimeChatRoomMeetingPlace", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ OneTimeChatRoom })
+      body: JSON.stringify({ EggPopChatRoom })
     });
     // console.log(response);
   } catch (error) {
