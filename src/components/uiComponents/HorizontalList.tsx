@@ -40,6 +40,7 @@ export const EggClubHorizontalList = ({ eggClub }) => {
   return (
     <div className="w-[248px] h-[90px] flex-col justify-start items-start gap-1.5 inline-flex">
       <Tag tagName="에그클럽" />
+
       <div className="self-stretch h-[65px] flex-col justify-start items-start gap-[5px] flex">
         <div className="self-stretch h-[43px] flex-col justify-start items-start gap-0.5 flex">
           <div className="self-stretch text-gray-900 text-subtitle-14">{eggClub.egg_club_name}</div>
@@ -85,28 +86,27 @@ export const EggClubHorizontalList = ({ eggClub }) => {
   );
 };
 
-export const EggDayHorizontalList = (
-  {
-    /*{ eggDay }*/
-  }
-) => {
+export const EggDayHorizontalList = ({ eggDay }) => {
   return (
     <div className="w-[248px] h-[91px] py-0.5 flex-col justify-start items-start gap-0.5 inline-flex">
       <Tag tagName="에그데이" />
-      <div className="self-stretch text-gray-900 text-subtitle-14">모임제목</div>
+      <div className="self-stretch text-gray-900 text-subtitle-14">{eggDay.egg_day_name}</div>
       <div className="pt-[3px] justify-start items-center gap-2 inline-flex">
         <div className="justify-start items-center gap-1 flex">
           <div className="w-4 h-4 justify-center items-center flex">
-            <div className="w-4 h-4 relative flex-col justify-start items-start flex" />
+            <span className="w-4 h-4 relative flex-col justify-start items-start flex">
+              <LocationImage selectedId={1} />
+            </span>
           </div>
-          <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">서울 용산구</div>
+          <span className="text-gray-400 text-body_medium-14 leading-tight">
+            {CustomAddress(eggDay.egg_day_location)}
+          </span>
         </div>
-        <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">12월 25일</div>
-        <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">17:00</div>
+        <span className="text-gray-400 text-body_medium-14 leading-tight">{CustomDate(eggDay.egg_day_date_time)}</span>
       </div>
       <div className="justify-start items-center gap-1 inline-flex">
-        <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">참여 인원</div>
-        <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">20</div>
+        <span className="text-gray-400 text-body_medium-14 leading-tight">참여 인원</span>
+        <span className="text-gray-400 text-body_medium-14 leading-tight">{eggDay.egg_day_member[0].count}</span>
       </div>
     </div>
   );

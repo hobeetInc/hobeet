@@ -163,7 +163,7 @@ const PaymentConfirmPage = () => {
           </label>
         </div>
       </div>
-      <div className="mb-4 flex items-center">
+      <label htmlFor="agree" className="mb-4 flex items-center cursor-pointer">
         <input
           type="checkbox"
           id="agree"
@@ -171,19 +171,17 @@ const PaymentConfirmPage = () => {
           onChange={(e) => setAgreeChecked(e.target.checked)}
           className="hidden"
         />
-
-        <div className="cursor-pointer" onClick={() => setAgreeChecked(!agreeChecked)}>
-          {agreeChecked ? (
-            <Image src={"/asset/Icon/checkbox-selected.png"} alt="checked" width={24} height={24} />
-          ) : (
-            <Image src={"/asset/Icon/checkbox-default.png"} alt="unChecked" width={24} height={24} />
-          )}
+        <div>
+          <Image
+            src={agreeChecked ? "/asset/Icon/checkbox-selected.png" : "/asset/Icon/checkbox-default.png"}
+            alt={agreeChecked ? "checked" : "unchecked"}
+            width={24}
+            height={24}
+          />
         </div>
+        <span className="ml-2 text-sm">주문 내용을 확인했으며, 결제에 동의합니다</span>
+      </label>
 
-        <label htmlFor="agree" className="ml-2 text-sm cursor-pointer" onClick={() => setAgreeChecked(!agreeChecked)}>
-          주문 내용을 확인했으며, 결제에 동의합니다
-        </label>
-      </div>
       <PaymentButton clubId={parseInt(clubId || "0")} clubType={clubType === "true"} agreeChecked={agreeChecked} />
     </div>
   );
