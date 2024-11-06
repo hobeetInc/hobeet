@@ -25,7 +25,7 @@ const PaymentConfirmPage = () => {
           console.log("잘못된 요청입니다.");
           return;
         }
-
+        //true면 에크팝 , false면 에크데이
         const isOneTimeClub = clubType === "true";
 
         if (isOneTimeClub) {

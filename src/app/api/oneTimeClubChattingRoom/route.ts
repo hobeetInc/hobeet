@@ -7,13 +7,13 @@ export async function GET(req: Request) {
 
   try {
     const url = new URL(req.url);
-    const one_time_club_id = Number(url.searchParams.get("o_t_c_id"));
+    const egg_pop_id = Number(url.searchParams.get("egg_pop_id"));
     // console.log("one_time_club_id", one_time_club_id, "야야야 장성현 채팅방 입장시켜줘라");
 
     const { data, error } = await supabase
       .from("egg_pop_chatting_room_member")
       .select(`*`)
-      .eq("egg_pop_id", one_time_club_id);
+      .eq("egg_pop_id", egg_pop_id);
 
     // console.log("data", data, "야야야 장성현 채팅방 입장시켜줘라");
 

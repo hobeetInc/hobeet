@@ -8,6 +8,10 @@ import { addHours, format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { EggClubDataNoTax, EggClubPay, EggPopDataNoTax, EggPopPay } from "@/types/payment.types";
 
+interface EggClubIdType {
+  egg_club_id: number;
+}
+
 const PaymentSuccesspage = () => {
   const [oneTimeClubPayData, setOneTimeClubPayData] = useState<EggPopPay | null>(null);
   const [regularClubPayData, setRegularClubPayData] = useState<EggClubPay | null>(null);
@@ -25,6 +29,7 @@ const PaymentSuccesspage = () => {
     clubType: null,
     pgToken: null
   });
+  const [eggClubId, setEggClubId] = useState<EggClubIdType | null>(null);
   const supabase = browserClient;
   const router = useRouter();
   const { userName } = useAuth();
@@ -148,7 +153,7 @@ const PaymentSuccesspage = () => {
             .from("egg_day_kakaopay")
             .select("egg_day_kakaopay_cid, egg_day_kakaopay_tid")
             .eq("user_id", requestUserId)
-            .eq("egg_club_id", parseInt(clubId))
+            .eq("egg_day_id", parseInt(clubId))
             .limit(1)
             .single();
 
@@ -252,6 +257,16 @@ const PaymentSuccesspage = () => {
     fetchOrderData();
   }, [oneTimeClubPayData, regularClubPayData]);
 
+  useEffect(() => {
+    const fetchClubId = async () => {
+      const clubId = searchParams.get("clubId");
+      const { data } = await supabase.from("egg_day").select("egg_club_id").eq("egg_day_id", parseInt(clubId)).single();
+      setEggClubId(data);
+    };
+
+    fetchClubId();
+  }, [oneTimeClubPayData, regularClubPayData]);
+
   const customAddress = (address: string) => {
     const withoutNumber = address.replace(/\[\d+\]\s*/, "");
     const parts = withoutNumber.split(" ");
@@ -286,9 +301,8 @@ const PaymentSuccesspage = () => {
     if (clubType === "true") {
       router.push(`/club/one-time-club-sub/${clubId}`);
     } else {
-      const egg_club_id = regularClubData?.egg_club_id;
-      if (egg_club_id) {
-        router.push(`/club/regular-club-sub/${egg_club_id}/create/${clubId}`);
+      if (eggClubId) {
+        router.push(`/club/regular-club-sub/${eggClubId.egg_club_id}/create/${clubId}`);
       }
     }
   };

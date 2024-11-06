@@ -82,7 +82,7 @@ export interface ApiResponse {
 export interface EggPopChatContextType {
   roomName: string;
   isLoading: boolean;
-  egg_pop_chatting_room_id?: number;
+  egg_pop_chatting_room_member_id?: number;
   egg_pop_id?: number;
 }
 
