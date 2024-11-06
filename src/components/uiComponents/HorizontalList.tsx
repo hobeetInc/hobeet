@@ -85,28 +85,37 @@ export const EggClubHorizontalList = ({ eggClub }) => {
   );
 };
 
-export const EggDayHorizontalList = (
-  {
-    /*{ eggDay }*/
-  }
-) => {
+export const EggDayHorizontalList = ({ eggDay }) => {
+  // 날짜와 시간 포맷팅
+  const dateObj = new Date(eggDay.egg_day_date_time);
+
+  const date = dateObj.toLocaleDateString("ko-KR", {
+    month: "long",
+    day: "numeric"
+  });
+
+  const time = `${String(dateObj.getHours()).padStart(2, "0")}:${String(dateObj.getMinutes()).padStart(2, "0")}`;
   return (
     <div className="w-[248px] h-[91px] py-0.5 flex-col justify-start items-start gap-0.5 inline-flex">
       <Tag tagName="에그데이" />
-      <div className="self-stretch text-gray-900 text-subtitle-14">모임제목</div>
+      <div className="self-stretch text-gray-900 text-subtitle-14">{eggDay.egg_day_name}</div>
       <div className="pt-[3px] justify-start items-center gap-2 inline-flex">
         <div className="justify-start items-center gap-1 flex">
           <div className="w-4 h-4 justify-center items-center flex">
             <div className="w-4 h-4 relative flex-col justify-start items-start flex" />
           </div>
-          <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">서울 용산구</div>
+          <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">
+            {eggDay.egg_day_location}
+          </div>
         </div>
         <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">12월 25일</div>
         <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">17:00</div>
       </div>
       <div className="justify-start items-center gap-1 inline-flex">
         <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">참여 인원</div>
-        <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">20</div>
+        <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">
+          {eggDay.egg_day_people_limited}
+        </div>
       </div>
     </div>
   );
