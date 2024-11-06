@@ -29,13 +29,13 @@ const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) =
       </div>
       <div className="flex items-start content-start gap-10 self-stretch flex-wrap">
         {data?.map((club) => (
-          <div key={club.regular_club_id} className="flex flex-col w-[174px] h-[306px]">
+          <div key={club.egg_club_id} className="flex flex-col w-[174px] h-[306px]">
             <div className="flex-shrink-0 w-[174px] h-[174px] rounded-[18px] bg-[#d9d9d9] overflow-hidden">
               <Image
                 width={174}
                 height={174}
-                src={club.regular_club_image}
-                alt={club.regular_club_name}
+                src={club.egg_club_image}
+                alt={club.egg_club_name}
                 className="w-full h-full rounded-[18px] object-cover"
               />
             </div>
@@ -45,7 +45,7 @@ const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) =
                   에그클럽
                 </p>
               </div>
-              <p className="text-[18px] font-semibold leading-[24.3px] mt-[12px]">{club.regular_club_name}</p>
+              <p className="text-[18px] font-semibold leading-[24.3px] mt-[12px]">{club.egg_club_name}</p>
               <div className="flex items-center gap-2 self-stretch">
                 <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
                   <Image
@@ -64,7 +64,7 @@ const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) =
                     멤버
                   </p>
                   <p className="font-pretendard text-[14px] ml-[2px] leading-[20.3px] text-[#8c8c8c] font-[500px]">
-                    {club.r_c_member[0].count} / {club.regular_club_people_limited}
+                    {club.egg_club_member[0].count} / {club.egg_club_people_limited}
                   </p>
                 </div>
               </div>

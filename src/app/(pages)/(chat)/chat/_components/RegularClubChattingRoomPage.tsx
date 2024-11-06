@@ -112,7 +112,7 @@ const RegularClubChattingRoomPage = () => {
         },
         (payload) => {
           const newMessage = payload.new;
-          const messageTime = formatDateTime(newMessage.r_c_n_chatting_message_create_at);
+          const messageTime = formatDateTime(newMessage.egg_day_chatting_message_create_at);
 
           setChatRooms((prevRooms) => {
             return prevRooms.map((room) => {

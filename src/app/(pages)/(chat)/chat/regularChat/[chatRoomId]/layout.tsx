@@ -13,7 +13,7 @@ function ChatHeader() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ChattingMember, setChattingMember] = useState<EggClubChattingMemberInfo[]>();
-  // console.log(regular_club_id);
+  console.log(egg_day_chatting_id);
   useEffect(() => {
     const supabase = createClient();
     if (egg_club_id) {
@@ -42,7 +42,7 @@ function ChatHeader() {
 
   const handleChatRoomExit = async () => {
     if (confirm("정말로 채팅방을 나가겠습니까? 채팅방을 나가면 다시 들어올수없습니다.")) {
-      if (egg_day_chatting_id) {
+      if (egg_day_chatting_id !== null) {
         const res = await ChatRoomExit(egg_day_chatting_id, true);
 
         if (res === null) {

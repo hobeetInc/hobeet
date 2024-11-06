@@ -3,7 +3,7 @@ import { EggClubChattingMember, EggClubId } from "@/types/eggclubchat.types";
 // 정기 모임 입장 함수(자동 가입시)
 export async function RegularClubChatRoomRecruiterEntrance(club: EggClubId) {
   try {
-    const response = await fetch(`/api/regularClubChattingRoom?r_c_id=${club.egg_club_id}`, {
+    const response = await fetch(`/api/regularClubChattingRoom?egg_club_id=${club.egg_club_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -43,7 +43,7 @@ interface ClubParams {
 //승인 시 채팅방 입장 함수
 export async function RegularClubApproveChatRoomRecruiterEntrance(params: ClubParams) {
   try {
-    const response = await fetch(`/api/regularClubChattingRoom?r_c_id=${params.egg_club_id}`, {
+    const response = await fetch(`/api/regularClubChattingRoom?egg_club_id=${params.egg_club_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
