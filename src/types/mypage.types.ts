@@ -38,6 +38,7 @@ export type EggDayResponse = {
 
 // 클럽 정보 타입
 export type EggClubInfo = {
+  egg_club_id: number;
   egg_club_name: string;
   egg_club_image: string;
   egg_club_people_limited: number;
@@ -53,3 +54,33 @@ export type EggClubInfo = {
 export interface WishListResponse {
   egg_club_id: EggClubInfo;
 }
+
+//에그팝 아이디를 가지고 있는 타입
+export type EggPopIdInfo = {
+  egg_pop_id: EggPopIdResponse;
+};
+
+export type EggPopIdResponse = {
+  egg_pop_id: number;
+  egg_pop_kakaopay_create_at: string;
+  egg_pop_name: string;
+  egg_pop_date_time: string;
+  egg_pop_location: string;
+  egg_pop_image: string;
+};
+
+// 에그데이유저ID포함한 데이터 타입
+export type EggDayUserIdData = {
+  egg_day_kakaopay_create_at: string;
+  egg_club_id: number;
+  egg_day_id: EggClubUserIdData;
+};
+
+// 에그클럽 유저Id포함한 데이터 타입
+export type EggClubUserIdData = {
+  egg_day_id: number;
+  egg_day_name: string;
+  egg_day_date_time: string;
+  egg_day_location: string;
+  egg_day_image: string;
+};

@@ -7,6 +7,7 @@ import { EggMember, GetEggPop, MemberInfo } from "@/types/eggpop.types";
 const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const oneTimeClubId = Number(params.id);
   const data: EggMember[] = await getOneTimeMember(oneTimeClubId);
+  console.log("data", data);
 
   // 클럽 정보만 추출
   const clubInfo: GetEggPop = data[0]?.egg_pop;

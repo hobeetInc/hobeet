@@ -4,6 +4,7 @@ import { getNotificationData, getNotificationMember } from "../../../../_api/sup
 import CrewList from "./_components/CrewList";
 import DayHeader from "./_components/DayHeader";
 import { EggDayInfo, EggDayMember, SubSubPageProps } from "@/types/eggday.types";
+import TabLayout from "../../_components/TabLayout";
 
 const SubSubPage = async ({ params }: SubSubPageProps) => {
   const { id, subId } = params;
@@ -55,63 +56,66 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
     const defaultImage = "/default-profile-image.jpg";
 
     return (
-      <div className="container">
-        <DayHeader clubInfo={clubInfo} />
-        <div className="flex flex-col w-full">
-          <Image
-            src={clubInfo.egg_day_image || defaultImage}
-            alt={clubInfo.egg_day_name || "모임 이미지"}
-            width={100}
-            height={100}
-            className="w-full"
-          />
-        </div>
-
-        <div className="flex flex-col p-4">
-          <div className="flex flex-col mt-4">
-            <p className="text-[13px]">에그데이</p>
-            <h1 className="font-bold text-[23px]">{clubInfo.egg_day_name}</h1>
-
-            <div className="flex justify-first items-center border-b-4 border-red-600 mb-7 pb-4">
-              <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full">
-                <Image
-                  src={hostInfo?.userImage || defaultImage}
-                  alt={hostInfo?.userName || "호스트"}
-                  width={50}
-                  height={50}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="flex flex-col justify-center">
-                <div className="flex">
-                  <p>{hostInfo?.userName}</p>
-                  <p className="text-[13px]">에그장</p>
-                </div>
-                <p className="text-[13px]">참여도</p>
-              </div>
-            </div>
-
-            <div className="flex flex-col">
-              <h1 className="text-lg font-semibold mb-2">상세 정보</h1>
-              <p>일시: {formDate}</p>
-              <p>장소: {currentLocation}</p>
-              <p>참가비: {currentTax}</p>
-            </div>
-
-            <div className="flex flex-col">
-              <h1 className="text-[20px] font-semibold">모임 소개</h1>
-              <p>{clubInfo.egg_day_content}</p>
-            </div>
+      <>
+        <TabLayout />
+        <div className="container">
+          <DayHeader clubInfo={clubInfo} />
+          <div className="flex flex-col w-full">
+            <Image
+              src={clubInfo.egg_day_image || defaultImage}
+              alt={clubInfo.egg_day_name || "모임 이미지"}
+              width={100}
+              height={100}
+              className="w-full"
+            />
           </div>
-          <CrewList
-            crewMembers={crewMembers}
-            clubId={clubId}
-            clubHostId={clubInfo.user_id}
-            clubInfo={clubInfo}
-            secondId={secondId}
-          />{" "}
+
+          <div className="flex flex-col p-4">
+            <div className="flex flex-col mt-4">
+              <p className="text-[13px]">에그데이</p>
+              <h1 className="font-bold text-[23px]">{clubInfo.egg_day_name}</h1>
+
+              <div className="flex justify-first items-center border-b-4 border-red-600 mb-7 pb-4">
+                <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full">
+                  <Image
+                    src={hostInfo?.userImage || defaultImage}
+                    alt={hostInfo?.userName || "호스트"}
+                    width={50}
+                    height={50}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex flex-col justify-center">
+                  <div className="flex">
+                    <p>{hostInfo?.userName}</p>
+                    <p className="text-[13px]">에그장</p>
+                  </div>
+                  <p className="text-[13px]">참여도</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <h1 className="text-lg font-semibold mb-2">상세 정보</h1>
+                <p>일시: {formDate}</p>
+                <p>장소: {currentLocation}</p>
+                <p>참가비: {currentTax}</p>
+              </div>
+
+              <div className="flex flex-col">
+                <h1 className="text-[20px] font-semibold">모임 소개</h1>
+                <p>{clubInfo.egg_day_content}</p>
+              </div>
+            </div>
+            <CrewList
+              crewMembers={crewMembers}
+              clubId={clubId}
+              clubHostId={clubInfo.user_id}
+              clubInfo={clubInfo}
+              secondId={secondId}
+            />{" "}
+          </div>
         </div>
-      </div>
+      </>
     );
   } catch (error) {
     console.error("Error loading club information:", error);

@@ -4,12 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import { addHours, format, parseISO } from "date-fns";
 import { getEggPopPayList } from "../_api/supabase";
 import Image from "next/image";
+import Link from "next/link";
 
 const EggPopPayDetail = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["eggPopPayData"],
     queryFn: getEggPopPayList
   });
+  console.log(data);
 
   const customAddress = (address: string) => {
     const withoutNumber = address?.replace(/\[\d+\]\s*/, "");
@@ -57,22 +59,27 @@ const EggPopPayDetail = () => {
 
   return (
     <div className="egg-day-pay-list">
-      {data?.map((oneTimeClub, index) => (
-        <div key={index} className="oneTimeClub-card my-4">
-          <div>{customDateFormat(oneTimeClub.egg_pop_id.egg_pop_date_time)}</div>
+      {data?.map((oneTimeClub) => (
+        <Link
+          href={`/club/one-time-club-sub/${oneTimeClub.egg_pop_id.egg_pop_id}`}
+          key={oneTimeClub.egg_pop_id.egg_pop_id}
+        >
+          <div key={oneTimeClub.egg_pop_id.egg_pop_id} className="oneTimeClub-card my-4">
+            <div>{customDateFormat(oneTimeClub.egg_pop_id.egg_pop_date_time)}</div>
 
-          <div>
-            <div className="oneTimeClub-image">
-              <Image src={oneTimeClub.egg_pop_id.egg_pop_image} alt="payList" width={100} height={100} />
-            </div>
-            <div className="oneTimeClub-content">
-              <div className=" bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그팝</div>
-              <h3 className="oneTimeClub-title">{oneTimeClub.egg_pop_id.egg_pop_name}</h3>
-              <p className="oneTimeClub-location">{customAddress(oneTimeClub.egg_pop_id.egg_pop_location)}</p>
-              <p className="oneTimeClub-date">{customDate(oneTimeClub.egg_pop_id.egg_pop_date_time)}</p>
+            <div>
+              <div className="oneTimeClub-image">
+                <Image src={oneTimeClub.egg_pop_id.egg_pop_image} alt="payList" width={100} height={100} />
+              </div>
+              <div className="oneTimeClub-content">
+                <div className=" bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그팝</div>
+                <h3 className="oneTimeClub-title">{oneTimeClub.egg_pop_id.egg_pop_name}</h3>
+                <p className="oneTimeClub-location">{customAddress(oneTimeClub.egg_pop_id.egg_pop_location)}</p>
+                <p className="oneTimeClub-date">{customDate(oneTimeClub.egg_pop_id.egg_pop_date_time)}</p>
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
