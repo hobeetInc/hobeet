@@ -7,6 +7,7 @@ import Image from "next/image";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDate } from "@/utils/CustomDate";
 import { EggPopForm } from "@/types/eggpop.types";
+import { VerticalContentsListMediumEggPop } from "./uiComponents/VerticalContentsListMedium";
 
 const OneTimeClubList = () => {
   const [list, setList] = useState<EggPopForm[]>([]);
@@ -34,7 +35,14 @@ const OneTimeClubList = () => {
               key={club.egg_pop_id}
               className="w-[160px] h-[311px] mr-4"
             >
-              <div className="relative ">
+              <VerticalContentsListMediumEggPop
+                eggPop={club}
+                hostName={club.user_id.user_name}
+                hostImage={club.user_id.user_profile_img}
+                memberCount={club.egg_pop_member[0].count}
+              />
+
+              {/* <div className="relative ">
                 <div
                   className="relative flex justify-end items-center "
                   style={{
@@ -106,7 +114,7 @@ const OneTimeClubList = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </Link>
           ))}
         </div>

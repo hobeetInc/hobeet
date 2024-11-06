@@ -11,6 +11,26 @@ const HomeContent = ({
   notificationData,
   stringCategory
 }: HomeContentProps) => {
+  // 성별 커스텀
+  const gender = (gender: null | string) => {
+    if (gender === null) {
+      return "누구나";
+    } else if (gender === "남성") {
+      return "남성만";
+    } else {
+      return "여성만";
+    }
+  };
+
+  // 인원 제한 커스텀
+  const limited = (limit: number) => {
+    if (limit === 100) {
+      return "최대 100명";
+    } else {
+      return `최대 ${limit}명`;
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col w-full">
@@ -51,8 +71,16 @@ const HomeContent = ({
               </div>
             </div>
 
+            <div>
+              <h1 className="font-semibold text-[20px] mb-2">상세 정보</h1>
+              <p>나이: {clubInfo.egg_club_age}세 이하</p>
+              <p>성별: {gender(clubInfo.egg_club_gender)}</p>
+              <p>인원: {limited(clubInfo.egg_club_people_limited)}</p>
+            </div>
+
             <div className="flex flex-col gap-2">
               <h1 className="text-[20px] font-semibold">모임 소개</h1>
+
               <p>{clubInfo.egg_club_introduction}</p>
             </div>
           </div>
