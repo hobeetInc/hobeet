@@ -27,13 +27,13 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
           .single();
 
         if (roomError) throw roomError;
-        // console.log(roomData);
+        console.log(roomData);
 
         const { data: chatMember, error: chatMemberError } = await supabase
           .from("egg_club_member")
           .select("egg_club_member_id")
           .eq("user_id", userId)
-          .eq("egg_club_id", roomData.regular_club_id)
+          .eq("egg_club_id", roomData.egg_club_id)
           .single();
 
         if (chatMemberError) throw chatMemberError;

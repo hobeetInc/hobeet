@@ -30,7 +30,7 @@ const ChatPage: React.FC = () => {
 
   // r_c_id 조회
   const { data: rec, isSuccess: isRecFetched } = useQuery({
-    queryKey: ["r_c_id", roomId],
+    queryKey: ["egg_club_id", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("egg_day_chatting")
@@ -119,7 +119,7 @@ const ChatPage: React.FC = () => {
           egg_day_chatting_room_id: roomId,
           user_id: currentUser.id,
           egg_day_chatting_id: chatInfo.egg_day_chatting_id,
-          r_c_megg_club_member_idember_id: chatInfo.egg_club_member_id,
+          egg_club_member_id: chatInfo.egg_club_member_id,
           egg_club_id: chatInfo.egg_club_id,
           egg_day_chatting_message_content: messageContent
         }

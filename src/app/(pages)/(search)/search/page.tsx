@@ -1,11 +1,12 @@
 "use client";
-import Image from "next/image";
+
 import { useRouter } from "next/navigation";
 import OverallPopularMeetings from "../_components/OverallPopularMeetings";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { getSearchedClubs } from "../_api/supabase";
 import Link from "next/link";
 import { Club } from "@/types/search.types";
+import Image from "next/image";
 
 const SearchPage = () => {
   const router = useRouter();
@@ -43,7 +44,7 @@ const SearchPage = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  // console.log(searchResults);
+  console.log(searchResults);
 
   return (
     <div className="flex flex-col items-center w-full max-w-[390px] mx-auto px-4 pt-4">
@@ -56,7 +57,7 @@ const SearchPage = () => {
           onChange={handleInputChange}
         />
         <button type="submit" className="flex items-center justify-center ml-2 flex-shrink-0">
-          <Image width={20} height={20} src="/asset/Icon/Frame 1000007052.png" alt="search" />
+          <Image width={20} height={20} src={"/asset/Icon/Frame 1000007052.png"} alt="search" />
         </button>
       </form>
       <div className="w-full h-[80px] mt-6 rounded-xl flex items-center justify-center bg-[#fff1cc]">

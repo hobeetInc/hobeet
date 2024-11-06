@@ -38,18 +38,18 @@ const RegularContent = () => {
     return {
       formData: {
         // 필수값이면서 null이 허용되지 않는 필드들
-        m_c_id: 0,
-        s_c_id: 0,
+        main_category_id: 0,
+        sub_category_id: 0,
         user_id: userId,
-        regular_club_approval: false,
-        regular_club_name: "",
-        regular_club_image: "",
-        regular_club_introduction: "",
+        egg_club_approval: false,
+        egg_club_name: "",
+        egg_club_image: "",
+        egg_club_introduction: "",
 
         // null이 허용되는 선택적 필드들
-        regular_club_gender: null,
-        regular_club_age: null,
-        regular_club_people_limited: null
+        egg_club_gender: null,
+        egg_club_age: null,
+        egg_club_people_limited: null
       },
       selectedGender: "",
       selectedAge: ""
@@ -203,19 +203,19 @@ const RegularContent = () => {
         user_id: data.user_id,
         egg_club_id: data.egg_club_id,
         egg_club_participation_request_id: res.egg_club_participation_request_id,
-        egg_club_participation_request_status: "active"
+        egg_club_request_status: "active"
       };
 
       // 승인된 맴버 테이블에 넣기
       await putRegularMember(member);
       // 모임장 채팅방 생성 및 입장
-      await RegularClubChatRoom(data.regular_club_name, data.regular_club_id, userId);
+      await RegularClubChatRoom(data.egg_club_name, data.egg_club_id, userId);
 
       alert("정기적 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(REGULAR_CLUB_CREATE);
       // 다른 페이지로 이동
-      router.push(`/club/regular-club-sub/${data.regular_club_id}`);
+      router.push(`/club/regular-club-sub/${data.egg_club_id}`);
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       alert("정기적 모임 생성 중 오류가 발생했습니다.");

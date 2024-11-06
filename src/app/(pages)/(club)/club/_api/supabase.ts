@@ -228,6 +228,8 @@ export const getParticipationStatus = async ({ userId, clubId }: GetParticipatio
 // 정기적 모임안의 공지 정보 가져오기
 export const getNotificationData = async (clubId: number) => {
   const { data, error } = await browserClient.from("egg_day").select("*").eq("egg_club_id", clubId);
+  console.log("data", data);
+
   if (error) throw error;
   return data;
 };
@@ -238,6 +240,7 @@ export const getNotificationMember = async (notificationId: number | undefined) 
     .from("egg_day_member")
     .select(`*, user(user_name, user_profile_img)`)
     .eq("egg_day_id", notificationId);
+  console.log("야 최지민", data);
 
   if (error) throw error;
   return data;

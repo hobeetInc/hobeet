@@ -40,25 +40,26 @@ export async function POST(req: Request) {
               )
               .eq("egg_pop_chatting_room_id", chatting.egg_pop_chatting_room_id)
               .order("created_at", { ascending: true });
+            console.log(messages);
 
             if (messageError) {
               console.error("메시지 조회 오류:", messageError);
               return {
                 ...chatting,
-                one_time_club_chatting_room_message: []
+                egg_pop_chatting_room_message: []
               };
             }
 
             return {
               ...chatting,
-              one_time_club_chatting_room_message: (messages as OneTimeChatMessage[]) || []
+              egg_pop_chatting_room_message: (messages as OneTimeChatMessage[]) || []
             };
           })
         );
 
         return {
           ...member,
-          one_time_club_chatting_room_member: chattingWithMessages
+          egg_pop_chatting_room_member: chattingWithMessages
         };
       })
     );

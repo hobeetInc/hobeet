@@ -1,6 +1,7 @@
 import { EggPopProps } from "@/types/eggpop.types";
 
 const ClubTitle = ({ formData, setFormData }: EggPopProps) => {
+  console.log("🚀 ~ file: ClubTitle.tsx ~ line 4 ~ ClubTitle ~ formData", formData);
   return (
     <div>
       <h1 className="mb-4">모임의 제목을 작성해 주세요</h1>

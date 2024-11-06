@@ -9,11 +9,11 @@ import Image from "next/image";
 import { EggPopChattingMemberInfo, LayoutProps } from "@/types/eggpopchat.types";
 
 function ChatHeader() {
-  const { roomName, isLoading, egg_pop_chatting_room_id, egg_pop_id } = useChatContext();
+  const { roomName, isLoading, egg_pop_chatting_room_member_id, egg_pop_id } = useChatContext();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ChattingMember, setChattingMember] = useState<EggPopChattingMemberInfo[]>();
-  // console.log(regular_club_id);
+  console.log(egg_pop_chatting_room_member_id);
   useEffect(() => {
     const supabase = createClient();
     if (egg_pop_id) {
@@ -42,9 +42,8 @@ function ChatHeader() {
 
   const handleChatRoomExit = async () => {
     if (confirm("정말로 채팅방을 나가겠습니까? 채팅방을 나가면 다시 들어올수없습니다.")) {
-      if (egg_pop_chatting_room_id) {
-        const res = await ChatRoomExit(egg_pop_chatting_room_id, false);
-
+      if (egg_pop_chatting_room_member_id !== null) {
+        const res = await ChatRoomExit(egg_pop_chatting_room_member_id, true);
         if (res === null) {
           router.replace("/chat");
         } else {

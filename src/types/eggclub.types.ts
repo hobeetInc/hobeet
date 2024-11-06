@@ -180,5 +180,5 @@ export type InsertMember = {
   user_id: string;
   egg_club_id: number;
   egg_club_participation_request_id: number;
-  egg_club_participation_request_status: string;
+  egg_club_request_status: string;
 };
