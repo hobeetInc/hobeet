@@ -29,7 +29,7 @@ const ChatPage: React.FC = () => {
   });
 
   const { data: rec, isSuccess: isRecFetched } = useQuery({
-    queryKey: ["o_t_c_id", roomId],
+    queryKey: ["egg_pop_id", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("egg_pop_chatting_room_member")
@@ -145,7 +145,7 @@ const ChatPage: React.FC = () => {
           filter: `egg_pop_chatting_room_id=eq.${roomId}`
         },
         () => {
-          queryClient.invalidateQueries({ queryKey: ["messages", roomId] });
+          queryClient.invalidateQueries({ queryKey: ["oneTimeMessages", roomId] });
         }
       )
       .subscribe();
