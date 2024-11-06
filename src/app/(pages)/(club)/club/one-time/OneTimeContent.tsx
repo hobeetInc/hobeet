@@ -165,7 +165,12 @@ const OneTimeContent = () => {
       }
 
       if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited === 0) {
-        alert("0명 이상 적어주세요");
+        alert("2명 이상 적어주세요");
+        return;
+      }
+
+      if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited === 1) {
+        alert("2명 이상 적어주세요");
         return;
       }
 
@@ -224,7 +229,6 @@ const OneTimeContent = () => {
         egg_pop_id: data.egg_pop_id,
         user_id: data.user_id
       };
-      // console.log("맴버", member);
 
       await putOneTimeMember(member);
       // 모임장 채팅방 생성 및 입장
@@ -232,8 +236,12 @@ const OneTimeContent = () => {
       alert("일회성 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(ONETIME_CLUB_CREATE);
-      // 다른 페이지로 이동
-      router.push(`/club/one-time-club-sub/${data.egg_pop_id}`);
+
+      // 생성 직후임을 로컬 스토리지에 표시
+      localStorage.setItem("justCreated", "true");
+
+      // 먼저 페이지 이동
+      router.replace(`/club/one-time-club-sub/${data.egg_pop_id}`);
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       alert("일회성 모임 생성 중 오류가 발생했습니다.");

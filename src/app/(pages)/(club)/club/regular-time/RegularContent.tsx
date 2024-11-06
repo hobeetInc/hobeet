@@ -154,6 +154,16 @@ const RegularContent = () => {
         return;
       }
 
+      if (formData.egg_club_people_limited !== null && formData.egg_club_people_limited === 0) {
+        alert("2명 이상 적어주세요");
+        return;
+      }
+
+      if (formData.egg_club_people_limited !== null && formData.egg_club_people_limited === 1) {
+        alert("2명 이상 적어주세요");
+        return;
+      }
+
       if (formData.egg_club_people_limited !== null && formData.egg_club_people_limited >= 101) {
         alert("인원제한은 100명 이하로 해주세요");
         return;
@@ -214,8 +224,9 @@ const RegularContent = () => {
       alert("정기적 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(REGULAR_CLUB_CREATE);
+
       // 다른 페이지로 이동
-      router.push(`/club/regular-club-sub/${data.egg_club_id}`);
+      router.replace(`/club/regular-club-sub/${data.egg_club_id}`);
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       alert("정기적 모임 생성 중 오류가 발생했습니다.");

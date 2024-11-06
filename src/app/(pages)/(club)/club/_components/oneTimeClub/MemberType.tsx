@@ -66,7 +66,7 @@ const MemberType = ({
     });
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // 소수점(.) 입력 방지
     if (e.key === ".") {
       e.preventDefault();

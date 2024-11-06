@@ -4,9 +4,17 @@ import CategorySlider from "@/components/CategorySlider";
 import OneTimeClubList from "@/components/OneTimeClubList";
 import RegularClubList from "@/components/RegularClubList";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./(pages)/(club)/club/_utils/localStorage";
 
 export default function Home() {
   const router = useRouter();
+
+  useEffect(() => {
+    localStorage.removeItem(ONETIME_CLUB_CREATE);
+    localStorage.removeItem(REGULAR_CLUB_CREATE);
+  }, []);
+
   return (
     <div className="w-full">
       <div className="flex justify-center items-center">
