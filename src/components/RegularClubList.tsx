@@ -7,6 +7,7 @@ import { getRegularClubList } from "@/app/(pages)/(club)/club/_api/supabase";
 import Image from "next/image";
 import { useAuth } from "@/app/store/AuthContext";
 import { EggClubForm } from "@/types/cardlist.types";
+import { VerticalContentsListMediumEggClub } from "./uiComponents/VerticalContentsListMedium";
 
 const RegularClubList = () => {
   const {
@@ -22,24 +23,29 @@ const RegularClubList = () => {
   // console.log(userId);
   // console.log(list);
 
-  const renderHeartIcon = (club: EggClubForm) => {
-    // console.log("club", club);
-
-    if (!userId) {
-      return <Image src="/asset/Icon/Heart.png" alt="Heart" width={24} height={24} />;
-    }
-
-    const isWished = club.wish_list?.some((wish) => wish.user_id === userId);
-
-    return (
-      <Image
-        src={isWished ? "/asset/Icon/Icon-Heart.png" : "/asset/Icon/Heart.png"}
-        alt="Heart"
-        width={24}
-        height={24}
-      />
-    );
+  const isWishedByUser = (club: EggClubForm): boolean => {
+    if (!userId) return false;
+    return club.wish_list?.some((wish) => wish.user_id === userId) || false;
   };
+
+  // const renderHeartIcon = (club: EggClubForm) => {
+  //   // console.log("club", club);
+
+  //   if (!userId) {
+  //     return <Image src="/asset/Icon/Heart.png" alt="Heart" width={24} height={24} />;
+  //   }
+
+  //   const isWished = club.wish_list?.some((wish) => wish.user_id === userId);
+
+  //   return (
+  //     <Image
+  //       src={isWished ? "/asset/Icon/Icon-Heart.png" : "/asset/Icon/Heart.png"}
+  //       alt="Heart"
+  //       width={24}
+  //       height={24}
+  //     />
+  //   );
+  // };
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러가 발생했습니다.</div>;
@@ -54,7 +60,15 @@ const RegularClubList = () => {
               key={club.egg_club_id}
               className="w-[160px] h-[292px] mr-4"
             >
-              <div className="relative w-[160px] h-[160px]">
+              <VerticalContentsListMediumEggClub
+                eggClub={club}
+                hostName={club.user_id.user_name}
+                hostImage={club.user_id.user_profile_img}
+                memberCount={club.egg_club_member[0].count}
+                isWished={isWishedByUser(club)}
+                wishListCount={club.wish_list.length}
+              />
+              {/* <div className="relative w-[160px] h-[160px]">
                 <div
                   className="w-full h-full rounded-xl"
                   style={{
@@ -121,7 +135,7 @@ const RegularClubList = () => {
                     {club.wish_list.length > 100 ? "100+" : club.wish_list.length}
                   </p>
                 </div>
-              </div>
+              </div> */}
             </Link>
           ))}
         </div>

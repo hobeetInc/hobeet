@@ -111,6 +111,7 @@ const Playground = () => {
           <Tag tagName="eggmaster" variant="black" />
           <Tag tagName="eggmaster" variant="yellow" />
           <Tag tagName="default" />
+          <Icon name="bell" />
         </div>
       </section>
     </div>
