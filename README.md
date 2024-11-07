@@ -22,7 +22,7 @@ Egg Friends는 기존 모임 플랫폼의 한계를 개선한 새로운 커뮤�
 
 
 ## 배포 주소
-(url 넣을 예정)
+[eggfriends](https://www.eggfriends.site/)
 
 
 ## 기획 배경
@@ -128,7 +128,7 @@ Egg Friends는 기존 모임 플랫폼의 한계를 개선한 새로운 커뮤�
 
 
 ## 프로젝트 구조
-    ```
+```
 📦app
  ┣ 📂(pages)
  ┃ ┣ 📂(auth)      # 인증 관련
@@ -141,4 +141,4 @@ Egg Friends는 기존 모임 플랫폼의 한계를 개선한 새로운 커뮤�
  ┣ 📂store         # 전역 상태 관리
  ┗ 📂providers     # 프로바이더
 
-    ```
+```
