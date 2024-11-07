@@ -2,8 +2,8 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getPopularClubs } from "../_api/supabase";
-import Image from "next/image";
 import Link from "next/link";
+import { HorizontalContentsListLargeEggClub } from "@/components/uiComponents/HorizontalContentsListLarge";
 
 const OverallPopularMeetings = () => {
   const { data, isLoading } = useQuery({
@@ -15,13 +15,16 @@ const OverallPopularMeetings = () => {
 
   return (
     <div className="flex w-[390px] px-4 flex-col items-start gap-4">
-      {data?.map((club, index) => (
+      {data?.map((club) => (
         <Link
-          key={club.regular_club_id}
-          href={`/club/regular-club-sub/${club.regular_club_id}`}
+          key={club.egg_club_id}
+          href={`/club/regular-club-sub/${club.egg_club_id}`}
           className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4"
         >
-          <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
+          {/* 여긴 이미지 88이고 검색해서 나오는건 102여야함 */}
+          {/* 지금은 102임 */}
+          <HorizontalContentsListLargeEggClub eggClub={club} />
+          {/* <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
             <div className="w-[37px] flex-shrink-0">
               <p className="text-[32px] font-bold leading-[135%]">{index + 1}</p>
             </div>
@@ -29,8 +32,8 @@ const OverallPopularMeetings = () => {
               <Image
                 width={88}
                 height={88}
-                src={club.regular_club_image}
-                alt={club.regular_club_name}
+                src={club.egg_club_image}
+                alt={club.egg_club_name}
                 className="w-[88px] h-[88px] object-cover"
               />
             </div>
@@ -41,7 +44,7 @@ const OverallPopularMeetings = () => {
                 </p>
               </div>
               <p className="text-[14px] leading-[18.9px] font-[600] overflow-hidden text-overflow-ellipsis">
-                {club.regular_club_name}
+                {club.egg_club_name}
               </p>
               <div className="flex items-center gap-2">
                 <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
@@ -61,7 +64,7 @@ const OverallPopularMeetings = () => {
                     멤버
                   </p>
                   <p className="font-pretendard text-[14px] ml-[2px] leading-[20.3px] text-[#8c8c8c] font-[500px]">
-                    {club.r_c_member[0].count} / {club.regular_club_people_limited}
+                    {club.egg_club_member[0].count} / {club.egg_club_people_limited}
                   </p>
                 </div>
               </div>
@@ -78,7 +81,7 @@ const OverallPopularMeetings = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
         </Link>
       ))}
     </div>

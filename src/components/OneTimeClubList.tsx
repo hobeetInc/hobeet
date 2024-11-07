@@ -3,10 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getOneTimeClub } from "@/app/(pages)/(club)/club/_api/supabase";
-import Image from "next/image";
-import { CustomAddress } from "@/utils/CustomAddress";
-import { CustomDate } from "@/utils/CustomDate";
+
 import { EggPopForm } from "@/types/eggpop.types";
+import { VerticalContentsListMediumEggPop } from "./uiComponents/VerticalContentsListMedium";
 
 const OneTimeClubList = () => {
   const [list, setList] = useState<EggPopForm[]>([]);
@@ -30,11 +29,18 @@ const OneTimeClubList = () => {
         <div className="inline-flex items-center  px-4 pt-4">
           {list?.map((club) => (
             <Link
-              href={`/club/one-time-club-sub/${club.one_time_club_id}`}
-              key={club.one_time_club_id}
+              href={`/club/one-time-club-sub/${club.egg_pop_id}`}
+              key={club.egg_pop_id}
               className="w-[160px] h-[311px] mr-4"
             >
-              <div className="relative ">
+              <VerticalContentsListMediumEggPop
+                eggPop={club}
+                hostName={club.user_id.user_name}
+                hostImag={club.user_id.user_profile_img}
+                memberCount={club.egg_pop_member[0].count}
+              />
+
+              {/* <div className="relative ">
                 <div
                   className="relative flex justify-end items-center "
                   style={{
@@ -42,7 +48,7 @@ const OneTimeClubList = () => {
                     height: "160px",
                     padding: "112px 0px 0px 112px",
                     borderRadius: "12px",
-                    background: `url(${club.one_time_image}) lightgray 50% / cover no-repeat`,
+                    background: `url(${club.egg_pop_image}) lightgray 50% / cover no-repeat`,
                     display: "flex",
                     alignItems: "center"
                   }}
@@ -70,18 +76,18 @@ const OneTimeClubList = () => {
                       lineHeight: "135%"
                     }}
                   >
-                    {club.one_time_club_name}
+                    {club.egg_pop_name}
                   </p>
                 </div>
                 <div className="flex pt-[2px] items-center gap-[2px]">
                   <Image src="/asset/Icon/Icon-Location.png" alt="LocationIcon" width={16} height={16} />
                   <p className="font-pretendard text-[14px] font-[500px] text-ellipsis	overflow-hidden leading-[20.3px]	text-[#8c8c8c]  ">
-                    {CustomAddress(club.one_time_club_location)}
+                    {CustomAddress(club.egg_pop_location)}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 w-[125px] h-[20px]">
                   <p className="font-pretendard leading-[20.3px] text-[14px] font-[500px] text-[#8c8c8c]">
-                    {CustomDate(club.one_time_club_date_time)}
+                    {CustomDate(club.egg_pop_date_time)}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 self-stretch">
@@ -102,11 +108,11 @@ const OneTimeClubList = () => {
                       멤버
                     </p>
                     <p className="font-pretendard leading-[20.3px] text-[14px] ml-[2px] text-[#8c8c8c] font-[500px]">
-                      {club.o_t_c_member[0].count} / {club.one_time_people_limited}
+                      {club.egg_pop_member[0].count} / {club.egg_pop_people_limited}
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </Link>
           ))}
         </div>

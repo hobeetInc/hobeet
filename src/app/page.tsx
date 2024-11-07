@@ -4,18 +4,26 @@ import CategorySlider from "@/components/CategorySlider";
 import OneTimeClubList from "@/components/OneTimeClubList";
 import RegularClubList from "@/components/RegularClubList";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./(pages)/(club)/club/_utils/localStorage";
 
 export default function Home() {
   const router = useRouter();
+
+  useEffect(() => {
+    localStorage.removeItem(ONETIME_CLUB_CREATE);
+    localStorage.removeItem(REGULAR_CLUB_CREATE);
+  }, []);
+
   return (
     <div className="w-full">
       <div className="flex justify-center items-center">
         <div className="w-[358px] h-[295px] flex-shrink-0 rounded-[18px] bg-[#d9d9d9] overflow-hidden mt-[22px]">
           <Image
-            src={"/asset/MainBanner.jpg"}
+            src={"/asset/banner.png"}
             alt="MainBanner"
             width={358}
-            height={295}
+            height={296}
             className="rounded-[18px] object-cover"
           />
         </div>

@@ -3,7 +3,7 @@ import { EggClubChattingMember, EggClubId } from "@/types/eggclubchat.types";
 // 정기 모임 입장 함수(자동 가입시)
 export async function RegularClubChatRoomRecruiterEntrance(club: EggClubId) {
   try {
-    const response = await fetch(`/api/regularClubChattingRoom?r_c_id=${club.r_c_id}`, {
+    const response = await fetch(`/api/regularClubChattingRoom?egg_club_id=${club.egg_club_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -22,7 +22,7 @@ export async function RegularClubChatRoomRecruiterEntrance(club: EggClubId) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ regularClubMember: data })
+      body: JSON.stringify({ EggClubChattingMember: data })
     });
 
     if (!postResponse.ok) {
@@ -36,14 +36,14 @@ export async function RegularClubChatRoomRecruiterEntrance(club: EggClubId) {
   }
 }
 interface ClubParams {
-  r_c_id: number; // 또는 string (clubId의 타입에 따라)
+  egg_club_id: number; // 또는 string (clubId의 타입에 따라)
   user_id: string;
 }
 
 //승인 시 채팅방 입장 함수
 export async function RegularClubApproveChatRoomRecruiterEntrance(params: ClubParams) {
   try {
-    const response = await fetch(`/api/regularClubChattingRoom?r_c_id=${params.r_c_id}`, {
+    const response = await fetch(`/api/regularClubChattingRoom?eggclubid=${params.egg_club_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"

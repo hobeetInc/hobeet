@@ -59,8 +59,8 @@ const OneTimeClubList = () => {
       <Slider {...settings}>
         {list?.map((club) => (
           <Link
-            href={`/club/one-time-club-sub/${club.one_time_club_id}`}
-            key={club.one_time_club_id}
+            href={`/club/one-time-club-sub/${club.egg_pop_id}`}
+            key={club.egg_pop_id}
             className="w-[380px] h-[240px]"
           >
             <div className="relative ">
@@ -71,7 +71,7 @@ const OneTimeClubList = () => {
                   height: "160px",
                   padding: "112px 0px 0px 112px",
                   borderRadius: "12px",
-                  background: `url(${club.one_time_image}) lightgray 50% / cover no-repeat`,
+                  background: `url(${club.egg_pop_image}) lightgray 50% / cover no-repeat`,
                   display: "flex",
                   alignItems: "center"
                 }}
@@ -99,12 +99,12 @@ const OneTimeClubList = () => {
                     lineHeight: "135%" // line-height를 135%로 설정
                   }}
                 >
-                  {club.one_time_club_name}
-                </p>{" "}
+                  {club.egg_pop_name}
+                </p>
               </div>
               <div className="mt-2 text-center">
-                <p className="text-[11px]">{customAddress(club.one_time_club_location)}</p>
-                <p className="text-[11px]">{customDate(club.one_time_club_date_time)}</p>
+                <p className="text-[11px]">{customAddress(club.egg_pop_location)}</p>
+                <p className="text-[11px]">{customDate(club.egg_pop_date_time)}</p>
               </div>
             </div>
           </Link>

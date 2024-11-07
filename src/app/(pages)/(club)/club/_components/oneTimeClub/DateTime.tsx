@@ -40,7 +40,7 @@ const DateTime = ({ formData, setFormData }: EggPopProps) => {
     if (date && time) {
       const combinedDate = new Date(date.setHours(time.getHours(), time.getMinutes()));
 
-      setFormData({ ...formData, one_time_club_date_time: combinedDate.toISOString() });
+      setFormData({ ...formData, egg_pop_date_time: combinedDate.toISOString() });
     }
   };
 

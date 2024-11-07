@@ -38,11 +38,48 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  if (request.nextUrl.pathname.startsWith("/approvemembers") && user) {
+    const clubId = request.nextUrl.pathname.split("/")[3];
+    const { data } = await supabase.from("egg_club").select("*").eq("user_id", user.id).eq("egg_club_id", clubId);
+
+    if (!data || data.length === 0) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/signin";
+      return NextResponse.redirect(url);
+    }
+  }
+
+  // if (
+  //   request.nextUrl.pathname.startsWith("/club/regular-club-sub") &&
+  //   request.nextUrl.pathname.match(/^\/club\/regular-club-sub\/[^\/]+\/create/) &&
+  //   user
+  // ) {
+  //   const clubId = request.nextUrl.pathname.split("/")[5];
+  //   const { data } = await supabase.from("egg_club").select("*").eq("user_id", user.id).eq("egg_club_id", clubId);
+
+  //   if (!data || data.length === 0) {
+  //     const url = request.nextUrl.clone();
+  //     url.pathname = "/signin";
+  //     return NextResponse.redirect(url);
+  //   }
+  // }
+
   if (
     !user &&
     (request.nextUrl.pathname.startsWith("/mypage") ||
       request.nextUrl.pathname.startsWith("/chat") ||
-      request.nextUrl.pathname.startsWith("/myclublist"))
+      request.nextUrl.pathname.startsWith("/myclublist") ||
+      request.nextUrl.pathname.startsWith("/club") ||
+      (request.nextUrl.pathname.startsWith("/club/one-time") && request.nextUrl.searchParams.has("step")) ||
+      (request.nextUrl.pathname.startsWith("/club/regular-time") && request.nextUrl.searchParams.has("step")) ||
+      request.nextUrl.pathname.startsWith("/clubmyclublist") ||
+      request.nextUrl.pathname.startsWith("/kakaopay/paymentConfirm") ||
+      request.nextUrl.pathname.startsWith("/kakaopay/isSuccess") ||
+      request.nextUrl.pathname.startsWith("/kakaopay/success") ||
+      request.nextUrl.pathname.startsWith("/chat/onetimeChat") ||
+      request.nextUrl.pathname.startsWith("/chat/regularChat") ||
+      request.nextUrl.pathname.startsWith("/approvemembers") ||
+      request.nextUrl.pathname.match(/^\/club\/regular-club-sub\/[^\/]+\/create/))
   ) {
     const url = request.nextUrl.clone();
     url.pathname = "/signin";

@@ -7,20 +7,34 @@ const HomeContent = ({
   clubInfo,
   hostInfo,
   crewMembers,
-  regularClubId,
+  egg_club_id,
   notificationData,
   stringCategory
 }: HomeContentProps) => {
+  // 성별 커스텀
+  const gender = (gender: null | string) => {
+    if (gender === null) {
+      return "누구나";
+    } else if (gender === "남성") {
+      return "남성만";
+    } else {
+      return "여성만";
+    }
+  };
+
+  // 인원 제한 커스텀
+  const limited = (limit: number) => {
+    if (limit === 100) {
+      return "최대 100명";
+    } else {
+      return `최대 ${limit}명`;
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col w-full">
-        <Image
-          src={clubInfo.regular_club_image}
-          alt={clubInfo.regular_club_name}
-          width={100}
-          height={100}
-          className="w-full"
-        />
+        <Image src={clubInfo.egg_club_image} alt={clubInfo.egg_club_name} width={100} height={100} className="w-full" />
       </div>
 
       <div className="flex flex-col gap-10 p-4">
@@ -28,11 +42,11 @@ const HomeContent = ({
           <p className="text-[13px]">{stringCategory}</p>
 
           <div className="flex justify-between">
-            <h1 className="font-bold text-[23px]">{clubInfo.regular_club_name}</h1>
-            <WishListHeart regularClubId={clubInfo.regular_club_id} />
+            <h1 className="font-bold text-[23px]">{clubInfo.egg_club_name}</h1>
+            <WishListHeart egg_club_id={clubInfo.egg_club_id} />
           </div>
           <p>
-            맴버 {crewMembers.length} / {clubInfo.regular_club_people_limited}
+            맴버 {crewMembers.length} / {clubInfo.egg_club_people_limited}
           </p>
 
           <p>이 모임의 호스트</p>
@@ -57,16 +71,24 @@ const HomeContent = ({
               </div>
             </div>
 
+            <div>
+              <h1 className="font-semibold text-[20px] mb-2">상세 정보</h1>
+              <p>나이: {clubInfo.egg_club_age}세 이하</p>
+              <p>성별: {gender(clubInfo.egg_club_gender)}</p>
+              <p>인원: {limited(clubInfo.egg_club_people_limited)}</p>
+            </div>
+
             <div className="flex flex-col gap-2">
               <h1 className="text-[20px] font-semibold">모임 소개</h1>
-              <p>{clubInfo.regular_club_introduction}</p>
+
+              <p>{clubInfo.egg_club_introduction}</p>
             </div>
           </div>
         </div>
 
         <CrewList
           crewMembers={crewMembers}
-          clubId={regularClubId}
+          clubId={egg_club_id}
           clubHostId={clubInfo.user_id}
           notificationData={notificationData}
         />

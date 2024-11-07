@@ -7,16 +7,16 @@ const ClubTitle = ({ formData, setFormData }: EggPopProps) => {
       <input
         type="text"
         maxLength={36}
-        value={formData.one_time_club_name}
+        value={formData.egg_pop_name}
         onChange={(e) =>
           setFormData({
             ...formData,
-            one_time_club_name: e.target.value
+            egg_pop_name: e.target.value
           })
         }
         className="border-2 border-black mt-4 w-[358px] h-[48px] p-2"
       />
-      <div className="text-sm text-gray-500">{formData.one_time_club_name.length} / 36</div>
+      <div className="text-sm text-gray-500">{formData.egg_pop_name.length} / 36</div>
     </div>
   );
 };

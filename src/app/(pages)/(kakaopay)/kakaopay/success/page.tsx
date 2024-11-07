@@ -8,6 +8,10 @@ import { addHours, format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { EggClubDataNoTax, EggClubPay, EggPopDataNoTax, EggPopPay } from "@/types/payment.types";
 
+interface EggClubIdType {
+  egg_club_id: number;
+}
+
 const PaymentSuccesspage = () => {
   const [oneTimeClubPayData, setOneTimeClubPayData] = useState<EggPopPay | null>(null);
   const [regularClubPayData, setRegularClubPayData] = useState<EggClubPay | null>(null);
@@ -25,6 +29,7 @@ const PaymentSuccesspage = () => {
     clubType: null,
     pgToken: null
   });
+  const [eggClubId, setEggClubId] = useState<EggClubIdType | null>(null);
   const supabase = browserClient;
   const router = useRouter();
   const { userName } = useAuth();
@@ -92,13 +97,13 @@ const PaymentSuccesspage = () => {
           }
 
           const formattedData: EggClubDataNoTax = {
-            r_c_notification_name: regularClubFetchData.r_c_notification_name,
-            r_c_notification_location: regularClubFetchData.r_c_notification_location,
-            r_c_notification_date_time: regularClubFetchData.r_c_notification_date_time,
-            r_c_notification_image: regularClubFetchData.r_c_notification_image,
-            r_c_id: {
-              m_c_id: {
-                m_c_name: regularClubFetchData.r_c_id[0]?.m_c_id[0]?.m_c_name || ""
+            egg_day_name: regularClubFetchData.egg_day_name,
+            egg_day_location: regularClubFetchData.egg_day_location,
+            egg_day_date_time: regularClubFetchData.egg_day_date_time,
+            egg_day_image: regularClubFetchData.egg_day_image,
+            egg_club_id: {
+              main_category_id: {
+                main_category_name: regularClubFetchData.egg_club_id[0]?.main_category_id[0]?.main_category_name || ""
               }
             }
           };
@@ -148,7 +153,7 @@ const PaymentSuccesspage = () => {
             .from("egg_day_kakaopay")
             .select("egg_day_kakaopay_cid, egg_day_kakaopay_tid")
             .eq("user_id", requestUserId)
-            .eq("egg_club_id", parseInt(clubId))
+            .eq("egg_day_id", parseInt(clubId))
             .limit(1)
             .single();
 
@@ -190,8 +195,8 @@ const PaymentSuccesspage = () => {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            cid: oneTimeClubPayData?.o_t_c_kakaopay_cid || regularClubPayData?.r_c_notification_kakaopay_cid,
-            tid: oneTimeClubPayData?.o_t_c_kakaopay_tid || regularClubPayData?.r_c_notification_kakaopay_tid,
+            cid: oneTimeClubPayData?.egg_pop_kakaopay_cid || regularClubPayData?.egg_day_kakaopay_cid,
+            tid: oneTimeClubPayData?.egg_pop_kakaopay_tid || regularClubPayData?.egg_day_kakaopay_tid,
             partner_order_id: clubId,
             partner_user_id: requestUserId,
             pg_token: pgToken
@@ -230,8 +235,8 @@ const PaymentSuccesspage = () => {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            cid: oneTimeClubPayData?.o_t_c_kakaopay_cid || regularClubPayData?.r_c_notification_kakaopay_cid,
-            tid: oneTimeClubPayData?.o_t_c_kakaopay_tid || regularClubPayData?.r_c_notification_kakaopay_tid
+            cid: oneTimeClubPayData?.egg_pop_kakaopay_cid || regularClubPayData?.egg_day_kakaopay_cid,
+            tid: oneTimeClubPayData?.egg_pop_kakaopay_tid || regularClubPayData?.egg_day_kakaopay_tid
           })
         });
 
@@ -250,6 +255,16 @@ const PaymentSuccesspage = () => {
     };
 
     fetchOrderData();
+  }, [oneTimeClubPayData, regularClubPayData]);
+
+  useEffect(() => {
+    const fetchClubId = async () => {
+      const clubId = searchParams.get("clubId");
+      const { data } = await supabase.from("egg_day").select("egg_club_id").eq("egg_day_id", parseInt(clubId)).single();
+      setEggClubId(data);
+    };
+
+    fetchClubId();
   }, [oneTimeClubPayData, regularClubPayData]);
 
   const customAddress = (address: string) => {
@@ -276,7 +291,7 @@ const PaymentSuccesspage = () => {
   // console.log(regularClubData?.r_c_id);
 
   const clubImageUrl =
-    (queryParams.clubType === "true" ? oneTimeClubData?.one_time_image : regularClubData?.r_c_notification_image) || "";
+    (queryParams.clubType === "true" ? oneTimeClubData?.egg_pop_image : regularClubData?.egg_day_image) || "";
 
   const handleGoToMyClub = () => {
     const { clubId, clubType } = queryParams;
@@ -286,9 +301,8 @@ const PaymentSuccesspage = () => {
     if (clubType === "true") {
       router.push(`/club/one-time-club-sub/${clubId}`);
     } else {
-      const r_c_id = regularClubData?.r_c_id;
-      if (r_c_id) {
-        router.push(`/club/regular-club-sub/${r_c_id}/create/${clubId}`);
+      if (eggClubId) {
+        router.push(`/club/regular-club-sub/${eggClubId.egg_club_id}/create/${clubId}`);
       }
     }
   };
@@ -305,23 +319,21 @@ const PaymentSuccesspage = () => {
         <div>
           <div className="text-xs text-gray-400">
             {queryParams.clubType === "true"
-              ? oneTimeClubData?.m_category?.m_c_name
-              : regularClubData?.r_c_id.m_c_id.m_c_name}
+              ? oneTimeClubData?.main_category?.main_category_name
+              : regularClubData?.egg_club_id.main_category_id.main_category_name}
           </div>
           <div className="text-base font-semibold">
-            {queryParams.clubType === "true"
-              ? oneTimeClubData?.one_time_club_name
-              : regularClubData?.r_c_notification_name}
+            {queryParams.clubType === "true" ? oneTimeClubData?.egg_pop_name : regularClubData?.egg_day_name}
           </div>
           <div className="text-xs text-gray-600">
             {queryParams.clubType === "true"
-              ? customAddress(oneTimeClubData?.one_time_club_location || "주소 정보 없음")
-              : customAddress(regularClubData?.r_c_notification_location || "주소 정보 없음")}
+              ? customAddress(oneTimeClubData?.egg_pop_location || "주소 정보 없음")
+              : customAddress(regularClubData?.egg_day_location || "주소 정보 없음")}
           </div>
           <div className="text-xs text-gray-600">
             {queryParams.clubType === "true"
-              ? customDate(oneTimeClubData?.one_time_club_date_time || "닐짜 정보 없음")
-              : customDate(regularClubData?.r_c_notification_date_time || "닐짜 정보 없음")}
+              ? customDate(oneTimeClubData?.egg_pop_date_time || "닐짜 정보 없음")
+              : customDate(regularClubData?.egg_day_date_time || "닐짜 정보 없음")}
           </div>
         </div>
       </div>

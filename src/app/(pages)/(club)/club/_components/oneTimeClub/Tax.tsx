@@ -11,9 +11,9 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
     setInputError("");
 
     if (!hasTax) {
-      setFormData({ ...formData, one_time_tax: 0 });
+      setFormData({ ...formData, egg_pop_tax: 0 });
     } else {
-      setFormData({ ...formData, one_time_tax: null });
+      setFormData({ ...formData, egg_pop_tax: null });
     }
   };
 
@@ -22,7 +22,7 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
 
     // 빈 문자열이면 null로 설정
     if (value === "") {
-      setFormData({ ...formData, one_time_tax: null });
+      setFormData({ ...formData, egg_pop_tax: null });
       setInputError("");
       return;
     }
@@ -48,7 +48,7 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
     }
 
     setInputError("");
-    setFormData({ ...formData, one_time_tax: numValue });
+    setFormData({ ...formData, egg_pop_tax: numValue });
   };
 
   return (
@@ -72,15 +72,15 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
         <div className="next-box bg-gray-100">
           <input
             type="text"
-            value={formData.one_time_tax || ""}
+            value={formData.egg_pop_tax || ""}
             onChange={handleTaxAmount}
             placeholder="참가비를 입력해주세요"
             className="w-[328px] h-8 rounded-lg p-2"
           />
           {inputError && <div className="text-red-500 text-sm mt-1">{inputError}</div>}
 
-          {formData.one_time_tax !== null && formData.one_time_tax > 0 && !inputError && (
-            <div className="py-4 px-1 text-gray-600">{formData.one_time_tax.toLocaleString()}원</div>
+          {formData.egg_pop_tax !== null && formData.egg_pop_tax > 0 && !inputError && (
+            <div className="py-4 px-1 text-gray-600">{formData.egg_pop_tax.toLocaleString()}원</div>
           )}
         </div>
       )}

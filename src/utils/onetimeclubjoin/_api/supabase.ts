@@ -1,4 +1,3 @@
-import { OneTimeClubChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/oneTimeClub/OneTimeClubChatRoomRecruiterEntrance";
 import { createClient } from "@/utils/supabase/client";
 
 export class ClubJoinError extends Error {
@@ -9,19 +8,19 @@ export class ClubJoinError extends Error {
 }
 
 export interface OneTimeClub {
-  one_time_club_id: number;
-  m_c_id: number;
+  egg_pop_id: number;
+  main_category_id: number;
   user_id: string;
-  one_time_club_name: string;
-  one_time_club_introduction: string;
-  one_time_club_date_time: string;
-  one_time_club_location: string;
-  one_time_people_limited: number;
-  one_time_tax: number;
-  one_time_gender: string;
-  one_time_age: number;
-  one_time_image: string;
-  one_time_create_at: string;
+  egg_pop_name: string;
+  egg_pop_introduction: string;
+  egg_pop_date_time: string;
+  egg_pop_location: string;
+  egg_pop_people_limited: number;
+  egg_pop_tax: number;
+  egg_pop_gender: string;
+  egg_pop_age: number;
+  egg_pop_image: string;
+  egg_pop_create_at: string;
 }
 
 export interface User {
@@ -36,7 +35,7 @@ export interface User {
 }
 
 export interface ClubMember {
-  o_t_c_id: number;
+  egg_pop_id: number;
   user_id: string;
 }
 
@@ -94,11 +93,23 @@ export class SupabaseClubAPI {
   // 가입
   async insertMember(clubId: string | null, userId: string | null): Promise<void> {
     const { error } = await this.supabase.from("egg_pop_member").insert({
-      o_t_c_id: clubId,
+      egg_pop_id: clubId,
       user_id: userId
     });
 
-    await OneTimeClubChatRoomRecruiterEntrance({ one_time_club_id: Number(clubId) });
+    // await OneTimeClubChatRoomRecruiterEntrance({ egg_pop_id: Number(clubId) });
+    if (error) {
+      throw new ClubJoinError("모임 가입 처리 중 오류가 발생했습니다.");
+    }
+  }
+  // 에그 데이 가입
+  async eggDayInsertMember(clubId: string | null, userId: string | null): Promise<void> {
+    const { error } = await this.supabase.from("egg_day_member").insert({
+      egg_day_id: clubId,
+      user_id: userId
+    });
+
+    // await OneTimeClubChatRoomRecruiterEntrance({ egg_pop_id: Number(clubId) });
     if (error) {
       throw new ClubJoinError("모임 가입 처리 중 오류가 발생했습니다.");
     }

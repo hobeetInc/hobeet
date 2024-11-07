@@ -37,7 +37,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         if (userId) {
           const statusResult = await getParticipationStatus({ userId, clubId });
 
-          setParticipationStatus(statusResult[0].r_c_participation_request_status);
+          setParticipationStatus(statusResult[0].egg_club_participation_request_status);
         }
       } catch (error) {
         console.error("크루인원 가져오는 중 오류:", error);
@@ -92,7 +92,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
       // console.log("정기적모임 아이디", chatRoom);
 
       if (chatRoom) {
-        router.push(`/chat/regularChat/${chatRoom.r_c_n_chatting_room_id}`);
+        router.push(`/chat/regularChat/${chatRoom.egg_day_chatting_room_id}`);
       }
     } catch (error) {
       console.error("채팅방 이동 중 오류:", error);

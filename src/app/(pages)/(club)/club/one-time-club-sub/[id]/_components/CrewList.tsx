@@ -24,7 +24,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         const data = await getOneTimeMember(clubId);
 
         const newCrewMemebers = data.map((member) => ({
-          memberId: member.o_t_c_member_id,
+          memberId: member.egg_pop_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img
@@ -81,7 +81,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         .single();
 
       if (chatRoom) {
-        router.push(`/chat/onetimeChat/${chatRoom.one_time_club_chatting_room_id}`);
+        router.push(`/chat/onetimeChat/${chatRoom.egg_pop_chatting_room_id}`);
       }
     } catch (error) {
       console.error("채팅방 이동 중 오류:", error);

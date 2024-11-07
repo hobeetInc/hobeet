@@ -14,7 +14,7 @@ const NotificationList = ({ notificationData, crewMembers }: NotificationListPro
   const groupDate = (notifications: InSertEggDay[]) => {
     return notifications.reduce((groups: { [key: string]: InSertEggDay[] }, notification) => {
       // 날짜는 "MM.dd" 형식으로 변환
-      const date = format(parseISO(notification.r_c_notification_date_time), "MM.dd");
+      const date = format(parseISO(notification.egg_day_date_time), "MM.dd");
 
       // 해당 날짜와 그 그룹이 없으면 새로 만든다
       if (!groups[date]) {
@@ -64,7 +64,7 @@ const NotificationList = ({ notificationData, crewMembers }: NotificationListPro
             }`}
           >
             {date}
-            {format(parseISO(groupedNotifications[date][0].r_c_notification_date_time), "eee", { locale: ko })}
+            {format(parseISO(groupedNotifications[date][0].egg_day_date_time), "eee", { locale: ko })}
           </button>
         ))}
       </div>
@@ -72,7 +72,7 @@ const NotificationList = ({ notificationData, crewMembers }: NotificationListPro
       {/* 모임 카드 목록 */}
       <div className="grid gap-4">
         {filteredNotification().map((notification) => (
-          <ClubCard key={notification.r_c_notification_id} notification={notification} crewMembers={crewMembers} />
+          <ClubCard key={notification.egg_day_id} notification={notification} crewMembers={crewMembers} />
         ))}
       </div>
     </div>

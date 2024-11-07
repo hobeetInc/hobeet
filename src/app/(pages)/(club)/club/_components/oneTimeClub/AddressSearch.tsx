@@ -70,7 +70,7 @@ const AddressSearch = ({ formData, setFormData }: EggPopProps) => {
         setAddressData(newAddressData);
         setFormData({
           ...formData,
-          one_time_club_location: fullAddress
+          egg_pop_location: fullAddress
         });
       }
     }).open();
@@ -92,7 +92,7 @@ const AddressSearch = ({ formData, setFormData }: EggPopProps) => {
 
       setFormData({
         ...formData,
-        one_time_club_location: fullAddress
+        egg_pop_location: fullAddress
       });
     }
   };

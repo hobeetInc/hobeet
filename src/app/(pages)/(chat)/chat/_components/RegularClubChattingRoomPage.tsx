@@ -60,28 +60,28 @@ const RegularClubChattingRoomPage = () => {
         }
 
         const rooms: EggClubChattingRoom[] = chatData.data.flatMap((member) =>
-          member.r_c_n_chatting
+          member.egg_day_chatting
             .filter((chatting) => chatting.active)
             .map((chatting) => {
               const lastMessageInfo =
-                chatting.r_c_n_chatting_message.length > 0
+                chatting.egg_day_chatting_message.length > 0
                   ? formatDateTime(
-                      chatting.r_c_n_chatting_message[chatting.r_c_n_chatting_message.length - 1]
-                        .r_c_n_chatting_message_create_at
+                      chatting.egg_day_chatting_message[chatting.egg_day_chatting_message.length - 1]
+                        .egg_day_chatting_message_create_at
                     )
                   : { date: "", time: "" };
 
               return {
                 user_id: member.user_id,
-                regular_club_id: member.r_c_id,
-                r_c_n_chatting_room_id: chatting.r_c_n_chatting_room.r_c_n_chatting_room_id,
-                r_c_n_chatting_room_name: chatting.r_c_n_chatting_room.r_c_n_chatting_room_name,
-                regular_club_image: member.regular_club.regular_club_image,
-                regular_club_name: member.regular_club.regular_club_name,
+                egg_club_id: member.egg_club_id,
+                egg_day_chatting_room_id: chatting.egg_day_chatting_room.egg_day_chatting_room_id,
+                egg_day_chatting_room_name: chatting.egg_day_chatting_room.egg_day_chatting_room_name,
+                egg_club_image: member.egg_club.egg_club_image,
+                egg_club_name: member.egg_club.egg_club_name,
                 last_message:
-                  chatting.r_c_n_chatting_message.length > 0
-                    ? chatting.r_c_n_chatting_message[chatting.r_c_n_chatting_message.length - 1]
-                        .r_c_n_chatting_message_content
+                  chatting.egg_day_chatting_message.length > 0
+                    ? chatting.egg_day_chatting_message[chatting.egg_day_chatting_message.length - 1]
+                        .egg_day_chatting_message_content
                     : "새 메시지가 없습니다.",
                 last_message_time: lastMessageInfo.date,
                 last_message_time_value: lastMessageInfo.time,
@@ -112,14 +112,14 @@ const RegularClubChattingRoomPage = () => {
         },
         (payload) => {
           const newMessage = payload.new;
-          const messageTime = formatDateTime(newMessage.r_c_n_chatting_message_create_at);
+          const messageTime = formatDateTime(newMessage.egg_day_chatting_message_create_at);
 
           setChatRooms((prevRooms) => {
             return prevRooms.map((room) => {
-              if (room.r_c_n_chatting_room_id === newMessage.r_c_n_chatting_room_id) {
+              if (room.egg_day_chatting_room_id === newMessage.egg_day_chatting_room_id) {
                 return {
                   ...room,
-                  last_message: newMessage.r_c_n_chatting_message_content,
+                  last_message: newMessage.egg_day_chatting_message_content,
                   last_message_time: messageTime.date,
                   last_message_time_value: messageTime.time
                 };
@@ -158,17 +158,17 @@ const RegularClubChattingRoomPage = () => {
           {chatRooms.length > 0 ? (
             chatRooms.map((room: EggClubChattingRoom) => (
               <div
-                key={room.r_c_n_chatting_room_id}
+                key={room.egg_day_chatting_room_id}
                 className="p-4 border-b flex content-between items-center w-[390px]"
               >
                 <Link
-                  href={`/chat/regularChat/${room.r_c_n_chatting_room_id}`}
+                  href={`/chat/regularChat/${room.egg_day_chatting_room_id}`}
                   className="flex items-center p-4 border-b w-full"
                 >
                   <div className="w-[63px] h-[63px] rounded-full overflow-hidden border border-solid">
                     <Image
-                      src={room.regular_club_image || ""}
-                      alt={room.regular_club_name || "기본 이미지"}
+                      src={room.egg_club_image || ""}
+                      alt={room.egg_club_name || "기본 이미지"}
                       width={63}
                       height={63}
                       className="w-full h-full object-cover"
@@ -176,7 +176,7 @@ const RegularClubChattingRoomPage = () => {
                   </div>
 
                   <div className="flex flex-col ml-4">
-                    <div className="text-[16px] font-medium mb-3">{room.r_c_n_chatting_room_name}</div>
+                    <div className="text-[16px] font-medium mb-3">{room.egg_day_chatting_room_name}</div>
                     <div className="text-[12px] text-[#808080]">{room.last_message}</div>
                   </div>
                   <div className="flex flex-col text-[12px] text-[#808080] ml-auto">

@@ -23,7 +23,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
         const memberResult = await getNotificationMember(secondId);
 
         const newCrewMembers = memberResult.map((member) => ({
-          notificationId: member.r_c_member_id,
+          egg_day_id: member.r_c_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img
@@ -91,9 +91,9 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
       <button
         onClick={async () => {
           try {
-            if (clubInfo?.r_c_notification_tax === 0) {
+            if (clubInfo?.egg_day_tax === 0) {
               const addMember = {
-                r_c_notification_id: secondId,
+                egg_day_id: secondId,
                 user_id: userId
               };
 

@@ -20,8 +20,6 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError, clas
         error: authError
       } = await supabase.auth.getUser();
 
-      // console.log("User data:", user);
-
       if (authError || !user) {
         onError?.("로그인이 필요합니다.");
         return;
@@ -34,7 +32,7 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError, clas
 
       if (result.success) {
         onSuccess?.();
-        RegularClubChatRoomRecruiterEntrance({ r_c_id: clubId }); // 모임원 채팅방 입장(자동 승인)
+        RegularClubChatRoomRecruiterEntrance({ egg_club_id: clubId }); // 모임원 채팅방 입장(자동 승인)
         alert(result.message);
         location.reload();
       }

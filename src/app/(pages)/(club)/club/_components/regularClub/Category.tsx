@@ -34,13 +34,13 @@ const Category = ({ formData, setFormData }: EggClubProps) => {
   const handleSubCategorySelect = (mainId: number, subId: number) => {
     setFormData({
       ...formData,
-      m_c_id: mainId,
-      s_c_id: subId
+      main_category_id: mainId,
+      sub_category_id: subId
     });
   };
 
   const getSubCategory = (mainId: number) => {
-    return subCategories?.filter((sub) => sub.m_c_id === mainId);
+    return subCategories?.filter((sub) => sub.main_category_id === mainId);
   };
 
   if (isLoading) return <div>로딩 중...</div>;
@@ -51,25 +51,25 @@ const Category = ({ formData, setFormData }: EggClubProps) => {
       <div className="flex flex-col gap-2">
         {mainCategories?.map((main) => (
           <div
-            onClick={() => handleCategoryToggle(main.m_c_id)}
+            onClick={() => handleCategoryToggle(main.main_category_id)}
             className="next-box bg-gray-100 cursor-pointer"
-            key={main.m_c_id}
+            key={main.main_category_id}
           >
-            {main.m_c_name}
+            {main.main_category_name}
             <br />
             <br />
-            {openCategoryId === main.m_c_id &&
-              getSubCategory(main.m_c_id).map((sub) => (
+            {openCategoryId === main.main_category_id &&
+              getSubCategory(main.main_category_id).map((sub) => (
                 <button
-                  key={sub.s_c_id}
+                  key={sub.sub_category_id}
                   onClick={(e) => {
                     e.stopPropagation(); // 상위 버튼 클릭 방지
-                    handleSubCategorySelect(main.m_c_id, sub.s_c_id);
+                    handleSubCategorySelect(main.main_category_id, sub.sub_category_id);
                   }}
                   className={`border-2 border-black p-1 m-1 
-                  ${formData.s_c_id === sub.s_c_id && "bg-blue-200"}`}
+                  ${formData.sub_category_id === sub.sub_category_id && "bg-blue-200"}`}
                 >
-                  {sub.s_c_name}
+                  {sub.sub_category_name}
                 </button>
               ))}
           </div>

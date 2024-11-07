@@ -2,46 +2,47 @@ import { SetStateAction } from "react";
 
 // 에그팝 폼 타입
 export interface EggPopForm {
-  m_c_id: number;
-  one_time_age: number | null;
-  one_time_club_date_time: string;
-  one_time_club_id: number;
-  one_time_club_introduction: string;
-  one_time_club_location: string;
-  one_time_club_name: string;
-  one_time_create_at: string;
-  one_time_gender: string | null;
-  one_time_image: string | File | null;
-  one_time_people_limited: number | null;
-  one_time_tax: number | null;
-  s_c_id: number;
+  main_category_id: number;
+  egg_pop_age: number | null;
+  egg_pop_date_time: string;
+  egg_pop_id: number;
+  egg_pop_introduction: string;
+  egg_pop_location: string;
+
+  egg_pop_name: string;
+  egg_pop_create_at: string;
+  egg_pop_gender: string | null;
+  egg_pop_image: string | File | null;
+  egg_pop_people_limited: number | null;
+  egg_pop_tax: number | null;
+  sub_category_id: number;
   user_id: {
     user_name: string;
     user_profile_img: string;
   };
-  o_t_c_member: Array<{ count: number }>;
+  egg_pop_member: Array<{ count: number }>;
 }
 
 // 에그팝 폼 타입(이미지 타입 파일 빼고)
 export interface StringEggPopForm {
-  m_c_id: number;
-  one_time_age: number | null;
-  one_time_club_date_time: string;
-  one_time_club_id: number;
-  one_time_club_introduction: string;
-  one_time_club_location: string;
-  one_time_club_name: string;
-  one_time_create_at: string;
-  one_time_gender: string | null;
-  one_time_image: string;
-  one_time_people_limited: number | null;
-  one_time_tax: number | null;
-  s_c_id: number;
+  main_category_id: number;
+  egg_pop_age: number | null;
+  egg_pop_date_time: string;
+  egg_pop_id: number;
+  egg_pop_introduction: string;
+  egg_pop_location: string;
+  egg_pop_name: string;
+  egg_pop_create_at: string;
+  egg_pop_gender: string | null;
+  egg_pop_image: string;
+  egg_pop_people_limited: number | null;
+  egg_pop_tax: number | null;
+  sub_category_id: number;
   user_id: {
     user_name: string;
     user_profile_img: string;
   };
-  o_t_c_member: Array<{ count: number }>;
+  egg_pop_member: Array<{ count: number }>;
 }
 
 // 에그팝 폼 props
@@ -85,20 +86,20 @@ export type FullScreenModalProps = {
 };
 
 export interface GetEggPop {
-  m_c_id: number;
-  s_c_id: number;
+  main_category_id: number;
+  sub_category_id: number;
   user_id: string;
-  one_time_age: number;
-  one_time_tax: number;
-  one_time_image: string;
-  one_time_gender: string | null;
-  one_time_club_id: number;
-  one_time_club_name: string;
-  one_time_create_at: string;
-  one_time_club_location: string;
-  one_time_club_date_time: string;
-  one_time_people_limited: number;
-  one_time_club_introduction: string;
+  egg_pop_age: number;
+  egg_pop_tax: number;
+  egg_pop_image: string;
+  egg_pop_gender: string | null;
+  egg_pop_id: number;
+  egg_pop_name: string;
+  egg_pop_create_at: string;
+  egg_pop_location: string;
+  egg_pop_date_time: string;
+  egg_pop_people_limited: number;
+  egg_pop_introduction: string;
 }
 
 // 에그팝헤더 props
@@ -108,10 +109,10 @@ export type PopHeaderProps = {
 
 // 멤버 정보 타입
 export interface EggMember {
-  o_t_c_member_id: number;
-  o_t_c_id: number;
+  egg_pop_member_id: number;
+  egg_pop_id: number;
   user_id: string;
-  one_time_club: GetEggPop;
+  egg_pop: GetEggPop;
   user: {
     user_name: string;
     user_profile_img: string;
@@ -120,6 +121,6 @@ export interface EggMember {
 
 // 일회성 모임 참가자 맴버 테이블
 export interface EggPopMember {
-  o_t_c_id: number;
+  egg_pop_id: number;
   user_id: string;
 }

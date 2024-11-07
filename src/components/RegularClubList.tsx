@@ -4,9 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
 import { getRegularClubList } from "@/app/(pages)/(club)/club/_api/supabase";
-import Image from "next/image";
+
 import { useAuth } from "@/app/store/AuthContext";
 import { EggClubForm } from "@/types/cardlist.types";
+import { VerticalContentsListMediumEggClub } from "./uiComponents/VerticalContentsListMedium";
 
 const RegularClubList = () => {
   const {
@@ -22,24 +23,29 @@ const RegularClubList = () => {
   // console.log(userId);
   // console.log(list);
 
-  const renderHeartIcon = (club: EggClubForm) => {
-    // console.log("club", club);
-
-    if (!userId) {
-      return <Image src="/asset/Icon/Heart.png" alt="Heart" width={24} height={24} />;
-    }
-
-    const isWished = club.wish_list?.some((wish) => wish.user_id === userId);
-
-    return (
-      <Image
-        src={isWished ? "/asset/Icon/Icon-Heart.png" : "/asset/Icon/Heart.png"}
-        alt="Heart"
-        width={24}
-        height={24}
-      />
-    );
+  const isWishedByUser = (club: EggClubForm): boolean => {
+    if (!userId) return false;
+    return club.wish_list?.some((wish) => wish.user_id === userId) || false;
   };
+
+  // const renderHeartIcon = (club: EggClubForm) => {
+  //   // console.log("club", club);
+
+  //   if (!userId) {
+  //     return <Image src="/asset/Icon/Heart.png" alt="Heart" width={24} height={24} />;
+  //   }
+
+  //   const isWished = club.wish_list?.some((wish) => wish.user_id === userId);
+
+  //   return (
+  //     <Image
+  //       src={isWished ? "/asset/Icon/Icon-Heart.png" : "/asset/Icon/Heart.png"}
+  //       alt="Heart"
+  //       width={24}
+  //       height={24}
+  //     />
+  //   );
+  // };
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러가 발생했습니다.</div>;
@@ -50,15 +56,23 @@ const RegularClubList = () => {
         <div className="inline-flex items-center px-4 pt-4">
           {list?.map((club) => (
             <Link
-              href={`/club/regular-club-sub/${club.regular_club_id}`}
-              key={club.regular_club_id}
+              href={`/club/regular-club-sub/${club.egg_club_id}`}
+              key={club.egg_club_id}
               className="w-[160px] h-[292px] mr-4"
             >
-              <div className="relative w-[160px] h-[160px]">
+              <VerticalContentsListMediumEggClub
+                eggClub={club}
+                hostName={club.user_id.user_name}
+                hostImage={club.user_id.user_profile_img}
+                memberCount={club.egg_club_member[0].count}
+                isWished={isWishedByUser(club)}
+                wishListCount={club.wish_list.length}
+              />
+              {/* <div className="relative w-[160px] h-[160px]">
                 <div
                   className="w-full h-full rounded-xl"
                   style={{
-                    background: `url(${club.regular_club_image}) lightgray 50% / cover no-repeat`
+                    background: `url(${club.egg_club_image}) lightgray 50% / cover no-repeat`
                   }}
                 />
                 <div className="absolute bottom-1 right-1">{renderHeartIcon(club)}</div>
@@ -84,7 +98,7 @@ const RegularClubList = () => {
                       lineHeight: "135%"
                     }}
                   >
-                    {club.regular_club_name}
+                    {club.egg_club_name}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 self-stretch">
@@ -105,7 +119,7 @@ const RegularClubList = () => {
                       멤버
                     </p>
                     <p className="font-pretendard text-[14px] ml-[2px] leading-[20.3px] text-[#8c8c8c] font-[500px]">
-                      {club.r_c_member[0].count} / {club.regular_club_people_limited}
+                      {club.egg_club_member[0].count} / {club.egg_club_people_limited}
                     </p>
                   </div>
                 </div>
@@ -121,7 +135,7 @@ const RegularClubList = () => {
                     {club.wish_list.length > 100 ? "100+" : club.wish_list.length}
                   </p>
                 </div>
-              </div>
+              </div> */}
             </Link>
           ))}
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import browserClient from "@/utils/supabase/client";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -53,7 +54,7 @@ const SigninPage = () => {
           className="w-full py-4 bg-white text-center rounded-[27px] border border-gray-300 flex items-center justify-center space-x-2"
           onClick={handleSignInWithGoogle}
         >
-          <img src="/asset/icon-google.png" className="w-6 h-6" alt="Google Icon" />
+          <Image width={24} height={24} src="/asset/icon-google.png" className="w-6 h-6" alt="Google Icon" />
           <span className="text-gray-700">구글로 시작하기</span>
         </button>
 
@@ -61,12 +62,12 @@ const SigninPage = () => {
           className="w-full py-4 bg-yellow-300 text-center rounded-[27px] flex items-center justify-center space-x-2"
           onClick={handleSignInWithKakao}
         >
-          <img src="/asset/icon-kakao.png" className="w-6 h-6" alt="Kakao Icon" />
+          <Image width={24} height={24} src="/asset/icon-kakao.png" className="w-6 h-6" alt="Kakao Icon" />
           <span className="text-black">카카오로 시작하기</span>
         </button>
 
         <button className="w-full py-4 bg-gray-200 text-center rounded-[27px] flex items-center justify-center space-x-2">
-          <img src="/asset/Message-Filled.png" className="w-6 h-6" alt="Email Icon" />
+          <Image width={24} height={24} src="/asset/Message-Filled.png" className="w-6 h-6" alt="Email Icon" />
           <span className="text-black">이메일로 시작하기</span>
         </button>
 

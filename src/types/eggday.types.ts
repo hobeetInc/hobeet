@@ -1,45 +1,45 @@
 // 정기적모임 안의 공지 인풋 타입
 export interface EggDay {
   user_id: string | null;
-  r_c_notification_name: string;
-  r_c_notification_content: string;
-  r_c_notification_date_time: string;
-  r_c_notification_location: string;
-  r_c_notification_tax: number | null;
-  r_c_notification_image: string | File | null;
-  r_c_id: number;
+  egg_day_name: string;
+  egg_day_content: string;
+  egg_day_date_time: string;
+  egg_day_location: string;
+  egg_day_tax: number | null;
+  egg_day_image: string | File | null;
+  egg_club_id: number;
 }
 
 // 정기적모임 안의 공지 내역 받는 타입
 export interface InSertEggDay {
   user_id: string | null;
-  r_c_notification_id: number;
-  r_c_notification_name: string;
-  r_c_notification_content: string;
-  r_c_notification_date_time: string;
-  r_c_notification_location: string;
-  r_c_notification_tax: number | null;
-  r_c_notification_image: string;
-  r_c_id: number;
-  r_c_notification_member: Array<{ count: number }>;
+  egg_day_id: number;
+  egg_day_name: string;
+  egg_day_content: string;
+  egg_day_date_time: string;
+  egg_day_location: string;
+  egg_day_tax: number | null;
+  egg_day_image: string;
+  egg_club_id: number;
+  egg_day_member: Array<{ count: number }>;
 }
 
 // 공지 참여 맴버 정보 {get}
 export interface NotificationMember {
-  r_c_member_id: number;
-  r_c_notification_id: number;
+  egg_club_member_id: number;
+  egg_day_id: number;
   user_id: string;
 }
 
 // 공지 맴버 테이블 {insert}
 export interface InsertEggDayMember {
-  r_c_notification_id: number;
+  egg_day_id: number;
   user_id: string | null;
 }
 
 // 멤버 정보 타입 정의
 export type MemberInfo = {
-  notificationId: number;
+  egg_day_id: number;
   userId: string;
   userName: string;
   userImage: string;
@@ -55,21 +55,21 @@ export interface CrewListProps {
 }
 
 export interface EggDayInfo {
-  r_c_notification_id: number;
+  egg_day_id: number;
   user_id: string;
-  r_c_notification_name: string;
-  r_c_notification_content: string;
-  r_c_notification_date_time: string;
-  r_c_notification_location: string;
-  r_c_notification_tax: number;
-  r_c_notification_create_at: string;
-  r_c_id: number;
-  r_c_notification_image: string;
+  egg_day_name: string;
+  egg_day_content: string;
+  egg_day_date_time: string;
+  egg_day_location: string;
+  egg_day_tax: number;
+  egg_day_create_at: string;
+  egg_club_id: number;
+  egg_day_image: string;
 }
 
 export interface EggDayMember {
-  r_c_notification_id: number;
-  r_c_member_id: number;
+  egg_day_id: number;
+  egg_club_member_id: number;
   user_id: string;
   user: {
     user_name: string;
@@ -85,7 +85,7 @@ export type DayHeaderProps = {
 // 에그데이 모달 props
 export type FullScreenModalProps = {
   crewList: {
-    notificationId: number;
+    egg_day_id: number;
     userId: string;
     userName: string;
     userImage: string;

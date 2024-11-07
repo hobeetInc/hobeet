@@ -7,7 +7,7 @@ import { useAuth } from "@/app/store/AuthContext";
 import { useRouter } from "next/navigation";
 import { WishList, WishListHeartProps } from "@/types/eggclub.types";
 
-const WishListHeart = ({ regularClubId }: WishListHeartProps) => {
+const WishListHeart = ({ egg_club_id }: WishListHeartProps) => {
   const [isWished, setIsWished] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { userId } = useAuth();
@@ -18,7 +18,7 @@ const WishListHeart = ({ regularClubId }: WishListHeartProps) => {
     const checkWishListStatus = async () => {
       try {
         const wishData: WishList = await getWishList({
-          r_c_id: regularClubId,
+          egg_club_id: egg_club_id,
           user_id: userId
         });
 
@@ -32,7 +32,7 @@ const WishListHeart = ({ regularClubId }: WishListHeartProps) => {
     if (userId) {
       checkWishListStatus();
     }
-  }, [regularClubId, userId]);
+  }, [egg_club_id, userId]);
 
   const toggleWishList = async () => {
     if (!userId) {
@@ -48,13 +48,13 @@ const WishListHeart = ({ regularClubId }: WishListHeartProps) => {
       // 위시리스트에서 제거
       if (isWished) {
         await deleteWishList({
-          r_c_id: regularClubId,
+          egg_club_id: egg_club_id,
           user_id: userId
         });
 
         setIsWished(false);
       } else {
-        await submitWishList({ r_c_id: regularClubId, user_id: userId });
+        await submitWishList({ egg_club_id: egg_club_id, user_id: userId });
         setIsWished(true);
       }
     } catch (error) {

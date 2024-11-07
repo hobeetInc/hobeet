@@ -1,43 +1,43 @@
 // 에그팝 데이터 타입
 export interface EggPop {
-  one_time_club_id: number;
-  one_time_club_name: string;
-  one_time_club_location: string;
-  one_time_club_date_time: string;
-  one_time_image: string;
-  one_time_people_limited: number;
+  egg_pop_id: number;
+  egg_pop_name: string;
+  egg_pop_location: string;
+  egg_pop_date_time: string;
+  egg_pop_image: string;
+  egg_pop_people_limited: number;
   user_id: string;
 }
 
 // 에그클럽 데이터 타입
 export interface EggClub {
-  regular_club_id: number;
-  regular_club_name: string;
-  regular_club_image: string;
-  regular_club_people_limited: number;
+  egg_club_id: number;
+  egg_club_name: string;
+  egg_club_image: string;
+  egg_club_people_limited: number;
   user_id: string;
   approved_members: string[];
 }
 
 // 에그클럽 폼 타입
 export interface EggClubForm {
-  m_c_id: number;
-  r_c_member: { count: number }[];
-  regular_club_age: number;
-  regular_club_approbval: boolean;
-  regular_club_create_at: string;
-  regular_club_id: number;
-  regular_club_image: string;
-  regular_club_introduction: string;
-  regular_clun_name: string;
-  regular_club_people_limited: number;
+  main_category_id: number;
+  egg_club_member: { count: number }[];
+  egg_club_age: number;
+  egg_club_approval: boolean;
+  egg_club_create_at: string;
+  egg_club_id: number;
+  egg_club_image: string;
+  egg_club_introduction: string;
+  egg_club_name: string;
+  egg_club_people_limited: number;
   s_c_id: number;
-  user_id: {
+  sub_category: {
     user_name: string;
     user_profile_img: string;
   };
   wish_list: {
-    r_c_id: number;
+    egg_club_id: number;
     user_id: string;
     wish_list_id: number;
   }[];

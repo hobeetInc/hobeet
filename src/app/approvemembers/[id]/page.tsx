@@ -7,21 +7,21 @@ import { useParams } from "next/navigation";
 import { RegularClubApproveChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
 
 export interface ParticipationRequest {
-  r_c_participation_request_id: number;
-  r_c_id: number;
+  egg_club_participation_request_id: number;
+  egg_club_id: number;
   user_id: {
     user_id: string;
     user_name: string;
     user_profile_img: string;
   };
-  r_c_participation_request_status: "pending" | "active" | "rejected";
+  egg_club_participation_request_status: "pending" | "active" | "rejected";
 }
 
 const ActiveMembersTab = ({ activeMembers }: { activeMembers: ParticipationRequest[] }) => {
   return (
     <div className="flex flex-col gap-4">
       {activeMembers.map((member) => (
-        <div key={member.r_c_participation_request_id} className="flex items-center gap-4">
+        <div key={member.egg_club_participation_request_id} className="flex items-center gap-4">
           <Image
             src={member.user_id.user_profile_img}
             alt={member.user_id.user_name}
@@ -46,7 +46,7 @@ const PendingRequestsTab = ({
   return (
     <div className="flex flex-col gap-4">
       {requests.map((req) => (
-        <div key={req.r_c_participation_request_id} className="flex items-center justify-between">
+        <div key={req.egg_club_participation_request_id} className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Image
               src={req.user_id.user_profile_img}
@@ -59,7 +59,7 @@ const PendingRequestsTab = ({
           </div>
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-            onClick={() => onApprove(req.r_c_participation_request_id)}
+            onClick={() => onApprove(req.egg_club_participation_request_id)}
           >
             승인하기
           </button>
@@ -108,22 +108,21 @@ export default function ApproveMembersPage() {
   const approveMember = async (requestId: number) => {
     const { data, error } = await supabase
       .from("egg_club_participation_request")
-      .update({ r_c_participation_request_status: "active" })
+      .update({ egg_club_participation_request_status: "active" })
       .eq("egg_club_participation_request_id", requestId)
       .select("*")
       .single();
     if (!error) {
-      setRequests((prev) => prev.filter((req) => req.r_c_participation_request_id !== requestId));
+      setRequests((prev) => prev.filter((req) => req.egg_club_participation_request_id !== requestId));
       const { error } = await supabase.from("egg_club_member").insert({
         user_id: data.user_id,
-        r_c_id: data.r_c_id,
-        r_c_participation_request_id: data.r_c_participation_request_id,
-        regular_club_request_status: "active"
+        egg_club_id: data.egg_club_id,
+        egg_club_participation_request_id: data.egg_club_participation_request_id,
+        egg_club_request_status: "active"
       });
       const user_id = data.user_id as string;
-      // console.log("나는 나는 나는 ", user_id);
 
-      await RegularClubApproveChatRoomRecruiterEntrance({ r_c_id: clubId, user_id: user_id }); // 모임원 채팅방 입장(가입 승인 시)
+      await RegularClubApproveChatRoomRecruiterEntrance({ egg_club_id: clubId, user_id: user_id }); // 모임원 채팅방 입장(가입 승인 시)
 
       if (!error) {
         alert("가입이 승인되었습니다.");

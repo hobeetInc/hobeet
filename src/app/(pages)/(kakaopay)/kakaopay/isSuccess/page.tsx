@@ -18,12 +18,21 @@ const Page = () => {
     const clubApi = new SupabaseClubAPI();
 
     const insertMember = async () => {
-      await clubApi.insertMember(clubId, requestUserId);
-      setIsMemberInserted(true);
+      if (clubType === "true") {
+        await clubApi.insertMember(clubId, requestUserId);
+        setIsMemberInserted(true);
 
-      router.push(
-        `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`
-      );
+        router.push(
+          `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`
+        );
+      } else {
+        await clubApi.eggDayInsertMember(clubId, requestUserId);
+        setIsMemberInserted(true);
+
+        router.push(
+          `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`
+        );
+      }
     };
 
     insertMember();

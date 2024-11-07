@@ -30,7 +30,7 @@ const ChatPage: React.FC = () => {
 
   // r_c_id 조회
   const { data: rec, isSuccess: isRecFetched } = useQuery({
-    queryKey: ["r_c_id", roomId],
+    queryKey: ["egg_club_id", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("egg_day_chatting")
@@ -51,7 +51,7 @@ const ChatPage: React.FC = () => {
         .from("egg_club_member")
         .select("egg_club_member_id")
         .eq("user_id", currentUser?.id)
-        .eq("egg_club_id", rec?.r_c_id)
+        .eq("egg_club_id", rec?.egg_club_id)
         .single();
 
       if (error) throw error;
@@ -68,7 +68,7 @@ const ChatPage: React.FC = () => {
         .from("egg_day_chatting")
         .select(`*, egg_day_chatting_room (*)`)
         .eq("egg_day_chatting_room_id", roomId)
-        .eq("egg_club_member_id", memberData?.r_c_member_id)
+        .eq("egg_club_member_id", memberData?.egg_club_member_id)
         .single();
 
       if (error) throw error;
@@ -116,12 +116,12 @@ const ChatPage: React.FC = () => {
 
       const { error } = await supabase.from("egg_day_chatting_message").insert([
         {
-          r_c_n_chatting_room_id: roomId,
+          egg_day_chatting_room_id: roomId,
           user_id: currentUser.id,
-          r_c_n_chatting_id: chatInfo.r_c_n_chatting_id,
-          r_c_member_id: chatInfo.r_c_member_id,
-          r_c_id: chatInfo.r_c_id,
-          r_c_n_chatting_message_content: messageContent
+          egg_day_chatting_id: chatInfo.egg_day_chatting_id,
+          egg_club_member_id: chatInfo.egg_club_member_id,
+          egg_club_id: chatInfo.egg_club_id,
+          egg_day_chatting_message_content: messageContent
         }
       ]);
 
@@ -169,7 +169,7 @@ const ChatPage: React.FC = () => {
 
   const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
     return messages.reduce((acc: { [date: string]: ExtendEggClubMessage[] }, message) => {
-      const date = new Date(message.r_c_n_chatting_message_create_at);
+      const date = new Date(message.egg_day_chatting_message_create_at);
       const dateString = date.toLocaleDateString("ko-KR", {
         year: "numeric",
         month: "long",
@@ -207,12 +207,12 @@ const ChatPage: React.FC = () => {
               <div key={dateString} className="mb-6">
                 <div className="text-[10px] mb-2 text-center">{dateString}</div>
                 {groupedMessages[dateString].map((message: ExtendEggClubMessage) => {
-                  const date = new Date(message.r_c_n_chatting_message_create_at);
+                  const date = new Date(message.egg_day_chatting_message_create_at);
                   const isCurrentUser = message.user.user_id === currentUser?.id;
 
                   return (
                     <div
-                      key={message.r_c_n_chatting_message_id}
+                      key={message.egg_day_chatting_message_id}
                       className={`flex items-start mb-4 ${isCurrentUser ? "justify-end" : "justify-start"}`}
                     >
                       <div className={`flex flex-col ${isCurrentUser ? "items-end" : "items-start"}`}>
@@ -246,7 +246,7 @@ const ChatPage: React.FC = () => {
                               isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2]"
                             } text-gray-900`}
                           >
-                            <p className="max-w-[150px]">{message.r_c_n_chatting_message_content}</p>
+                            <p className="max-w-[150px]">{message.egg_day_chatting_message_content}</p>
                           </div>
                           {!isCurrentUser && (
                             <span className="text-xs text-gray-500 block self-end ml-1	">

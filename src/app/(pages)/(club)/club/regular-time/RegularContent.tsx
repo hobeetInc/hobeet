@@ -38,18 +38,18 @@ const RegularContent = () => {
     return {
       formData: {
         // 필수값이면서 null이 허용되지 않는 필드들
-        m_c_id: 0,
-        s_c_id: 0,
+        main_category_id: 0,
+        sub_category_id: 0,
         user_id: userId,
-        regular_club_approval: false,
-        regular_club_name: "",
-        regular_club_image: "",
-        regular_club_introduction: "",
+        egg_club_approval: false,
+        egg_club_name: "",
+        egg_club_image: "",
+        egg_club_introduction: "",
 
         // null이 허용되는 선택적 필드들
-        regular_club_gender: null,
-        regular_club_age: null,
-        regular_club_people_limited: null
+        egg_club_gender: null,
+        egg_club_age: null,
+        egg_club_people_limited: null
       },
       selectedGender: "",
       selectedAge: ""
@@ -69,9 +69,7 @@ const RegularContent = () => {
   const [formData, setFormData] = useState<EggClubForm>(initialData.formData);
 
   // 폼데이터 확인용
-  useEffect(() => {
-    console.log("폼:", formData);
-  }, [formData]);
+  useEffect(() => {}, [formData]);
 
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
@@ -122,22 +120,22 @@ const RegularContent = () => {
 
   // 다음단계 버튼 (유효성 검사 함수)
   const handleNext = () => {
-    if (step === 1 && formData.s_c_id === 0) {
+    if (step === 1 && formData.sub_category_id === 0) {
       alert("카테고리를 선택해주세요");
       return;
     }
 
     if (step === 2) {
-      if (!formData.regular_club_image) {
+      if (!formData.egg_club_image) {
         alert("이미지를 선택해주세요");
         return;
       }
 
-      if (!formData.regular_club_name.trim()) {
+      if (!formData.egg_club_name.trim()) {
         alert("모임 제목을 입력해주세요");
         return;
       }
-      if (!formData.regular_club_introduction.trim()) {
+      if (!formData.egg_club_introduction.trim()) {
         alert("모임 소개글을 입력해주세요");
         return;
       }
@@ -154,15 +152,25 @@ const RegularContent = () => {
         return;
       }
 
-      if (formData.regular_club_people_limited !== null && formData.regular_club_people_limited >= 101) {
+      if (formData.egg_club_people_limited !== null && formData.egg_club_people_limited === 0) {
+        alert("2명 이상 적어주세요");
+        return;
+      }
+
+      if (formData.egg_club_people_limited !== null && formData.egg_club_people_limited === 1) {
+        alert("2명 이상 적어주세요");
+        return;
+      }
+
+      if (formData.egg_club_people_limited !== null && formData.egg_club_people_limited >= 101) {
         alert("인원제한은 100명 이하로 해주세요");
         return;
       }
 
-      if (formData.regular_club_people_limited === null) {
+      if (formData.egg_club_people_limited === null) {
         setFormData({
           ...formData,
-          regular_club_people_limited: 100
+          egg_club_people_limited: 100
         });
         return alert("정말로 인원제한을 주지 않겠습니까?");
       }
@@ -178,11 +186,11 @@ const RegularContent = () => {
     try {
       let finalFormData = { ...formData };
       // File 객체인 경우에만 업로드 처리
-      if (formData.regular_club_image instanceof File) {
-        const imageUrl = await uploadImage(formData.regular_club_image);
+      if (formData.egg_club_image instanceof File) {
+        const imageUrl = await uploadImage(formData.egg_club_image);
         finalFormData = {
           ...finalFormData,
-          regular_club_image: imageUrl
+          egg_club_image: imageUrl
         };
       }
       // 슈퍼베이스에 데이터 저장
@@ -190,10 +198,10 @@ const RegularContent = () => {
       // console.log(data);
 
       const representive = {
-        r_c_id: data.regular_club_id,
+        egg_club_id: data.egg_club_id,
         user_id: data.user_id,
-        r_c_participation_request_status: "active",
-        r_c_participation_request_approved_date: new Date().toISOString()
+        egg_club_participation_request_status: "active",
+        egg_club_participation_request_approved_date: new Date().toISOString()
       };
 
       // 승인 테이블에 넣기
@@ -201,21 +209,22 @@ const RegularContent = () => {
 
       const member = {
         user_id: data.user_id,
-        r_c_id: data.regular_club_id,
-        r_c_participation_request_id: res.r_c_participation_request_id,
-        regular_club_request_status: "active"
+        egg_club_id: data.egg_club_id,
+        egg_club_participation_request_id: res.egg_club_participation_request_id,
+        egg_club_request_status: "active"
       };
 
       // 승인된 맴버 테이블에 넣기
       await putRegularMember(member);
       // 모임장 채팅방 생성 및 입장
-      await RegularClubChatRoom(data.regular_club_name, data.regular_club_id, userId);
+      await RegularClubChatRoom(data.egg_club_name, data.egg_club_id, userId);
 
       alert("정기적 모임 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(REGULAR_CLUB_CREATE);
+
       // 다른 페이지로 이동
-      router.push(`/club/regular-club-sub/${data.regular_club_id}`);
+      router.replace(`/club/regular-club-sub/${data.egg_club_id}`);
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       alert("정기적 모임 생성 중 오류가 발생했습니다.");
@@ -236,12 +245,12 @@ const RegularContent = () => {
             <div>
               <h1>정기모임 소개</h1>
               <textarea
-                value={formData.regular_club_introduction}
+                value={formData.egg_club_introduction}
                 maxLength={290}
-                onChange={(e) => setFormData({ ...formData, regular_club_introduction: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, egg_club_introduction: e.target.value })}
                 className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
               />
-              <div className="text-sm text-gray-500">{formData.regular_club_introduction.length} / 290</div>
+              <div className="text-sm text-gray-500">{formData.egg_club_introduction.length} / 290</div>
             </div>
           </div>
         );

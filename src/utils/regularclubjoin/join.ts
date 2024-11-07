@@ -20,17 +20,16 @@ export const regularClubJoin = async ({ clubId, userId }: RegularClubJoinParams)
 
     // 가입 조건 검증 (나이, 성별 등)
     await clubAPI.validateJoinConditions(userId, clubId);
-    // console.log("모임 승인 상태에 따라 가입 신청!!!");
 
     // 모임 승인 상태에 따라 가입 신청
     await clubAPI.applyForMembership(clubId, userId);
-    // console.log("클럽 데이터", clubData);
+
     return {
       success: true,
-      message: clubData.regular_club_approval
+      message: clubData.egg_club_approval
         ? "가입 신청이 완료되었습니다. 모임장의 승인을 기다려주세요."
         : "모임 가입이 완료 되었습니다.",
-      status: clubData.regular_club_approval ? "pending" : "active"
+      status: clubData.egg_club_approval ? "pending" : "active"
     };
   } catch (error) {
     if (error instanceof ClubJoinError) {

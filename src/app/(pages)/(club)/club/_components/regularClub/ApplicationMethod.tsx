@@ -15,7 +15,7 @@ const ApplicationMethod = ({ formData, setFormData }: EggClubProps) => {
   ];
 
   const handleMethod = (value: boolean) => {
-    setFormData({ ...formData, regular_club_approval: value });
+    setFormData({ ...formData, egg_club_approval: value });
   };
 
   return (
@@ -27,7 +27,7 @@ const ApplicationMethod = ({ formData, setFormData }: EggClubProps) => {
             key={method.id}
             onClick={() => handleMethod(method.value)}
             className={`border-2 border-black h-[57px] ${
-              formData.regular_club_approval === method.value ? "bg-blue-100" : ""
+              formData.egg_club_approval === method.value ? "bg-blue-100" : ""
             }`}
           >
             {method.text}

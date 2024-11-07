@@ -26,8 +26,8 @@ export const fetchJoinedClubs = async (userId: string) => {
     .eq("user_id", userId)
     .eq("egg_club_request_status", "active");
 
-  const oneTimeIds = oneTimeMemberships?.map((m) => m.o_t_c_id) || [];
-  const regularIds = regularMemberships?.map((m) => m.r_c_id) || [];
+  const oneTimeIds = oneTimeMemberships?.map((m) => m.egg_pop_id) || [];
+  const regularIds = regularMemberships?.map((m) => m.egg_club_id) || [];
 
   const oneTimeData = oneTimeIds.length
     ? await supabase

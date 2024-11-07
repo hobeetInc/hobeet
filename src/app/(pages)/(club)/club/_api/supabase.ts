@@ -2,7 +2,7 @@ import browserClient from "@/utils/supabase/client";
 
 import { EggDay, InsertEggDayMember } from "@/types/eggday.types";
 import { EggPopForm, EggPopMember } from "@/types/eggpop.types";
-import { EggClubForm, EggClubRequest, InsertWishList } from "@/types/eggclub.types";
+import { EggClubForm, EggClubRequest, InsertMember, InsertWishList } from "@/types/eggclub.types";
 
 // supabase에 일회성 모임 제출
 
@@ -130,7 +130,7 @@ export const putRepresentative = async (representative: EggClubRequest) => {
 
 // 모임장 정기적 모임 맴버 테이블에 집어넣기
 
-export const putRegularMember = async (member: EggClubForm) => {
+export const putRegularMember = async (member: InsertMember) => {
   const { data, error } = await browserClient.from("egg_club_member").insert([member]).select("*").single();
 
   if (error) throw error;
@@ -228,6 +228,7 @@ export const getParticipationStatus = async ({ userId, clubId }: GetParticipatio
 // 정기적 모임안의 공지 정보 가져오기
 export const getNotificationData = async (clubId: number) => {
   const { data, error } = await browserClient.from("egg_day").select("*").eq("egg_club_id", clubId);
+
   if (error) throw error;
   return data;
 };
@@ -255,7 +256,7 @@ export const getWishList = async (wish: InsertWishList) => {
   const { data, error } = await browserClient
     .from("wish_list")
     .select("*")
-    .match({ r_c_id: wish.r_c_id, user_id: wish.user_id })
+    .match({ egg_club_id: wish.egg_club_id, user_id: wish.user_id })
     .single();
   if (error) throw error;
   return data;
@@ -266,7 +267,7 @@ export const deleteWishList = async (wish: InsertWishList) => {
   const { data, error } = await browserClient
     .from("wish_list")
     .delete()
-    .match({ r_c_id: wish.r_c_id, user_id: wish.user_id });
+    .match({ egg_club_id: wish.egg_club_id, user_id: wish.user_id });
   if (error) throw error;
   return data;
 };

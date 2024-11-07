@@ -1,11 +1,13 @@
 "use client";
-import Image from "next/image";
+
 import { useRouter } from "next/navigation";
 import OverallPopularMeetings from "../_components/OverallPopularMeetings";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { getSearchedClubs } from "../_api/supabase";
 import Link from "next/link";
 import { Club } from "@/types/search.types";
+import Image from "next/image";
+import { HorizontalContentsListLargeEggClub } from "@/components/uiComponents/HorizontalContentsListLarge";
 
 const SearchPage = () => {
   const router = useRouter();
@@ -43,20 +45,19 @@ const SearchPage = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  // console.log(searchResults);
 
   return (
     <div className="flex flex-col items-center w-full max-w-[390px] mx-auto px-4 pt-4">
       <form onSubmit={handleSearch} className="relative flex items-center w-full bg-[#f2f2f2] rounded-[22px] py-2 px-5">
         <input
-          className="w-full bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
+          className="w-full h-[11 px] bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
           type="text"
           placeholder="검색어를 입력하세요"
           value={searchTerm}
           onChange={handleInputChange}
         />
         <button type="submit" className="flex items-center justify-center ml-2 flex-shrink-0">
-          <Image width={20} height={20} src="/asset/Icon/Frame 1000007052.png" alt="search" />
+          <Image width={20} height={20} src={"/asset/Icon/Frame 1000007052.png"} alt="search" />
         </button>
       </form>
       <div className="w-full h-[80px] mt-6 rounded-xl flex items-center justify-center bg-[#fff1cc]">
@@ -69,24 +70,25 @@ const SearchPage = () => {
         <div className="w-full mt-4">
           {searchResults.map((club) => (
             <div
-              key={club.type === "regular" ? club.regular_club_id : club.one_time_club_id}
+              key={club.type === "eggClub" ? club.egg_club_id : club.egg_pop_id}
               className="p-4 bg-white rounded-lg mb-2 shadow-sm"
             >
-              {club.type === "regular" ? (
+              {club.type === "eggClub" ? (
                 // 정규 모임 표시
                 <div>
                   <Link
-                    key={club.regular_club_id}
-                    href={`/club/regular-club-sub/${club.regular_club_id}`}
+                    key={club.egg_club_id}
+                    href={`/club/regular-club-sub/${club.egg_club_id}`}
                     className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4"
                   >
-                    <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
+                    <HorizontalContentsListLargeEggClub eggClub={club} />
+                    {/* <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
                       <div className="w-[88px] h-[88px] rounded-[12px] flex-shrink-0 overflow-hidden">
                         <Image
                           width={88}
                           height={88}
-                          src={club.regular_club_image}
-                          alt={club.regular_club_name}
+                          src={club.egg_club_image}
+                          alt={club.egg_club_name}
                           className="w-[88px] h-[88px] object-cover"
                         />
                       </div>
@@ -97,7 +99,7 @@ const SearchPage = () => {
                           </p>
                         </div>
                         <p className="text-[14px] leading-[18.9px] font-[600] overflow-hidden text-overflow-ellipsis">
-                          {club.regular_club_name}
+                          {club.egg_club_name}
                         </p>
                         <div className="flex items-center gap-2">
                           <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
@@ -117,7 +119,7 @@ const SearchPage = () => {
                               멤버
                             </p>
                             <p className="font-pretendard text-[14px] ml-[2px] leading-[20.3px] text-[#8c8c8c] font-[500px]">
-                              {club.r_c_member[0].count} / {club.regular_club_people_limited}
+                              {club.egg_club_member[0].count} / {club.egg_club_people_limited}
                             </p>
                           </div>
                         </div>
@@ -134,24 +136,25 @@ const SearchPage = () => {
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </Link>
                 </div>
               ) : (
                 // 일회성 모임 표시
                 <div>
                   <Link
-                    href={`/club/one-time-club-sub/${club.one_time_club_id}`}
-                    key={club.one_time_club_id}
+                    href={`/club/one-time-club-sub/${club.egg_pop_id}`}
+                    key={club.egg_pop_id}
                     className="w-[160px] h-[311px] mr-4"
                   >
+                    {/* <HorizontalContentsListLargeEggPop eggPop={club} /> */}
                     <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
                       <div className="w-[88px] h-[88px] rounded-[12px] flex-shrink-0 overflow-hidden">
                         <Image
                           width={88}
                           height={88}
-                          src={club.one_time_image}
-                          alt={club.one_time_club_name}
+                          src={club.egg_pop_image}
+                          alt={club.egg_pop_name}
                           className="w-[88px] h-[88px] object-cover"
                         />
                       </div>
@@ -162,7 +165,7 @@ const SearchPage = () => {
                         <p className="font-pretendard text-[10px] not-italic leading-[14.5px] font-normal">에그팝</p>
                       </div>
                       <p className="text-[14px] leading-[18.9px] font-[600] overflow-hidden text-overflow-ellipsis">
-                        {club.one_time_club_name}
+                        {club.egg_pop_name}
                       </p>
                       <div className="flex items-center gap-2">
                         <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">

@@ -44,13 +44,13 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
   const [formData, setFormData] = useState<EggDay>({
     user_id: userId,
-    r_c_notification_name: "",
-    r_c_notification_content: "",
-    r_c_notification_date_time: "",
-    r_c_notification_location: "",
-    r_c_notification_tax: 0,
-    r_c_notification_image: "",
-    r_c_id: parseInt(params.id)
+    egg_day_name: "",
+    egg_day_content: "",
+    egg_day_date_time: "",
+    egg_day_location: "",
+    egg_day_tax: 0,
+    egg_day_image: "",
+    egg_club_id: parseInt(params.id)
   });
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -72,15 +72,15 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
   // 컴포넌트 마운트 시 또는 formData의 이미지가 변경될 때 미리보기 생성
   useEffect(() => {
-    if (formData.r_c_notification_image instanceof File) {
-      const url = URL.createObjectURL(formData.r_c_notification_image);
+    if (formData.egg_day_image instanceof File) {
+      const url = URL.createObjectURL(formData.egg_day_image);
       setPreviewUrl(url);
 
       return () => {
         URL.revokeObjectURL(url);
       };
     }
-  }, [formData.r_c_notification_image]);
+  }, [formData.egg_day_image]);
 
   // 이미지 선택 시 처리하는 함수
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,12 +104,12 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
     setPreviewUrl(previewImageUrl);
 
     // formData에 File 객체 저장
-    setFormData({ ...formData, r_c_notification_image: file });
+    setFormData({ ...formData, egg_day_image: file });
   };
 
   const handleDeleteImage = () => {
     setPreviewUrl(null);
-    setFormData({ ...formData, r_c_notification_image: null });
+    setFormData({ ...formData, egg_day_image: null });
 
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; //input 값 초기화
@@ -168,7 +168,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
       const combinedDate = new Date(date.setHours(time.getHours(), time.getMinutes()));
       setFormData({
         ...formData,
-        r_c_notification_date_time: combinedDate.toISOString()
+        egg_day_date_time: combinedDate.toISOString()
       });
     }
   };
@@ -221,7 +221,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
         setAddressData(newAddressData);
         setFormData({
           ...formData,
-          r_c_notification_location: fullAddress
+          egg_day_location: fullAddress
         });
       }
     }).open();
@@ -243,7 +243,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
       setFormData({
         ...formData,
-        r_c_notification_location: fullAddress
+        egg_day_location: fullAddress
       });
     }
   };
@@ -253,9 +253,9 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
     setInputError("");
 
     if (!hasTax) {
-      setFormData({ ...formData, r_c_notification_tax: 0 });
+      setFormData({ ...formData, egg_day_tax: 0 });
     } else {
-      setFormData({ ...formData, r_c_notification_tax: null });
+      setFormData({ ...formData, egg_day_tax: null });
     }
   };
 
@@ -264,7 +264,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
     // 빈 문자열이면 null로 설정
     if (value === "") {
-      setFormData({ ...formData, r_c_notification_tax: null });
+      setFormData({ ...formData, egg_day_tax: null });
       setInputError("");
       return;
     }
@@ -290,38 +290,38 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
     }
 
     setInputError("");
-    setFormData({ ...formData, r_c_notification_tax: numValue });
+    setFormData({ ...formData, egg_day_tax: numValue });
   };
 
   const handleSubmit = async () => {
     try {
       // 필수값 유효성 검사
-      if (!formData.r_c_notification_name.trim()) {
+      if (!formData.egg_day_name.trim()) {
         alert("모임 제목을 입력해주세요");
         return;
       }
 
-      if (!formData.r_c_notification_content.trim()) {
+      if (!formData.egg_day_content.trim()) {
         alert("모임 소개를 입력해주세요");
         return;
       }
 
-      if (!formData.r_c_notification_date_time) {
+      if (!formData.egg_day_date_time) {
         alert("날짜와 시간을 선택해주세요");
         return;
       }
 
-      if (!formData.r_c_notification_location) {
+      if (!formData.egg_day_location) {
         alert("모임 장소를 입력해주세요");
         return;
       }
 
-      if (showTaxInput && formData.r_c_notification_tax === null) {
+      if (showTaxInput && formData.egg_day_tax === null) {
         alert("참가비를 입력해주세요");
         return;
       }
 
-      if (!formData.r_c_notification_image) {
+      if (!formData.egg_day_image) {
         alert("모임 대표 이미지를 업로드해주세요");
         return;
       }
@@ -329,12 +329,12 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
       let finalFormData = { ...formData };
 
       // 이미지 업로드 처리
-      if (formData.r_c_notification_image instanceof File) {
+      if (formData.egg_day_image instanceof File) {
         try {
-          const imageUrl = await uploadImage(formData.r_c_notification_image);
+          const imageUrl = await uploadImage(formData.egg_day_image);
           finalFormData = {
             ...finalFormData,
-            r_c_notification_image: imageUrl
+            egg_day_image: imageUrl
           };
         } catch (error) {
           console.error("이미지 업로드 오류:", error);
@@ -348,14 +348,14 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
       // console.log("이거 지금 생성함!!!!!!!!!", data);
 
       const hostInfo = {
-        r_c_notification_id: data.r_c_notification_id,
+        egg_day_id: data.egg_day_id,
         user_id: data.user_id
       };
 
       await submitRegularMember(hostInfo);
 
       alert("정기모임 안의 공지글을 생성하였습니다");
-      router.push(`/club/regular-club-sub/${params.id}/create/${data.r_c_notification_id}`); // 성공 시 이동할 페이지
+      router.push(`/club/regular-club-sub/${params.id}/create/${data.egg_day_id}`); // 성공 시 이동할 페이지
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       const errorMessage = error instanceof Error ? error.message : "알 수 없는 오류가 발생했습니다";
@@ -394,17 +394,17 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
           <input
             type="text"
             placeholder="모임 제목을 작성해주세요"
-            value={formData.r_c_notification_name}
+            value={formData.egg_day_name}
             maxLength={36}
             onChange={(e) =>
               setFormData({
                 ...formData,
-                r_c_notification_name: e.target.value
+                egg_day_name: e.target.value
               })
             }
             className="border-2 border-black mt-4 w-[358px] h-[48px] p-2"
           />
-          <div className="text-gray-500 text-sm">{formData.r_c_notification_name.length} / 36</div>
+          <div className="text-gray-500 text-sm">{formData.egg_day_name.length} / 36</div>
         </div>
 
         <div>
@@ -450,12 +450,12 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
           <h1 className="text-[20px] font-semibold mb-4">설명</h1>
 
           <textarea
-            value={formData.r_c_notification_content}
+            value={formData.egg_day_content}
             maxLength={290}
-            onChange={(e) => setFormData({ ...formData, r_c_notification_content: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, egg_day_content: e.target.value })}
             className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
           />
-          <div className="text-gray-500 text-sm">{formData.r_c_notification_content.length} / 290</div>
+          <div className="text-gray-500 text-sm">{formData.egg_day_content.length} / 290</div>
         </div>
 
         <div>
@@ -478,15 +478,15 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
             <div className="next-box bg-blue-100">
               <input
                 type="text"
-                value={formData.r_c_notification_tax || ""}
+                value={formData.egg_day_tax || ""}
                 onChange={handleTaxAmount}
                 placeholder="참가비를 입력해주세요"
                 className="w-[328px] h-8 rounded-lg p-2"
               />
               {inputError && <div className="text-red-500 text-sm mt-1">{inputError}</div>}
 
-              {formData.r_c_notification_tax !== null && formData.r_c_notification_tax > 0 && !inputError && (
-                <div className="py-4 px-1 text-gray-600">{formData.r_c_notification_tax.toLocaleString()}원</div>
+              {formData.egg_day_tax !== null && formData.egg_day_tax > 0 && !inputError && (
+                <div className="py-4 px-1 text-gray-600">{formData.egg_day_tax.toLocaleString()}원</div>
               )}
             </div>
           )}

@@ -9,15 +9,15 @@ const ImageUpload = ({ formData, setFormData }: EggClubProps) => {
 
   // 컴포넌트 마운트 시 또는 formData의 이미지가 변경될 때 미리보기 생성
   useEffect(() => {
-    if (formData.regular_club_image instanceof File) {
-      const url = URL.createObjectURL(formData.regular_club_image);
+    if (formData.egg_club_image instanceof File) {
+      const url = URL.createObjectURL(formData.egg_club_image);
       setPreviewUrl(url);
 
       return () => {
         URL.revokeObjectURL(url);
       };
     }
-  }, [formData.regular_club_image]);
+  }, [formData.egg_club_image]);
 
   // 이미지 선택 시 처리하는 함수
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,12 +41,12 @@ const ImageUpload = ({ formData, setFormData }: EggClubProps) => {
     setPreviewUrl(previewImageUrl);
 
     // formData에 File 객체 저장
-    setFormData({ ...formData, regular_club_image: file });
+    setFormData({ ...formData, egg_club_image: file });
   };
 
   const handleDeleteImage = () => {
     setPreviewUrl(null);
-    setFormData({ ...formData, regular_club_image: null });
+    setFormData({ ...formData, egg_club_image: null });
 
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; //input 값 초기화

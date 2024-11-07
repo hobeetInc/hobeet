@@ -23,10 +23,7 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
 
             <div className="space-y-4">
               {crewList?.map((member, index) => (
-                <div
-                  key={member.notificationId}
-                  className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-                >
+                <div key={member.egg_day_id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center space-x-3">
                     <div className="relative w-12 h-12">
                       <Image src={member.userImage} alt={member.userName} fill className="rounded-full object-cover" />

@@ -6,9 +6,9 @@ export async function GET(req: Request) {
 
   try {
     const url = new URL(req.url);
-    const r_c_id = url.searchParams.get("regular_club_id");
+    const egg_club_id = url.searchParams.get("eggclubid");
 
-    const { data, error } = await supabase.from("egg_day_chatting").select(`*`).eq("egg_club_id", r_c_id);
+    const { data, error } = await supabase.from("egg_day_chatting").select(`*`).eq("egg_club_id", egg_club_id);
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

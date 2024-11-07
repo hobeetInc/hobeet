@@ -27,11 +27,11 @@ const MemberType = ({
     setSelectedGender(gender);
 
     if (gender === "누구나") {
-      setFormData({ ...formData, regular_club_gender: null });
+      setFormData({ ...formData, egg_club_gender: null });
     } else if (gender === "여자만") {
-      setFormData({ ...formData, regular_club_gender: "여성" });
+      setFormData({ ...formData, egg_club_gender: "여성" });
     } else if (gender === "남자만") {
-      setFormData({ ...formData, regular_club_gender: "남성" });
+      setFormData({ ...formData, egg_club_gender: "남성" });
     }
   };
 
@@ -41,17 +41,17 @@ const MemberType = ({
     setSelectedAge(age);
 
     if (age === "누구나") {
-      setFormData({ ...formData, regular_club_age: 100 });
+      setFormData({ ...formData, egg_club_age: 100 });
     } else if (age === "10대") {
-      setFormData({ ...formData, regular_club_age: 19 });
+      setFormData({ ...formData, egg_club_age: 19 });
     } else if (age === "20대") {
-      setFormData({ ...formData, regular_club_age: 29 });
+      setFormData({ ...formData, egg_club_age: 29 });
     } else if (age === "30대") {
-      setFormData({ ...formData, regular_club_age: 39 });
+      setFormData({ ...formData, egg_club_age: 39 });
     } else if (age === "40대") {
-      setFormData({ ...formData, regular_club_age: 49 });
+      setFormData({ ...formData, egg_club_age: 49 });
     } else if (age === "50대 이상") {
-      setFormData({ ...formData, regular_club_age: 50 });
+      setFormData({ ...formData, egg_club_age: 50 });
     }
   };
   const handlePeopleLimit = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,11 +61,11 @@ const MemberType = ({
     // formData 업데이트
     setFormData({
       ...formData,
-      regular_club_people_limited: value === "" ? 100 : parseInt(value)
+      egg_club_people_limited: value === "" ? 100 : parseInt(value)
     });
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // 소수점(.) 입력 방지
     if (e.key === ".") {
       e.preventDefault();

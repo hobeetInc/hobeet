@@ -9,10 +9,10 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const data: EggMember[] = await getOneTimeMember(oneTimeClubId);
 
   // 클럽 정보만 추출
-  const clubInfo: GetEggPop = data[0]?.one_time_club;
+  const clubInfo: GetEggPop = data[0]?.egg_pop;
 
   // 날짜 커스텀
-  const date = clubInfo.one_time_club_date_time;
+  const date = clubInfo.egg_pop_date_time;
   const currentDate = new Date(date);
   const addZero = (num: number) => String(num).padStart(2, "0");
 
@@ -26,11 +26,11 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   }월 ${currentDate.getDate()}일 ${ampm} ${displayHours}:${addZero(currentDate.getMinutes())}`;
 
   // 장소 커스텀
-  const location = clubInfo.one_time_club_location;
+  const location = clubInfo.egg_pop_location;
   const currentLocation = location.split(" ").slice(1).join(" ");
 
   // 참가비 커스텀
-  const tax = clubInfo.one_time_tax;
+  const tax = clubInfo.egg_pop_tax;
   const currentTax = tax === 0 ? "X" : tax.toLocaleString() + "원";
 
   // console.log("택스", tax);
@@ -57,7 +57,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
 
   // 참여 크루 정보 추출
   const crewMembers: MemberInfo[] = data.map((member) => ({
-    memberId: member.o_t_c_member_id,
+    memberId: member.egg_pop_member_id,
     userId: member.user_id,
     userName: member.user.user_name,
     userImage: member.user.user_profile_img
@@ -70,13 +70,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
     <div className="container">
       <PopHeader clubInfo={clubInfo} />
       <div className="flex flex-col w-full">
-        <Image
-          src={clubInfo.one_time_image}
-          alt={clubInfo.one_time_club_name}
-          width={100}
-          height={100}
-          className="w-full"
-        />
+        <Image src={clubInfo.egg_pop_image} alt={clubInfo.egg_pop_name} width={100} height={100} className="w-full" />
       </div>
 
       <div className="flex flex-col gap-10 p-4">
@@ -84,7 +78,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
           <p className="text-[13px]">에그팝</p>
 
           <div className="flex justify-between">
-            <h1 className="font-bold text-[23px] mt-4">{clubInfo.one_time_club_name}</h1>
+            <h1 className="font-bold text-[23px] mt-4">{clubInfo.egg_pop_name}</h1>
             <p>♡</p>
           </div>
 
@@ -111,15 +105,15 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
             <h1 className="text-lg font-semibold mb-2">상세 정보</h1>
             <p>일시: {formDate}</p>
             <p>장소: {currentLocation}</p>
-            <p>나이: {clubInfo.one_time_age}세 이하</p>
-            <p>성별: {gender(clubInfo.one_time_gender)}</p>
-            <p>인원: {limited(clubInfo.one_time_people_limited)}</p>
+            <p>나이: {clubInfo.egg_pop_age}세 이하</p>
+            <p>성별: {gender(clubInfo.egg_pop_gender)}</p>
+            <p>인원: {limited(clubInfo.egg_pop_people_limited)}</p>
             <p>참가비: {currentTax}</p>
           </div>
 
           <div className="flex flex-col gap-2 mt-10">
             <h1 className="text-[20px] font-semibold">모임 소개</h1>
-            <p>{clubInfo.one_time_club_introduction}</p>
+            <p>{clubInfo.egg_pop_introduction}</p>
           </div>
         </div>
 
