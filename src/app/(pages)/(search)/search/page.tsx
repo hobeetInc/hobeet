@@ -45,7 +45,6 @@ const SearchPage = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  console.log(searchResults);
 
   return (
     <div className="flex flex-col items-center w-full max-w-[390px] mx-auto px-4 pt-4">

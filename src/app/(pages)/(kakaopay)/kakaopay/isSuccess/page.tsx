@@ -19,22 +19,18 @@ const Page = () => {
 
     const insertMember = async () => {
       if (clubType === "true") {
-        console.log("너 여기 타면 죽인다 진짜");
-
         await clubApi.insertMember(clubId, requestUserId);
         setIsMemberInserted(true);
 
         router.push(
-          `http://localhost:3000/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`
+          `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`
         );
       } else {
-        console.log("일단 너 타면 내가 살려줄게");
-
         await clubApi.eggDayInsertMember(clubId, requestUserId);
         setIsMemberInserted(true);
 
         router.push(
-          `http://localhost:3000/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`
+          `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`
         );
       }
     };

@@ -41,7 +41,6 @@ export async function ChatRoomExit(egg_day_chatting_id: number, clubCheck: boole
         .eq("egg_pop_chatting_room_member_id", egg_day_chatting_id)
 
         .single();
-      console.log(data);
 
       if (data.admin) {
         return false;

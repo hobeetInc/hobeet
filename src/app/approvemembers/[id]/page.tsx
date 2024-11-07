@@ -106,8 +106,6 @@ export default function ApproveMembersPage() {
   }, [clubId]);
 
   const approveMember = async (requestId: number) => {
-    console.log("야 이재호 제발 되게 해주삼!!! 살려줘");
-
     const { data, error } = await supabase
       .from("egg_club_participation_request")
       .update({ egg_club_participation_request_status: "active" })
@@ -123,7 +121,6 @@ export default function ApproveMembersPage() {
         egg_club_request_status: "active"
       });
       const user_id = data.user_id as string;
-      // console.log("나는 나는 나는 ", user_id);
 
       await RegularClubApproveChatRoomRecruiterEntrance({ egg_club_id: clubId, user_id: user_id }); // 모임원 채팅방 입장(가입 승인 시)
 

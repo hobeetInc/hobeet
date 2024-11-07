@@ -27,7 +27,6 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
           .single();
 
         if (roomError) throw roomError;
-        console.log(roomData);
 
         const { data: chatMember, error: chatMemberError } = await supabase
           .from("egg_club_member")

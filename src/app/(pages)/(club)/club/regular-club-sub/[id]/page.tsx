@@ -32,7 +32,6 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
     userImage: member.user.user_profile_img
   }));
 
-  console.log("Hmm...", crewMembers);
   // 호스트 정보 추출
   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 

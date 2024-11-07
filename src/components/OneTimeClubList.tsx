@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getOneTimeClub } from "@/app/(pages)/(club)/club/_api/supabase";
-import Image from "next/image";
-import { CustomAddress } from "@/utils/CustomAddress";
-import { CustomDate } from "@/utils/CustomDate";
+
 import { EggPopForm } from "@/types/eggpop.types";
 import { VerticalContentsListMediumEggPop } from "./uiComponents/VerticalContentsListMedium";
 
@@ -38,7 +36,7 @@ const OneTimeClubList = () => {
               <VerticalContentsListMediumEggPop
                 eggPop={club}
                 hostName={club.user_id.user_name}
-                hostImage={club.user_id.user_profile_img}
+                hostImag={club.user_id.user_profile_img}
                 memberCount={club.egg_pop_member[0].count}
               />
 

@@ -11,7 +11,6 @@ const EggPopPayDetail = () => {
     queryKey: ["eggPopPayData"],
     queryFn: getEggPopPayList
   });
-  console.log(data);
 
   const customAddress = (address: string) => {
     const withoutNumber = address?.replace(/\[\d+\]\s*/, "");

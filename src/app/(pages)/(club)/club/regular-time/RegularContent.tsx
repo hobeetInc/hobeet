@@ -69,9 +69,7 @@ const RegularContent = () => {
   const [formData, setFormData] = useState<EggClubForm>(initialData.formData);
 
   // 폼데이터 확인용
-  useEffect(() => {
-    console.log("폼:", formData);
-  }, [formData]);
+  useEffect(() => {}, [formData]);
 
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {

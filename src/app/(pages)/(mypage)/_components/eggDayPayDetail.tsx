@@ -11,7 +11,6 @@ const EggDayPayDetail = () => {
     queryKey: ["eggDayPayData"],
     queryFn: getEggDayPayList
   });
-  console.log(data);
 
   const customAddress = (address: string) => {
     const withoutNumber = address?.replace(/\[\d+\]\s*/, "");

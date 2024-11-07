@@ -56,9 +56,9 @@ export async function POST(req: Request) {
         quantity: 1,
         total_amount: amount,
         tax_free_amount: 0,
-        approval_url: `http://localhost:3000/kakaopay/isSuccess?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
-        cancel_url: "http://localhost:3000/",
-        fail_url: "http://localhost:3000/"
+        approval_url: `https://www.eggfriends.site/kakaopay/isSuccess?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
+        cancel_url: "https://www.eggfriends.site/",
+        fail_url: "https://www.eggfriends.site/"
       })
     });
 
@@ -107,7 +107,6 @@ export async function POST(req: Request) {
         console.error("egg_club_member_id fetch error:", rcmError);
         throw new Error("egg_club_member 테이블에서 egg_club_member_id를 가져오는 중 오류가 발생했습니다.");
       }
-      console.log(rcIdData);
 
       const { error } = await supabase.from("egg_day_kakaopay").insert({
         egg_club_member_id: rcmIdData.egg_club_member_id,

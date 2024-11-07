@@ -1,7 +1,7 @@
 // 프롭스로 eggPop 정보, hostName(모임장 이름), memberCount(가입 맴버수) 받아야 함
 
 import Image from "next/image";
-import { EggClubMainImage } from "./EggClubMainImage";
+
 import Tag from "./tag/index";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { Icon } from "./icon";
@@ -9,7 +9,7 @@ import { HeartImage } from "./HeartImage";
 
 // eggPop 상세정보, hostName(모임장 이름), memberCount(모임 참여 인원) 프롭스
 // 에그팝 모임 리스트 (medium)
-export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImage, memberCount }) => {
+export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImag, memberCount }) => {
   // 날짜와 시간 포맷팅
   const dateObj = new Date(eggPop.egg_pop_date_time);
 
@@ -70,7 +70,7 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImage, 
           <div className="justify-start items-center gap-0.5 flex">
             <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
               <Image
-                src={eggPop.user_id.user_profile_img}
+                src={hostImag}
                 alt="profile"
                 width={22}
                 height={22}

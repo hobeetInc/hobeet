@@ -9,14 +9,11 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
   const { id, subId } = params;
   const secondId = Number(subId);
   const clubId = Number(id);
-  console.log("clubId", clubId);
 
   try {
     const data: EggDayInfo[] = await getNotificationData(clubId);
-    console.log("진짜 왜 없는데에에에에에", data);
-    console.log(secondId);
+
     const clubInfo = data.find((club) => club.egg_day_id === secondId);
-    console.log("야 짜증나게 하지마라 진짜", clubInfo);
 
     if (!clubInfo) {
       throw new Error("Club information not found");

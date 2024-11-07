@@ -40,7 +40,6 @@ export async function POST(req: Request) {
               )
               .eq("egg_pop_chatting_room_id", chatting.egg_pop_chatting_room_id)
               .order("created_at", { ascending: true });
-            console.log(messages);
 
             if (messageError) {
               console.error("메시지 조회 오류:", messageError);
