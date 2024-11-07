@@ -7,21 +7,21 @@ import { useParams } from "next/navigation";
 import { RegularClubApproveChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
 
 export interface ParticipationRequest {
-  r_c_participation_request_id: number;
-  r_c_id: number;
+  egg_club_participation_request_id: number;
+  egg_club_id: number;
   user_id: {
     user_id: string;
     user_name: string;
     user_profile_img: string;
   };
-  r_c_participation_request_status: "pending" | "active" | "rejected";
+  egg_club_participation_request_status: "pending" | "active" | "rejected";
 }
 
 const ActiveMembersTab = ({ activeMembers }: { activeMembers: ParticipationRequest[] }) => {
   return (
     <div className="flex flex-col gap-4">
       {activeMembers.map((member) => (
-        <div key={member.r_c_participation_request_id} className="flex items-center gap-4">
+        <div key={member.egg_club_participation_request_id} className="flex items-center gap-4">
           <Image
             src={member.user_id.user_profile_img}
             alt={member.user_id.user_name}
@@ -46,7 +46,7 @@ const PendingRequestsTab = ({
   return (
     <div className="flex flex-col gap-4">
       {requests.map((req) => (
-        <div key={req.r_c_participation_request_id} className="flex items-center justify-between">
+        <div key={req.egg_club_participation_request_id} className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Image
               src={req.user_id.user_profile_img}
@@ -59,7 +59,7 @@ const PendingRequestsTab = ({
           </div>
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-            onClick={() => onApprove(req.r_c_participation_request_id)}
+            onClick={() => onApprove(req.egg_club_participation_request_id)}
           >
             승인하기
           </button>
@@ -106,14 +106,16 @@ export default function ApproveMembersPage() {
   }, [clubId]);
 
   const approveMember = async (requestId: number) => {
+    console.log("야 이재호 제발 되게 해주삼!!! 살려줘");
+
     const { data, error } = await supabase
       .from("egg_club_participation_request")
-      .update({ egg_club_request_status: "active" })
+      .update({ egg_club_participation_request_status: "active" })
       .eq("egg_club_participation_request_id", requestId)
       .select("*")
       .single();
     if (!error) {
-      setRequests((prev) => prev.filter((req) => req.r_c_participation_request_id !== requestId));
+      setRequests((prev) => prev.filter((req) => req.egg_club_participation_request_id !== requestId));
       const { error } = await supabase.from("egg_club_member").insert({
         user_id: data.user_id,
         egg_club_id: data.egg_club_id,

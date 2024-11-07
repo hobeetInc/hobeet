@@ -1,13 +1,15 @@
 // 프롭스로 eggPop 정보, hostName(모임장 이름), memberCount(가입 맴버수) 받아야 함
 
-import { EggPopMainImage } from "./EggClubMainImage";
 import Image from "next/image";
 import { EggClubMainImage } from "./EggClubMainImage";
-import Tag from "./Tag";
+import Tag from "./tag/index";
+import { CustomAddress } from "@/utils/CustomAddress";
+import { Icon } from "./icon";
+import { HeartImage } from "./HeartImage";
 
 // eggPop 상세정보, hostName(모임장 이름), memberCount(모임 참여 인원) 프롭스
 // 에그팝 모임 리스트 (medium)
-export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, memberCount }) => {
+export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImage, memberCount }) => {
   // 날짜와 시간 포맷팅
   const dateObj = new Date(eggPop.egg_pop_date_time);
 
@@ -21,12 +23,25 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, memberCount
   return (
     <div className="h-[311px] flex-col justify-start items-start gap-2 inline-flex">
       {/* 썸네일 이미지 */}
-      <EggPopMainImage imageURL={eggPop.egg_pop_image} size={160} />
+      <div className="relative ">
+        <div
+          className="relative flex justify-end items-center "
+          style={{
+            width: "160px",
+            height: "160px",
+            padding: "112px 0px 0px 112px",
+            borderRadius: "12px",
+            background: `url(${eggPop.egg_pop_image}) lightgray 50% / cover no-repeat`,
+            display: "flex",
+            alignItems: "center"
+          }}
+        />
+      </div>
 
       {/* 콘텐츠 영역 */}
       <div className="h-[143px] flex-col justify-start items-start gap-1 flex">
         {/* 에그팝 태그 */}
-        <Tag tagName="에그팝" />
+        <Tag tagName="eggpop" />
 
         {/* 모임 제목 */}
         <div className="self-stretch text-gray-900 text-subtitle-16">{eggPop.egg_pop_name}</div>
@@ -34,9 +49,14 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, memberCount
         {/* 위치 정보 */}
         <div className="self-stretch pt-0.5 justify-start items-center gap-0.5 inline-flex">
           <div className="w-4 h-4 justify-center items-center flex">
-            <div className="w-4 h-4 relative flex-col justify-start items-start flex" />
+            <span>
+              <Image src={"/asset/Icon/Icon-Location.png"} alt="지도" width={16} height={16} />
+            </span>
           </div>
-          <div className="grow shrink basis-0 text-gray-400 text-body_medium-14">{eggPop.egg_pop_location}</div>
+
+          <div className="grow shrink basis-0 text-gray-400 text-body_medium-14">
+            {CustomAddress(eggPop.egg_pop_location)}
+          </div>
         </div>
 
         {/* 날짜와 시간 */}
@@ -48,13 +68,13 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, memberCount
         {/* 호스트와 멤버 정보 */}
         <div className="self-stretch justify-start items-center gap-2 inline-flex">
           <div className="justify-start items-center gap-0.5 flex">
-            <div className="w-[22px] h-[22px] relative">
+            <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
               <Image
-                src={eggPop.egg_pop_image}
-                alt={eggPop.egg_pop_name}
+                src={eggPop.user_id.user_profile_img}
+                alt="profile"
                 width={22}
                 height={22}
-                className="rounded-full object-cover"
+                className="rounded-full object-cover w-[22px] h-[22px]"
               />
             </div>
             <div className="grow shrink basis-0 text-gray-400 text-body-medium-14">{hostName}</div>
@@ -73,17 +93,35 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, memberCount
 
 // eggClub 정보, hostName(모임장 이름), memberCount(모임 참여 인원), wishList(불리언 값으로 true면 하트 / flase면 빈하트), wishListCount(찜 개수) 프롭스
 // 에그클럽 모임 리스트 (medium)
-export const VerticalContentsListMediumEggClub = (eggClub, hostName, memberCount, wishList, wishListCount) => {
+export const VerticalContentsListMediumEggClub = ({
+  eggClub,
+  hostName,
+  hostImage,
+  memberCount,
+  isWished,
+  wishListCount
+}) => {
   return (
     // 컴포넌트 전체 컨테이너
     <div className="w-40 h-[292px] flex-col justify-start items-start gap-2 inline-flex">
       {/* 썸네일 이미지 영역 */}
-      <EggClubMainImage imageURL={eggClub.egg_club_image} isHeart={wishList} size={160} />
+
+      <div className={`relative w-[160px] h-[160px] bg-gray-100 rounded-xl`}>
+        <div
+          className="w-full h-full rounded-xl object-cover"
+          style={{
+            background: `url(${eggClub.egg_club_image}) lightgray 50% / cover no-repeat`
+          }}
+        />
+        <div className="absolute bottom-1 right-1">
+          <HeartImage selectedId={isWished ? 2 : 1} />
+        </div>
+      </div>
 
       {/* 컨텐츠 정보 영역 */}
       <div className="h-[124px] flex-col justify-start items-start gap-1.5 flex">
         {/* 에그클럽 태그 */}
-        <Tag tagName="에그클럽" />
+        <Tag tagName="eggclub" />
 
         {/* 모임 제목 */}
         <div className="self-stretch text-gray-900 text-subtitle-16">{eggClub.egg_club_name}</div>
@@ -93,13 +131,13 @@ export const VerticalContentsListMediumEggClub = (eggClub, hostName, memberCount
           {/* 호스트 정보 */}
           <div className="justify-start items-center gap-0.5 flex">
             {/* 호스트 프로필 이미지 */}
-            <div className="w-[22px] h-[22px] relative">
+            <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
               <Image
-                src={eggClub.egg_club_image}
-                alt={eggClub.egg_club_name}
+                src={hostImage}
+                alt={hostName}
                 width={22}
                 height={22}
-                className="rounded-full object-cover"
+                className="rounded-full object-cover w-[22px] h-[22px]"
               />
             </div>
             {/* 호스트 이름 */}
@@ -108,8 +146,8 @@ export const VerticalContentsListMediumEggClub = (eggClub, hostName, memberCount
 
           {/* 멤버 카운트 */}
           <div className="justify-start items-center gap-0.5 flex">
-            <div className="text-gray-400 text-body-medium-14">멤버</div>
-            <div className="text-gray-400 text-body-medium-14">
+            <div className=" text-gray-400 text-body-medium-14">멤버</div>
+            <div className=" text-gray-400 text-body-medium-14">
               {memberCount}/{eggClub.egg_club_people_limited}
             </div>
           </div>
@@ -117,11 +155,9 @@ export const VerticalContentsListMediumEggClub = (eggClub, hostName, memberCount
 
         {/* 찜하기 정보 */}
         <div className="pt-1 justify-start items-center gap-0.5 inline-flex">
-          <div className="w-4 h-4 justify-center items-center flex">
-            <div className="w-4 h-4 relative flex-col justify-start items-start flex" />
-          </div>
-          <div className="justify-start items-center flex">
-            <div className="text-gray-400 text-body-12">{wishListCount}</div>
+          <div className="justify-start items-center flex gap-[2px]">
+            <Icon name="heart" />
+            <div className="text-gray-400 text-body-12">{wishListCount > 100 ? "100+" : wishListCount}</div>
           </div>
         </div>
       </div>

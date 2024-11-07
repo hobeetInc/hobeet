@@ -24,7 +24,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         const data = await getOneTimeMember(clubId);
 
         const newCrewMemebers = data.map((member) => ({
-          memberId: member.o_t_c_member_id,
+          memberId: member.egg_pop_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img

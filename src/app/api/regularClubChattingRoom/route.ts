@@ -6,7 +6,7 @@ export async function GET(req: Request) {
 
   try {
     const url = new URL(req.url);
-    const egg_club_id = url.searchParams.get("egg_club_id");
+    const egg_club_id = url.searchParams.get("eggclubid");
 
     const { data, error } = await supabase.from("egg_day_chatting").select(`*`).eq("egg_club_id", egg_club_id);
 

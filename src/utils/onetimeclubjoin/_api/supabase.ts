@@ -102,6 +102,18 @@ export class SupabaseClubAPI {
       throw new ClubJoinError("모임 가입 처리 중 오류가 발생했습니다.");
     }
   }
+  // 에그 데이 가입
+  async eggDayInsertMember(clubId: string | null, userId: string | null): Promise<void> {
+    const { error } = await this.supabase.from("egg_day_member").insert({
+      egg_day_id: clubId,
+      user_id: userId
+    });
+
+    // await OneTimeClubChatRoomRecruiterEntrance({ egg_pop_id: Number(clubId) });
+    if (error) {
+      throw new ClubJoinError("모임 가입 처리 중 오류가 발생했습니다.");
+    }
+  }
 
   validateAgeRestriction(userAge: number, clubAge: number): void {
     if (clubAge === 100) {

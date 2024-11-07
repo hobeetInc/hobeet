@@ -4,12 +4,14 @@ import { addHours, format, parseISO } from "date-fns";
 import { getEggDayPayList } from "../_api/supabase";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
 const EggDayPayDetail = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["eggDayPayData"],
     queryFn: getEggDayPayList
   });
+  console.log(data);
 
   const customAddress = (address: string) => {
     const withoutNumber = address?.replace(/\[\d+\]\s*/, "");
@@ -53,22 +55,25 @@ const EggDayPayDetail = () => {
   return (
     <div className="egg-day-pay-list">
       {data?.map((notification, index) => (
-        <div key={index} className="notification-card my-4">
-          <div>{customDateFormat(notification.egg_club_id.egg_day_kakaopay_create_at)}</div>
-          <div>
-            <div className="notification-image">
-              <Image src={notification.egg_club_id.egg_day_id.egg_day_image} alt="payList" width={100} height={100} />
-            </div>
-            <div className="notification-content">
-              <div className=" bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그데이</div>
-              <h3 className="notification-title">{notification.egg_club_id.egg_day_id.egg_day_name}</h3>
-              <p className="notification-location">
-                {customAddress(notification.egg_club_id.egg_day_id.egg_day_location)}
-              </p>
-              <p className="notification-date">{customDate(notification.egg_club_id.egg_day_id.egg_day_date_time)}</p>
+        <Link
+          href={`/club/regular-club-sub/${notification.egg_club_id}/create/${notification.egg_day_id.egg_day_id}`}
+          key={index}
+        >
+          <div key={index} className="notification-card my-4">
+            <div>{customDateFormat(notification.egg_day_kakaopay_create_at)}</div>
+            <div>
+              <div className="notification-image">
+                <Image src={notification.egg_day_id.egg_day_image} alt="payList" width={100} height={100} />
+              </div>
+              <div className="notification-content">
+                <div className=" bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그데이</div>
+                <h3 className="notification-title">{notification.egg_day_id.egg_day_name}</h3>
+                <p className="notification-location">{customAddress(notification.egg_day_id.egg_day_location)}</p>
+                <p className="notification-date">{customDate(notification.egg_day_id.egg_day_date_time)}</p>
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

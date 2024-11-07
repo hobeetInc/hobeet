@@ -95,7 +95,7 @@ const ProfileEditPage = () => {
     } else {
       setUserEmail(email);
       alert("프로필 정보가 성공적으로 업데이트되었습니다.");
-      router.push("/profile");
+      router.push("/mypage/profile");
     }
   };
 

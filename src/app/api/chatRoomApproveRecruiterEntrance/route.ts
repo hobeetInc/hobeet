@@ -5,12 +5,14 @@ export async function POST(req: Request) {
   const supabase = createClient();
   const { regularClubMember, user_id } = await req.json();
   // console.log("user_id", user_id);
+  console.log("야 이 새끼야", regularClubMember);
 
   try {
     const { data: memberData, error: memberError } = await supabase
       .from("egg_club_member")
       .select("egg_club_member_id")
       .eq("user_id", user_id)
+      .eq("egg_club_id", regularClubMember.data[0].egg_club_id)
       .single();
 
     if (memberError || !memberData) {
@@ -18,15 +20,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "멤버 정보를 찾을 수 없습니다." }, { status: 404 });
     }
     debugger;
-    const r_c_member_id = memberData.egg_club_member_id;
+    const egg_club_member_id = memberData.egg_club_member_id;
+    console.log("에그클럽 멤버 아이디 egg_club_member_id", egg_club_member_id);
 
     // console.log("채팅방 정보: ", regularClubMember);
     const chatRoomData = regularClubMember.data[0];
+    console.log("채팅방 데이터 chatRoomData", chatRoomData);
 
     const { error: insertError } = await supabase.from("egg_day_chatting").insert({
-      r_c_n_chatting_room_id: chatRoomData.r_c_n_chatting_room_id,
-      r_c_member_id: r_c_member_id,
-      r_c_id: chatRoomData.r_c_id,
+      egg_day_chatting_room_id: chatRoomData.egg_day_chatting_room_id,
+      egg_club_member_id: egg_club_member_id,
+      egg_club_id: chatRoomData.egg_club_id,
       admin: false
     });
 
