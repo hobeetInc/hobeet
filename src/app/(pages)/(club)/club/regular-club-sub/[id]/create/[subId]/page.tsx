@@ -4,7 +4,6 @@ import { getNotificationData, getNotificationMember } from "../../../../_api/sup
 import CrewList from "./_components/CrewList";
 import DayHeader from "./_components/DayHeader";
 import { EggDayInfo, EggDayMember, SubSubPageProps } from "@/types/eggday.types";
-import TabLayout from "../../_components/TabLayout";
 
 const SubSubPage = async ({ params }: SubSubPageProps) => {
   const { id, subId } = params;
@@ -57,7 +56,6 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
     return (
       <>
-        <TabLayout />
         <div className="container">
           <DayHeader clubInfo={clubInfo} />
           <div className="flex flex-col w-full">
