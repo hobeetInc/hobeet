@@ -2,8 +2,8 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getPopularClubs } from "../_api/supabase";
-import Image from "next/image";
 import Link from "next/link";
+import { HorizontalContentsListLargeEggClub } from "@/components/uiComponents/HorizontalContentsListLarge";
 
 const OverallPopularMeetings = () => {
   const { data, isLoading } = useQuery({
@@ -15,13 +15,16 @@ const OverallPopularMeetings = () => {
 
   return (
     <div className="flex w-[390px] px-4 flex-col items-start gap-4">
-      {data?.map((club, index) => (
+      {data?.map((club) => (
         <Link
           key={club.egg_club_id}
           href={`/club/regular-club-sub/${club.egg_club_id}`}
           className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4"
         >
-          <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
+          {/* 여긴 이미지 88이고 검색해서 나오는건 102여야함 */}
+          {/* 지금은 102임 */}
+          <HorizontalContentsListLargeEggClub eggClub={club} />
+          {/* <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
             <div className="w-[37px] flex-shrink-0">
               <p className="text-[32px] font-bold leading-[135%]">{index + 1}</p>
             </div>
@@ -78,7 +81,7 @@ const OverallPopularMeetings = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
         </Link>
       ))}
     </div>

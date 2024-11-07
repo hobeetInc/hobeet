@@ -1,6 +1,6 @@
 import { CustomAddress } from "@/utils/CustomAddress";
 import { LocationImage } from "./LocationImage";
-import Tag from "./Tag";
+import Tag from "@/components/uiComponents/tag/index";
 import { CustomDate } from "@/utils/CustomDate";
 import Image from "next/image";
 import { HeartImage } from "./HeartImage";
@@ -8,7 +8,7 @@ import { HeartImage } from "./HeartImage";
 export const EggPopVerticalList = ({ eggPop }) => {
   return (
     <div className="flex w-[174px] flex-col items-start gap-1">
-      <Tag tagName="에그팝" variant="yellow" />
+      <Tag tagName="eggpop" variant="yellow" />
       {/* 에그팝 제목*/}
       <span
         className="self-stretch overflow-hidden text-ellipsis text-subtitle-16 font-semibold leading-[21.6px] text-gray-900"
@@ -70,7 +70,7 @@ export const EggPopVerticalList = ({ eggPop }) => {
 export const EggClubVerticalList = ({ eggClub }) => {
   return (
     <div className="flex w-[174px] flex-col items-start gap-[6px]">
-      <Tag tagName="에그클럽" variant="black" />
+      <Tag tagName="eggclub" variant="black" />
       <span
         className="self-stretch overflow-hidden text-ellipsis text-subtitle-16 font-semibold leading-[21.6px] text-gray-900"
         style={{

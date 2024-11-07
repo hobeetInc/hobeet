@@ -7,6 +7,7 @@ import { getSearchedClubs } from "../_api/supabase";
 import Link from "next/link";
 import { Club } from "@/types/search.types";
 import Image from "next/image";
+import { HorizontalContentsListLargeEggClub } from "@/components/uiComponents/HorizontalContentsListLarge";
 
 const SearchPage = () => {
   const router = useRouter();
@@ -50,7 +51,7 @@ const SearchPage = () => {
     <div className="flex flex-col items-center w-full max-w-[390px] mx-auto px-4 pt-4">
       <form onSubmit={handleSearch} className="relative flex items-center w-full bg-[#f2f2f2] rounded-[22px] py-2 px-5">
         <input
-          className="w-full bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
+          className="w-full h-[11 px] bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
           type="text"
           placeholder="검색어를 입력하세요"
           value={searchTerm}
@@ -81,7 +82,8 @@ const SearchPage = () => {
                     href={`/club/regular-club-sub/${club.egg_club_id}`}
                     className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4"
                   >
-                    <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
+                    <HorizontalContentsListLargeEggClub eggClub={club} />
+                    {/* <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
                       <div className="w-[88px] h-[88px] rounded-[12px] flex-shrink-0 overflow-hidden">
                         <Image
                           width={88}
@@ -135,7 +137,7 @@ const SearchPage = () => {
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </Link>
                 </div>
               ) : (
@@ -146,6 +148,7 @@ const SearchPage = () => {
                     key={club.egg_pop_id}
                     className="w-[160px] h-[311px] mr-4"
                   >
+                    {/* <HorizontalContentsListLargeEggPop eggPop={club} /> */}
                     <div className="w-[358px] h-[90px] flex items-center gap-[8px] mx-4">
                       <div className="w-[88px] h-[88px] rounded-[12px] flex-shrink-0 overflow-hidden">
                         <Image
