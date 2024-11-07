@@ -10,6 +10,8 @@ const Page = () => {
   const requestUserId = searchParams.get("requestUserId") || "";
   const clubId = searchParams.get("clubId") || "";
   const clubType = searchParams.get("clubType") || "";
+  const pgToken = searchParams.get("pg_token");
+
   const [isMemberInserted, setIsMemberInserted] = useState(false);
 
   useEffect(() => {
@@ -23,14 +25,14 @@ const Page = () => {
         setIsMemberInserted(true);
 
         router.push(
-          `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`
+          `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}&pg_token=${pgToken}`
         );
       } else {
         await clubApi.eggDayInsertMember(clubId, requestUserId);
         setIsMemberInserted(true);
 
         router.push(
-          `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`
+          `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}&pg_token=${pgToken}`
         );
       }
     };
