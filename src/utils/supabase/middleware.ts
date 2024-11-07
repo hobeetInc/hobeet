@@ -38,16 +38,16 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (request.nextUrl.pathname.startsWith("/approvemembers") && user) {
-    const clubId = request.nextUrl.pathname.split("/")[3];
-    const { data } = await supabase.from("egg_club").select("*").eq("user_id", user.id).eq("egg_club_id", clubId);
+  // if (request.nextUrl.pathname.startsWith("/approvemembers") && user) {
+  //   const clubId = request.nextUrl.pathname.split("/")[3];
+  //   const { data } = await supabase.from("egg_club").select("*").eq("user_id", user.id).eq("egg_club_id", clubId);
 
-    if (!data || data.length === 0) {
-      const url = request.nextUrl.clone();
-      url.pathname = "/signin";
-      return NextResponse.redirect(url);
-    }
-  }
+  //   if (!data || data.length === 0) {
+  //     const url = request.nextUrl.clone();
+  //     url.pathname = "/signin";
+  //     return NextResponse.redirect(url);
+  //   }
+  // }
 
   // if (
   //   request.nextUrl.pathname.startsWith("/club/regular-club-sub") &&
