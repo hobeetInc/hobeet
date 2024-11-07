@@ -15,8 +15,6 @@ export interface RegularClub {
   egg_club_approval: boolean;
   egg_club_create_at: string;
   sub_category_id: number;
-  // pending_members: string[];
-  // approved_members: string
 }
 
 export interface RCMember {
@@ -77,36 +75,6 @@ export class RegularClubAPI {
     }
   }
 
-  // async applyForMembership(clubId: number, userId: string): Promise<void> {
-  //   const isExistingMember = await this.checkExistingMember(userId, clubId);
-  //   if (isExistingMember) {
-  //     throw new ClubJoinError("이미 가입된 모임입니다.");
-  //   }
-
-  //   await this.validateJoinConditions(userId, clubId);
-
-  //   const club = await this.getClubData(clubId);
-
-  //   if (!club) {
-  //     throw new ClubJoinError("모임을 찾을 수 없습니다.");
-  //   }
-
-  //   if (club.regular_club_approval) {
-  //     await this.insertMember(clubId, userId);
-  //   } else {
-  //     const { error: trxError } = await this.supabase.rpc("apply_club_membership", {
-  //       p_club_id: clubId,
-  //       p_user_id: userId
-  //     });
-
-  //     if (trxError) {
-  //       console.error("가입 신청 처리 중 오류:", trxError);
-  //       throw new ClubJoinError("가입 신청 처리 중 오류가 발생했습니다.");
-  //     }
-  //   }
-  // }
-
-  // applyForMembership 수정
   async applyForMembership(clubId: number, userId: string): Promise<void> {
     const isExistingMember = await this.checkExistingMember(userId, clubId);
     if (isExistingMember) {
@@ -116,7 +84,6 @@ export class RegularClubAPI {
     await this.validateJoinConditions(userId, clubId);
 
     const club = await this.getClubData(clubId);
-    // console.log(club);
 
     if (!club) {
       throw new ClubJoinError("모임을 찾을 수 없습니다.");
@@ -125,10 +92,10 @@ export class RegularClubAPI {
     if (club.egg_club_approval) {
       // r_c_participation_request 테이블에 pending 상태로 추가
       await this.supabase.from("egg_club_participation_request").insert({
-        r_c_id: clubId,
+        egg_club_id: clubId,
         user_id: userId,
-        r_c_participation_request_status: "pending",
-        r_c_participation_request_create_at: new Date()
+        egg_club_participation_request_status: "pending",
+        egg_club_participation_request_create_at: new Date()
       });
     } else {
       await this.insertMember(clubId, userId);
@@ -175,13 +142,11 @@ export class RegularClubAPI {
       })
       .select("*")
       .single();
-    // console.log("data", data);
     const { error } = await this.supabase.from("egg_club_member").insert({
       egg_club_id: clubId,
       user_id: userId,
       egg_club_request_status: "active",
-      egg_club_participation_request_id: data.r_c_participation_request_id
-      //   r_c_participation_request_id
+      egg_club_participation_request_id: data.egg_club_participation_request_id
     });
     await RegularClubChatRoomRecruiterEntrance({ egg_club_id: clubId });
     if (error) {

@@ -43,7 +43,7 @@ interface ClubParams {
 //승인 시 채팅방 입장 함수
 export async function RegularClubApproveChatRoomRecruiterEntrance(params: ClubParams) {
   try {
-    const response = await fetch(`/api/regularClubChattingRoom?egg_club_id=${params.egg_club_id}`, {
+    const response = await fetch(`/api/regularClubChattingRoom?eggclubid=${params.egg_club_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -56,6 +56,7 @@ export async function RegularClubApproveChatRoomRecruiterEntrance(params: ClubPa
 
     const data: EggClubChattingMember = await response.json();
     // console.log(data);
+    console.log("야 이자식아 제발좀 ....", data);
 
     const postResponse = await fetch("/api/chatRoomApproveRecruiterEntrance", {
       method: "POST",
@@ -67,6 +68,7 @@ export async function RegularClubApproveChatRoomRecruiterEntrance(params: ClubPa
         user_id: params.user_id
       })
     });
+    console.log("야 진짜 제발좀,...흐애애애앵", postResponse);
 
     if (!postResponse.ok) {
       throw new Error("채팅방 입장 처리 중 오류가 발생했습니다.");

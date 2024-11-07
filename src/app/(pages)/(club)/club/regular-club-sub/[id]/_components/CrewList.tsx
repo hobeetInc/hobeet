@@ -37,7 +37,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         if (userId) {
           const statusResult = await getParticipationStatus({ userId, clubId });
 
-          setParticipationStatus(statusResult[0].r_c_participation_request_status);
+          setParticipationStatus(statusResult[0].egg_club_participation_request_status);
         }
       } catch (error) {
         console.error("크루인원 가져오는 중 오류:", error);

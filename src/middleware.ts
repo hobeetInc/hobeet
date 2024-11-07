@@ -10,5 +10,19 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/signin/:path*", "/mypage/:path* ", "/chat/:path*", "/myclublist/:path*"]
+  matcher: [
+    "/signin/:path*",
+    "/mypage/:path*",
+    "/chat/:path*",
+    "/myclublist/:path*",
+    "/club",
+    "/club/one-time/:path*",
+    "/club/regular-time/:path*",
+    // "/club/regular-club-sub/:clubId/create/:path*",
+    // "/club/regular-club-sub/:path*/create/:path*",
+    "/kakaopay/paymentConfirm/:path*",
+    "/kakaopay/isSuccess/:path*",
+    "/kakaopay/success/:path*",
+    "/approvemembers/:path*"
+  ]
 };

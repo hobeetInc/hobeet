@@ -4,11 +4,13 @@ import React, { useEffect, useState } from "react";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
 import { WishListResponse } from "@/types/mypage.types";
+import { useRouter } from "next/navigation";
 
 const WishClubListPage = () => {
   const supabase = browserClient;
   const [wishData, setWishData] = useState<WishListResponse[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const getWishList = async () => {
@@ -22,6 +24,7 @@ const WishClubListPage = () => {
           .from("wish_list")
           .select(
             `egg_club_id(
+              egg_club_id,
               egg_club_name,
               egg_club_image, 
               egg_club_people_limited,
@@ -53,6 +56,10 @@ const WishClubListPage = () => {
     getWishList();
   }, []);
 
+  const handleClick = (egg_club_id: number) => {
+    router.push(`/club/regular-club-sub/${egg_club_id}`);
+  };
+
   if (error) {
     return <div className="p-4 text-red-500 text-center">에러: {error}</div>;
   }
@@ -65,7 +72,11 @@ const WishClubListPage = () => {
       ) : (
         <div className="grid grid-cols-2 gap-4">
           {wishData.map((item, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 relative">
+            <div
+              onClick={() => handleClick(item.egg_club_id.egg_club_id)}
+              key={index}
+              className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 relative"
+            >
               <div className="relative">
                 <Image
                   src={item.egg_club_id.egg_club_image}
