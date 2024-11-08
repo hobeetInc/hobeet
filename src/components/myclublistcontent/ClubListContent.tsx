@@ -6,11 +6,12 @@ import { RegularClubCard } from "@/components/regularclublist/RegularClubCard";
 import { EggClub, EggPop } from "@/types/cardlist.types";
 import { createClient } from "@/utils/supabase/client";
 import { fetchCreatedClubs, fetchJoinedClubs } from "./_api/ClubListContentApi";
+import TabBar from "../uiComponents/TapBar";
 
 const supabase = createClient();
 
 export default function ClubListContent() {
-  const [activeTab, setActiveTab] = useState<"created" | "joined">("created");
+  const [activeTab, setActiveTab] = useState(true);
   const [oneTimeClubs, setOneTimeClubs] = useState<EggPop[]>([]);
   const [regularClubs, setRegularClubs] = useState<EggClub[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
@@ -20,20 +21,20 @@ export default function ClubListContent() {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setUserId(user.id);
-        fetchClubs(user.id);
+        fetchClubs(user.id, true);
       }
     });
   }, []);
 
   useEffect(() => {
     if (userId) {
-      fetchClubs(userId);
+      fetchClubs(userId, activeTab);
     }
   }, [activeTab, userId]);
 
-  const fetchClubs = async (currentUserId: string) => {
+  const fetchClubs = async (currentUserId: string, tab: boolean) => {
     setLoading(true);
-    const fetchData = activeTab === "created" ? fetchCreatedClubs : fetchJoinedClubs;
+    const fetchData = tab ? fetchCreatedClubs : fetchJoinedClubs;
     const { oneTime, regular } = await fetchData(currentUserId);
 
     setOneTimeClubs(oneTime);
@@ -41,8 +42,13 @@ export default function ClubListContent() {
     setLoading(false);
   };
 
+  const handleTabSwitch = (tab: boolean) => {
+    setActiveTab(tab);
+    fetchClubs(userId!, tab);
+  };
+
   const renderEmptyState = () => {
-    const message = activeTab === "created" ? "내가 만든 모임이 없습니다" : "내가 참여한 모임이 없습니다";
+    const message = activeTab ? "내가 만든 모임이 없습니다" : "내가 참여한 모임이 없습니다";
     return <div className="flex items-center justify-center p-12 text-gray-500">{message}</div>;
   };
 
@@ -52,24 +58,7 @@ export default function ClubListContent() {
 
   return (
     <div className="w-full max-w-2xl mx-auto p-4 border-b">
-      <div className="flex gap-4 mb-6">
-        <button
-          className={`flex-1 py-2 rounded ${
-            activeTab === "created" ? "bg-blue-500 text-white border-b-4" : "bg-gray-200"
-          }`}
-          onClick={() => setActiveTab("created")}
-        >
-          내가 만든 모임
-        </button>
-        <button
-          className={`flex-1 py-2 rounded ${
-            activeTab === "joined" ? "bg-blue-500 text-white border-b-4" : "bg-gray-200"
-          }`}
-          onClick={() => setActiveTab("joined")}
-        >
-          내가 참여한 모임
-        </button>
-      </div>
+      <TabBar activeTab={activeTab} onTabChange={handleTabSwitch} vlaue={"myclub"} />
 
       <div className="space-y-4">
         {loading ? (
