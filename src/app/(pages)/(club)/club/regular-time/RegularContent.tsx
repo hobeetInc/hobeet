@@ -12,6 +12,7 @@ import ApplicationMethod from "../_components/regularClub/ApplicationMethod";
 import MemberType from "../_components/regularClub/MemberType";
 import { putRegularMember, putRepresentative, submitRegularClubData, uploadImage } from "../_api/supabase";
 import { EggClubForm } from "@/types/eggclub.types";
+import ProgressBar from "../_components/ProgressBar";
 
 const RegularContent = () => {
   const router = useRouter();
@@ -277,6 +278,9 @@ const RegularContent = () => {
         <button onClick={handleBack} className="w-6 h-6 border-black border-2">
           뒤
         </button>
+        <div>
+          <ProgressBar currentStep={step} totalSteps={3} />
+        </div>
         <div>{renderStep()}</div>
 
         {step === 3 ? (

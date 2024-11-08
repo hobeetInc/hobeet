@@ -14,6 +14,8 @@ import AddressSearch from "../_components/oneTimeClub/AddressSearch";
 import MemberType from "../_components/oneTimeClub/MemberType";
 import Tax from "../_components/oneTimeClub/Tax";
 import { EggPopForm } from "@/types/eggpop.types";
+import ProgressBar from "../_components/ProgressBar";
+import { IoIosArrowBack } from "react-icons/io";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -279,10 +281,15 @@ const OneTimeContent = () => {
 
   return (
     <div className="container">
-      <div className="m-4 flex flex-col gap-7">
-        <button onClick={handleBack} className="w-6 h-6 border-black border-2">
-          뒤
-        </button>
+      <div className="h-12">
+        <div onClick={handleBack} className="h-12 w-12 p-3 justify-start items-center inline-flex ">
+          <IoIosArrowBack className="w-6 h-6" />
+        </div>
+      </div>
+
+      <div className="m-4 flex flex-col">
+        <ProgressBar currentStep={step} totalSteps={7} />
+
         <div>{renderStep()}</div>
 
         {step === 7 ? (

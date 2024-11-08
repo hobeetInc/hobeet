@@ -1,7 +1,7 @@
 import { cn } from "@/utils/cn/util";
 import { cva, type VariantProps } from "class-variance-authority";
 
-const textVariants = cva("text-black font-pretendard", {
+const textVariants = cva("font-pretendard", {
   variants: {
     variant: {
       // Body variants (Regular)
@@ -20,7 +20,7 @@ const textVariants = cva("text-black font-pretendard", {
       // Subtitle variants
       "subtitle-12": "text-subtitle-12",
       "subtitle-14": "text-subtitle-14",
-      "subtitle-16": "text-subtitle-16",
+      "subtitle-16": "text-base font-semibold leading-[21.6px]",
       "subtitle-18": "text-subtitle-18",
       "subtitle-20": "text-subtitle-20",
 

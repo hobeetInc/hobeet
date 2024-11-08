@@ -31,7 +31,9 @@ const Playground = () => {
           <Text variant="body-16" as="h3" className="text-primary-600">
             나는 텍스트
           </Text>
-          <Text variant="body-12">Body 12 - 본문 텍스트입니다</Text>
+          <Text variant="body-12" className="text-primary-500">
+            Body 12 - 본문 텍스트입니다
+          </Text>
           <Text variant="body-14">Body 14 - 본문 텍스트입니다</Text>
           <Text variant="body-16">Body 16 - 본문 텍스트입니다</Text>
           <Text variant="body-18">Body 18 - 본문 텍스트입니다</Text>
@@ -43,7 +45,9 @@ const Playground = () => {
           Body Medium
         </Text>
         <div className="space-y-2">
-          <Text variant="body_medium-12">Body Medium 12 - 본문 텍스트입니다</Text>
+          <Text variant="body_medium-12" className="bg-primary-500">
+            Body Medium 12 - 본문 텍스트입니다
+          </Text>
           <Text variant="body_medium-14">Body Medium 14 - 본문 텍스트입니다</Text>
           <Text variant="body_medium-16">Body Medium 16 - 본문 텍스트입니다</Text>
           <Text variant="body_medium-18">Body Medium 18 - 본문 텍스트입니다</Text>
