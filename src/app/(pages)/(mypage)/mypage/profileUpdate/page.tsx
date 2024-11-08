@@ -12,12 +12,16 @@ const ProfileEditPage = () => {
   const [email, setEmail] = useState("");
   const [provider, setProvider] = useState<string | null>(null);
   const [emailError, setEmailError] = useState("");
+  const { userId, userEmail, userName, userGender, userProfileImg, userBirth, setUserEmail, setUserProfileImg } =
+    useAuth();
+  const [tempProfileImg, setTempProfileImg] = useState<string | null>(userProfileImg);
 
   const router = useRouter();
   const supabase = browserClient;
 
-  const { userId, userEmail, userName, userGender, userProfileImg, userBirth, setUserEmail, setUserProfileImg } =
-    useAuth();
+  useEffect(() => {
+    setTempProfileImg(userProfileImg);
+  }, [userProfileImg]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -43,7 +47,7 @@ const ProfileEditPage = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setUserProfileImg(reader.result as string);
+        setTempProfileImg(reader.result as string);
       };
       reader.readAsDataURL(file);
       setProfileFile(file);
@@ -78,7 +82,6 @@ const ProfileEditPage = () => {
       } else {
         uploadedImageUrl = supabase.storage.from("avatars").getPublicUrl(`public/${userId}/${sanitizedFileName}`)
           .data.publicUrl;
-        setUserProfileImg(uploadedImageUrl || "");
       }
     }
 
@@ -94,6 +97,7 @@ const ProfileEditPage = () => {
       console.error("정보 업데이트 실패:", error.message);
     } else {
       setUserEmail(email);
+      setUserProfileImg(uploadedImageUrl || "");
       alert("프로필 정보가 성공적으로 업데이트되었습니다.");
       router.push("/mypage/profile");
     }
@@ -108,11 +112,11 @@ const ProfileEditPage = () => {
           <div className="relative w-32 h-32">
             <div className="rounded-full overflow-hidden w-32 h-32">
               <Image
-                src={userProfileImg || "/default-avatar.png"}
+                src={tempProfileImg || "/default-avatar.png"}
                 alt="프로필 이미지"
                 width={128}
                 height={128}
-                className="object-cover"
+                className="object-cover w-32 h-32"
               />
             </div>
             <label
