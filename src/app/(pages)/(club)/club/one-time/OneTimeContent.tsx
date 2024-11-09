@@ -16,6 +16,7 @@ import Tax from "../_components/oneTimeClub/Tax";
 import { EggPopForm } from "@/types/eggpop.types";
 import ProgressBar from "../_components/ProgressBar";
 import { IoIosArrowBack } from "react-icons/io";
+import { Button } from "@/components/uiComponents/button";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -114,83 +115,84 @@ const OneTimeContent = () => {
 
   // 다음단계 버튼 (유효성 검사 함수)
   const handleNext = () => {
-    if (step === 1 && formData.sub_category_id === 0) {
-      alert("카테고리를 선택해주세요");
-      return;
-    }
+    // if (step === 1 && formData.sub_category_id === 0) {
+    //   alert("카테고리를 선택해주세요");
+    //   return;
+    // }
 
-    if (step === 2) {
-      if (!formData.egg_pop_name.trim()) {
-        alert("모임 제목을 입력해주세요");
-        return;
-      }
-    }
+    // if (step === 2) {
+    //   if (!formData.egg_pop_name.trim()) {
+    //     alert("모임 제목을 입력해주세요");
+    //     return;
+    //   }
+    // }
 
-    if (step === 3) {
-      if (!formData.egg_pop_image) {
-        alert("이미지를 선택해주세요");
-        return;
-      }
-      if (!formData.egg_pop_introduction.trim()) {
-        alert("모임 소개글을 입력해주세요");
-        return;
-      }
-    }
-    if (step === 4) {
-      if (!formData.egg_pop_date_time) {
-        alert("날짜와 시간을 선택해주세요");
-        return;
-      }
-    }
+    // if (step === 3) {
+    //   if (!formData.egg_pop_image) {
+    //     alert("이미지를 선택해주세요");
+    //     return;
+    //   }
+    //   if (!formData.egg_pop_introduction.trim()) {
+    //     alert("모임 소개글을 입력해주세요");
+    //     return;
+    //   }
+    // }
+    // if (step === 4) {
+    //   if (!formData.egg_pop_date_time) {
+    //     alert("날짜와 시간을 선택해주세요");
+    //     return;
+    //   }
+    // }
 
-    if (step === 5) {
-      if (!formData.egg_pop_location) {
-        alert("모임 장소를 정해주세요");
-        return;
-      }
-    }
+    // if (step === 5) {
+    //   if (!formData.egg_pop_location) {
+    //     alert("모임 장소를 정해주세요");
+    //     return;
+    //   }
+    // }
 
-    if (step === 6) {
-      if (!selectedGender) {
-        alert("성별제한을 설정해주세요");
-        return;
-      }
+    // if (step === 6) {
+    //   if (!selectedGender) {
+    //     alert("성별제한을 설정해주세요");
+    //     return;
+    //   }
 
-      if (!selectedAge) {
-        alert("나이제한을 설정해주세요");
-        return;
-      }
+    //   if (!selectedAge) {
+    //     alert("나이제한을 설정해주세요");
+    //     return;
+    //   }
 
-      if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited >= 101) {
-        alert("인원제한은 100명 이하로 해주세요");
-        return;
-      }
+    //   if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited >= 101) {
+    //     alert("인원제한은 100명 이하로 해주세요");
+    //     return;
+    //   }
 
-      if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited === 0) {
-        alert("2명 이상 적어주세요");
-        return;
-      }
+    //   if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited === 0) {
+    //     alert("2명 이상 적어주세요");
+    //     return;
+    //   }
 
-      if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited === 1) {
-        alert("2명 이상 적어주세요");
-        return;
-      }
+    //   if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited === 1) {
+    //     alert("2명 이상 적어주세요");
+    //     return;
+    //   }
 
-      if (formData.egg_pop_people_limited === null) {
-        setFormData({
-          ...formData,
-          egg_pop_people_limited: 100
-        });
-        return alert("정말로 인원제한을 주지 않겠습니까?");
-      }
-    }
+    //   if (formData.egg_pop_people_limited === null) {
+    //     setFormData({
+    //       ...formData,
+    //       egg_pop_people_limited: 100
+    //     });
+    //     return alert("정말로 인원제한을 주지 않겠습니까?");
+    //   }
+    // }
+
+    // if (step === 7) {
+    //   if (formData.egg_pop_tax === null) {
+    //     alert("금액을 입력해주세요");
+    //     return;
+    //   }
 
     if (step === 7) {
-      if (formData.egg_pop_tax === null) {
-        alert("금액을 입력해주세요");
-        return;
-      }
-
       handleSubmit();
     } else {
       setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7);
@@ -279,31 +281,55 @@ const OneTimeContent = () => {
     }
   };
 
+  const isNextButtonDisabled = () => {
+    switch (step) {
+      case 1:
+        return formData.sub_category_id === 0;
+      case 2:
+        return !formData.egg_pop_name.trim();
+      case 3:
+        return !formData.egg_pop_image || !formData.egg_pop_introduction.trim();
+      case 4:
+        return !formData.egg_pop_date_time;
+
+      case 5:
+        return !formData.egg_pop_location;
+      case 6:
+        return (
+          !selectedGender ||
+          !selectedAge ||
+          (formData.egg_pop_people_limited !== null &&
+            (formData.egg_pop_people_limited >= 101 || formData.egg_pop_people_limited <= 1))
+        );
+      case 7:
+        return formData.egg_pop_tax === null;
+
+      default:
+        return false;
+    }
+  };
+
   return (
-    <div className="container">
+    <div className="relative min-h-[739px]">
       <div className="h-12">
-        <div onClick={handleBack} className="h-12 w-12 p-3 justify-start items-center inline-flex ">
+        <div onClick={handleBack} className="h-12 w-12 p-3 justify-start items-center inline-flex">
           <IoIosArrowBack className="w-6 h-6" />
         </div>
       </div>
 
       <div className="m-4 flex flex-col">
         <ProgressBar currentStep={step} totalSteps={7} />
-
         <div>{renderStep()}</div>
-
-        {step === 7 ? (
-          <button
-            onClick={handleNext}
-            className="w-[358px] h-[53px] rounded-lg hover:border-2 hover:border-black bg-red-400"
-          >
-            모임 생성
-          </button>
-        ) : (
-          <button onClick={handleNext} className="next-button">
-            다음
-          </button>
-        )}
+      </div>
+      <div className="absolute bottom-[0px] left-0 right-0 px-4">
+        <Button
+          onClick={handleNext}
+          disabled={isNextButtonDisabled()}
+          colorType={isNextButtonDisabled() ? undefined : "orange"}
+          borderType="circle"
+        >
+          {step === 7 ? "모임 생성" : "다음"}
+        </Button>
       </div>
     </div>
   );

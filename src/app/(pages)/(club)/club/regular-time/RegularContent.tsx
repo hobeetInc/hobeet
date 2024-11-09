@@ -273,7 +273,7 @@ const RegularContent = () => {
   };
 
   return (
-    <div className="container">
+    <div>
       <div className="m-4 flex flex-col gap-7">
         <button onClick={handleBack} className="w-6 h-6 border-black border-2">
           뒤
