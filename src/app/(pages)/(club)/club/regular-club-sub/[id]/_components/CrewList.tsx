@@ -8,7 +8,7 @@ import FullScreenModal from "./FullScreenModal";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import { ChevronRight } from "lucide-react";
-import RegularClubJoinButton from "@/components/regularClubJoinButton";
+import RegularClubJoinButton from "@/components/RegularClubJoinButton";
 import browserClient from "@/utils/supabase/client";
 import { CrewListProps, UserStatus } from "@/types/eggclub.types";
 

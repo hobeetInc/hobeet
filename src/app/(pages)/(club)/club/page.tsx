@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./_utils/localStorage";
 import { IoIosArrowBack } from "react-icons/io";
-import { Button } from "@/components/uiComponents/button";
-import Text from "@/components/uiComponents/text";
+import { Button } from "@/components/uiComponents/Button";
+import Text from "@/components/uiComponents/Text/Text";
 
 const TypeSelectionPage = () => {
   const router = useRouter();

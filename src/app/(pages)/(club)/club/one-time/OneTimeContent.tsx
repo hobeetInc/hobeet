@@ -7,8 +7,6 @@ import { OneTimeClubChatRoom } from "@/app/(pages)/(chat)/_components/oneTimeClu
 import { ONETIME_CLUB_CREATE } from "../_utils/localStorage";
 import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../_api/supabase";
 import Category from "../_components/oneTimeClub/Category";
-import ClubTitle from "../_components/oneTimeClub/ClubTitle";
-import ImageUpload from "../_components/oneTimeClub/ImageUpload";
 import DateTime from "../_components/oneTimeClub/DateTime";
 import AddressSearch from "../_components/oneTimeClub/AddressSearch";
 import MemberType from "../_components/oneTimeClub/MemberType";
@@ -16,7 +14,8 @@ import Tax from "../_components/oneTimeClub/Tax";
 import { EggPopForm } from "@/types/eggpop.types";
 import ProgressBar from "../_components/ProgressBar";
 import { IoIosArrowBack } from "react-icons/io";
-import { Button } from "@/components/uiComponents/button";
+import { Button } from "@/components/uiComponents/Button";
+import Introduction from "../_components/oneTimeClub/Introduction";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -67,7 +66,7 @@ const OneTimeContent = () => {
   const initialData = getInitialData();
 
   // URL에서 step 파라미터 읽기
-  const currentStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7;
+  const currentStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3 | 4 | 5 | 6;
 
   // 상태 관리
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(currentStep);
@@ -195,7 +194,7 @@ const OneTimeContent = () => {
     if (step === 7) {
       handleSubmit();
     } else {
-      setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7);
+      setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6);
     }
   };
   // step이 변경될 때마다 URL 업데이트
@@ -208,7 +207,7 @@ const OneTimeContent = () => {
     if (step === 1) {
       window.location.replace("/club");
     } else {
-      setStep((prev) => (prev - 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7);
+      setStep((prev) => (prev - 1) as 1 | 2 | 3 | 4 | 5 | 6);
     }
   };
 
@@ -258,14 +257,12 @@ const OneTimeContent = () => {
       case 1:
         return <Category formData={formData} setFormData={setFormData} />;
       case 2:
-        return <ClubTitle formData={formData} setFormData={setFormData} />;
+        return <Introduction formData={formData} setFormData={setFormData} />;
       case 3:
-        return <ImageUpload formData={formData} setFormData={setFormData} />;
-      case 4:
         return <DateTime formData={formData} setFormData={setFormData} />;
-      case 5:
+      case 4:
         return <AddressSearch formData={formData} setFormData={setFormData} />;
-      case 6:
+      case 5:
         return (
           <MemberType
             formData={formData}
@@ -276,7 +273,7 @@ const OneTimeContent = () => {
             setSelectedAge={setSelectedAge}
           />
         );
-      case 7:
+      case 6:
         return <Tax formData={formData} setFormData={setFormData} />;
     }
   };
@@ -286,22 +283,19 @@ const OneTimeContent = () => {
       case 1:
         return formData.sub_category_id === 0;
       case 2:
-        return !formData.egg_pop_name.trim();
+        return !formData.egg_pop_image || !formData.egg_pop_name.trim() || !formData.egg_pop_introduction.trim();
       case 3:
-        return !formData.egg_pop_image || !formData.egg_pop_introduction.trim();
-      case 4:
         return !formData.egg_pop_date_time;
-
-      case 5:
+      case 4:
         return !formData.egg_pop_location;
-      case 6:
+      case 5:
         return (
           !selectedGender ||
           !selectedAge ||
           (formData.egg_pop_people_limited !== null &&
             (formData.egg_pop_people_limited >= 101 || formData.egg_pop_people_limited <= 1))
         );
-      case 7:
+      case 6:
         return formData.egg_pop_tax === null;
 
       default:
@@ -310,10 +304,10 @@ const OneTimeContent = () => {
   };
 
   return (
-    <div className="relative min-h-[739px]">
+    <div className="relative">
       <div className="h-12">
         <div onClick={handleBack} className="h-12 w-12 p-3 justify-start items-center inline-flex">
-          <IoIosArrowBack className="w-6 h-6" />
+          <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
         </div>
       </div>
 
@@ -321,14 +315,14 @@ const OneTimeContent = () => {
         <ProgressBar currentStep={step} totalSteps={7} />
         <div>{renderStep()}</div>
       </div>
-      <div className="absolute bottom-[0px] left-0 right-0 px-4">
+      <div className="fixed bottom-[30px] pt-10 left-0 right-0 px-4">
         <Button
           onClick={handleNext}
           disabled={isNextButtonDisabled()}
           colorType={isNextButtonDisabled() ? undefined : "orange"}
           borderType="circle"
         >
-          {step === 7 ? "모임 생성" : "다음"}
+          {step === 6 ? "모임 생성" : "다음"}
         </Button>
       </div>
     </div>

@@ -6,7 +6,7 @@ import { getOneTimeMember } from "../../../_api/supabase";
 import FullScreenModal from "./FullScreenModal";
 import { useAuth } from "@/app/store/AuthContext";
 import { ChevronRight } from "lucide-react";
-import JoinClubButton from "@/components/oneTimeClubJoinButton";
+import JoinClubButton from "@/components/OneTimeClubJoinButton";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { CrewListProps } from "@/types/eggpop.types";

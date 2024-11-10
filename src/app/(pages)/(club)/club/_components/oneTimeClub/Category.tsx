@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchMainCategories, fetchSubCategories } from "../../_api/supabase";
 import { EggPopProps } from "@/types/eggpop.types";
 import { MainCategory, SubCategory } from "@/types/category.types";
-import Text from "@/components/uiComponents/text";
+import Text from "@/components/uiComponents/Text/Text";
 
 const Category = ({ formData, setFormData }: EggPopProps) => {
   const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);
@@ -53,7 +53,7 @@ const Category = ({ formData, setFormData }: EggPopProps) => {
 
   return (
     <div>
-      <Text variant="header-18" className="mb-6 h-11">
+      <Text variant="header-18" className="flex items-center mb-6 h-11">
         어떤 주제로 시작해볼까요?
       </Text>
       <div className="flex flex-col gap-2">

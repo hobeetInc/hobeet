@@ -2,7 +2,7 @@ import { LocationImage } from "./LocationImage";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDate } from "@/utils/CustomDate";
 import Image from "next/image";
-import Tag from "./Tag";
+import Tag from "./Tag/Tag";
 
 export const EggPopHorizontalList = ({ eggPop }) => {
   return (

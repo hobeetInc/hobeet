@@ -1,4 +1,4 @@
-import { BellOutLineIcon, ChatOutLineIcon, HomeOutLineIcon, WishHeart } from "./icons";
+import { BellOutLineIcon, ChatOutLineIcon, HomeOutLineIcon, WishHeart } from "./Icons";
 
 type IconType = "home" | "chat" | "bell" | "heart";
 
