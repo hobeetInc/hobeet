@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/utils/cn/util";
-import Text from "../Text/Text";
+import Text from "../TextComponents/Text";
 
 
 

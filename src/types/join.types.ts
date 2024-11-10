@@ -3,6 +3,7 @@ export interface JoinClubButtonProps {
   clubId: number;
   onSuccess?: () => void;
   onError?: (message: string) => void;
+
 }
 
 // 에그클럽 가입 버튼 props
