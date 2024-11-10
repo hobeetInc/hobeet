@@ -6,10 +6,6 @@ import Image from "next/image";
 import { GoPlus } from "react-icons/go";
 import { Icon } from "@/components/uiComponents/Icon/Icon";
 
-
-
-
-
 export default function Header({ className }: { className: string }) {
   const { userId } = useAuth();
   const pathname = usePathname();

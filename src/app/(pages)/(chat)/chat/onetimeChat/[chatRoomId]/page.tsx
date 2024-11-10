@@ -9,6 +9,7 @@ import { EggPopChatInfo, ExtendEggPopMessage } from "@/types/eggpopchat.types";
 import Text from "@/components/uiComponents/Text/Text";
 import { Icon } from "@/components/uiComponents/Icon/Icon";
 
+
 const supabase = createClient();
 
 const ChatPage: React.FC = () => {
