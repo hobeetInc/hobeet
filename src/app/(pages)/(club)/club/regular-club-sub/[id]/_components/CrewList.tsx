@@ -8,9 +8,9 @@ import FullScreenModal from "./FullScreenModal";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import { ChevronRight } from "lucide-react";
-import RegularClubJoinButton from "@/components/RegularClubJoinButton";
 import browserClient from "@/utils/supabase/client";
 import { CrewListProps, UserStatus } from "@/types/eggclub.types";
+import RegularClubJoinButton from "@/components/RegularClubJoinButton";
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notificationData }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);

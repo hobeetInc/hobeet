@@ -7,7 +7,7 @@ const ChatPage = () => {
   const [chattingRooms, setChattingRooms] = useState(true);
   return (
     <>
-      <div className="flex w-[390px] py-[var(--Font-size-100, 10px)] px-4 pt-[10px] border-b border-gray-200 justify-center items-center">
+      <div className="flex  py-[var(--Font-size-100, 10px)] px-4 pt-[10px] border-b border-gray-200 justify-center items-center">
         <div
           className={`flex w-[179px] flex-col items-center gap-3 flex-shrink-0 ${
             chattingRooms ? "text-[#0d0d0d]" : "text-[#A6A6A6]"

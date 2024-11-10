@@ -31,25 +31,37 @@ export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
   };
 
   return (
-    <div onClick={handleClick} className="flex items-start p-4 border rounded-lg shadow-sm cursor-pointer">
-      <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden">
-        <Image
-          src={club.egg_pop_image}
-          alt={club.egg_pop_name}
-          width={158}
-          height={158}
-          className="w-full h-full object-cover"
-        />
-      </div>
-
-      <div className="ml-4 flex-1">
-        <div className="text-sm text-gray-500">에그팝</div>
-        <h3 className="text-lg font-semibold mt-1">{club.egg_pop_name}</h3>
-        <div className="text-sm text-gray-600 mt-1">
-          {currentLocation} • {format(new Date(club.egg_pop_date_time), "MM.dd HH:mm")}
+    <div
+      onClick={handleClick}
+      className="w-full hover:bg-gray-50 transition-colors duration-200 cursor-pointer border-b border-gray-100 last:border-b-0"
+    >
+      <div className=" flex gap-2">
+        <div className="w-[102px] h-[102px] relative overflow-hidden rounded-[12px] bg-gray-100">
+          <Image
+            src={club.egg_pop_image}
+            alt={club.egg_pop_name}
+            width={102}
+            height={102}
+            className="w-full h-full object-cover"
+          />
         </div>
-        <div className="text-sm text-gray-600 mt-1">
-          {memberCount} / {club.egg_pop_people_limited}명
+
+        <div className="flex-1 flex flex-col justify-between">
+          <div>
+            <div className="inline-block px-2 py-0.5 bg-primary-500 rounded-[124px] text-sm text-gray-900">에그팝</div>
+            <h3 className="text-sm font-semibold mt-2">{club.egg_pop_name}</h3>
+            <div className="flex items-center mt-1 text-gray-400 text-sm">
+              <span>{currentLocation}</span>
+              <span className="ml-2">{format(new Date(club.egg_pop_date_time), "MM월 dd일 HH:mm")}</span>
+            </div>
+          </div>
+
+          <div className="flex items-center mt-2">
+            <div className="text-sm text-gray-400">
+              멤버 <span className=" text-gray-400">{memberCount}</span>
+              <span className="text-gray-400"> / {club.egg_pop_people_limited}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

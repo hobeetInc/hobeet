@@ -1,4 +1,4 @@
-import { LocationImage } from "./LocationImage";
+
 import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDate } from "@/utils/CustomDate";
 import Image from "next/image";
@@ -14,8 +14,8 @@ export const EggPopHorizontalList = ({ eggPop }) => {
       <div className="pt-[3px] justify-start items-center gap-2 inline-flex">
         <div className="justify-start items-center gap-1 flex">
           <div className="w-4 h-4 justify-center items-center flex">
-            <span className="w-4 h-4 relative flex-col justify-start items-start flex">
-              <LocationImage selectedId={1} />
+            <span>
+              <Image src={"/asset/Icon/Icon-Location.png"} alt="지도" width={16} height={16} />
             </span>
           </div>
           <span className="text-gray-400 text-body_medium-14 leading-tight">

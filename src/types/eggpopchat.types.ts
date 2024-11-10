@@ -40,6 +40,11 @@ export interface EggPopChattingRoom {
   last_message_time: string;
   last_message_time_value: string;
   active: boolean;
+  egg_pop_chatting_room_member: EggPopChattingMemberCount[];
+}
+
+interface EggPopChattingMemberCount {
+  count: number;
 }
 
 // 확장된 EggPopChatting 타입
