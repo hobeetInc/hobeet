@@ -86,18 +86,18 @@ export const WhiteEgg = () => {
         rx="43.8461"
         transform="matrix(-1 0 0 1 87.6923 0)"
         stroke="#262626"
-        stroke-width="2.30769"
+        strokeWidth="2.30769"
       />
       <ellipse cx="2.25" cy="3" rx="2.25" ry="3" transform="matrix(-1 0 0 1 65.9961 32.9961)" fill="black" />
       <ellipse cx="2.25" cy="3" rx="2.25" ry="3" transform="matrix(-1 0 0 1 49.4961 32.9961)" fill="black" />
       <path
         d="M47.9961 44.9922C50.9961 47.2422 58.3461 50.3922 63.7461 44.9922"
         stroke="black"
-        stroke-width="3"
-        stroke-linecap="round"
+        strokeWidth="3"
+        strokeLinecap="round"
       />
-      <path d="M37.4109 40.4934L34.8509 42.6605" stroke="#F69898" stroke-width="3" stroke-linecap="round" />
-      <path d="M42.0516 40.8294L39.4916 42.9965" stroke="#F69898" stroke-width="3" stroke-linecap="round" />
+      <path d="M37.4109 40.4934L34.8509 42.6605" stroke="#F69898" strokeWidth="3" strokeLinecap="round" />
+      <path d="M42.0516 40.8294L39.4916 42.9965" stroke="#F69898" strokeWidth="3" strokeLinecap="round" />
     </svg>
   );
 };
@@ -109,18 +109,18 @@ export const YellowEgg = () => {
         d="M88.8462 45C88.8462 69.2156 69.2156 88.8462 45 88.8462C20.7844 88.8462 1.15385 69.2156 1.15385 45C1.15385 20.7844 20.7844 1.15385 45 1.15385C50.7792 1.15385 54.8775 3.17373 58.5566 6.18417C60.4146 7.70448 62.1626 9.4754 63.9747 11.387C64.3876 11.8225 64.8044 12.266 65.2263 12.7149C66.6425 14.2218 68.1167 15.7905 69.6952 17.3269C71.1287 18.7221 72.6092 20.0767 74.086 21.4279C77.0478 24.1379 79.995 26.8345 82.5188 29.8183C86.2471 34.2262 88.8462 39.0514 88.8462 45Z"
         fill="#FDB800"
         stroke="#262626"
-        stroke-width="2.30769"
+        strokeWidth="2.30769"
       />
       <ellipse cx="15.7539" cy="32.9961" rx="2.25" ry="3" fill="black" />
       <ellipse cx="32.2539" cy="32.9961" rx="2.25" ry="3" fill="black" />
       <path
         d="M18.0039 41.9961C18.0039 41.9961 21.0953 45.0696 23.4349 44.9947C25.6473 44.924 28.5039 41.9961 28.5039 41.9961"
         stroke="black"
-        stroke-width="3"
-        stroke-linecap="round"
+        strokeWidth="3"
+        strokeLinecap="round"
       />
-      <path d="M37.4188 38.9973L34.8588 41.1645" stroke="#F77E7E" stroke-width="3" stroke-linecap="round" />
-      <path d="M42.0594 39.3255L39.4994 41.4926" stroke="#F77E7E" stroke-width="3" stroke-linecap="round" />
+      <path d="M37.4188 38.9973L34.8588 41.1645" stroke="#F77E7E" strokeWidth="3" strokeLinecap="round" />
+      <path d="M42.0594 39.3255L39.4994 41.4926" stroke="#F77E7E" strokeWidth="3" strokeLinecap="round" />
     </svg>
   );
 };

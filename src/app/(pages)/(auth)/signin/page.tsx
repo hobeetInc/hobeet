@@ -48,7 +48,7 @@ const SigninPage = () => {
       <div className="flex flex-col items-center">
         <h1 className="text-2xl font-black text-[#0c0c0c]  mt-[160px] mb-2">EGG FRIENDS</h1>
         <p className="text-base font-medium text-[#0c0c0c]">함께라서 더 즐거운 우리</p>
-        <div className="h-[90px] w-full mb-8  mt-[32px] relative flex justify-center">
+        <div className="h-[90px] w-full  mt-[32px] relative flex justify-center mb-[160px]">
           <div className="flex items-center">
             <div className="w-[90px] h-[90px] z-10">
               <Icon name="whiteEgg" />
