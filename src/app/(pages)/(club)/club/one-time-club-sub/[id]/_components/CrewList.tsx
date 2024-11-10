@@ -11,12 +11,6 @@ import { useRouter } from "next/navigation";
 import { CrewListProps } from "@/types/eggpop.types";
 import OneTimeClubJoinButton from "@/components/OneTimeClubJoinButton";
 
-
-
-
-
-
-
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
