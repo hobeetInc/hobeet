@@ -10,7 +10,8 @@ import { ChevronRight } from "lucide-react";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { CrewListProps } from "@/types/eggpop.types";
-import JoinClubButton from "@/components/oneTimeClubJoinButton";
+import JoinClubButton from "@/components/OneTimeClubJoinButton";
+
 
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
