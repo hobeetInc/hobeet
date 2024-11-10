@@ -5,7 +5,7 @@ import { addHours, format, parseISO } from "date-fns";
 import { getEggPopPayList } from "../_api/supabase";
 import Image from "next/image";
 import Link from "next/link";
-import { LocationIcon } from "@/components/uiComponents/icon/icons";
+import { LocationIcon } from "@/components/uiComponents/Icon/Icons";
 
 const EggPopPayDetail = () => {
   const { data, isLoading, isError } = useQuery({

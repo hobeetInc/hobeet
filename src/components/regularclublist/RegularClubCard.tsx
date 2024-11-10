@@ -42,35 +42,47 @@ export const RegularClubCard = ({ club }: { club: EggClub }) => {
   };
 
   return (
-    <div onClick={handleClick} className="flex items-start p-4 border rounded-lg shadow-sm cursor-pointer">
-      <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden">
-        <Image
-          src={club.egg_club_image}
-          alt={club.egg_club_name}
-          width={158}
-          height={158}
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <div
+      onClick={handleClick}
+      className="w-full hover:bg-gray-50 transition-colors duration-200 cursor-pointer border-b border-gray-100 last:border-b-0 "
+    >
+      <div className=" flex gap-2">
+        <div className="w-[102px] h-[102px] relative overflow-hidden rounded-[12px] bg-gray-100">
+          <Image
+            src={club.egg_club_image}
+            alt={club.egg_club_name}
+            width={102}
+            height={102}
+            className="w-full h-full object-cover"
+          />
+        </div>
 
-      <div className="ml-4 flex-1">
-        <div className="text-sm text-gray-500">에그클럽</div>
-        <h3 className="text-lg font-semibold mt-1">{club.egg_club_name}</h3>
-        <div className="flex items-center text-sm text-gray-600 mt-1">
-          {creator?.user_profile_img && (
-            <Image
-              src={creator.user_profile_img}
-              alt={creator.user_name}
-              width={158}
-              height={158}
-              className="w-5 h-5 rounded-full mr-2"
-            />
-          )}
-          <span>{creator?.user_name}</span>
-          <span className="mx-2">•</span>
-          <span>
-            {memberCount} / {club.egg_club_people_limited}명
-          </span>
+        <div className="flex-1 flex flex-col justify-between ">
+          <div>
+            <div className="inline-block px-2 py-0.5 bg-gray-800 rounded-[124px] text-sm text-white">에그클럽</div>
+            <h3 className="text-sm font-semibold mt-2">{club.egg_club_name}</h3>
+            <div className="flex items-center mt-1">
+              <div className="flex items-center">
+                {creator?.user_profile_img && (
+                  <div className="w-5 h-5 rounded-full overflow-hidden mr-2">
+                    <Image
+                      src={creator.user_profile_img}
+                      alt={creator.user_name}
+                      width={20}
+                      height={20}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <span className="text-sm text-gray-400 font-pretendard">{creator?.user_name}</span>
+                <span className="mx-2 text-gray-400"></span>
+                <span className="text-sm text-gray-400">
+                  멤버 <span className=" text-gray-400">{memberCount}</span>
+                  <span className="text-gray-400"> / {club.egg_club_people_limited}</span>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

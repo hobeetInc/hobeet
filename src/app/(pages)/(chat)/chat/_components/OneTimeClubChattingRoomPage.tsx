@@ -1,4 +1,6 @@
 "use client";
+
+import Text from "@/components/uiComponents/Text/Text";
 import { ApiResponse, EggPopChattingRoom } from "@/types/eggpopchat.types";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
@@ -59,6 +61,7 @@ const OneTimeClubChattingRoomPage = () => {
           return;
         }
 
+
         const rooms: EggPopChattingRoom[] = chatData.data.flatMap((member) =>
           member.egg_pop_chatting_room_member
             .filter((chatting) => chatting.active)
@@ -85,7 +88,8 @@ const OneTimeClubChattingRoomPage = () => {
                     : "새 메시지가 없습니다.",
                 last_message_time: lastMessageInfo.date,
                 last_message_time_value: lastMessageInfo.time,
-                active: chatting.active
+                active: chatting.active,
+                egg_pop_chatting_room_member: chatting.egg_pop_chatting_room.egg_pop_chatting_room_member
               };
             })
         );
@@ -100,6 +104,7 @@ const OneTimeClubChattingRoomPage = () => {
     };
 
     fetchChatRooms();
+
 
     const subscription = supabase
       .channel("oneTimeChatting")
@@ -140,6 +145,7 @@ const OneTimeClubChattingRoomPage = () => {
     return <div>로딩 중...</div>;
   }
 
+
   if (errorMessage) {
     return (
       <>
@@ -157,37 +163,50 @@ const OneTimeClubChattingRoomPage = () => {
         <div className="flex flex-col w-full overflow-y-auto">
           {chatRooms.length > 0 ? (
             chatRooms.map((room: EggPopChattingRoom) => (
-              <div
-                key={room.egg_pop_chatting_room_id}
-                className="p-4 border-b flex content-between items-center w-[390px]"
-              >
+              <div key={room.egg_pop_chatting_room_id} className="border-b">
                 <Link
                   href={`/chat/onetimeChat/${room.egg_pop_chatting_room_id}`}
-                  className="flex items-center p-4 border-b w-full"
+                  className="flex items-center p-4 border-b w-full hover:bg-gray-50"
                 >
-                  <div className="w-[63px] h-[63px] rounded-full overflow-hidden border border-solid">
+                  <div className="w-[52px] h-[52px] flex-shrink-0">
                     <Image
-                      src={room.egg_pop_image || ""}
-                      alt={room.egg_pop_name || "기본 이미지"}
-                      width={63}
-                      height={63}
-                      className="w-full h-full object-cover"
+                      src={room.egg_pop_image}
+                      alt={room.egg_pop_name}
+                      width={52}
+                      height={52}
+                      className="w-full h-full object-cover rounded-full border"
                     />
                   </div>
 
-                  <div className="flex flex-col ml-4">
-                    <div className="text-[16px] font-medium mb-3">{room.egg_pop_chatting_room_name}</div>
-                    <div className="text-[12px] text-[#808080]">{room.last_message}</div>
-                  </div>
-                  <div className="flex flex-col text-[12px] text-[#808080] ml-auto">
-                    {/* <span>{room.last_message_time}</span> */}
-                    <span>{room.last_message_time_value}</span>
+                  <div className="flex-1 ml-4">
+                    <div className="flex justify-between items-center mb-1">
+                      <Text variant="subtitle-16" className="text-gray-900 font-medium truncate max-w-[200px]">
+                        {room.egg_pop_chatting_room_name}
+                      </Text>
+                      <div className="flex items-center gap-4">
+                        {room.egg_pop_chatting_room_member[0].count > 0 && (
+                          <Text variant="subtitle-16" className="text-gray-200">
+                            {room.egg_pop_chatting_room_member[0].count}{" "}
+                          </Text>
+                        )}
+                        <Text variant="body-12" className="text-gray-400">
+                          {room.last_message_time_value}
+                        </Text>
+                      </div>
+                    </div>
+                    <Text
+                      variant="body_medium-12"
+                      className=" w-[252px] text-gray-400 line-clamp-2 text-ellipsis overflow-hidden"
+                    >
+                      {room.last_message}
+                    </Text>
                   </div>
                 </Link>
               </div>
             ))
-          ) : (
-            <div className="text-center">채팅방이 없습니다.</div>
+          ) : (<div className="text-center py-8 ">
+              <Text variant="body_medium-16">채팅방이 없습니다.</Text>
+            </div>
           )}
         </div>
       </div>

@@ -5,7 +5,7 @@ import { getEggDayPayList } from "../_api/supabase";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { LocationIcon } from "@/components/uiComponents/icon/icons";
+import { LocationIcon } from "@/components/uiComponents/Icon/Icons";
 
 const EggDayPayDetail = () => {
   const { data, isLoading } = useQuery({

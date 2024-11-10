@@ -5,7 +5,7 @@ import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
 import { WishListResponse } from "@/types/mypage.types";
 import { useRouter } from "next/navigation";
-import { WishHeart } from "@/components/uiComponents/icon/icons";
+import { WishHeart } from "@/components/uiComponents/Icon/Icons";
 
 const WishClubListPage = () => {
   const supabase = browserClient;
