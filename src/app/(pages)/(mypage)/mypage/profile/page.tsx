@@ -15,7 +15,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-5">
+    <div className=" mx-auto p-5">
       <div className="flex items-center mb-6">
         <div className="relative w-24 h-24 mr-4">
           <Image

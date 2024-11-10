@@ -29,14 +29,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${pretendard.variable}`}>
-      <body className="font-pretendard">
+    <html lang="ko" className={`${pretendard.variable} h-full`} suppressHydrationWarning>
+      <body className="font-pretendard h-full">
         <AuthProvider>
           <Providers>
-            <div className="fixed flex flex-col w-[390px] h-[844px] bg-white">
-              <Header className="w-full h-[48px] flex-shrink-0" />
-              <main className="flex-1 overflow-y-auto h-[739px]">{children}</main>
-              <Footer className="w-full flex-shrink-0" />
+            <div className="flex flex-col h-full bg-white">
+              <Header className="fixed top-0 w-full flex-shrink-0" />
+              <main className="flex-1 overflow-y-auto mt-[60px] mb-[60px]">{children}</main>
+              <Footer className="fixed bottom-0 w-full flex-shrink-0" />
             </div>
           </Providers>
         </AuthProvider>
