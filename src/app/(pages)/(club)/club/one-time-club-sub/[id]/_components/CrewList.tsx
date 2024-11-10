@@ -9,7 +9,7 @@ import { ChevronRight } from "lucide-react";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { CrewListProps } from "@/types/eggpop.types";
-import JoinClubButton from "@/components/OneTimeClubJoinButton";
+import OneTimeClubJoinButton from "@/components/OneTimeClubJoinButtonCom";
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
@@ -116,7 +116,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
       );
     }
 
-    return <JoinClubButton clubId={clubId} onSuccess={() => {}} onError={() => {}} />;
+    return <OneTimeClubJoinButton clubId={clubId} />;
   };
 
   return (

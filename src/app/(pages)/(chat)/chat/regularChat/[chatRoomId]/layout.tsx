@@ -9,8 +9,8 @@ import Image from "next/image";
 import { EggClubChattingMemberInfo, LayoutProps } from "@/types/eggclubchat.types";
 import { IoCloseOutline } from "react-icons/io5";
 
-import Tag from "@/components/uiComponents/Tag/Tag";
-import Text from "@/components/uiComponents/Text/Text";
+import Tag from "@/components/uiComponents/TagComponents/Tag";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 
 

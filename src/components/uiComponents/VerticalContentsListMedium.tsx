@@ -1,11 +1,10 @@
 // 프롭스로 eggPop 정보, hostName(모임장 이름), memberCount(가입 맴버수) 받아야 함
 
 import Image from "next/image";
-
-import Tag from "./Tag/Tag";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { HeartImage } from "./HeartImage";
-import { Icon } from "./Icon/Icon";
+import Tag from "./TagComponents/Tag";
+import { Icon } from "./IconComponents/Icon";
 
 // eggPop 상세정보, hostName(모임장 이름), memberCount(모임 참여 인원) 프롭스
 // 에그팝 모임 리스트 (medium)
