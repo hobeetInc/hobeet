@@ -1,4 +1,3 @@
-// import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { JoinClubButtonProps } from "@/types/join.types";
 import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { oneTimeClubJoin } from "@/utils/onetimeclubjoin/join";
@@ -53,7 +52,7 @@ export default function JoinClubButton({ clubId, onError }: JoinClubButtonProps)
   };
 
   return (
-    <button onClick={handleJoinRequest} disabled={isLoading} className="w-full h-[50px] bg-yellow-300 rounded-full">
+    <button  onClick={handleJoinRequest} disabled={isLoading} className="w-full h-[50px] bg-yellow-300 rounded-full">
       {isLoading ? "처리중..." : "참여하기"}
     </button>
   );
