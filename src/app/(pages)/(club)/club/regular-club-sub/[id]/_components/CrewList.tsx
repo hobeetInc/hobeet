@@ -11,7 +11,8 @@ import { ChevronRight } from "lucide-react";
 
 import browserClient from "@/utils/supabase/client";
 import { CrewListProps, UserStatus } from "@/types/eggclub.types";
-import RegularClubJoinButton from "@/components/regularClubJoinButton";
+import RegularClubJoinButton from "@/components/RegularClubJoinButton";
+
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notificationData }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
