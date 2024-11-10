@@ -11,10 +11,6 @@ const ProfilePage = () => {
   const router = useRouter();
   const { userName, userProfileImg, setUserProfileImg } = useAuth();
 
-  const handleReadyAlert = () => {
-    alert("서비스 준비중입니다.");
-  };
-
   return (
     <div className="max-w-md mx-auto p-5">
       <div
@@ -67,7 +63,7 @@ const ProfilePage = () => {
           </span>
         </div>
         <div
-          onClick={handleReadyAlert}
+          onClick={() => router.push("/mypage/inquiry")}
           className="flex items-center justify-between px-4 py-4 text-lg font-medium cursor-pointer border-solid border-b-[1px] border-gray-100"
         >
           문의하기

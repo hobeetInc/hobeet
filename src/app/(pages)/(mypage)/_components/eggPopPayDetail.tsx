@@ -5,6 +5,7 @@ import { addHours, format, parseISO } from "date-fns";
 import { getEggPopPayList } from "../_api/supabase";
 import Image from "next/image";
 import Link from "next/link";
+import { LocationIcon } from "@/components/uiComponents/icon/icons";
 
 const EggPopPayDetail = () => {
   const { data, isLoading, isError } = useQuery({
@@ -54,7 +55,6 @@ const EggPopPayDetail = () => {
   if (isError) {
     return <div>에러 발생</div>;
   }
-  // console.log(data);
 
   return (
     <div className="egg-day-pay-list">
@@ -64,17 +64,42 @@ const EggPopPayDetail = () => {
           key={oneTimeClub.egg_pop_id.egg_pop_id}
         >
           <div key={oneTimeClub.egg_pop_id.egg_pop_id} className="oneTimeClub-card my-4">
-            <div>{customDateFormat(oneTimeClub.egg_pop_id.egg_pop_date_time)}</div>
-
-            <div>
-              <div className="oneTimeClub-image">
-                <Image src={oneTimeClub.egg_pop_id.egg_pop_image} alt="payList" width={100} height={100} />
+            <div className="h-[35px] py-2 justify-start items-center gap-2.5 inline-flex">
+              <div className="text-black text-sm font-semibold font-['Pretendard'] leading-[18.90px]">
+                {customDateFormat(oneTimeClub.egg_pop_id.egg_pop_date_time)}
               </div>
-              <div className="oneTimeClub-content">
-                <div className=" bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그팝</div>
-                <h3 className="oneTimeClub-title">{oneTimeClub.egg_pop_id.egg_pop_name}</h3>
-                <p className="oneTimeClub-location">{customAddress(oneTimeClub.egg_pop_id.egg_pop_location)}</p>
-                <p className="oneTimeClub-date">{customDate(oneTimeClub.egg_pop_id.egg_pop_date_time)}</p>
+            </div>
+
+            <div className="w-[358px] h-[88px] justify-start items-center gap-2 inline-flex">
+              <Image
+                src={oneTimeClub.egg_pop_id.egg_pop_image}
+                alt="payList"
+                width={88}
+                height={88}
+                className="w-[88px] h-[88px] relative bg-[#d9d9d9] rounded-xl"
+              />
+              <div className="w-[248px] py-0.5 flex-col justify-start items-start gap-0.5 inline-flex">
+                <div className="px-2 py-0.5 bg-[#fdb800] rounded-[124px] justify-center items-center inline-flex">
+                  <div className="text-[#0c0c0c] text-[10px] font-normal font-['Pretendard'] leading-[14.50px]">
+                    에그팝
+                  </div>
+                </div>
+                <div className="self-stretch text-[#0c0c0c] text-sm font-semibold font-['Pretendard'] leading-[18.90px]">
+                  {oneTimeClub.egg_pop_id.egg_pop_name}
+                </div>
+                <div className="pt-[3px] justify-start items-center gap-2 inline-flex">
+                  <div className="justify-start items-center gap-1 flex">
+                    <div className="w-4 h-4 justify-center items-center flex">
+                      <LocationIcon />
+                    </div>
+                    <div className="text-[#8c8c8c] text-sm font-medium font-['Pretendard'] leading-tight">
+                      {customAddress(oneTimeClub.egg_pop_id.egg_pop_location)}
+                    </div>
+                  </div>
+                  <div className="text-[#8c8c8c] text-sm font-medium font-['Pretendard'] leading-tight">
+                    {customDate(oneTimeClub.egg_pop_id.egg_pop_date_time)}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
