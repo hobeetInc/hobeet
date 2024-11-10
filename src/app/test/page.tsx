@@ -1,5 +1,5 @@
 import Tag from "@/components/uiComponents/Tag/Tag";
-import { Text } from "@/components/uiComponents/Text/Text";
+import Text from "@/components/uiComponents/Text/Text";
 import { Bell, Home, MessageCircle, Clapperboard } from "lucide-react";
 import React from "react";
 

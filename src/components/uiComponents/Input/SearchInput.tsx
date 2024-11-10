@@ -12,7 +12,7 @@ interface SearchInputProps extends VariantProps<typeof inputVariants> {
   children: ReactNode;
 }
 
-const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(({ className, children, ...props }, ref) => {
+const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(({ className, children, ...props }) => {
   return (
     <div className={cn(inputVariants(), className)} {...props}>
       {children}
