@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { RegularClubApproveChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
+import ApproveMemberTabBar from "@/components/uiComponents/ApproveMemberTapBar";
 
 export interface ParticipationRequest {
   egg_club_participation_request_id: number;
@@ -19,15 +20,15 @@ export interface ParticipationRequest {
 
 const ActiveMembersTab = ({ activeMembers }: { activeMembers: ParticipationRequest[] }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6">
       {activeMembers.map((member) => (
-        <div key={member.egg_club_participation_request_id} className="flex items-center gap-4">
+        <div key={member.egg_club_participation_request_id} className="flex items-center gap-3">
           <Image
             src={member.user_id.user_profile_img}
             alt={member.user_id.user_name}
             width={158}
             height={158}
-            className="w-12 h-12 rounded-full"
+            className="w-10 h-10 rounded-full"
           />
           <span>{member.user_id.user_name}</span>
         </div>
@@ -44,24 +45,24 @@ const PendingRequestsTab = ({
   onApprove: (requestId: number) => void;
 }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6">
       {requests.map((req) => (
         <div key={req.egg_club_participation_request_id} className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Image
               src={req.user_id.user_profile_img}
               alt={req.user_id.user_name}
               width={158}
               height={158}
-              className="w-12 h-12 rounded-full"
+              className="w-10 h-10 rounded-full"
             />
             <span>{req.user_id.user_name}</span>
           </div>
           <button
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
             onClick={() => onApprove(req.egg_club_participation_request_id)}
+            className="h-[39px] px-6 py-2.5 bg-neutral-800 rounded-[30px] justify-center items-center inline-flex hover:bg-neutral-700 transition-colors"
           >
-            승인하기
+            <span className="text-white text-sm font-semibold font-pretendard leading-[18.90px]">승인</span>
           </button>
         </div>
       ))}
@@ -72,7 +73,7 @@ const PendingRequestsTab = ({
 export default function ApproveMembersPage() {
   const [requests, setRequests] = useState<ParticipationRequest[]>([]);
   const [activeMembers, setActiveMembers] = useState<ParticipationRequest[]>([]);
-  const [activeTab, setActiveTab] = useState<"active" | "pending">("active");
+  const [activeTab, setActiveTab] = useState(true);
   const supabase = createClient();
   const params = useParams();
   const clubId = Number(params.id);
@@ -139,30 +140,19 @@ export default function ApproveMembersPage() {
 
   return (
     <div>
-      <h2>모임 회원 관리</h2>
-      <div className="flex justify-between mb-4">
-        <div className="flex gap-4">
-          <button
-            className={`px-4 py-2 rounded ${activeTab === "active" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-            onClick={() => setActiveTab("active")}
-          >
-            전체 회원
-          </button>
-          <button
-            className={`px-4 py-2 rounded ${activeTab === "pending" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-            onClick={() => setActiveTab("pending")}
-          >
-            승인 대기
-          </button>
+      <h2 className="text-center mb-2">에그즈 관리</h2>
+      <ApproveMemberTabBar activeTab={activeTab} onTabChange={setActiveTab} vlaue="egges" />
+      <div className="mt-4 px-4">
+        <div className="text-left mb-2">
+          <span>총 {activeTab ? activeMembers.length : requests.length}명</span>
         </div>
         <div>
-          {activeTab === "active" && <span>총 {activeMembers.length}명</span>}
-          {activeTab === "pending" && <span>총 {requests.length}명</span>}
+          {activeTab ? (
+            <ActiveMembersTab activeMembers={activeMembers} />
+          ) : (
+            <PendingRequestsTab requests={requests} onApprove={approveMember} />
+          )}
         </div>
-      </div>
-      <div>
-        {activeTab === "active" && <ActiveMembersTab activeMembers={activeMembers} />}
-        {activeTab === "pending" && <PendingRequestsTab requests={requests} onApprove={approveMember} />}
       </div>
     </div>
   );
