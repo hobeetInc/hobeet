@@ -92,7 +92,7 @@ const Category = ({ formData, setFormData }: EggPopProps) => {
                       handleSubCategorySelect(main.main_category_id, sub.sub_category_id);
                     }}
                     className={`min-w-[106px] h-[43px] px-2 py-3 bg-white rounded-lg border border-solid border-[#d9d9d9] justify-center items-center inline-flex ${
-                      formData.sub_category_id === sub.sub_category_id && "border-primary-500"
+                      formData.sub_category_id === sub.sub_category_id && "border-primary-500 border-2"
                     }`}
                   >
                     <Text

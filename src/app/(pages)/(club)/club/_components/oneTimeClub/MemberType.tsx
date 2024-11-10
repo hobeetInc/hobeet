@@ -1,5 +1,6 @@
 "use client";
 
+import NumberSpinner from "@/components/uiComponents/Input/NumberSpinner";
 import Text from "@/components/uiComponents/Text/Text";
 import { MemeberTypeProps } from "@/types/eggpop.types";
 import { useState } from "react";
@@ -53,14 +54,13 @@ const MemberType = ({
     }
   };
 
-  const handlePeopleLimit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPeopleLimit(value); // 입력값 state 업데이트
+  const handlePeopleLimit = (value: number) => {
+    setPeopleLimit(String(value));
 
     // formData 업데이트
     setFormData({
       ...formData,
-      egg_pop_people_limited: value === "" ? 100 : parseInt(value)
+      egg_pop_people_limited: value === 0 ? 100 : value
     });
   };
 
@@ -85,7 +85,7 @@ const MemberType = ({
                 key={element}
                 onClick={(e) => handleGender(e, element)}
                 className={`w-[111px] h-12 rounded-xl border  justify-center items-center inline-flex ${
-                  selectedGender === element ? "border-primary-500" : "border-gray-50"
+                  selectedGender === element ? "border-primary-500 border-2" : "border-gray-50"
                 }`}
               >
                 <div
@@ -112,7 +112,7 @@ const MemberType = ({
                 key={element}
                 onClick={(e) => handleAge(e, element)}
                 className={`w-[111px] h-12 rounded-xl border  justify-center items-center inline-flex ${
-                  selectedAge === element ? "border-primary-500" : "border-gray-50"
+                  selectedAge === element ? "border-primary-500 border-2" : "border-gray-50"
                 }`}
               >
                 <div
@@ -163,7 +163,12 @@ const MemberType = ({
           </div>
         </div> */}
 
-        <div className="next-box bg-gray-100 flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <Text variant="body_medium-16">최대 인원</Text>
+          <NumberSpinner value={Number(peopleLimit)} onChange={handlePeopleLimit} max={100} min={0} />
+        </div>
+
+        {/* <div className="next-box bg-gray-100 flex flex-col gap-4">
           <h1>최대인원수</h1>
           <input
             type="number"
@@ -175,7 +180,7 @@ const MemberType = ({
             min="0"
             step="1"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -311,7 +311,7 @@ const OneTimeContent = () => {
         </div>
       </div>
 
-      <div className="m-4 flex flex-col">
+      <div className="mx-4 flex flex-col">
         <ProgressBar currentStep={step} totalSteps={7} />
         <div>{renderStep()}</div>
       </div>
