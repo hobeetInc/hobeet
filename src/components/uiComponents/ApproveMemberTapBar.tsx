@@ -5,13 +5,13 @@ interface TabBarProps {
 }
 
 // 내 모임 리스트 탭바
-export const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, vlaue }) => {
+export const ApproveMemberTabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, vlaue }) => {
   const getTabText = (tabType: boolean) => {
-    if (vlaue === "myclub") {
-      return tabType ? "내가 에그장" : "내가 에그즈";
-    } else if (vlaue === "mychat") {
-      return tabType ? "에그클럽" : "에그팝";
-    }
+    if (vlaue === "egges") {
+      return tabType ? "전체 에그즈" : "승인 대기";
+    } // else if (vlaue === "mychat") {
+    //   return tabType ? "에그클럽" : "에그팝";
+    // }
     return "";
   };
 
@@ -25,7 +25,7 @@ export const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, vlaue })
         >
           {getTabText(true)}
         </span>
-        <div className={`left-0 w-full h-0.5 mt-3 ${activeTab === true ? "bg-primary-500" : "bg-gray-50"}`} />
+        <div className={`left-0 w-full h-0.5 mt-3 ${activeTab === true ? "bg-gray-800" : "bg-gray-50"}`} />
       </button>
 
       <button className="w-[179px] text-base font-pretendard relative" onClick={() => onTabChange(false)}>
@@ -36,10 +36,10 @@ export const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, vlaue })
         >
           {getTabText(false)}
         </span>
-        <div className={`left-0 w-full h-0.5 mt-3 ${activeTab === false ? "bg-primary-500" : "bg-gray-50"}`} />
+        <div className={`left-0 w-full h-0.5 mt-3 ${activeTab === false ? "bg-gray-800" : "bg-gray-50"}`} />
       </button>
     </div>
   );
 };
 
-export default TabBar;
+export default ApproveMemberTabBar;
