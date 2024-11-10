@@ -3,6 +3,7 @@ import { Category } from "@/types/category.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+
 const categories: Category[] = [
   { id: 0, name: "에그팝", icon: "/asset/Category icon_voltage.png", alt: "에그팝" },
   { id: 1, name: "아웃도어/여행", icon: "/asset/Category icon_airplane.png", alt: "아웃도어/여행" },
@@ -21,16 +22,16 @@ const CategorySlider = () => {
   };
 
   return (
-    <div className="relative w-full max-w-[390px] mx-auto">
+    <div className="relative w-full max-w-full mx-auto px-4">
       <div className="overflow-x-auto scrollbar-hide">
-        <div className="inline-flex items-center gap-[6px] px-4 py-2">
+        <div className="inline-flex items-center gap-2 py-2">
           {categories.map((category) => (
             <button
               key={category.id}
-              className="flex w-[77px] flex-col justify-center items-center gap-[4px] flex-shrink-0"
+              className="flex w-20 flex-col justify-center items-center gap-1 flex-shrink-0"
               onClick={() => handleCategory(category.id)}
             >
-              <div className="flex w-[67px] h-[64px] p-2 justify-center items-center rounded-[32px] bg-[#fff1cc]">
+              <div className="flex w-16 h-16 p-2 justify-center items-center rounded-full bg-[#fff1cc]">
                 <Image width={48} height={48} src={category.icon} alt={category.alt} className="w-12 h-12" />
               </div>
               <div className="self-stretch text-center text-xs leading-[135%]">

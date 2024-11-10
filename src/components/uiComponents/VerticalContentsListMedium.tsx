@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 
-import Tag from "./tag/index";
+import Tag from "./Tag/Tag";
 import { CustomAddress } from "@/utils/CustomAddress";
-import { Icon } from "./icon";
+import { Icon } from "./Icon/Icon";
 import { HeartImage } from "./HeartImage";
 
 // eggPop 상세정보, hostName(모임장 이름), memberCount(모임 참여 인원) 프롭스

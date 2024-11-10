@@ -54,7 +54,8 @@ export const getSearchedClubs = async (searchTerm: string): Promise<Club[]> => {
     .from("egg_pop")
     .select(
       `*,user_id(user_name,
-          user_profile_img)`
+          user_profile_img
+          ),egg_pop_member(count)`
     )
     .ilike("egg_pop_name", `%${searchTerm}%`);
 

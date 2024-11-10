@@ -15,7 +15,7 @@ export async function POST(req: Request) {
         *,
         egg_day_chatting (
           *,
-          egg_day_chatting_room (*)
+          egg_day_chatting_room (*, egg_day_chatting(count))
         ),
         egg_club (*)
         `

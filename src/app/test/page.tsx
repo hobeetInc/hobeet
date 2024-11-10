@@ -1,7 +1,9 @@
-import Tag from "@/components/uiComponents/tag/index";
-import { Text } from "@/components/uiComponents/text";
+import Tag from "@/components/uiComponents/Tag/Tag";
+import Text from "@/components/uiComponents/Text/Text";
 import { Bell, Home, MessageCircle, Clapperboard } from "lucide-react";
 import React from "react";
+
+
 
 const ICON_MAP = {
   home: Home,

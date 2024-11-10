@@ -51,7 +51,7 @@ export default function ClubListContent() {
   );
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4 border-b">
+    <div className="w-full mx-auto p-4 border-b">
       <div className="flex gap-4 mb-6">
         <button
           className={`flex-1 py-2 rounded ${
