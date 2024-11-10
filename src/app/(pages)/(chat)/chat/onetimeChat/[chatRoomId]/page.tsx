@@ -6,8 +6,8 @@ import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { EggPopChatInfo, ExtendEggPopMessage } from "@/types/eggpopchat.types";
-import { Icon } from '../../../../../../components/uiComponents/Icon/Icon';
-import Text from '../../../../../../components/uiComponents/Text/Text';
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 
 
 

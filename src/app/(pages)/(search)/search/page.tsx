@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Club } from "@/types/search.types";
 import Image from "next/image";
 import { HorizontalContentsListLargeEggClub, HorizontalContentsListLargeEggPop } from "@/components/uiComponents/HorizontalContentsListLarge";
-import Text from "@/components/uiComponents/Text/Text";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";

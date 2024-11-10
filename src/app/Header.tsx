@@ -4,7 +4,8 @@ import { useAuth } from "./store/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { GoPlus } from "react-icons/go";
-import { Icon } from '../components/uiComponents/Icon/Icon';
+import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+
 
 
 export default function Header({ className }: { className: string }) {
