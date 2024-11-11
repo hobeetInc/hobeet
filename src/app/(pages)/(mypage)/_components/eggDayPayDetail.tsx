@@ -5,6 +5,7 @@ import { getEggDayPayList } from "../_api/supabase";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { LocationIcon } from "@/components/uiComponents/IconComponents/Icons";
 
 const EggDayPayDetail = () => {
   const { data, isLoading } = useQuery({
@@ -59,16 +60,42 @@ const EggDayPayDetail = () => {
           key={index}
         >
           <div key={index} className="notification-card my-4">
-            <div>{customDateFormat(notification.egg_day_kakaopay_create_at)}</div>
-            <div>
-              <div className="notification-image">
-                <Image src={notification.egg_day_id.egg_day_image} alt="payList" width={100} height={100} />
+            <div className="h-[35px] py-2 justify-start items-center gap-2.5 inline-flex">
+              <div className="text-black text-sm font-semibold font-['Pretendard'] leading-[18.90px]">
+                {customDateFormat(notification.egg_day_kakaopay_create_at)}
               </div>
-              <div className="notification-content">
-                <div className=" bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그데이</div>
-                <h3 className="notification-title">{notification.egg_day_id.egg_day_name}</h3>
-                <p className="notification-location">{customAddress(notification.egg_day_id.egg_day_location)}</p>
-                <p className="notification-date">{customDate(notification.egg_day_id.egg_day_date_time)}</p>
+            </div>
+
+            <div className="w-[358px] h-[88px] justify-start items-center gap-2 inline-flex">
+              <Image
+                src={notification.egg_day_id.egg_day_image}
+                alt="payList"
+                width={88}
+                height={88}
+                className="w-[88px] h-[88px] relative bg-[#d9d9d9] rounded-xl"
+              />
+              <div className="w-[248px] py-0.5 flex-col justify-start items-start gap-0.5 inline-flex">
+                <div className="px-2 py-0.5 bg-[#ffe399] rounded-[124px] justify-center items-center inline-flex">
+                  <div className="text-[#0c0c0c] text-[10px] font-normal font-['Pretendard'] leading-[14.50px]">
+                    에그데이
+                  </div>
+                </div>
+                <div className="self-stretch text-[#0c0c0c] text-sm font-semibold font-['Pretendard'] leading-[18.90px]">
+                  {notification.egg_day_id.egg_day_name}
+                </div>
+                <div className="pt-[3px] justify-start items-center gap-2 inline-flex">
+                  <div className="justify-start items-center gap-1 flex">
+                    <div className="w-4 h-4 justify-center items-center flex">
+                      <LocationIcon />
+                    </div>
+                    <div className="text-[#8c8c8c] text-sm font-medium font-['Pretendard'] leading-tight">
+                      {customAddress(notification.egg_day_id.egg_day_location)}
+                    </div>
+                  </div>
+                  <div className="text-[#8c8c8c] text-sm font-medium font-['Pretendard'] leading-tight">
+                    {customDate(notification.egg_day_id.egg_day_date_time)}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

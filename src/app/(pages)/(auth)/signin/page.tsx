@@ -1,8 +1,8 @@
 "use client";
 
+import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 const SigninPage = () => {
@@ -43,40 +43,61 @@ const SigninPage = () => {
   };
 
   return (
-    
-    <div className="flex flex-col items-center justify-center w-[390px] h-[844px]">
-      <div className="text-center mb-10">
-        <h1 className="text-4xl font-bold mb-2">hobeet</h1>
-        <p className="text-lg font-light">우리들만의 취미공유</p>
+
+    <div className="flex flex-col items-center justify-start   p-6">
+      <div className="flex flex-col items-center w-[174px] h-[176px] mb-[116px]">
+        <h1 className="text-2xl font-black text-[#0c0c0c]  mt-[160px] mb-2">EGG FRIENDS</h1>
+        <p className="text-base font-medium text-[#0c0c0c]">함께라서 더 즐거운 우리</p>
+        <div className="h-[90px] w-full  mt-[32px] relative flex justify-center mb-[160px]">
+          <div className="flex items-center">
+            <div className="w-[90px] h-[90px] z-10">
+              <Icon name="whiteEgg" />
+            </div>
+            <div className="w-[90px] h-[90px] -ml-2 ">
+              <Icon name="yellowEgg" />
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div className="space-y-4 w-full px-10">
+      <div className="fixed w-full mb-[129px] px-[16px] bottom-0">
         <button
-          className="w-full py-4 bg-white text-center rounded-[27px] border border-gray-300 flex items-center justify-center space-x-2"
           onClick={handleSignInWithGoogle}
+          className="w-full flex items-center space-x-3 px-7 py-3.5 mb-[12px] bg-white border border-[#f2f2f2] rounded-[27px]"
         >
-          <Image width={24} height={24} src="/asset/icon-google.png" className="w-6 h-6" alt="Google Icon" />
-          <span className="text-gray-700">구글로 시작하기</span>
+          <Image width={24} height={24} src="/asset/icon-google.png" alt="Google Icon" />
+          <span className="w-[302px] text-center text-black text-base font-semibold leading-snug">구글로 시작하기</span>
         </button>
 
         <button
-          className="w-full py-4 bg-yellow-300 text-center rounded-[27px] flex items-center justify-center space-x-2"
           onClick={handleSignInWithKakao}
+          className="w-full flex items-center space-x-3 px-7 py-3.5 mb-[12px] bg-[#fcec4e] rounded-[27px]"
         >
-          <Image width={24} height={24} src="/asset/icon-kakao.png" className="w-6 h-6" alt="Kakao Icon" />
-          <span className="text-black">카카오로 시작하기</span>
+          <Image width={24} height={24} src="/asset/icon-kakao.png" alt="Kakao Icon" />
+          <span className="w-[302px] text-center text-black text-base font-semibold leading-snug">
+            카카오로 시작하기
+          </span>
         </button>
 
-        <button className="w-full py-4 bg-gray-200 text-center rounded-[27px] flex items-center justify-center space-x-2">
-          <Image width={24} height={24} src="/asset/Message-Filled.png" className="w-6 h-6" alt="Email Icon" />
-          <span className="text-black">이메일로 시작하기</span>
+        <button
+          onClick={() => alert("서비스 준비 중입니다.")}
+          className="w-full flex items-center space-x-3 px-7 py-3.5  bg-[#f2f2f2] rounded-[27px]"
+        >
+          <Image width={24} height={24} src="/asset/Message-Filled.png" alt="Email Icon" />
+          <span className="w-[302px] text-center text-black text-base font-semibold leading-snug">
+            이메일로 시작하기
+          </span>
         </button>
+      </div>
 
-        <div className="flex flex-col items-center justify-center mt-4">
-          <Link href={"/"} className="text-sm text-gray-500">
-            이메일로 간편하게 회원가입👉
-          </Link>
-        </div>
+      <div className="fixed text-center mb-[72px] bottom-0">
+        <button
+          className="text-black text-xs font-medium font-['Pretendard'] leading-[17.40px]"
+          onClick={() => alert("서비스 준비 중입니다.")}
+        >
+          이메일로 간편하게 회원가입 👉
+        </button>
       </div>
     </div>
   );

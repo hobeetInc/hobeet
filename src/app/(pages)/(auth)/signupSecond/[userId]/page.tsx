@@ -6,6 +6,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { sanitizeFileName } from "@/utils/sanitizeFileName";
 import { useAuth } from "@/app/store/AuthContext";
+import { FaCamera } from "react-icons/fa6";
 
 const NAME_REGEX = /^[가-힣]{2,5}$/;
 
@@ -130,7 +131,6 @@ const SignupSecondPage = () => {
         setUserGender(userData.user_gender || "");
         setUserProfileImg(userData.user_profile_img || "");
       }
-      // console.log(userData);
     };
 
     fetchUser();
@@ -197,85 +197,87 @@ const SignupSecondPage = () => {
   };
 
   return (
-    <div className="p-5 max-w-lg mx-auto">
-      <h1 className="text-center text-2xl font-bold mb-5">회원가입</h1>
+    <div className=" h-[844px] relative bg-white">
+      <div className=" h-12 absolute  bg-white flex justify-center items-center">
+        <h1 className="text-center text-[#0c0c0c] text-base font-bold">회원가입</h1>
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        <div className="relative flex justify-center mb-5">
-          <div className="relative w-32 h-32">
-            <div className="rounded-full overflow-hidden w-32 h-32">
-              <Image
-                src={userProfileImg || "/default-avatar.png"}
-                alt="프로필 이미지"
-                width={128}
-                height={128}
-                className="object-cover"
-              />
+      <div className="h-auto absolute top-[112px] left-[16px] flex flex-col gap-12">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-[#0c0c0c] text-lg font-semibold">프로필</h2>
+          <div className="relative w-[78px] h-[78px]">
+            <div className="w-full h-full bg-[#d9d9d9] rounded-full overflow-hidden">
+              {userProfileImg && (
+                <Image src={userProfileImg} alt="프로필 이미지" width={78} height={78} className="object-cover" />
+              )}
             </div>
             <label
-              htmlFor="profileImg"
-              className="absolute bottom-0 right-0 bg-gray-200 px-2 py-2 rounded-lg shadow cursor-pointer"
-              style={{ transform: "translate(6%, 20%)" }}
+              htmlFor="profile-upload"
+              className="absolute w-[30px] h-[30px] left-[48px] top-[48px] bg-white rounded-full border border-[#f2f2f2] flex items-center justify-center cursor-pointer"
+              style={{ border: "solid 1px #f2f2f2" }}
             >
-              수정
+              <FaCamera />
             </label>
-            <input type="file" id="profileImg" className="hidden" onChange={handleImagePreview} />
+            <input id="profile-upload" type="file" className="hidden" onChange={handleImagePreview} />
           </div>
         </div>
 
-        <div className="mb-5">
-          <label className="block text-gray-700 font-bold mb-2">이름</label>
+        <div className="flex flex-col gap-2">
+          <label className="flex items-center">
+            <span className="text-[#0c0c0c] text-lg font-semibold">이름</span>
+            <span className="text-[#f02a48] text-lg">*</span>
+          </label>
           <input
             type="text"
             value={userName || ""}
             onChange={handleNameChange}
             placeholder="이름을 입력해주세요."
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full h-12 px-5 bg-[#f2f2f2] rounded-lg"
           />
-          {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
+          {nameError && <p className="text-[#f02a48] text-sm">{nameError}</p>}
         </div>
 
-        <div className="mb-5">
-          <label className="block text-gray-700 font-bold mb-2">성별</label>
+        <div className="flex flex-col gap-2">
+          <label className="flex items-center">
+            <span className="text-[#0c0c0c] text-lg font-semibold">성별</span>
+            <span className="text-[#f02a48] text-lg">*</span>
+          </label>
           <div className="flex gap-3">
             <button
               type="button"
-              onClick={() => {
-                setUserGender("남성");
-                setGenderError("");
-              }}
-              className={`flex-1 py-2 rounded ${
-                userGender === "남성" ? "bg-black text-white" : "bg-gray-200 text-black"
+              onClick={() => setUserGender("남성")}
+              className={`w-[173px] h-12 px-4 rounded-lg border-2 ${
+                userGender === "남성" ? "border-[#fdb800] text-[#fdb800] font-bold" : "border-[#d9d9d9] text-black"
               }`}
             >
               남성
             </button>
             <button
               type="button"
-              onClick={() => {
-                setUserGender("여성");
-                setGenderError("");
-              }}
-              className={`flex-1 py-2 rounded ${
-                userGender === "여성" ? "bg-black text-white" : "bg-gray-200 text-black"
+              onClick={() => setUserGender("여성")}
+              className={`w-[173px] h-12 px-4 rounded-lg border-2 ${
+                userGender === "여성" ? "border-[#fdb800] text-[#fdb800] font-bold" : "border-[#d9d9d9] text-black"
               }`}
             >
               여성
             </button>
           </div>
-          {genderError && <p className="text-red-500 text-sm mt-1">{genderError}</p>}
+          {genderError && <p className="text-[#f02a48] text-sm">{genderError}</p>}
         </div>
 
-        <div className="mb-5">
-          <label className="block text-gray-700 font-bold mb-2">생년월일</label>
+        <div className="flex flex-col gap-2">
+          <label className="flex items-center">
+            <span className="text-[#0c0c0c] text-lg font-semibold">생년월일</span>
+            <span className="text-[#f02a48] text-lg">*</span>
+          </label>
           <div className="flex gap-3">
             <select
               value={birthYear}
               onChange={(e) => setBirthYear(e.target.value)}
-              className="p-2 border border-gray-300 rounded"
+              className="w-[111px] h-12 px-5 rounded-lg border border-[#d9d9d9] text-center"
             >
-              <option value="">연도</option>
-              {[...Array(90)].map((_, i) => (
+              <option value="">년</option>
+              {[...Array(100)].map((_, i) => (
                 <option key={i} value={2024 - i}>
                   {2024 - i}
                 </option>
@@ -284,38 +286,37 @@ const SignupSecondPage = () => {
             <select
               value={birthMonth}
               onChange={(e) => setBirthMonth(e.target.value)}
-              className="p-2 border border-gray-300 rounded"
+              className="w-[111px] h-12 px-5 rounded-lg border border-[#d9d9d9] text-center"
             >
               <option value="">월</option>
               {[...Array(12)].map((_, i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1}월
+                <option key={i} value={i + 1}>
+                  {i + 1}
                 </option>
               ))}
             </select>
             <select
               value={birthDay}
               onChange={(e) => setBirthDay(e.target.value)}
-              className="p-2 border border-gray-300 rounded"
+              className="w-[111px] h-12 px-5 rounded-lg border border-[#d9d9d9] text-center"
             >
               <option value="">일</option>
-              {[...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].map((_, i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1}일
+              {[...Array(31)].map((_, i) => (
+                <option key={i} value={i + 1}>
+                  {i + 1}
                 </option>
               ))}
             </select>
           </div>
-          {birthDateError && <p className="text-red-500 text-sm mt-1">{birthDateError}</p>}
+          {birthDateError && <p className="text-[#f02a48] text-sm">{birthDateError}</p>}
         </div>
+      </div>
 
-        <button
-          type="submit"
-          className="w-full py-2 bg-gray-400 text-white rounded hover:bg-black transition duration-200"
-        >
-          시작하기
+      <div className="fixed ml-[16px] mr-[16px] w-[358px] bottom-0 mb-[54px] h-[50px] px-[10px] py-[14px] bg-[#fdb800] rounded-lg justify-center items-center gap-2.5 inline-flex">
+        <button onClick={handleSubmit} className="text-white text-base font-semibold leading-snug">
+          다음
         </button>
-      </form>
+      </div>
     </div>
   );
 };
