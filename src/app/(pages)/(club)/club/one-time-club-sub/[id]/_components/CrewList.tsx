@@ -10,6 +10,9 @@ import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { CrewListProps } from "@/types/eggpop.types";
 import OneTimeClubJoinButton from "@/components/OneTimeClubJoinButtonCom";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { IoIosArrowForward } from "react-icons/io";
+import { Button } from "@/components/uiComponents/Button/ButtonCom";
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
@@ -98,40 +101,54 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
   const renderJoinButton = () => {
     if (isHost) {
       return (
-        <div className="flex justify-center items-center gap-2">
-          <button className="flex-1 bg-yellow-100 h-[50px] rounded-full">{`참여 ${crewList.length}명`}</button>
-          <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
+        <div className="w-full h-20 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+          <div className="w-[50%] px-2.5 py-3.5 bg-primary-300 rounded-[25px] justify-center items-center gap-2 inline-flex">
+            <Text variant="subtitle-16">{`참여 ${crewList.length}명`}</Text>
+          </div>
+          <Button colorType="orange" borderType="circle" sizeType="small" className="w-[50%]">
+            에그팝 채팅방
+          </Button>
         </div>
       );
     }
 
     if (isAlreadJoined) {
       return (
-        <div className="flex justify-center items-center gap-2">
-          <p className="flex-1 h-[50px] pt-4 font-semibold">참여 중인 에그팝이에요</p>
-          <button onClick={handleChatClick} className="flex-1 bg-yellow-300  h-[50px] rounded-full">
+        <div className="w-full h-20 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+          <Text variant="subtitle-16" className="w-[50%]">
+            참여 중인 에그팝이에요
+          </Text>
+          <Button colorType="orange" borderType="circle" sizeType="small" className="w-[50%]">
             에그팝 채팅방
-          </button>
+          </Button>
         </div>
       );
     }
 
-    return <OneTimeClubJoinButton clubId={clubId} />;
+    return (
+      <div className="w-full flex justify-center items-center">
+        <OneTimeClubJoinButton clubId={clubId} />
+      </div>
+    );
   };
 
   return (
     <>
-      <div className="flex flex-col gap-4">
-        <div className="flex justify-between">
-          <h1 className="font-extrabold text-[20px]">{`참여중인 크루원 ${crewList.length}명`}</h1>
-          <button onClick={() => setIsModalOpen(true)} className="text-gray-600 hover:text-black">
-            <ChevronRight />
+      <div className="w-full h-20 flex-col justify-start items-start gap-4 flex">
+        <div className="self-stretch justify-start items-start inline-flex">
+          <div className="grow shrink basis-0 h-6 justify-start items-center gap-2 flex">
+            <Text variant="subtitle-18">참여 중인 에그즈</Text>
+            <Text variant="subtitle-18">{crewList.length}명</Text>
+          </div>
+          <button onClick={() => setIsModalOpen(true)} className="w-6 h-6 text-gray-600 hover:text-black">
+            <IoIosArrowForward className="w-full h-full" />
           </button>
         </div>
-        <div className="grid grid-cols-8 grid-flow-col gap-2 w-full">{displaySlots}</div>
+        <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
+
+        <div className="w-full">{renderJoinButton()}</div>
+        <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
-      {renderJoinButton()}
-      <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };

@@ -4,6 +4,7 @@ import { oneTimeClubJoin } from "@/utils/onetimeclubjoin/join";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "./uiComponents/Button/ButtonCom";
 
 export default function OneTimeClubJoinButton({ clubId, onError }: JoinClubButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,8 +53,8 @@ export default function OneTimeClubJoinButton({ clubId, onError }: JoinClubButto
   };
 
   return (
-    <button onClick={handleJoinRequest} disabled={isLoading} className="w-full h-[50px] bg-yellow-300 rounded-full">
+    <Button colorType="orange" borderType="circle" onClick={handleJoinRequest} disabled={isLoading}>
       {isLoading ? "처리중..." : "참여하기"}
-    </button>
+    </Button>
   );
 }

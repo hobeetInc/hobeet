@@ -31,6 +31,23 @@ const HomeContent = ({
     }
   };
 
+  // 나이 커스텀
+  const age = (age: number) => {
+    if (age === 100) {
+      return "제한 없음";
+    } else if (age === 50) {
+      return "50대";
+    } else if (age === 49) {
+      return "40대";
+    } else if (age === 39) {
+      return "30대";
+    } else if (age === 29) {
+      return "20대";
+    } else if (age === 19) {
+      return "10대";
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col w-full">
