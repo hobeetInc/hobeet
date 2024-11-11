@@ -9,7 +9,7 @@ import { useState } from "react";
 import Text from "./uiComponents/TextComponents/Text";
 import { Button } from "./uiComponents/Button/ButtonCom";
 
-export default function RegularClubJoinButton({ clubId, onSuccess, onError, className }: EggClubJoinButtonProps) {
+export default function RegularClubJoinButton({ clubId, onSuccess, onError }: EggClubJoinButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const supabase = createClient();
 

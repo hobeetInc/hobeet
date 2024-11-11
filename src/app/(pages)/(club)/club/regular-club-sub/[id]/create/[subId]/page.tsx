@@ -52,8 +52,6 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
     const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
-    const defaultImage = "/default-profile-image.jpg";
-
     return (
       <div className="flex flex-col items-center justify-center">
         <div className="flex w-full h-[48px] fixed top-0 right-0 left-0 z-50 bg-white">

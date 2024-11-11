@@ -1,9 +1,7 @@
 import Image from "next/image";
 import CrewList from "./CrewList";
-import WishListHeart from "./WishListHeart";
 import { HomeContentProps } from "@/types/eggclub.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import ClubHeader from "./ClubHeader";
 import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 

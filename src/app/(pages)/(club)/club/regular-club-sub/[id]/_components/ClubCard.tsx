@@ -48,12 +48,7 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
   };
 
   return (
-    <button
-      onClick={() =>
-        router.push(`/club/regular-club-sub/${notification.egg_club_id}/create/${notification.egg_day_id}`)
-      }
-      className="flex gap-2 w-full"
-    >
+    <button onClick={handleClick} className="flex gap-2 w-full">
       <div className="w-[102px] h-102px overflow-hidden flex items-center justify-center rounded-[12px]">
         <Image
           src={notification.egg_day_image}
@@ -71,9 +66,15 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
         <div className="flex items-center gap-1">
           <Icon name="location" />
 
-          <Text variant="body_medium-14" className="text-gray-400">
-            {addressCustom(notification.egg_day_location)}
-          </Text>
+          <div className="flex gap-2">
+            <Text variant="body_medium-14" className="text-gray-400">
+              {addressCustom(notification.egg_day_location)}
+            </Text>
+
+            <Text variant="body_medium-14" className="text-gray-400">
+              {DateTimeCustom(notification.egg_day_date_time)}
+            </Text>
+          </div>
         </div>
 
         <div className="flex items-center gap-1">
