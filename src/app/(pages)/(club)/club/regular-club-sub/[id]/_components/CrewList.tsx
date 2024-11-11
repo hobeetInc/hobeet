@@ -152,7 +152,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
             </Text>
           </Button>
 
-          <Button colorType="black" borderType="circle" sizeType="small" className="w-[50%]">
+          <Button colorType="black" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
             <Text variant="subtitle-16">에그클럽 채팅방</Text>
           </Button>
         </div>
@@ -175,8 +175,14 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
             <Text variant="subtitle-16" className="w-[50%]">
               참여 중인 에그클럽이에요
             </Text>
-            <Button colorType="black" borderType="circle" sizeType="small" className="w-[50%]">
-              에그팝 채팅방
+            <Button
+              colorType="black"
+              borderType="circle"
+              sizeType="small"
+              className="w-[50%]"
+              onClick={handleChatClick}
+            >
+              에그클럽 채팅방
             </Button>
           </div>
 
@@ -212,7 +218,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
 
       case "not_applied":
         return (
-          <div className="w-full flex justify-center items-center">
+          <div className="w-full  h-20 flex justify-center items-center">
             <RegularClubJoinButton
               clubId={clubId}
               onSuccess={() => {}}
@@ -227,7 +233,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
 
   return (
     <>
-      <div className="w-full h-20 flex-col justify-start items-start gap-4 flex">
+      <div className="w-full flex-col justify-start items-start gap-4 flex">
         <div className="self-stretch justify-start items-start inline-flex">
           <div className="grow shrink basis-0 h-6 justify-start items-center gap-2 flex">
             <Text variant="subtitle-18">참여 중인 에그즈</Text>
@@ -239,10 +245,11 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         </div>
         <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
 
-        <div className="w-full">
+        <div className="w-full ">
           <NotificationList notificationData={notificationData} crewMembers={crewList} />
+
+          <div className="w-full">{renderJoinButton()}</div>
         </div>
-        <div className="w-full fixed bottom-0 right-0 left-0">{renderJoinButton()}</div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
     </>

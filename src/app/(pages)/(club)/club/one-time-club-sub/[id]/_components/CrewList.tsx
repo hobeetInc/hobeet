@@ -105,7 +105,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
           <div className="w-[50%] px-2.5 py-3.5 bg-primary-300 rounded-[25px] justify-center items-center gap-2 inline-flex">
             <Text variant="subtitle-16">{`참여 ${crewList.length}명`}</Text>
           </div>
-          <Button colorType="orange" borderType="circle" sizeType="small" className="w-[50%]">
+          <Button colorType="orange" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
             에그팝 채팅방
           </Button>
         </div>
@@ -118,7 +118,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
           <Text variant="subtitle-16" className="w-[50%]">
             참여 중인 에그팝이에요
           </Text>
-          <Button colorType="orange" borderType="circle" sizeType="small" className="w-[50%]">
+          <Button colorType="orange" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
             에그팝 채팅방
           </Button>
         </div>

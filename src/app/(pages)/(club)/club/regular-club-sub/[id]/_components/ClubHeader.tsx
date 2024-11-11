@@ -18,8 +18,8 @@ const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   };
 
   return (
-    <div className="flex justify-between items-center h-[48px] p-4 relative">
-      <button onClick={handleBack} className="absolute left-4">
+    <div className="flex justify-between items-center h-[48px] p-4">
+      <button onClick={handleBack} className="left-4">
         <IoIosArrowBack />
       </button>
       <h1 className="flex-1 text-center text-lg font-semibold">
