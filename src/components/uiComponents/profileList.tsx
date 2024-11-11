@@ -1,5 +1,5 @@
 import { ProfileImageLarge, ProfileImageSmall } from "./ProfileImageLarge";
-import Tag from "./Tag/Tag";
+import Tag from "./TagComponents/Tag";
 
 // 에그장 프로필 리스트
 export const ProfileListRepresentative = ({ hostName, hostImage }) => {

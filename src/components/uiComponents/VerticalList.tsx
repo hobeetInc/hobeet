@@ -1,10 +1,9 @@
 import { CustomAddress } from "@/utils/CustomAddress";
 import { LocationImage } from "./LocationImage";
-
 import { CustomDate } from "@/utils/CustomDate";
 import Image from "next/image";
 import { HeartImage } from "./HeartImage";
-import Tag from "./Tag/Tag";
+import Tag from "./TagComponents/Tag";
 
 export const EggPopVerticalList = ({ eggPop }) => {
   return (

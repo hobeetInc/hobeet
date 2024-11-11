@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getPopularClubs } from "../_api/supabase";
 import Link from "next/link";
-import Text from "@/components/uiComponents/Text/Text";
+import Text from "@/components/uiComponents/TextComponents/Text";
 import { HorizontalContentsListLargeEggClubImage88Size } from "@/components/uiComponents/HorizontalContentsListLarge";
 
 
