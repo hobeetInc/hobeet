@@ -21,7 +21,7 @@ export interface ParticipationRequest {
 const ActiveMembersTab = ({ activeMembers }: { activeMembers: ParticipationRequest[] }) => {
   return (
     <div className="flex flex-col gap-6">
-      {activeMembers.map((member) => (
+      {activeMembers.map((member, index) => (
         <div key={member.egg_club_participation_request_id} className="flex items-center gap-3">
           <Image
             src={member.user_id.user_profile_img}
@@ -30,7 +30,18 @@ const ActiveMembersTab = ({ activeMembers }: { activeMembers: ParticipationReque
             height={158}
             className="w-10 h-10 rounded-full"
           />
-          <span>{member.user_id.user_name}</span>
+          <span className="text-gray-900 font-semibold font-pretendard">{member.user_id.user_name}</span>
+          {index === 0 ? (
+            // 에그장 뱃지 (첫 번째 멤버)
+            <div className="w-[42px] h-[19px] px-2 py-0.5 bg-gray-800 rounded-[124px] justify-center items-center inline-flex">
+              <div className="text-white text-[10px] font-normal font-pretendard leading-[14.50px]">에그장</div>
+            </div>
+          ) : (
+            // 에그즈 뱃지 (나머지 멤버)
+            <div className="w-[42px] h-[19px] px-2 py-0.5 bg-primary-300 rounded-[124px] justify-center items-center inline-flex">
+              <div className="text-gray-900 text-[10px] font-normal font-pretendard leading-[14.50px]">에그즈</div>
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -77,9 +88,6 @@ export default function ApproveMembersPage() {
   const supabase = createClient();
   const params = useParams();
   const clubId = Number(params.id);
-  // console.log(clubId);
-
-  // params.clubId = 29; // 상세페이지 생성 협의(어떻게 받아올 것인지 클럽아이디)
 
   useEffect(() => {
     const fetchPendingAndActiveRequests = async () => {
@@ -140,7 +148,7 @@ export default function ApproveMembersPage() {
 
   return (
     <div>
-      <h2 className="text-center mb-2">에그즈 관리</h2>
+      <h2 className="text-center text-gray-900  font-bold font-pretendard mb-2">에그즈 관리</h2>
       <ApproveMemberTabBar activeTab={activeTab} onTabChange={setActiveTab} vlaue="egges" />
       <div className="mt-4 px-4">
         <div className="text-left mb-2">

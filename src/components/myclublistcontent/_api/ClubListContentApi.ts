@@ -34,6 +34,7 @@ export const fetchJoinedClubs = async (userId: string) => {
         .from("egg_pop")
         .select("*")
         .in("egg_pop_id", oneTimeIds)
+        .neq("user_id", userId)
         .order("egg_pop_date_time", { ascending: false })
     : { data: [] };
 
@@ -42,6 +43,7 @@ export const fetchJoinedClubs = async (userId: string) => {
         .from("egg_club")
         .select("*")
         .in("egg_club_id", regularIds)
+        .neq("user_id", userId)
         .order("egg_club_create_at", { ascending: false })
     : { data: [] };
 
