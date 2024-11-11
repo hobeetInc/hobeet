@@ -69,7 +69,7 @@ const OneTimeContent = () => {
   const currentStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3 | 4 | 5 | 6;
 
   // 상태 관리
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(currentStep);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6>(currentStep);
   const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedGender);
   const [formData, setFormData] = useState<EggPopForm>(initialData.formData);
@@ -81,7 +81,7 @@ const OneTimeContent = () => {
 
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
-    const newStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7;
+    const newStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3 | 4 | 5 | 6;
     setStep(newStep);
   }, [searchParams]);
 
@@ -191,7 +191,7 @@ const OneTimeContent = () => {
     //     return;
     //   }
 
-    if (step === 7) {
+    if (step === 6) {
       handleSubmit();
     } else {
       setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6);
@@ -304,9 +304,9 @@ const OneTimeContent = () => {
   };
 
   return (
-    <div className="relative">
-      <div className="h-12">
-        <div onClick={handleBack} className="h-12 w-12 p-3 justify-start items-center inline-flex">
+    <div className="relative flex flex-col justify-center items-center">
+      <div className="w-[390px] h-12 flex justify-start">
+        <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
           <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
         </div>
       </div>
@@ -315,7 +315,7 @@ const OneTimeContent = () => {
         <ProgressBar currentStep={step} totalSteps={7} />
         <div>{renderStep()}</div>
       </div>
-      <div className="fixed bottom-[30px] pt-10 left-0 right-0 px-4">
+      <div className="fixed bottom-[30px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
         <Button
           onClick={handleNext}
           disabled={isNextButtonDisabled()}

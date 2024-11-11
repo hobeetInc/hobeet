@@ -74,7 +74,7 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
           } `}
         >
           <Text variant="subtitle-14" className={`${!showTaxInput ? "text-primary-500" : "text-gray-800"}`}>
-            있음
+            없음
           </Text>
         </button>
       </div>
