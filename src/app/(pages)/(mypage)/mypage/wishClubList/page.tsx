@@ -5,6 +5,7 @@ import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
 import { WishListResponse } from "@/types/mypage.types";
 import { useRouter } from "next/navigation";
+import { WishHeart } from "@/components/uiComponents/IconComponents/Icons";
 
 const WishClubListPage = () => {
   const supabase = browserClient;
@@ -65,19 +66,70 @@ const WishClubListPage = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="w-[390px] h-[844px] relative bg-white px-[16px]">
       <h1 className="text-xl font-bold text-center mb-4">내가 찜한 클럽</h1>
       {wishData.length === 0 ? (
         <p className="text-center text-gray-500">찜한 클럽이 없습니다.</p>
       ) : (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="w-[358px] h-[652px] justify-start items-start gap-2.5 grid grid-cols-2">
           {wishData.map((item, index) => (
             <div
               onClick={() => handleClick(item.egg_club_id.egg_club_id)}
               key={index}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 relative"
+              className="w-[174px] flex-col justify-start items-start gap-2 inline-flex"
             >
-              <div className="relative">
+              <div className="w-[174px] flex-col justify-start items-start gap-2 inline-flex">
+                <Image
+                  src={item.egg_club_id.egg_club_image}
+                  alt={item.egg_club_id.egg_club_name}
+                  width={150}
+                  height={150}
+                  className="w-full h-32 object-cover rounded-md"
+                />
+                <div className="self-stretch h-[124px] flex-col justify-start items-start gap-1.5 flex">
+                  <div className="px-2 py-0.5 bg-neutral-800 rounded-[124px] justify-center items-center inline-flex">
+                    <div className="text-white text-[10px] font-normal font-['Pretendard'] leading-[14.50px]">
+                      에그클럽
+                    </div>
+                  </div>
+                  <div className="self-stretch text-[#0c0c0c] text-base font-semibold font-['Pretendard'] leading-snug">
+                    {item.egg_club_id.egg_club_name}
+                  </div>
+                  <div className="self-stretch justify-start items-center gap-1 inline-flex">
+                    <div className="justify-start items-center gap-0.5 flex">
+                      <div className="w-[22px] h-[22px] relative">
+                        <Image
+                          src={item.egg_club_id.user_id.user_profile_img}
+                          alt={item.egg_club_id.user_id.user_name}
+                          width={24}
+                          height={24}
+                          className="w-[22px] h-[22px] left-0 top-0 absolute bg-[#d9d9d9] rounded-full"
+                        />
+                      </div>
+                      <div className="grow shrink basis-0 text-[#8c8c8c] text-sm font-medium font-['Pretendard'] leading-tight">
+                        {item.egg_club_id.user_id.user_name}
+                      </div>
+                    </div>
+                    <div className="justify-start items-center gap-0.5 flex">
+                      <div className="text-[#8c8c8c] text-sm font-medium font-['Pretendard'] leading-tight">멤버</div>
+                      <div className="text-[#8c8c8c] text-sm font-medium font-['Pretendard'] leading-tight">
+                        {item.egg_club_id.egg_club_member[0]?.count || 0}/{item.egg_club_id.egg_club_people_limited}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pt-1 justify-start items-center gap-0.5 inline-flex">
+                    <div className="justify-start items-center flex">
+                      <span>
+                        <WishHeart />
+                      </span>
+                      <div className="text-[#8c8c8c] text-xs font-normal font-['Pretendard'] leading-[17.40px]">
+                        <span>찜수 {item.egg_club_id.wish_list[0]?.count || 0}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="relative">
                 <Image
                   src={item.egg_club_id.egg_club_image}
                   alt={item.egg_club_id.egg_club_name}
@@ -108,7 +160,7 @@ const WishClubListPage = () => {
 
               <div className="flex items-center mt-2 text-xs text-gray-500">
                 찜수+ {item.egg_club_id.wish_list[0]?.count || 0}
-              </div>
+              </div> */}
             </div>
           ))}
         </div>

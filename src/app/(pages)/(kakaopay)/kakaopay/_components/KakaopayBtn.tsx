@@ -2,10 +2,8 @@
 
 import { useAuth } from "@/app/store/AuthContext";
 import { PaymentButtonProps } from "@/types/payment.types";
-import { useState } from "react";
 
 const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) => {
-  const [isLoading, setIsLoading] = useState(false);
   const { userId } = useAuth();
 
   const onClickKakaopayBtn = async () => {
@@ -15,7 +13,6 @@ const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) =
     }
 
     try {
-      setIsLoading(true);
       const orderId = `${clubId}`;
       const requestUserId = `${userId}`;
 
@@ -45,22 +42,12 @@ const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) =
     } catch (error) {
       console.error("Payment error:", error);
       alert("결제 중 오류가 발생했습니다.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
-    <button
-      onClick={onClickKakaopayBtn}
-      disabled={isLoading}
-      className={`w-full py-3 font-bold rounded-lg mt-5 ${
-        isLoading
-          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-          : "bg-yellow-400 text-gray-700 hover:bg-yellow-500 transition-colors"
-      }`}
-    >
-      {isLoading ? "처리중..." : "카카오페이로 결제하기"}
+    <button onClick={onClickKakaopayBtn} className="text-white text-base font-semibold leading-snug w-[358px]">
+      결제하기
     </button>
   );
 };

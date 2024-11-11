@@ -4,9 +4,12 @@ import { useAuth } from "@/app/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { addHours, format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { EggClubDataNoTax, EggClubPay, EggPopDataNoTax, EggPopPay } from "@/types/payment.types";
+import { CustomAddress } from "@/utils/CustomAddress";
+import { CustomDateNotWeek } from "@/utils/CustomDate";
+import Tag from "@/components/uiComponents/TagComponents/Tag";
+import { LocationIcon } from "@/components/uiComponents/IconComponents/Icons";
 
 interface EggClubIdType {
   egg_club_id: number;
@@ -267,29 +270,6 @@ const PaymentSuccesspage = () => {
     fetchClubId();
   }, [oneTimeClubPayData, regularClubPayData]);
 
-  const customAddress = (address: string) => {
-    const withoutNumber = address.replace(/\[\d+\]\s*/, "");
-    const parts = withoutNumber.split(" ");
-    return parts.slice(0, 2).join(" ");
-  };
-
-  const customDate = (dateString: string | null | undefined) => {
-    if (!dateString) {
-      return "날짜 정보 없음";
-    }
-
-    try {
-      const parsedDate = parseISO(dateString);
-      const adjustedDate = addHours(parsedDate, 9);
-      return format(adjustedDate, "yy년 MM월 dd일 HH:mm");
-    } catch (error) {
-      console.error("Invalid date format:", dateString, error);
-      return "유효하지 않은 날짜 형식";
-    }
-  };
-
-  // console.log(regularClubData?.r_c_id);
-
   const clubImageUrl =
     (queryParams.clubType === "true" ? oneTimeClubData?.egg_pop_image : regularClubData?.egg_day_image) || "";
 
@@ -308,32 +288,39 @@ const PaymentSuccesspage = () => {
   };
 
   return (
-    <div className="font-sans p-5 max-w-md mx-auto">
+    <div className="font-sans p-5 max-w-md mx-auto flex flex-col">
       <h2 className="text-center text-lg font-bold mb-2">주문완료</h2>
+      <Image src={"/asset/Egg.png"} alt="egg" width={62} height={32} className="self-center mb-[8px]" />
       <p className="text-center text-gray-600 mb-1">모임 참여 신청이 완료됐어요!</p>
 
       <div className="border-b border-gray-200 my-4"></div>
 
       <div className="flex items-center mb-6">
-        <Image src={clubImageUrl} alt="모임 이미지" width={60} height={60} className="rounded-lg mr-4 object-cover" />
+        <Image src={clubImageUrl} alt="모임 이미지" width={88} height={88} className="rounded-lg mr-4 object-cover" />
         <div>
-          <div className="text-xs text-gray-400">
+          {/* <div className="text-xs text-gray-400">
             {queryParams.clubType === "true"
               ? oneTimeClubData?.main_category?.main_category_name
               : regularClubData?.egg_club_id.main_category_id.main_category_name}
-          </div>
+          </div> */}
+          <Tag tagName={`${queryParams.clubType === "true" ? "eggpop" : "eggday"}`} />
           <div className="text-base font-semibold">
             {queryParams.clubType === "true" ? oneTimeClubData?.egg_pop_name : regularClubData?.egg_day_name}
           </div>
-          <div className="text-xs text-gray-600">
-            {queryParams.clubType === "true"
-              ? customAddress(oneTimeClubData?.egg_pop_location || "주소 정보 없음")
-              : customAddress(regularClubData?.egg_day_location || "주소 정보 없음")}
-          </div>
-          <div className="text-xs text-gray-600">
-            {queryParams.clubType === "true"
-              ? customDate(oneTimeClubData?.egg_pop_date_time || "닐짜 정보 없음")
-              : customDate(regularClubData?.egg_day_date_time || "닐짜 정보 없음")}
+          <div className="flex items-center text-xs text-gray-600">
+            <LocationIcon />
+            <span className="mx-[2px]"></span>
+            <span>
+              {queryParams.clubType === "true"
+                ? CustomAddress(oneTimeClubData?.egg_pop_location || "주소 정보 없음")
+                : CustomAddress(regularClubData?.egg_day_location || "주소 정보 없음")}
+            </span>
+            <span className="mx-[2px]"></span>
+            <span>
+              {queryParams.clubType === "true"
+                ? CustomDateNotWeek(oneTimeClubData?.egg_pop_date_time || "날짜 정보 없음")
+                : CustomDateNotWeek(regularClubData?.egg_day_date_time || "날짜 정보 없음")}
+            </span>
           </div>
         </div>
       </div>
@@ -344,14 +331,20 @@ const PaymentSuccesspage = () => {
           <span className="text-sm font-semibold">{userName}</span>
         </div>
         <div className="flex justify-between mb-2">
+          <span className="text-sm text-gray-600">결제방법</span>
+          <span className="text-sm font-semibold">카카오페이</span>
+        </div>
+        <div className="flex justify-between mb-2">
           <span className="text-sm text-gray-600">결제 금액</span>
           <span className="text-sm font-semibold">{paymentAmount}원</span>
         </div>
       </div>
-      {/* TODO 내 모임으로 가기 연결해야함 */}
-      <button className="w-full py-3 bg-gray-300 text-gray-700 font-bold rounded-lg mt-5" onClick={handleGoToMyClub}>
-        내 모임으로 가기
-      </button>
+
+      <div className="h-[50px] px-2.5 py-3.5 bg-neutral-800 rounded-[25px] justify-center items-center gap-2.5 inline-flex">
+        <button className="text-white text-base font-semibold leading-snug" onClick={handleGoToMyClub}>
+          내 모임으로 가기
+        </button>
+      </div>
     </div>
   );
 };
