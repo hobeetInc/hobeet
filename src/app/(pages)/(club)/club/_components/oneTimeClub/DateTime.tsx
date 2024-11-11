@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ko } from "date-fns/locale";
 import { EggPopProps } from "@/types/eggpop.types";
 import SearchInput from "@/components/uiComponents/Input/SearchInput";
-import Text from "@/components/uiComponents/Text/Text";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 // 커스텀 스타일
 const customStyles = `

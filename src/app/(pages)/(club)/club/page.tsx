@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./_utils/localStorage";
 import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button";
-import Text from "@/components/uiComponents/Text/Text";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const TypeSelectionPage = () => {
   const router = useRouter();
@@ -31,7 +31,7 @@ const TypeSelectionPage = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col justify-center">
       <div className="h-12 mb-10">
         <div onClick={handleBack} className="h-12 w-12 p-3 justify-start items-center inline-flex hover:cursor-pointer">
           <IoIosArrowBack className="w-6 h-6" />

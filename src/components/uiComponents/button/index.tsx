@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn/util";
 import { cva, type VariantProps } from "class-variance-authority";
-import Text from "../Text/Text";
+import Text from "../TextComponents/Text";
 
 const buttonVariants = cva(
   // 기본 스타일

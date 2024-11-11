@@ -1,7 +1,7 @@
 "use client";
 
 import NumberSpinner from "@/components/uiComponents/Input/NumberSpinner";
-import Text from "@/components/uiComponents/Text/Text";
+import Text from "@/components/uiComponents/TextComponents/Text";
 import { MemeberTypeProps } from "@/types/eggpop.types";
 import { useState } from "react";
 
@@ -62,13 +62,6 @@ const MemberType = ({
       ...formData,
       egg_pop_people_limited: value === 0 ? 100 : value
     });
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // 소수점(.) 입력 방지
-    if (e.key === ".") {
-      e.preventDefault();
-    }
   };
 
   return (

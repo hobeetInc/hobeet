@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import Text from "../Text/Text";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import Text from "../TextComponents/Text";
 
 const cn = (...inputs: any) => {
   return twMerge(clsx(inputs));
