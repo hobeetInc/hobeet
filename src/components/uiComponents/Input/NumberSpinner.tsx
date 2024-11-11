@@ -1,6 +1,5 @@
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-
 import { FaMinus, FaPlus } from "react-icons/fa";
 import Text from "../TextComponents/Text";
 
@@ -31,7 +30,10 @@ const NumberSpinner = ({ max, min = 0, value, onChange, className }: SpinnerProp
 
   return (
     <div
-      className={cn("h-12 px-5 rounded-xl border border-[#f2f2f2] justify-between items-center inline-flex", className)}
+      className={cn(
+        "h-12 px-5 rounded-xl border border-solid border-[#f2f2f2] justify-between items-center inline-flex",
+        className
+      )}
     >
       <div className="w-12 h-12 justify-center items-center gap-2.5 flex">
         <button

@@ -1,27 +1,27 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { EggPopProps } from "@/types/eggpop.types";
 import ImageUpload from "@/components/uiComponents/Image/ImageUpload";
 import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
 import ClubCreateTextArea from "@/components/uiComponents/Input/Textarea";
 import Text from "@/components/uiComponents/TextComponents/Text";
+import { EggClubProps } from "@/types/eggclub.types";
 
-const Introduction = ({ formData, setFormData }: EggPopProps) => {
+const Introduction = ({ formData, setFormData }: EggClubProps) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // 컴포넌트 마운트 시 또는 formData의 이미지가 변경될 때 미리보기 생성
   useEffect(() => {
-    if (formData.egg_pop_image instanceof File) {
-      const url = URL.createObjectURL(formData.egg_pop_image);
+    if (formData.egg_club_image instanceof File) {
+      const url = URL.createObjectURL(formData.egg_club_image);
       setPreviewUrl(url);
 
       return () => {
         URL.revokeObjectURL(url);
       };
     }
-  }, [formData.egg_pop_image]);
+  }, [formData.egg_club_image]);
 
   // 이미지 선택 시 처리하는 함수
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,13 +45,13 @@ const Introduction = ({ formData, setFormData }: EggPopProps) => {
     setPreviewUrl(previewImageUrl);
 
     // formData에 File 객체 저장
-    setFormData({ ...formData, egg_pop_image: file });
+    setFormData({ ...formData, egg_club_image: file });
   };
 
   return (
     <div>
       <Text variant="header-18" className="flex items-center mb-6 h-11">
-        에그팝을 소개해볼까요?
+        에그클럽을 소개해볼까요?
       </Text>
       {/* <h1 className="mb-4">모임을 소개해주세요</h1> */}
       <div className="flex flex-col gap-8">
@@ -84,11 +84,11 @@ const Introduction = ({ formData, setFormData }: EggPopProps) => {
           <ClubCreateInput
             type="text"
             maxLength={36}
-            value={formData.egg_pop_name}
+            value={formData.egg_club_name}
             onChange={(e) =>
               setFormData({
                 ...formData,
-                egg_pop_name: e.target.value
+                egg_club_name: e.target.value
               })
             }
             placeholder="제목을 입력해주세요(최대 글자 36자)"
@@ -99,9 +99,9 @@ const Introduction = ({ formData, setFormData }: EggPopProps) => {
           <Text variant="body_medium-16">어떤 모임인가요?</Text>
 
           <ClubCreateTextArea
-            value={formData.egg_pop_introduction}
+            value={formData.egg_club_introduction}
             maxLength={290}
-            onChange={(e) => setFormData({ ...formData, egg_pop_introduction: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, egg_club_introduction: e.target.value })}
             placeholder="모임 소개를 작성해주세요"
           />
         </div>

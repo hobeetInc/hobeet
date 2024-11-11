@@ -116,34 +116,12 @@ const AddressSearch = ({ formData, setFormData }: EggPopProps) => {
           </SearchInput>
         </label>
 
-        {/* <div className="flex gap-2">
-          <input
-            type="hidden"
-            value={addressData.zonecode}
-            placeholder="우편번호"
-            className="border p-2 w-24 "
-            readOnly
-          />
-          <button onClick={execDaumPostcode} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-            주소 검색
-          </button>
-        </div> */}
-
-        {/* <input type="text" value={addressData.address} placeholder="주소" className="border p-2 w-full" readOnly /> */}
-
         <ClubCreateInput
           type="text"
           value={addressData.detailAddress}
           onChange={handleDetailAddressChange}
           placeholder="상세주소를 입력해주세요(선택)"
         />
-        {/* <input
-          type="text"
-          value={addressData.detailAddress}
-          onChange={handleDetailAddressChange}
-          placeholder="상세주소를 입력해주세요(선택)"
-          className="border p-2 w-full"
-        /> */}
       </div>
     </div>
   );

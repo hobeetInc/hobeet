@@ -1,7 +1,6 @@
 "use client";
 import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
 import Text from "@/components/uiComponents/TextComponents/Text";
-
 import { EggPopProps } from "@/types/eggpop.types";
 import { useState } from "react";
 
@@ -75,7 +74,7 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
           } `}
         >
           <Text variant="subtitle-14" className={`${!showTaxInput ? "text-primary-500" : "text-gray-800"}`}>
-            있음
+            없음
           </Text>
         </button>
       </div>

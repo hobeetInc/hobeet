@@ -31,20 +31,20 @@ const TypeSelectionPage = () => {
   };
 
   return (
-    <div>
-      <div className="h-12 mb-10">
-        <div onClick={handleBack} className="h-12 w-12 p-3 justify-start items-center inline-flex hover:cursor-pointer">
-          <IoIosArrowBack className="w-6 h-6" />
+    <div className="relative flex flex-col justify-center items-center">
+      <div className="w-[390px] h-12 flex justify-start mb-10">
+        <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
+          <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
         </div>
       </div>
 
       <div className="mx-4">
         <h1 className="text-header-18 mb-6 h-11">어떤 모임을 만들어볼까요?</h1>
 
-        <div className="flex flex-col gap-6 ">
+        <div className="flex flex-col gap-6">
           <div
             onClick={() => setSelectedType("one-time")}
-            className={`h-[104px] p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
+            className={`h-[104px] w-[358px] p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
               selectedType === "one-time"
                 ? "bg-primary-500 border-primary-500"
                 : "bg-white border border-solid border-[#d9d9d9]"
@@ -70,7 +70,7 @@ const TypeSelectionPage = () => {
 
           <div
             onClick={() => setSelectedType("regular-time")}
-            className={`h-[104px] p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
+            className={`h-[104px] w-[358px] p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
               selectedType === "regular-time"
                 ? "bg-primary-900 border-primary-900 "
                 : "bg-white border border-solid border-[#d9d9d9]"
@@ -95,19 +95,21 @@ const TypeSelectionPage = () => {
           </div>
         </div>
 
-        {selectedType === null ? (
-          <Button disabled borderType="circle" className="mt-[308px]">
-            다음
-          </Button>
-        ) : selectedType === "one-time" ? (
-          <Button onClick={handleNext} colorType="orange" borderType="circle" className="mt-[308px]">
-            다음
-          </Button>
-        ) : (
-          <Button onClick={handleNext} colorType="black" borderType="circle" className="mt-[308px]">
-            다음
-          </Button>
-        )}
+        <div className="w-full fixed bottom-[50px]">
+          {selectedType === null ? (
+            <Button disabled borderType="circle" className="mt-[308px]">
+              다음
+            </Button>
+          ) : selectedType === "one-time" ? (
+            <Button onClick={handleNext} colorType="orange" borderType="circle" className="mt-[308px]">
+              다음
+            </Button>
+          ) : (
+            <Button onClick={handleNext} colorType="black" borderType="circle" className="mt-[308px]">
+              다음
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

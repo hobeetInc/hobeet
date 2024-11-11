@@ -4,7 +4,7 @@ import { forwardRef, ReactNode } from "react";
 import { CiSearch } from "react-icons/ci";
 
 const inputVariants = cva(
-  "w-full h-12 pl-5 bg-gray-50 rounded-lg justify-start items-center inline-flex overflow-hidden"
+  "w-[358px] h-12 pl-5 bg-gray-50 rounded-lg justify-start items-center inline-flex overflow-hidden"
 );
 
 interface SearchInputProps extends VariantProps<typeof inputVariants> {

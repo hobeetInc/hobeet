@@ -69,19 +69,14 @@ const OneTimeContent = () => {
   const currentStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3 | 4 | 5 | 6;
 
   // 상태 관리
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(currentStep);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6>(currentStep);
   const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedGender);
   const [formData, setFormData] = useState<EggPopForm>(initialData.formData);
 
-  // 폼데이터 확인용
-  // useEffect(() => {
-  //   console.log("폼:", formData);
-  // }, [formData]);
-
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
-    const newStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7;
+    const newStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3 | 4 | 5 | 6;
     setStep(newStep);
   }, [searchParams]);
 
@@ -114,84 +109,7 @@ const OneTimeContent = () => {
 
   // 다음단계 버튼 (유효성 검사 함수)
   const handleNext = () => {
-    // if (step === 1 && formData.sub_category_id === 0) {
-    //   alert("카테고리를 선택해주세요");
-    //   return;
-    // }
-
-    // if (step === 2) {
-    //   if (!formData.egg_pop_name.trim()) {
-    //     alert("모임 제목을 입력해주세요");
-    //     return;
-    //   }
-    // }
-
-    // if (step === 3) {
-    //   if (!formData.egg_pop_image) {
-    //     alert("이미지를 선택해주세요");
-    //     return;
-    //   }
-    //   if (!formData.egg_pop_introduction.trim()) {
-    //     alert("모임 소개글을 입력해주세요");
-    //     return;
-    //   }
-    // }
-    // if (step === 4) {
-    //   if (!formData.egg_pop_date_time) {
-    //     alert("날짜와 시간을 선택해주세요");
-    //     return;
-    //   }
-    // }
-
-    // if (step === 5) {
-    //   if (!formData.egg_pop_location) {
-    //     alert("모임 장소를 정해주세요");
-    //     return;
-    //   }
-    // }
-
-    // if (step === 6) {
-    //   if (!selectedGender) {
-    //     alert("성별제한을 설정해주세요");
-    //     return;
-    //   }
-
-    //   if (!selectedAge) {
-    //     alert("나이제한을 설정해주세요");
-    //     return;
-    //   }
-
-    //   if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited >= 101) {
-    //     alert("인원제한은 100명 이하로 해주세요");
-    //     return;
-    //   }
-
-    //   if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited === 0) {
-    //     alert("2명 이상 적어주세요");
-    //     return;
-    //   }
-
-    //   if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited === 1) {
-    //     alert("2명 이상 적어주세요");
-    //     return;
-    //   }
-
-    //   if (formData.egg_pop_people_limited === null) {
-    //     setFormData({
-    //       ...formData,
-    //       egg_pop_people_limited: 100
-    //     });
-    //     return alert("정말로 인원제한을 주지 않겠습니까?");
-    //   }
-    // }
-
-    // if (step === 7) {
-    //   if (formData.egg_pop_tax === null) {
-    //     alert("금액을 입력해주세요");
-    //     return;
-    //   }
-
-    if (step === 7) {
+    if (step === 6) {
       handleSubmit();
     } else {
       setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6);
@@ -304,9 +222,9 @@ const OneTimeContent = () => {
   };
 
   return (
-    <div className="relative">
-      <div className="h-12">
-        <div onClick={handleBack} className="h-12 w-12 p-3 justify-start items-center inline-flex">
+    <div className="relative flex flex-col justify-center items-center">
+      <div className="w-[390px] h-12 flex justify-start">
+        <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
           <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
         </div>
       </div>
@@ -315,7 +233,7 @@ const OneTimeContent = () => {
         <ProgressBar currentStep={step} totalSteps={7} />
         <div>{renderStep()}</div>
       </div>
-      <div className="fixed bottom-[30px] pt-10 left-0 right-0 px-4">
+      <div className="fixed bottom-[50px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
         <Button
           onClick={handleNext}
           disabled={isNextButtonDisabled()}
