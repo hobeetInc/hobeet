@@ -1,42 +1,57 @@
 "use client";
-
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { sanitizeFileName } from "@/utils/sanitizeFileName";
-import { useAuth } from "@/app/store/AuthContext";
+// import { useAuth } from "@/app/store/AuthContext";
 import { FaCamera } from "react-icons/fa6";
 
 const ProfileEditPage = () => {
   const [email, setEmail] = useState("");
-  const [provider, setProvider] = useState<string | null>(null);
-  const { userId, userEmail, userName, userGender, userProfileImg, userBirth, setUserProfileImg } = useAuth();
-  const [tempProfileImg, setTempProfileImg] = useState<string | null>(userProfileImg);
+  const [userName, setUserName] = useState("");
+  const [userGender, setUserGender] = useState("");
+  const [userProfileImg, setUserProfileImg] = useState("");
+  const [userBirth, setUserBirth] = useState("");
+  const [provider, setProvider] = useState("");
+  const [userId, setUserId] = useState("");
+  // const { userId, userEmail, userName, userGender, userProfileImg, userBirth, setUserProfileImg } = useAuth();
+  // const [tempProfileImg, setTempProfileImg] = useState("");
 
   const supabase = browserClient;
 
-  useEffect(() => {
-    setTempProfileImg(userProfileImg);
-  }, [userProfileImg]);
+  // useEffect(() => {
+  //   setTempProfileImg(userProfileImg);
+  // }, [userProfileImg]);
 
   useEffect(() => {
     const getUser = async () => {
       const { data, error } = await supabase.auth.getUser();
-
+      const userId = data?.user.id;
+      setUserId(userId);
+      const {data: userData} = await supabase.from("user").select("*").eq("user_id", userId).single();
+      const userEmail = userData?.user_email;
+      setEmail(userEmail);
+      const userName = userData?.user_name;
+      setUserName(userName);
+      const userGender = userData?.user_gender;
+      setUserGender(userGender);
+      const userProfileImg = userData?.user_profile_img;
+      setUserProfileImg(userProfileImg);
+      const userBirth = userData?.user_birth;
+      setUserBirth(userBirth);
       if (error) {
         console.log("회원 정보를 불러오는 중 오류가 발생했습니다.");
       }
-
       const provider = data.user?.app_metadata.provider;
-      setProvider(provider || "");
+      setProvider(provider);
     };
 
     getUser();
   }, []);
 
-  useEffect(() => {
-    if (userEmail) setEmail(userEmail);
-  }, [userEmail]);
+  // useEffect(() => {
+  //   if (userEmail) setEmail(userEmail);
+  // }, [userEmail]);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -44,7 +59,7 @@ const ProfileEditPage = () => {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setTempProfileImg(reader.result as string);
+      setUserProfileImg(reader.result as string);
     };
     reader.readAsDataURL(file);
 
@@ -90,7 +105,7 @@ const ProfileEditPage = () => {
         <div className="relative w-[78px] h-[78px]">
           <div className="rounded-full overflow-hidden w-[78px] h-[78px]">
             <Image
-              src={tempProfileImg || ""}
+              src={userProfileImg}
               alt="프로필 이미지"
               width={78}
               height={78}

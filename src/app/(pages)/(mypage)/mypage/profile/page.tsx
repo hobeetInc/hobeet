@@ -1,15 +1,39 @@
 // pages/mypage.js
 "use client";
 
-import { useAuth } from "@/app/store/AuthContext";
+// import { useAuth } from "@/app/store/AuthContext";
 import Image from "next/image";
 import { SlArrowRight } from "react-icons/sl";
 import { useRouter } from "next/navigation";
 import { logOut } from "../../_components/logout";
+import { useEffect, useState } from "react";
+import browserClient from "@/utils/supabase/client";
 
 const ProfilePage = () => {
   const router = useRouter();
-  const { userName, userProfileImg, setUserProfileImg } = useAuth();
+  // const { userName, userProfileImg, setUserProfileImg } = useAuth();
+  const [userName, setUserName] = useState("");
+  const [userProfileImg, setUserProfileImg] = useState("");
+  const supabase = browserClient;
+
+useEffect(() => {
+  const getUser = async () => {
+    const { data, error } = await supabase.auth.getUser();
+    const userId = data?.user.id;
+
+    const { data: userData } = await supabase.from("user").select("*").eq("user_id", userId).single();
+    const userName = userData?.user_name;
+    setUserName(userName);
+    const userProfileImg = userData?.user_profile_img;
+    setUserProfileImg(userProfileImg);
+
+    if (error) {
+      console.log("회원 정보를 불러오는 중 오류가 발생했습니다.");
+    }
+  };
+
+  getUser();
+}, []);
 
   return (
     <div className="max-w-md mx-auto p-5">
