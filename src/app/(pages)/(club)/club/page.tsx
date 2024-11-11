@@ -32,7 +32,7 @@ const TypeSelectionPage = () => {
 
   return (
     <div className="relative flex flex-col justify-center items-center">
-      <div className="w-[390px] h-12 flex justify-start">
+      <div className="w-[390px] h-12 flex justify-start mb-10">
         <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
           <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
         </div>

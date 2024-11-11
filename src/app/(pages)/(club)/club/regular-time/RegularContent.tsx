@@ -287,7 +287,7 @@ const RegularContent = () => {
         <ProgressBar currentStep={step} totalSteps={3} />
         <div>{renderStep()}</div>
       </div>
-      <div className="fixed bottom-[30px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
+      <div className="fixed bottom-[50px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
         <Button
           onClick={handleNext}
           disabled={isNextButtonDisabled()}
