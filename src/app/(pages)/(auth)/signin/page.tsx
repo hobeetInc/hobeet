@@ -43,6 +43,7 @@ const SigninPage = () => {
   };
 
   return (
+    
     <div className="flex flex-col items-center justify-center w-[390px] h-[844px]">
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold mb-2">hobeet</h1>

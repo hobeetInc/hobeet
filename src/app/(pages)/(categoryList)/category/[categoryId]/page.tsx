@@ -49,7 +49,7 @@ const CategoryPage = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex fixed w-full h-auto overflow-x-auto p-4 gap-2 bg-white z-10">
+      <div className="flex fixed w-full h-auto overflow-x-auto p-4 gap-2 bg-white z-10 mb-10">
         <button
           onClick={() => setSelectedCategory(0)}
           className={`flex-shrink-0 py-2 px-3 rounded-lg transition-colors ${

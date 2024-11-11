@@ -16,6 +16,7 @@ export default function Home() {
   }, []);
 
   return (
+    
     <div className="w-full ">
       <div className="flex justify-center items-center">
         <div className="flex-shrink-0 rounded-[18px] bg-[#d9d9d9] overflow-hidden mt-[22px]">
