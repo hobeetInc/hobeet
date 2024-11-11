@@ -20,7 +20,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    const pathname = usePathname();
+  const pathname = usePathname();
 
   const noHeaderFooterRoutes = [
     "/signin",
@@ -49,13 +49,7 @@ const showHeader = !noHeaderRoutes.some((route) =>
               {showHeaderFooter && showHeader && <Header className="fixed top-0 w-full flex-shrink-0" />}
               <main
                 className={`flex-1 overflow-y-auto ${
-                  showHeaderFooter
-                    ? showHeader
-                      ? "mt-[60px] mb-[60px]"
-                      : "mb-[60px]" 
-                    : showHeader
-                    ? ""
-                    : "" 
+                  showHeaderFooter ? (showHeader ? "mt-[60px] mb-[60px]" : "mb-[60px]") : showHeader ? "" : ""
                 }`}
               >
                 {children}

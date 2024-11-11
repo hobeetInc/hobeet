@@ -66,8 +66,23 @@ export default function Header({ className }: { className: string }) {
         </Link>
       )}
 
+      {pathname === "/myclublist" && (
+        <Link href="/myclublist">
+          <div className="flex w-[96px] h-[24px] flex-shrink-0 ml-[16px] mt-[12px] mb-[12px]">
+            <div className="flex w-[35px] h-[28px]  py-[10px] items-center gap-[10px]">
+              <p
+                className="text-[#000] text-center font-pretendard
+               text-[20px] not-italic font-[700px]	leading-[27px]"
+              >
+                내 모임
+              </p>
+            </div>
+          </div>
+        </Link>
+      )}
+
       <div className="flex items-center ml-auto gap-4 mr-3 my-3">
-        {pathname === "/" || pathname === "/search" ? (
+        {pathname === "/" || pathname === "/search" || pathname === "/myclublist" ? (
           <button onClick={handleCreateMeet} className="w-6 h-6 flex items-center justify-center">
             <GoPlus className="w-6 h-6" />
           </button>
