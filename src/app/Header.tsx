@@ -29,7 +29,7 @@ export default function Header({ className }: { className: string }) {
     }
   };
   return (
-    <header className={`flex w-[390px] h-[48px] items-center flex-shrink-0 ${className || ""}`}>
+    <header className={`flex w-full h-[48px] items-center flex-shrink-0 ${className || ""}`}>
       {pathname === "/" && (
         <Link href="/">
           <div className="flex w-[96px] h-[24px] flex-shrink-0 ml-[16px] mt-[12px] mb-[12px]">

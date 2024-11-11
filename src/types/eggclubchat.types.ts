@@ -100,6 +100,8 @@ export interface LayoutProps {
   };
 }
 
+
+
 // 에그클럽 채팅방 멤버 상세 정보 타입
 export type EggClubChattingMemberInfo = {
   active: boolean;
