@@ -40,3 +40,15 @@ export const getCategoryList = async (main_category_id: number, sub_category_id:
     throw error;
   }
 };
+
+export const getUserId = async () => {
+  try {
+    const {data} = await supabase.auth.getUser();
+    if (data) {
+      return data.user.id;
+    }
+  } catch (error) {
+    console.error("getUserId 함수 에러:", error);
+    throw error;
+  }
+}

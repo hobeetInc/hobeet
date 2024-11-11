@@ -4,7 +4,7 @@ interface TabBarProps {
   vlaue: string;
 }
 
-// 내 모임 리스트 탭바
+// 승인 페이지 탭바
 export const ApproveMemberTabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, vlaue }) => {
   const getTabText = (tabType: boolean) => {
     if (vlaue === "egges") {
@@ -17,7 +17,7 @@ export const ApproveMemberTabBar: React.FC<TabBarProps> = ({ activeTab, onTabCha
 
   return (
     <div className="w-full px-4 pt-2.5 border-b border-gray-50 flex">
-      <button className="w-[50%] text-base font-pretendard relative" onClick={() => onTabChange(true)}>
+      <button className="w-[50%] text-base font-medium font-pretendard relative" onClick={() => onTabChange(true)}>
         <span
           className={`text-center text-base font-pretendard relative ${
             activeTab === true ? "text-gray-900 text-body-16" : "text-gray-300 font-pretendard"
@@ -28,7 +28,7 @@ export const ApproveMemberTabBar: React.FC<TabBarProps> = ({ activeTab, onTabCha
         <div className={`left-0 w-full h-0.5 mt-3 ${activeTab === true ? "bg-gray-800" : "bg-gray-50"}`} />
       </button>
 
-      <button className="w-[50%] text-base font-pretendard relative" onClick={() => onTabChange(false)}>
+      <button className="w-[50%] text-base font-medium font-pretendard relative" onClick={() => onTabChange(false)}>
         <span
           className={`text-center text-base font-pretendard relative ${
             activeTab === false ? "text-gray-900 text-body-16" : "text-gray-300 font-pretendard"

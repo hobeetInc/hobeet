@@ -46,12 +46,17 @@ export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
           />
         </div>
 
-        <div className="flex-1 flex flex-col justify-between">
+        <div className="h-[19px] flex-1 flex flex-col justify-between">
           <div>
-            <div className="inline-block px-2 py-0.5 bg-primary-500 rounded-[124px] text-sm text-gray-900">에그팝</div>
+            <div className="inline-flex px-2 py-0.5 bg-primary-500 rounded-[124px] text-[10px] text-gray-900 font-pretendard font-normal leading-[14.50px]">
+              에그팝
+            </div>
             <h3 className="text-sm font-semibold mt-2">{club.egg_pop_name}</h3>
             <div className="flex items-center mt-1 text-gray-400 text-sm">
-              <span>{currentLocation}</span>
+              <span>
+                <Image src={"/asset/Icon/Icon-Location.png"} alt="지도" width={16} height={16} />
+              </span>
+              <span className="ml-1">{currentLocation}</span>
               <span className="ml-2">{format(new Date(club.egg_pop_date_time), "MM월 dd일 HH:mm")}</span>
             </div>
           </div>
