@@ -20,9 +20,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    const pathname = usePathname();
+  const pathname = usePathname();
 
-  const noHeaderFooterRoutes = ["/signin", "/register", /^\/chat\/regularChat\/.*$/ , "/club", "/club/one-time" , "/club/regular-time" , /^\/chat\/onetimeChat\/.*$/ ,/^\/club\/one-time-club-sub\/.*$/ ];
+  const noHeaderFooterRoutes = [
+    "/signin",
+    "/register",
+    /^\/chat\/regularChat\/.*$/,
+    "/club",
+    "/club/one-time",
+    "/club/regular-time",
+    /^\/chat\/onetimeChat\/.*$/,
+    /^\/club\/one-time-club-sub\/.*$/,
+    /^\/club\/regular-club-sub\/.*$/
+  ];
   const noHeaderRoutes = [/^\/category\/.*$/]
 const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>
   typeof route === "string" ? route === pathname : route.test(pathname)
@@ -39,13 +49,7 @@ const showHeader = !noHeaderRoutes.some((route) =>
               {showHeaderFooter && showHeader && <Header className="fixed top-0 w-full flex-shrink-0" />}
               <main
                 className={`flex-1 overflow-y-auto ${
-                  showHeaderFooter
-                    ? showHeader
-                      ? "mt-[60px] mb-[60px]"
-                      : "mb-[60px]" 
-                    : showHeader
-                    ? ""
-                    : "" 
+                  showHeaderFooter ? (showHeader ? "mt-[60px] mb-[60px]" : "mb-[60px]") : showHeader ? "" : ""
                 }`}
               >
                 {children}
