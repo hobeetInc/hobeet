@@ -14,7 +14,7 @@ const ProfilePage = () => {
   return (
     <div className="max-w-md mx-auto p-5">
       <div
-        className="flex items-center bg-[#FFF1CC] p-4 rounded-lg mb-6 justify-between"
+        className="flex items-center bg-[#FFF1CC] p-4 rounded-lg mb-6 justify-between cursor-pointer"
         onClick={() => router.push("/mypage/profileUpdate")}
       >
         <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white">
@@ -46,7 +46,7 @@ const ProfilePage = () => {
       <div className="space-y-4">
         <div
           onClick={() => router.push("/mypage/wishClubList")}
-          className="flex items-center justify-between px-4 py-4 text-lg font-medium cursor-pointe border-solid border-b-[1px] border-gray-100"
+          className="flex items-center justify-between px-4 py-4 text-lg font-medium cursor-pointer border-solid border-b-[1px] border-gray-100"
         >
           내가 찜한 모임
           <span className="text-gray-500 text-sm">

@@ -1,13 +1,21 @@
 "use client";
 
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const ErrorPage = () => {
+  const router = useRouter();
+
   return (
     <div className=" relative bg-white">
       <div className="w-[358px] px-2.5 py-3.5 left-[16px] top-[740px] absolute bg-[#fdb800] rounded-[25px] justify-center items-center gap-2.5 inline-flex">
-        <div className="text-[#0c0c0c] text-base font-semibold font-['Pretendard'] leading-snug">모임 둘러보기</div>
+        <div
+          onClick={() => router.push("/")}
+          className="text-[#0c0c0c] text-base font-semibold font-['Pretendard'] leading-snug"
+        >
+          모임 둘러보기
+        </div>
       </div>
 
       <div className="flex flex-col justify-center items-center text-center mt-[292px] ">

@@ -3,7 +3,6 @@
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 const SigninPage = () => {
@@ -60,34 +59,43 @@ const SigninPage = () => {
         </div>
       </div>
 
-      <div className="absolute top-[501px] left-[16px]  space-y-4">
+      <div className="fixed w-full mb-[129px] px-[16px] bottom-0">
         <button
           onClick={handleSignInWithGoogle}
-          className="w-full flex items-center space-x-3 px-7 py-3.5 bg-white border border-[#f2f2f2] rounded-[27px] hover:bg-gray-50 transition"
+          className="w-full flex items-center space-x-3 px-7 py-3.5 mb-[12px] bg-white border border-[#f2f2f2] rounded-[27px]"
         >
           <Image width={24} height={24} src="/asset/icon-google.png" alt="Google Icon" />
-          <span className="flex-grow text-center text-black text-base font-semibold">구글로 시작하기</span>
+          <span className="w-[302px] text-center text-black text-base font-semibold leading-snug">구글로 시작하기</span>
         </button>
 
         <button
           onClick={handleSignInWithKakao}
-          className="w-full flex items-center space-x-3 px-7 py-3.5 bg-[#fcec4e] rounded-[27px] hover:bg-yellow-400 transition"
+          className="w-full flex items-center space-x-3 px-7 py-3.5 mb-[12px] bg-[#fcec4e] rounded-[27px]"
         >
           <Image width={24} height={24} src="/asset/icon-kakao.png" alt="Kakao Icon" />
-          <span className="flex-grow text-center text-black text-base font-semibold">카카오로 시작하기</span>
+          <span className="w-[302px] text-center text-black text-base font-semibold leading-snug">
+            카카오로 시작하기
+          </span>
         </button>
 
-        <button className="w-full flex items-center space-x-3 px-7 py-3.5 bg-[#f2f2f2] rounded-[27px] hover:bg-gray-300 transition">
+        <button
+          onClick={() => alert("서비스 준비 중입니다.")}
+          className="w-full flex items-center space-x-3 px-7 py-3.5  bg-[#f2f2f2] rounded-[27px]"
+        >
           <Image width={24} height={24} src="/asset/Message-Filled.png" alt="Email Icon" />
-          <span className="flex-grow text-center text-black text-base font-semibold">이메일로 시작하기</span>
+          <span className="w-[302px] text-center text-black text-base font-semibold leading-snug">
+            이메일로 시작하기
+          </span>
         </button>
       </div>
 
-      {/* 하단 링크 */}
-      <div className="absolute left-[122px] top-[721px] text-xs font-medium text-black">
-        <Link href="/" className="hover:underline">
+      <div className="fixed text-center mb-[72px] bottom-0">
+        <button
+          className="text-black text-xs font-medium font-['Pretendard'] leading-[17.40px]"
+          onClick={() => alert("서비스 준비 중입니다.")}
+        >
           이메일로 간편하게 회원가입 👉
-        </Link>
+        </button>
       </div>
     </div>
   );

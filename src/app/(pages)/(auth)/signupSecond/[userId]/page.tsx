@@ -131,7 +131,6 @@ const SignupSecondPage = () => {
         setUserGender(userData.user_gender || "");
         setUserProfileImg(userData.user_profile_img || "");
       }
-      // console.log(userData);
     };
 
     fetchUser();
@@ -198,8 +197,8 @@ const SignupSecondPage = () => {
   };
 
   return (
-    <div className="w-[390px] h-[844px] relative bg-white">
-      <div className="w-[390px] h-12 absolute  bg-white flex justify-center items-center">
+    <div className=" h-[844px] relative bg-white">
+      <div className=" h-12 absolute  bg-white flex justify-center items-center">
         <h1 className="text-center text-[#0c0c0c] text-base font-bold">회원가입</h1>
       </div>
 
@@ -313,11 +312,8 @@ const SignupSecondPage = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-[50px] left-[16px] w-[358px]">
-        <button
-          onClick={handleSubmit}
-          className="w-full py-3 bg-[#fdb800] rounded-lg text-white text-base font-semibold"
-        >
+      <div className="fixed ml-[16px] mr-[16px] w-[358px] bottom-0 mb-[54px] h-[50px] px-[10px] py-[14px] bg-[#fdb800] rounded-lg justify-center items-center gap-2.5 inline-flex">
+        <button onClick={handleSubmit} className="text-white text-base font-semibold leading-snug">
           다음
         </button>
       </div>
