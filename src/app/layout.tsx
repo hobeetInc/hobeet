@@ -30,15 +30,16 @@ export default function RootLayout({
     "/club/one-time",
     "/club/regular-time",
     /^\/chat\/onetimeChat\/.*$/,
-    /^\/club\/one-time-club-sub\/.*$/
+    /^\/club\/one-time-club-sub\/.*$/,
+    /^\/club\/regular-club-sub\/.*$/
   ];
-  const noHeaderRoutes = [/^\/category\/.*$/];
-  const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>
-    typeof route === "string" ? route === pathname : route.test(pathname)
-  );
-  const showHeader = !noHeaderRoutes.some((route) =>
-    typeof route === "string" ? route === pathname : route.test(pathname)
-  );
+  const noHeaderRoutes = [/^\/category\/.*$/]
+const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>
+  typeof route === "string" ? route === pathname : route.test(pathname)
+);
+const showHeader = !noHeaderRoutes.some((route) =>
+  typeof route === "string" ? route === pathname : route.test(pathname)
+);
   return (
     <html lang="ko" className={`${pretendard.variable} h-full`} suppressHydrationWarning>
       <body className="font-pretendard h-full">
