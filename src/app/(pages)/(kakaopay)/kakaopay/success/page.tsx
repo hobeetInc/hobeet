@@ -288,7 +288,7 @@ const PaymentSuccesspage = () => {
   };
 
   return (
-    <div className="font-sans p-5 max-w-md mx-auto flex flex-col">
+    <div className="p-4  flex flex-col">
       <h2 className="text-center text-lg font-bold mb-2">주문완료</h2>
       <Image src={"/asset/Egg.png"} alt="egg" width={62} height={32} className="self-center mb-[8px]" />
       <p className="text-center text-gray-600 mb-1">모임 참여 신청이 완료됐어요!</p>
@@ -296,26 +296,34 @@ const PaymentSuccesspage = () => {
       <div className="border-b border-gray-200 my-4"></div>
 
       <div className="flex items-center mb-6">
-        <Image src={clubImageUrl} alt="모임 이미지" width={88} height={88} className="rounded-lg mr-4 object-cover" />
+        <div className="w-[88px] h-[88px] mr-2">
+          <Image
+            src={clubImageUrl}
+            alt="모임 이미지"
+            width={88}
+            height={88}
+            className="rounded-lg mr-2 object-cover w-[88px] h-[88px]"
+          />
+        </div>
         <div>
           {/* <div className="text-xs text-gray-400">
             {queryParams.clubType === "true"
               ? oneTimeClubData?.main_category?.main_category_name
               : regularClubData?.egg_club_id.main_category_id.main_category_name}
           </div> */}
-          <Tag tagName={`${queryParams.clubType === "true" ? "eggpop" : "eggday"}`} />
-          <div className="text-base font-semibold">
+          <Tag tagName={`${queryParams.clubType === "true" ? "eggpop" : "eggday"}`} className="mb-[4px]" />
+          <div className="text-base font-semibold mb-[5px]">
             {queryParams.clubType === "true" ? oneTimeClubData?.egg_pop_name : regularClubData?.egg_day_name}
           </div>
           <div className="flex items-center text-xs text-gray-600">
             <LocationIcon />
-            <span className="mx-[2px]"></span>
+            <span className="mx-[4px]"></span>
             <span>
               {queryParams.clubType === "true"
                 ? CustomAddress(oneTimeClubData?.egg_pop_location || "주소 정보 없음")
                 : CustomAddress(regularClubData?.egg_day_location || "주소 정보 없음")}
             </span>
-            <span className="mx-[2px]"></span>
+            <span className="mx-[4px]"></span>
             <span>
               {queryParams.clubType === "true"
                 ? CustomDateNotWeek(oneTimeClubData?.egg_pop_date_time || "날짜 정보 없음")
@@ -326,6 +334,7 @@ const PaymentSuccesspage = () => {
       </div>
 
       <div className="border-t border-gray-200 py-4">
+        <span className="text-[#0c0c0c] text-lg font-medium font-['Pretendard'] leading-normal">결제 정보</span>
         <div className="flex justify-between mb-2">
           <span className="text-sm text-gray-600">이름</span>
           <span className="text-sm font-semibold">{userName}</span>
@@ -336,7 +345,7 @@ const PaymentSuccesspage = () => {
         </div>
         <div className="flex justify-between mb-2">
           <span className="text-sm text-gray-600">결제 금액</span>
-          <span className="text-sm font-semibold">{paymentAmount}원</span>
+          <span className="text-sm font-semibold">{new Intl.NumberFormat("ko-KR").format(paymentAmount)}원</span>
         </div>
       </div>
 

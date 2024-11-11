@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { sanitizeFileName } from "@/utils/sanitizeFileName";
 import { useAuth } from "@/app/store/AuthContext";
 import { FaCamera } from "react-icons/fa6";
+import { Button } from "@/components/uiComponents/Button/ButtonCom";
 
 const NAME_REGEX = /^[가-힣]{2,5}$/;
 
@@ -197,7 +198,7 @@ const SignupSecondPage = () => {
   };
 
   return (
-    <div className=" h-[844px] relative bg-white">
+    <div className="flex flex-col items-center gap-[48px]">
       <div className=" h-12 absolute  bg-white flex justify-center items-center">
         <h1 className="text-center text-[#0c0c0c] text-base font-bold">회원가입</h1>
       </div>
@@ -312,10 +313,15 @@ const SignupSecondPage = () => {
         </div>
       </div>
 
-      <div className="fixed ml-[16px] mr-[16px] w-[358px] bottom-0 mb-[54px] h-[50px] px-[10px] py-[14px] bg-[#fdb800] rounded-lg justify-center items-center gap-2.5 inline-flex">
-        <button onClick={handleSubmit} className="text-white text-base font-semibold leading-snug">
+      <div className="fixed ml-[16px] mr-[16px] w-full bottom-0 mb-[54px]">
+        <Button
+          colorType="orange"
+          borderType="rectangle"
+          className="ml-[16px] mr-[16px] text-white"
+          onClick={handleSubmit}
+        >
           다음
-        </button>
+        </Button>
       </div>
     </div>
   );
