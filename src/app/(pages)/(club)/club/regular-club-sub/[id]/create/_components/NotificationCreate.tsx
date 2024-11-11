@@ -10,6 +10,12 @@ import { useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
 import { EggDay } from "@/types/eggday.types";
 import { AddressData, DaumPostcodeData } from "@/types/address.types";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import ImageUpload from "@/components/uiComponents/Image/ImageUpload";
+import { IoIosArrowBack } from "react-icons/io";
+import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
+import ClubCreateTextArea from "@/components/uiComponents/Input/Textarea";
+import SearchInput from "@/components/uiComponents/Input/SearchInput";
 
 // 커스텀 스타일
 const customStyles = `
@@ -368,12 +374,43 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
       <style>{customStyles}</style>
       <div className="flex justify-between items-center h-[48px] p-4 relative">
         <button onClick={() => router.back()} className="absolute left-4 text-lg">
-          ←
+          <IoIosArrowBack className="w-6 h-6" />
         </button>
-        <h1 className="text-lg font-semibold flex-1 text-center">에그데이</h1>
+        <Text variant="header-16" className="flex-1 text-center">
+          에그데이
+        </Text>
       </div>
-      <div className="flex flex-col gap-20 p-2">
-        <div>
+      <div className="flex flex-col p-2 justify-center items-center">
+        <Text variant="header-18" className="flex items-center mb-6 h-11">
+          에그데이를 만들어 볼까요?
+        </Text>
+
+        <div className="flex flex-col gap-8">
+          <label htmlFor="image-upload" className="w-[88px] h-[88px] cursor-pointer">
+            <input
+              id="image-upload"
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              accept="image/png, image/jpeg"
+              className="hidden"
+            />
+            {previewUrl ? (
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src={previewUrl}
+                  alt="모임대표이미지"
+                  width={88}
+                  height={88}
+                  className="w-[88px] h-[88px] object-cover rounded-xl"
+                />
+              </div>
+            ) : (
+              <ImageUpload />
+            )}
+          </label>
+
+          {/* <div>
           <h1 className="mb-4 text-[20px] font-semibold">모임 사진</h1>
           <div className="flex flex-col gap-4">
             <input type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/png, image/jpeg" />
@@ -386,142 +423,293 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
               </div>
             )}
           </div>
-        </div>
+        </div> */}
 
-        <div>
-          <h1 className="mb-4 text-[20px] font-semibold">모임 제목</h1>
-
-          <input
-            type="text"
-            placeholder="모임 제목을 작성해주세요"
-            value={formData.egg_day_name}
-            maxLength={36}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                egg_day_name: e.target.value
-              })
-            }
-            className="border-2 border-black mt-4 w-[358px] h-[48px] p-2"
-          />
-          <div className="text-gray-500 text-sm">{formData.egg_day_name.length} / 36</div>
-        </div>
-
-        <div>
-          <h1 className="text-[20px] font-semibold mb-4">모임 장소</h1>
-
-          <div className="relative">
-            <DatePicker
-              selected={startDate}
-              onChange={handleDateChange}
-              dateFormat={`yyyy년 MM월 dd일`}
-              minDate={new Date()}
-              locale={ko}
-              placeholderText="날짜를 선택해주세요"
-              className="w-full p-4 bg-gray-50 rounded-lg pr-12"
-              wrapperClassName="w-full"
+          <div className="flex flex-col gap-2">
+            <Text variant="body_medium-16">모임의 제목은 무엇인가요?</Text>
+            <ClubCreateInput
+              type="text"
+              maxLength={36}
+              value={formData.egg_day_name}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  egg_day_name: e.target.value
+                })
+              }
+              placeholder="제목을 입력해주세요(최대 글자 36자)"
             />
           </div>
 
-          <div className="mt-6">
-            <h2 className="text-[20px] font-semibold mb-4">모임 시간</h2>
+          {/* <div>
+            <h1 className="mb-4 text-[20px] font-semibold">모임 제목</h1>
+
+            <input
+              type="text"
+              placeholder="모임 제목을 작성해주세요"
+              value={formData.egg_day_name}
+              maxLength={36}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  egg_day_name: e.target.value
+                })
+              }
+              className="border-2 border-black mt-4 w-[358px] h-[48px] p-2"
+            />
+            <div className="text-gray-500 text-sm">{formData.egg_day_name.length} / 36</div>
+          </div> */}
+
+          <div className="flex flex-col gap-8">
+            <style>{customStyles}</style>
+            <div className="flex flex-col gap-2">
+              <Text variant="header-18">언제 만날까요?</Text>
+              <label htmlFor="datePickerDate" className="cursor-pointer ">
+                <SearchInput>
+                  <DatePicker
+                    id="datePickerDate"
+                    selected={startDate}
+                    onChange={handleDateChange}
+                    dateFormat={`yyyy년 MM월 dd일`}
+                    minDate={new Date()}
+                    locale={ko}
+                    placeholderText="날짜를 선택해주세요"
+                    className="w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 text-gray-300"
+                    wrapperClassName="w-full"
+                  />
+                </SearchInput>
+              </label>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Text variant="header-18">몇 시에 만날까요?</Text>
+
+              <label htmlFor="datePickerTime" className="cursor-pointer">
+                <SearchInput>
+                  <DatePicker
+                    id="datePickerTime"
+                    selected={startTime}
+                    onChange={handleTimeChange}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={30}
+                    timeCaption="시간"
+                    dateFormat="aa h:mm"
+                    locale={ko}
+                    placeholderText="시간을 선택해주세요"
+                    className="w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 text-gray-300"
+                    wrapperClassName="w-full"
+                    filterTime={filterTime}
+                    disabled={!startDate}
+                  />
+                </SearchInput>
+              </label>
+            </div>
+          </div>
+
+          {/* <div>
+            <h1 className="text-[20px] font-semibold mb-4">모임 장소</h1>
 
             <div className="relative">
               <DatePicker
-                selected={startTime}
-                onChange={handleTimeChange}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={30}
-                timeCaption="시간"
-                dateFormat="aa h:mm"
+                selected={startDate}
+                onChange={handleDateChange}
+                dateFormat={`yyyy년 MM월 dd일`}
+                minDate={new Date()}
                 locale={ko}
-                placeholderText="시간을 선택해주세요"
+                placeholderText="날짜를 선택해주세요"
                 className="w-full p-4 bg-gray-50 rounded-lg pr-12"
                 wrapperClassName="w-full"
-                filterTime={filterTime}
-                disabled={!startDate}
               />
             </div>
-          </div>
-        </div>
 
-        <div>
-          <h1 className="text-[20px] font-semibold mb-4">설명</h1>
+            <div className="mt-6">
+              <h2 className="text-[20px] font-semibold mb-4">모임 시간</h2>
 
-          <textarea
-            value={formData.egg_day_content}
-            maxLength={290}
-            onChange={(e) => setFormData({ ...formData, egg_day_content: e.target.value })}
-            className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
-          />
-          <div className="text-gray-500 text-sm">{formData.egg_day_content.length} / 290</div>
-        </div>
-
-        <div>
-          <h1 className="mb-4 text-[20px] font-semibold">참가비</h1>
-          <div className="flex justify-center gap-2">
-            <button
-              onClick={() => handleTaxToggle(true)}
-              className={`w-[175px] h-[57px]  ${showTaxInput ? "bg-blue-100" : "bg-gray-100 "}`}
-            >
-              있음
-            </button>
-            <button
-              onClick={() => handleTaxToggle(false)}
-              className={`w-[175px] h-[57px] ${!showTaxInput ? "bg-blue-100" : "bg-gray-100 "}`}
-            >
-              없음
-            </button>
-          </div>
-          {showTaxInput && (
-            <div className="next-box bg-blue-100">
-              <input
-                type="text"
-                value={formData.egg_day_tax || ""}
-                onChange={handleTaxAmount}
-                placeholder="참가비를 입력해주세요"
-                className="w-[328px] h-8 rounded-lg p-2"
-              />
-              {inputError && <div className="text-red-500 text-sm mt-1">{inputError}</div>}
-
-              {formData.egg_day_tax !== null && formData.egg_day_tax > 0 && !inputError && (
-                <div className="py-4 px-1 text-gray-600">{formData.egg_day_tax.toLocaleString()}원</div>
-              )}
+              <div className="relative">
+                <DatePicker
+                  selected={startTime}
+                  onChange={handleTimeChange}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={30}
+                  timeCaption="시간"
+                  dateFormat="aa h:mm"
+                  locale={ko}
+                  placeholderText="시간을 선택해주세요"
+                  className="w-full p-4 bg-gray-50 rounded-lg pr-12"
+                  wrapperClassName="w-full"
+                  filterTime={filterTime}
+                  disabled={!startDate}
+                />
+              </div>
             </div>
-          )}
-        </div>
+          </div> */}
 
-        <div>
-          <h1 className="mb-4 text-[20px] font-semibold">장소</h1>
           <div className="flex flex-col gap-2">
-            <div className="flex gap-2">
-              <input
-                type="hidden"
-                value={addressData.zonecode}
-                placeholder="우편번호"
-                className="border p-2 w-24"
-                readOnly
-              />
-              <button onClick={execDaumPostcode} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                주소 검색
+            <Text variant="body_medium-16">어떤 모임인가요?</Text>
+
+            <ClubCreateTextArea
+              value={formData.egg_day_content}
+              maxLength={290}
+              onChange={(e) => setFormData({ ...formData, egg_day_content: e.target.value })}
+              placeholder="모임 소개를 작성해주세요"
+            />
+          </div>
+          {/* <div>
+            <h1 className="text-[20px] font-semibold mb-4">설명</h1>
+
+            <textarea
+              value={formData.egg_day_content}
+              maxLength={290}
+              onChange={(e) => setFormData({ ...formData, egg_day_content: e.target.value })}
+              className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
+            />
+            <div className="text-gray-500 text-sm">{formData.egg_day_content.length} / 290</div>
+          </div> */}
+
+          <div className="flex flex-col gap-2">
+            <Text variant="header-18">참가비가 있나요?</Text>
+            <div className="flex justify-center gap-2">
+              <button
+                onClick={() => handleTaxToggle(true)}
+                className={`w-[173px] h-12 px-4 rounded-lg border  justify-center items-center gap-2.5 inline-flex  ${
+                  showTaxInput ? "border-primary-500 border-2" : "border-gray-100"
+                } `}
+              >
+                <Text variant="subtitle-14" className={`${showTaxInput ? "text-primary-300" : "text-gray-800"}`}>
+                  있음
+                </Text>
+              </button>
+              <button
+                onClick={() => handleTaxToggle(false)}
+                className={`w-[173px] h-12 px-4 rounded-lg border justify-center items-center gap-2.5 inline-flex  ${
+                  !showTaxInput ? "border-primary-300 border-2" : "border-gray-100"
+                } `}
+              >
+                <Text variant="subtitle-14" className={`${!showTaxInput ? "text-primary-300" : "text-gray-800"}`}>
+                  없음
+                </Text>
               </button>
             </div>
 
-            <input type="text" value={addressData.address} placeholder="주소" className="border p-2 w-full" readOnly />
-            <input
+            <div>
+              {showTaxInput && (
+                <div className="relative">
+                  <ClubCreateInput
+                    type="text"
+                    value={formData.egg_day_tax || ""}
+                    onChange={handleTaxAmount}
+                    placeholder="금액을 입력해주세요"
+                  />
+
+                  <div className="mx-2">
+                    {inputError && <div className="text-red-500 text-sm mt-1">{inputError}</div>}
+
+                    {formData.egg_day_tax !== null && formData.egg_day_tax > 0 && !inputError && (
+                      <div className="py-4 px-1 text-gray-600">{formData.egg_day_tax.toLocaleString()}원</div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          {/* <div>
+            <h1 className="mb-4 text-[20px] font-semibold">참가비</h1>
+            <div className="flex justify-center gap-2">
+              <button
+                onClick={() => handleTaxToggle(true)}
+                className={`w-[175px] h-[57px]  ${showTaxInput ? "bg-blue-100" : "bg-gray-100 "}`}
+              >
+                있음
+              </button>
+              <button
+                onClick={() => handleTaxToggle(false)}
+                className={`w-[175px] h-[57px] ${!showTaxInput ? "bg-blue-100" : "bg-gray-100 "}`}
+              >
+                없음
+              </button>
+            </div>
+            {showTaxInput && (
+              <div className="next-box bg-blue-100">
+                <input
+                  type="text"
+                  value={formData.egg_day_tax || ""}
+                  onChange={handleTaxAmount}
+                  placeholder="참가비를 입력해주세요"
+                  className="w-[328px] h-8 rounded-lg p-2"
+                />
+                {inputError && <div className="text-red-500 text-sm mt-1">{inputError}</div>}
+
+                {formData.egg_day_tax !== null && formData.egg_day_tax > 0 && !inputError && (
+                  <div className="py-4 px-1 text-gray-600">{formData.egg_day_tax.toLocaleString()}원</div>
+                )}
+              </div>
+            )}
+          </div> */}
+
+          <div className="flex flex-col gap-2">
+            <Text variant="header-18">어디서 만날까요?</Text>
+            <label htmlFor="address" onClick={execDaumPostcode} className="cursor-pointer">
+              <SearchInput>
+                <input
+                  id="address"
+                  value={addressData.address}
+                  placeholder="주소를 검색해주세요"
+                  className="w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 text-gray-300"
+                  readOnly
+                />
+              </SearchInput>
+            </label>
+
+            <ClubCreateInput
               type="text"
               value={addressData.detailAddress}
               onChange={handleDetailAddressChange}
               placeholder="상세주소를 입력해주세요(선택)"
-              className="border p-2 w-full"
             />
           </div>
-        </div>
+          {/* 
+          <div>
+            <h1 className="mb-4 text-[20px] font-semibold">장소</h1>
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <input
+                  type="hidden"
+                  value={addressData.zonecode}
+                  placeholder="우편번호"
+                  className="border p-2 w-24"
+                  readOnly
+                />
+                <button
+                  onClick={execDaumPostcode}
+                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                  주소 검색
+                </button>
+              </div>
 
-        <button onClick={handleSubmit} className="w-full h-[59px] bg-yellow-200 rounded-full">
-          공지글 올리기
-        </button>
+              <input
+                type="text"
+                value={addressData.address}
+                placeholder="주소"
+                className="border p-2 w-full"
+                readOnly
+              />
+              <input
+                type="text"
+                value={addressData.detailAddress}
+                onChange={handleDetailAddressChange}
+                placeholder="상세주소를 입력해주세요(선택)"
+                className="border p-2 w-full"
+              />
+            </div>
+          </div> */}
+
+          <button onClick={handleSubmit} className="w-full h-[59px] bg-primary-300 rounded-full">
+            에그데이 생성
+          </button>
+        </div>
       </div>
     </div>
   );
