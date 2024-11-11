@@ -36,7 +36,7 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
         </div>
         <div className="flex-1 flex justify-center">
           <h1 onClick={toggleModal} className="cursor-pointer flex items-center">
-            <Text variant="header-16">
+            <Text variant="header-16" className='ml-10'>
               {
                 categories.filter((category) => category.main_category_id === Number(currentCategory))[0]
                   ?.main_category_name
@@ -47,23 +47,33 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
             </span>
           </h1>
           {isModalOpen && (
-            <div className="absolute top-12 bg-primary-400 p-4 rounded-2xl shadow-lg z-50">
-              <ul>
+            <div className="absolute top-12 bg-[#ffffff]  min-w-[358px] ml-[30px] rounded-[8px] border border-solid border-gray-50 shadow-lg z-50 justify-items-center">
+              <ul className="grid grid-cols-3 text-center">
+                <li className="cursor-pointer border border-solid border-gray-100 w-full h-full">
+                  <Text variant="body_medium-12" className="w-[119px] h-[48px] content-center">
+                    에그팝
+                  </Text>
+                </li>
                 {categories.map((category) => (
                   <li
                     key={category.main_category_id}
-                    className="cursor-pointer"
+                    className="cursor-pointer border border-solid border-gray-100 w-full h-full"
                     onClick={() => {
                       setIsModalOpen(false);
                     }}
                   >
                     <Link href={`/category/${category.main_category_id}`}>
-                      <Text variant="body-16" className="py-2">
+                      <Text variant="body_medium-12" className="text-gray-900 w-[119px] h-[48px] content-center">
                         {category.main_category_name}
                       </Text>
                     </Link>
                   </li>
                 ))}
+                <li className="cursor-pointer border border-solid border-gray-100 w-full h-full">
+                  <Text variant="body_medium-12" className="text-gray-300 w-[119px] h-[48px] content-center">
+                    곧 생겨요!
+                  </Text>
+                </li>
               </ul>
             </div>
           )}
