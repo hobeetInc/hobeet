@@ -64,13 +64,6 @@ const MemberType = ({
     });
   };
 
-  // const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   // 소수점(.) 입력 방지
-  //   if (e.key === ".") {
-  //     e.preventDefault();
-  //   }
-  // };
-
   return (
     <div>
       <Text variant="header-18" className="flex items-center mb-6 h-11">
@@ -127,60 +120,10 @@ const MemberType = ({
           </div>
         </div>
 
-        {/* <div onClick={() => setGenderToggle((prev) => !prev)} className="next-box bg-gray-100 cursor-pointer">
-          성별
-          <div className="flex flex-row justify-center flex-wrap gap-1 m-2" onClick={(e) => e.stopPropagation()}>
-            {genderToggle &&
-              gender.map((element) => (
-                <button
-                  key={element}
-                  onClick={(e) => handleGender(e, element)}
-                  className={`border-2 border-black p-1 rounded-lg ${
-                    selectedGender === element ? "bg-blue-200" : "bg-white"
-                  }`}
-                >
-                  {element}
-                </button>
-              ))}
-          </div>
-        </div>
-
-        <div onClick={() => setAgeToggle((prev) => !prev)} className="next-box bg-gray-100 cursor-pointer">
-          나이
-          <div className="flex flex-row justify-center flex-wrap gap-1 m-2" onClick={(e) => e.stopPropagation()}>
-            {ageToggle &&
-              age.map((element) => (
-                <button
-                  key={element}
-                  onClick={(e) => handleAge(e, element)}
-                  className={`border-2 border-black p-1 rounded-lg ${
-                    selectedAge === element ? "bg-blue-200" : "bg-white"
-                  }`}
-                >
-                  {element}
-                </button>
-              ))}
-          </div>
-        </div> */}
-
         <div className="flex flex-col gap-2">
           <Text variant="body_medium-16">최대 인원</Text>
           <NumberSpinner value={Number(peopleLimit)} onChange={handlePeopleLimit} max={100} min={0} />
         </div>
-
-        {/* <div className="next-box bg-gray-100 flex flex-col gap-4">
-          <h1>최대인원수</h1>
-          <input
-            type="number"
-            placeholder="인원수를 적지 않으면 인원제한 없이 생성됩니다"
-            className="w-[328px] h-8 rounded-lg p-2"
-            value={peopleLimit}
-            onChange={handlePeopleLimit}
-            onKeyDown={handleKeyDown}
-            min="0"
-            step="1"
-          />
-        </div> */}
       </div>
     </div>
   );

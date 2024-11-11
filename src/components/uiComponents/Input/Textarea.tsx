@@ -3,7 +3,7 @@ import { cn } from "@/utils/cn/util";
 import { TextareaHTMLAttributes, forwardRef } from "react";
 
 const textareaVariants = cva(
-  "min-h-[81px] px-4 py-3 rounded-xl border border-solid border-gray-100 flex flex-col justify-between"
+  "min-h-[81px] w-[358px] px-4 py-3 rounded-xl border border-solid border-gray-100 flex flex-col justify-between"
 );
 
 const textareaInputVariants = cva(

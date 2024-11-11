@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn/util";
 import { InputHTMLAttributes, forwardRef } from "react";
 
 const inputVariants = cva(
-  "w-full h-12 pl-5 bg-gray-50 rounded-lg text-sm font-normal placeholder:text-gray-300 focus:outline-none"
+  "w-[358px] h-12 pl-5 bg-gray-50 rounded-lg text-sm font-normal placeholder:text-gray-300 focus:outline-none"
 );
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement>, VariantProps<typeof inputVariants> {

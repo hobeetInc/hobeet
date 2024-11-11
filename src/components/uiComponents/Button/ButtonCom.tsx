@@ -2,7 +2,6 @@ import { cn } from "@/utils/cn/util";
 import { cva, type VariantProps } from "class-variance-authority";
 import Text from "../TextComponents/Text";
 
-
 const buttonVariants = cva(
   // 기본 스타일
   "flex justify-center items-center w-full max-w-[358px] px-[10px] py-[14px] disabled:bg-gray-100 disabled:text-gray-500",
