@@ -1,4 +1,6 @@
 "use client";
+import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
+import Text from "@/components/uiComponents/Text/Text";
 import { EggPopProps } from "@/types/eggpop.types";
 import { useState } from "react";
 
@@ -52,38 +54,51 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1>참가비가 있나요?</h1>
+    <div className="flex flex-col gap-2">
+      <Text variant="header-18">참가비가 있나요?</Text>
       <div className="flex justify-center gap-2">
         <button
           onClick={() => handleTaxToggle(true)}
-          className={`w-[175px] h-[57px]  ${showTaxInput ? "bg-blue-100" : "bg-gray-100 "}`}
+          className={`w-[173px] h-12 px-4 rounded-lg border  justify-center items-center gap-2.5 inline-flex  ${
+            showTaxInput ? "border-primary-500 border-2" : "border-gray-100"
+          } `}
         >
-          있음
+          <Text variant="subtitle-14" className={`${showTaxInput ? "text-primary-500" : "text-gray-800"}`}>
+            있음
+          </Text>
         </button>
         <button
           onClick={() => handleTaxToggle(false)}
-          className={`w-[175px] h-[57px] ${!showTaxInput ? "bg-blue-100" : "bg-gray-100 "}`}
+          className={`w-[173px] h-12 px-4 rounded-lg border justify-center items-center gap-2.5 inline-flex  ${
+            !showTaxInput ? "border-primary-500 border-2" : "border-gray-100"
+          } `}
         >
-          없음
+          <Text variant="subtitle-14" className={`${!showTaxInput ? "text-primary-500" : "text-gray-800"}`}>
+            있음
+          </Text>
         </button>
       </div>
-      {showTaxInput && (
-        <div className="next-box bg-gray-100">
-          <input
-            type="text"
-            value={formData.egg_pop_tax || ""}
-            onChange={handleTaxAmount}
-            placeholder="참가비를 입력해주세요"
-            className="w-[328px] h-8 rounded-lg p-2"
-          />
-          {inputError && <div className="text-red-500 text-sm mt-1">{inputError}</div>}
 
-          {formData.egg_pop_tax !== null && formData.egg_pop_tax > 0 && !inputError && (
-            <div className="py-4 px-1 text-gray-600">{formData.egg_pop_tax.toLocaleString()}원</div>
-          )}
-        </div>
-      )}
+      <div>
+        {showTaxInput && (
+          <div className="relative">
+            <ClubCreateInput
+              type="text"
+              value={formData.egg_pop_tax || ""}
+              onChange={handleTaxAmount}
+              placeholder="금액을 입력해주세요"
+            />
+
+            <div className="mx-2">
+              {inputError && <div className="text-red-500 text-sm mt-1">{inputError}</div>}
+
+              {formData.egg_pop_tax !== null && formData.egg_pop_tax > 0 && !inputError && (
+                <div className="py-4 px-1 text-gray-600">{formData.egg_pop_tax.toLocaleString()}원</div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

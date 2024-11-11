@@ -36,7 +36,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
   return (
-    <div className="container">
+    <div>
       <ClubHeader clubInfo={clubInfo} />
 
       <TabLayout>

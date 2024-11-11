@@ -1,6 +1,5 @@
 import { CustomAddress } from "@/utils/CustomAddress";
 import { LocationImage } from "./LocationImage";
-
 import { CustomDate } from "@/utils/CustomDate";
 import Image from "next/image";
 import { HeartImage } from "./HeartImage";

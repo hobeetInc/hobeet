@@ -9,7 +9,7 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
 
   return (
     <div className="fixed inset-0 bg-white z-50">
-      <div className="container h-screen flex flex-col">
+      <div className="h-screen flex flex-col">
         <div className="flex items-center justify-between h-[48px] p-4 relative">
           <button onClick={onClose} className="absolute left-4">
             <ChevronLeft />

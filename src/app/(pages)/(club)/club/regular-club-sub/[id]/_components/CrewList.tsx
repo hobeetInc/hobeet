@@ -12,7 +12,6 @@ import browserClient from "@/utils/supabase/client";
 import { CrewListProps, UserStatus } from "@/types/eggclub.types";
 import RegularClubJoinButton from "@/components/RegularClubJoinButtonCom";
 
-
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notificationData }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
   const [participationStatus, setParticipationStatus] = useState<UserStatus>("not_applied");

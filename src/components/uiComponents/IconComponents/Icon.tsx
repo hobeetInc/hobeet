@@ -1,8 +1,6 @@
-
 import { BellOutLineIcon, ChatOutLineIcon, HomeOutLineIcon, RocketIcon, WishHeart } from "./Icons";
 
-
-type IconType = "home" | "chat" | "bell" | "heart" | "rocket" ;
+type IconType = "home" | "chat" | "bell" | "heart" | "rocket";
 
 interface IconProps {
   name: IconType;

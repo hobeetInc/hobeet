@@ -67,7 +67,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
   return (
-    <div className="container">
+    <div>
       <PopHeader clubInfo={clubInfo} />
       <div className="flex flex-col w-full">
         <Image src={clubInfo.egg_pop_image} alt={clubInfo.egg_pop_name} width={100} height={100} className="w-full" />

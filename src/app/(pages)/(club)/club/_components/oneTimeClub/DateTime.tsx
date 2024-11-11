@@ -5,6 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { ko } from "date-fns/locale";
 import { EggPopProps } from "@/types/eggpop.types";
+import SearchInput from "@/components/uiComponents/Input/SearchInput";
+import Text from "@/components/uiComponents/Text/Text";
 
 // 커스텀 스타일
 const customStyles = `
@@ -62,13 +64,26 @@ const DateTime = ({ formData, setFormData }: EggPopProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-8">
       <style>{customStyles}</style>
-
-      <div>
-        <h1 className="text-xl font-bold mb-4">언제 만날까요?</h1>
-
-        <div className="relative">
+      <div className="flex flex-col gap-2">
+        <Text variant="header-18">언제 만날까요?</Text>
+        <label htmlFor="datePickerDate" className="cursor-pointer ">
+          <SearchInput>
+            <DatePicker
+              id="datePickerDate"
+              selected={startDate}
+              onChange={handleDateChange}
+              dateFormat={`yyyy년 MM월 dd일`}
+              minDate={new Date()}
+              locale={ko}
+              placeholderText="날짜를 선택해주세요"
+              className="w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 text-gray-300"
+              wrapperClassName="w-full"
+            />
+          </SearchInput>
+        </label>
+        {/* <div className="relative">
           <DatePicker
             selected={startDate}
             onChange={handleDateChange}
@@ -79,29 +94,35 @@ const DateTime = ({ formData, setFormData }: EggPopProps) => {
             className="w-full p-4 bg-gray-50 rounded-lg pr-12"
             wrapperClassName="w-full"
           />
-        </div>
+          <div className="flex items-center justify-center w-12 h-12 absolute right-0 top-0">
+            <CiSearch className="w-6 h-6" />
+          </div>
+        </div> */}
       </div>
 
-      <div>
-        <h2 className="text-xl font-bold mb-4">몇 시에 만날까요?</h2>
+      <div className="flex flex-col gap-2">
+        <Text variant="header-18">몇 시에 만날까요?</Text>
 
-        <div className="relative">
-          <DatePicker
-            selected={startTime}
-            onChange={handleTimeChange}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={30}
-            timeCaption="시간"
-            dateFormat="aa h:mm"
-            locale={ko}
-            placeholderText="시간을 선택해주세요"
-            className="w-full p-4 bg-gray-50 rounded-lg pr-12"
-            wrapperClassName="w-full"
-            filterTime={filterTime}
-            disabled={!startDate}
-          />
-        </div>
+        <label htmlFor="datePickerTime" className="cursor-pointer">
+          <SearchInput>
+            <DatePicker
+              id="datePickerTime"
+              selected={startTime}
+              onChange={handleTimeChange}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={30}
+              timeCaption="시간"
+              dateFormat="aa h:mm"
+              locale={ko}
+              placeholderText="시간을 선택해주세요"
+              className="w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 text-gray-300"
+              wrapperClassName="w-full"
+              filterTime={filterTime}
+              disabled={!startDate}
+            />
+          </SearchInput>
+        </label>
       </div>
     </div>
   );
