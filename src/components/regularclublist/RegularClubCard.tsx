@@ -10,11 +10,13 @@ const supabase = createClient();
 export const RegularClubCard = ({ club }: { club: EggClub }) => {
   const [creator, setCreator] = useState<User | null>(null);
   const [memberCount, setMemberCount] = useState<number>(0);
+  const [wishlistCount, setWishlistCount] = useState<number>(0);
   const router = useRouter();
 
   useEffect(() => {
     fetchCreator();
     fetchMemberCount();
+    fetchWishlistCount();
   }, []);
 
   const fetchCreator = async () => {
@@ -37,6 +39,15 @@ export const RegularClubCard = ({ club }: { club: EggClub }) => {
     setMemberCount(data?.length || 0);
   };
 
+  const fetchWishlistCount = async () => {
+    const { data } = await supabase
+      .from("wish_list")
+      .select("*", { count: "exact" })
+      .eq("egg_club_id", club.egg_club_id);
+
+    setWishlistCount(data?.length || 0);
+  };
+
   const handleClick = () => {
     router.push(`/club/regular-club-sub/${club.egg_club_id}`);
   };
@@ -57,9 +68,11 @@ export const RegularClubCard = ({ club }: { club: EggClub }) => {
           />
         </div>
 
-        <div className="flex-1 flex flex-col justify-between ">
+        <div className="h-[19px] flex-1 flex flex-col justify-between">
           <div>
-            <div className="inline-block px-2 py-0.5 bg-gray-800 rounded-[124px] text-sm text-white">에그클럽</div>
+            <div className="inline-flex px-2 py-0.5 bg-gray-800 rounded-[124px] text-center text-[10px] text-white font-normal font-pretendard leading-[14.50px]">
+              에그클럽
+            </div>
             <h3 className="text-sm font-semibold mt-2">{club.egg_club_name}</h3>
             <div className="flex items-center mt-1">
               <div className="flex items-center">
@@ -81,6 +94,10 @@ export const RegularClubCard = ({ club }: { club: EggClub }) => {
                   <span className="text-gray-400"> / {club.egg_club_people_limited}</span>
                 </span>
               </div>
+            </div>
+            <div className="flex items-center mt-1">
+              <Image src="/asset/Icon/Icon-Heart.png" alt="heart" width={16} height={16} className="mr-1" />
+              <span className="text-xs text-gray-400">{wishlistCount > 100 ? "100+" : wishlistCount}</span>
             </div>
           </div>
         </div>
