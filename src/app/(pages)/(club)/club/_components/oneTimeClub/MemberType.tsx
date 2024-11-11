@@ -64,6 +64,13 @@ const MemberType = ({
     });
   };
 
+  // const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   // 소수점(.) 입력 방지
+  //   if (e.key === ".") {
+  //     e.preventDefault();
+  //   }
+  // };
+
   return (
     <div>
       <Text variant="header-18" className="flex items-center mb-6 h-11">
