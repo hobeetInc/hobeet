@@ -5,7 +5,7 @@ import { AddressData, DaumPostcodeData } from "@/types/address.types";
 import { EggPopProps } from "@/types/eggpop.types";
 import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
 import SearchInput from "@/components/uiComponents/Input/SearchInput";
-import Text from "@/components/uiComponents/Text/Text";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const AddressSearch = ({ formData, setFormData }: EggPopProps) => {
   const [addressData, setAddressData] = useState<AddressData>({

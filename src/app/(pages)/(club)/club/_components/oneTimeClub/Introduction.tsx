@@ -2,10 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { EggPopProps } from "@/types/eggpop.types";
-import Text from "@/components/uiComponents/Text/Text";
 import ImageUpload from "@/components/uiComponents/Image/ImageUpload";
 import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
 import ClubCreateTextArea from "@/components/uiComponents/Input/Textarea";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const Introduction = ({ formData, setFormData }: EggPopProps) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
