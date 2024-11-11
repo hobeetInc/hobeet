@@ -111,14 +111,14 @@ const SearchPage = () => {
       {searchResults.length === 0 && (
         <>
           <button className="w-full" onClick={handleCreateClub}>
-            <div className="w-full h-[80px] mt-6 rounded-xl flex items-center justify-between bg-primary-200 p-4">
+            <div className="w-full h-[80px] mt-6 rounded-xl flex items-center  bg-primary-200 p-4 justify-center">
               <div className="flex flex-col">
                 <div className="w-[213px]">
                   <Text variant="subtitle-16" className="text-gray-900">
                     나만의 모임, 지금 만들어봐요!
                   </Text>
                 </div>
-                <div className="w-[320px] flex items-center">
+                <div className="w-[320px] flex items-center ml-3">
                   <Text variant="body-14" className="text-gray-500">
                     함께할 에그즈들을 만나볼까요?
                   </Text>
