@@ -22,7 +22,17 @@ export default function RootLayout({
 }>) {
     const pathname = usePathname();
 
-  const noHeaderFooterRoutes = ["/signin", "/register", /^\/chat\/regularChat\/.*$/ , "/club", "/club/one-time" , "/club/regular-time" , /^\/chat\/onetimeChat\/.*$/ ,/^\/club\/one-time-club-sub\/.*$/ ];
+  const noHeaderFooterRoutes = [
+    "/signin",
+    "/register",
+    /^\/chat\/regularChat\/.*$/,
+    "/club",
+    "/club/one-time",
+    "/club/regular-time",
+    /^\/chat\/onetimeChat\/.*$/,
+    /^\/club\/one-time-club-sub\/.*$/,
+    /^\/club\/regular-club-sub\/.*$/
+  ];
   const noHeaderRoutes = [/^\/category\/.*$/]
 const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>
   typeof route === "string" ? route === pathname : route.test(pathname)
