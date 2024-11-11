@@ -6,10 +6,10 @@ import { getOneTimeMember } from "../../../_api/supabase";
 import FullScreenModal from "./FullScreenModal";
 import { useAuth } from "@/app/store/AuthContext";
 import { ChevronRight } from "lucide-react";
-import JoinClubButton from "@/components/oneTimeClubJoinButton";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { CrewListProps } from "@/types/eggpop.types";
+import OneTimeClubJoinButton from "@/components/OneTimeClubJoinButtonCom";
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
@@ -116,7 +116,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
       );
     }
 
-    return <JoinClubButton clubId={clubId} onSuccess={() => {}} onError={() => {}} />;
+    return <OneTimeClubJoinButton clubId={clubId} />;
   };
 
   return (

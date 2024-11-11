@@ -58,9 +58,9 @@ export default function ClubListContent() {
 
   return (
     <div className="w-full border-b">
-      <TabBar activeTab={activeTab} onTabChange={handleTabSwitch} vlaue={"myclub"} />
+      <TabBar activeTab={activeTab} onTabChange={handleTabSwitch} value={"myclub"} />
 
-      <div className="mt-9 px-4">
+      <div className="w-full mt-9 px-4">
         {loading ? (
           renderLoadingState()
         ) : oneTimeClubs.length === 0 && regularClubs.length === 0 ? (

@@ -6,6 +6,13 @@ import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { EggClubChatInfo, ExtendEggClubMessage } from "@/types/eggclubchat.types";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+
+
+
+
+
 
 const supabase = createClient();
 
@@ -16,7 +23,7 @@ const ChatPage: React.FC = () => {
   const queryClient = useQueryClient();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
+  const [sendIconColor , setSentIconColor] = useState<boolean>(false);
   // 현재 사용자 정보 조회
   const { data: currentUser, isSuccess: isUserFetched } = useQuery({
     queryKey: ["currentUser"],
@@ -167,24 +174,28 @@ const ChatPage: React.FC = () => {
     }
   }, [newMessage]);
 
-  const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
-    return messages.reduce((acc: { [date: string]: ExtendEggClubMessage[] }, message) => {
-      const date = new Date(message.egg_day_chatting_message_create_at);
-      const dateString = date.toLocaleDateString("ko-KR", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        weekday: "long"
-      });
+const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
+  return messages.reduce((acc: { [date: string]: ExtendEggClubMessage[] }, message) => {
+    const date = new Date(message.egg_day_chatting_message_create_at);
+    const dateString = date.toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
 
-      if (!acc[dateString]) {
-        acc[dateString] = [];
-      }
+    // 요일을 별도로 가져와서 괄호와 함께 추가
+    const weekday = date.toLocaleDateString("ko-KR", { weekday: "long" }).replace("요일", ""); // "요일" 텍스트 제거
 
-      acc[dateString].push(message);
-      return acc;
-    }, {});
-  };
+    const formattedDate = `${dateString} (${weekday})`;
+
+    if (!acc[formattedDate]) {
+      acc[formattedDate] = [];
+    }
+
+    acc[formattedDate].push(message);
+    return acc;
+  }, {});
+};
 
   const groupedMessages = groupMessagesByDate(messages);
 
@@ -198,14 +209,20 @@ const ChatPage: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full">
       {/* 메시지 출력 */}
-      <div className="flex-grow overflow-y-auto" style={{ paddingBottom: "80px", paddingTop: "55px" }}>
+      <div className="flex-grow overflow-y-auto">
         <div className="p-4">
           {Object.keys(groupedMessages).length > 0 ? (
             Object.keys(groupedMessages).map((dateString) => (
               <div key={dateString} className="mb-6">
-                <div className="text-[10px] mb-2 text-center">{dateString}</div>
+                <div className="justify-items-center">
+                  <div className="w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-2 text-center">
+                    <Text variant="body-12" className="text-gray-500">
+                      {dateString}
+                    </Text>
+                  </div>
+                </div>
                 {groupedMessages[dateString].map((message: ExtendEggClubMessage) => {
                   const date = new Date(message.egg_day_chatting_message_create_at);
                   const isCurrentUser = message.user.user_id === currentUser?.id;
@@ -217,10 +234,7 @@ const ChatPage: React.FC = () => {
                     >
                       <div className={`flex flex-col ${isCurrentUser ? "items-end" : "items-start"}`}>
                         {!isCurrentUser && (
-                          <span className="text-sm text-gray-600 block mb-1 ml-[60px]">{message.user.user_name}</span>
-                        )}
-                        <div className="flex items-center">
-                          {!isCurrentUser && (
+                          <div className="flex">
                             <div className="flex items-center mr-2 border-solid border-[1px] rounded-full w-[40px] h-[40px]">
                               <Image
                                 src={message.user.user_profile_img}
@@ -230,9 +244,14 @@ const ChatPage: React.FC = () => {
                                 className="rounded-full"
                               />
                             </div>
-                          )}
+                            <span className="text-sm content-center text-gray-600 block]">
+                              {message.user.user_name}
+                            </span>
+                          </div>
+                        )}
+                        <div className="flex items-center">
                           {isCurrentUser && (
-                            <span className="text-xs text-gray-500 block self-end	mr-1">
+                            <span className="text-xs text-gray-500 block self-end	mr-2">
                               {date.toLocaleTimeString([], {
                                 hour: "2-digit",
                                 minute: "2-digit",
@@ -243,7 +262,7 @@ const ChatPage: React.FC = () => {
 
                           <div
                             className={`max-w-xs break-words p-3 rounded-[16px] ${
-                              isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2]"
+                              isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2] ml-10 "
                             } text-gray-900`}
                           >
                             <p className="max-w-[150px]">{message.egg_day_chatting_message_content}</p>
@@ -279,6 +298,12 @@ const ChatPage: React.FC = () => {
               ref={textareaRef}
               value={newMessage}
               onChange={(e) => {
+                if (e.target.value.length === 0) {
+                  setSentIconColor(false);
+                } else {
+                  setSentIconColor(true);
+                }
+
                 const lines = e.target.value.split("\n");
                 if (lines.length <= 5) {
                   setNewMessage(e.target.value);
@@ -292,18 +317,17 @@ const ChatPage: React.FC = () => {
               }}
               rows={1}
               maxLength={100}
-              className="flex-grow p-2 border border-gray-300 bg-[#d9d9d9] rounded-[20px] focus:outline-none focus:ring-2 transition duration-200 min-h-[48px] max-h-[120px] resize-none overflow-y-auto"
+              className="flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px] focus:outline-none focus:ring-2 transition duration-200 min-h-[48px] max-h-[120px] content-center resize-none overflow-y-auto text-body-14"
               placeholder="메시지를 입력하세요..."
-              style={{
-                lineHeight: "1.5"
-              }}
             />
             <button
               type="button"
               onClick={handleSendMessage}
-              className="ml-4 bg-[#69c3b0] text-white rounded-lg px-4 py-2"
+              className={`w-[40px] h-[40px] ml-4 ${
+                sendIconColor ? "bg-primary-400" : "bg-gray-50"
+              } text-white rounded-full flex items-center justify-center`}
             >
-              ↑
+              <Icon name="rocket" />
             </button>
           </div>
         </div>

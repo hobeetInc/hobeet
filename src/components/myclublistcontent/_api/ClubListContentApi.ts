@@ -18,7 +18,10 @@ export const fetchCreatedClubs = async (userId: string) => {
 };
 
 export const fetchJoinedClubs = async (userId: string) => {
-  const { data: oneTimeMemberships } = await supabase.from("egg_pop_member").select("egg_pop_id").eq("user_id", userId);
+  const { data: oneTimeMemberships } = await supabase
+    .from("egg_pop_member")
+    .select("egg_pop_id")
+    .eq("user_id", userId);
 
   const { data: regularMemberships } = await supabase
     .from("egg_club_member")

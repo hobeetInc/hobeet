@@ -41,6 +41,10 @@ export interface EggClubChattingRoom {
   last_message_time: string;
   last_message_time_value: string;
   active: boolean;
+  egg_day_chatting: EggDayChatting[];
+}
+interface EggDayChatting {
+  count: number;
 }
 
 // Chatting이 EggClubChatting을 확장
@@ -95,6 +99,8 @@ export interface LayoutProps {
     chatRoomId: string;
   };
 }
+
+
 
 // 에그클럽 채팅방 멤버 상세 정보 타입
 export type EggClubChattingMemberInfo = {

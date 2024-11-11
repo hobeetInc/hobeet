@@ -1,15 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, Menu, X } from "lucide-react";
+import { ChevronLeft, Menu} from "lucide-react";
 import { ChatProvider, useChatContext } from "./_components/ChatContext";
 import { ChatRoomExit } from "@/app/api/_ChatRoomExit/ChatRoomExit";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { EggPopChattingMemberInfo, LayoutProps } from "@/types/eggpopchat.types";
 
+import { IoCloseOutline } from "react-icons/io5";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import Tag from "@/components/uiComponents/TagComponents/Tag";
+
+
+
 function ChatHeader() {
   const { roomName, isLoading, egg_pop_chatting_room_member_id, egg_pop_id } = useChatContext();
+  const [userId, setUserId] = useState("");
+
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ChattingMember, setChattingMember] = useState<EggPopChattingMemberInfo[]>();
@@ -18,6 +26,8 @@ function ChatHeader() {
     const supabase = createClient();
     if (egg_pop_id) {
       const fetchRegularClubId = async () => {
+      const userId = (await supabase.auth.getUser()).data.user?.id;
+
         const { data, error } = await supabase
           .from("egg_pop_chatting_room_member")
           .select(`* , egg_pop_member_id(* , user_id(*))`)
@@ -27,6 +37,7 @@ function ChatHeader() {
           console.error(error);
           return;
         }
+        setUserId(userId);
 
         setChattingMember(data);
       };
@@ -34,7 +45,6 @@ function ChatHeader() {
     }
   }, [egg_pop_id]);
 
-  // console.log(ChattingMember);
 
   const handleBack = () => {
     router.back();
@@ -59,57 +69,88 @@ function ChatHeader() {
           <ChevronLeft className="w-6 h-6" />
         </button>
 
-        <h1 className="text-lg font-medium">{isLoading ? "로딩중..." : roomName}</h1>
+        <Text variant="header-16" className="text-gray-900">
+          {isLoading ? "로딩중..." : roomName}
+        </Text>
 
         <button onClick={() => setIsModalOpen(true)} className="p-2">
           <Menu className="w-6 h-6" />
         </button>
       </div>
-
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
           <div className="absolute right-0 top-0 h-full w-[280px] bg-white shadow-lg">
             <div className="flex justify-between items-center p-4 border-b border-gray-200">
-              <h2 className="text-lg font-medium">메뉴</h2>
+              <Text variant="header-16" className="text-gray-900">
+                대화 상대
+              </Text>
               <button onClick={() => setIsModalOpen(false)} className="p-2">
-                <X className="w-5 h-5" />
+                <IoCloseOutline className="w-6 h-6" />
               </button>
             </div>
-
-            <div className="p-4">
+            <div>
               <ul className="space-y-4">
-                <li>
-                  <div className="w-full text-left py-2 px-4 rounded-md">참여자 정보</div>
-                </li>
-                {ChattingMember?.map((member) => (
-                  <li key={member.egg_pop_member_id.egg_pop_member_id}>
-                    <div className="flex items-center justify-between py-2 px-4 rounded-md">
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 overflow-hidden rounded-full mr-2">
-                          <Image
-                            src={member.egg_pop_member_id.user_id.user_profile_img}
-                            alt="프로필 이미지"
-                            width={40}
-                            height={40}
-                            className="rounded-full"
-                          />
+                {/* 현재 사용자 먼저 렌더링 */}
+                {ChattingMember?.filter((member) => member.egg_pop_member_id.user_id.user_id === userId).map(
+                  (member) => (
+                    <li key={member.egg_pop_member_id.egg_pop_member_id}>
+                      <div className="flex items-center justify-between py-2 px-4 rounded-md border-solid border-gray-50 border-b-2">
+                        <div className="flex items-center">
+                          <div className="w-10 h-10 overflow-hidden rounded-full mr-2">
+                            <Image
+                              src={member.egg_pop_member_id.user_id.user_profile_img}
+                              alt="프로필 이미지"
+                              width={40}
+                              height={40}
+                              className="rounded-full"
+                            />
+                          </div>
+                          <Text variant="subtitle-16" className="text-gray-900">
+                            {member.egg_pop_member_id.user_id.user_name}
+                          </Text>
+                          {member.admin && <Tag tagName="eggmaster" variant="black" className="ml-2" />}
                         </div>
-                        <span>{member.egg_pop_member_id.user_id.user_name}</span>
                       </div>
-                      {member.admin && <span className="text-sm text-gray-500">모임장</span>}
-                    </div>
-                  </li>
-                ))}
+                    </li>
+                  )
+                )}
 
-                <li>
-                  <button
-                    onClick={handleChatRoomExit}
-                    className="w-full text-left py-2 px-4 hover:bg-gray-100 rounded-md text-red-500"
-                  >
-                    채팅방 나가기
-                  </button>
-                </li>
+                {/* 나머지 사용자들 렌더링 */}
+                {ChattingMember?.filter((member) => member.egg_pop_member_id.user_id.user_id !== userId).map(
+                  (member) => (
+                    <li key={member.egg_pop_member_id.egg_pop_member_id}>
+                      <div className="flex items-center justify-between py-2 px-4 rounded-md">
+                        <div className="flex items-center">
+                          <div className="w-10 h-10 overflow-hidden rounded-full mr-2">
+                            <Image
+                              src={member.egg_pop_member_id.user_id.user_profile_img}
+                              alt="프로필 이미지"
+                              width={40}
+                              height={40}
+                              className="rounded-full"
+                            />
+                          </div>
+                          <Text variant="subtitle-16" className="text-gray-900">
+                            {member.egg_pop_member_id.user_id.user_name}
+                          </Text>
+                          {member.admin && <Tag tagName="eggmaster" variant="black" className="ml-2" />}
+                        </div>
+                      </div>
+                    </li>
+                  )
+                )}
               </ul>
+            </div>
+            <div className="absolute bottom-0 w-full p-4 border-t border-gray-200">
+              <button
+                onClick={handleChatRoomExit}
+                className="w-full text-right py-2 px-4 hover:bg-gray-100 rounded-md text-red-500 flex items-center justify-end"
+              >
+                <Image src="/asset/Icon/icon-vector.svg" alt="나가기" width={18} height={18} className="mr-2" />
+                <Text variant="body_medium-14" className="text-gray-500">
+                  나가기
+                </Text>
+              </button>
             </div>
           </div>
         </div>
@@ -123,7 +164,7 @@ export default function ChatRoomLayout({ children, params }: LayoutProps) {
     <ChatProvider roomId={params.chatRoomId}>
       <div className="flex flex-col h-screen">
         <ChatHeader />
-        <div className="flex-1 overflow-hidden">{children}</div>
+        <div className="flex-1 overflow-hidden mt-10">{children}</div>
       </div>
     </ChatProvider>
   );

@@ -1,15 +1,15 @@
 interface TabBarProps {
   activeTab: boolean;
   onTabChange: (newActiveTab: boolean) => void;
-  vlaue: string;
+  value: string;
 }
 
 // 내 모임 리스트 탭바
-export const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, vlaue }) => {
+export const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, value }) => {
   const getTabText = (tabType: boolean) => {
-    if (vlaue === "myclub") {
+    if (value === "myclub") {
       return tabType ? "내가 에그장" : "내가 에그즈";
-    } else if (vlaue === "mychat") {
+    } else if (value === "mychat") {
       return tabType ? "에그클럽" : "에그팝";
     }
     return "";

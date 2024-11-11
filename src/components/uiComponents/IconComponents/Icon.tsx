@@ -1,6 +1,6 @@
-import { BellOutLineIcon, ChatOutLineIcon, HomeOutLineIcon, WishHeart } from "./icons";
+import { BellOutLineIcon, ChatOutLineIcon, HomeOutLineIcon, RocketIcon, WishHeart } from "./Icons";
 
-type IconType = "home" | "chat" | "bell" | "heart";
+type IconType = "home" | "chat" | "bell" | "heart" | "rocket";
 
 interface IconProps {
   name: IconType;
@@ -10,7 +10,8 @@ const ICON_MAP = {
   home: HomeOutLineIcon,
   chat: ChatOutLineIcon,
   bell: BellOutLineIcon,
-  heart: WishHeart
+  heart: WishHeart,
+  rocket: RocketIcon
 } as const;
 
 export function Icon({ name }: IconProps) {

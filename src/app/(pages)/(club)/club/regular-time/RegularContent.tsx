@@ -6,12 +6,13 @@ import { useAuth } from "@/app/store/AuthContext";
 import { RegularClubChatRoom } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoom";
 import { REGULAR_CLUB_CREATE } from "../_utils/localStorage";
 import Category from "../_components/regularClub/Category";
-import ImageUpload from "../_components/regularClub/ImageUpload";
-import ClubTitle from "../_components/regularClub/ClubTitle";
-import ApplicationMethod from "../_components/regularClub/ApplicationMethod";
 import MemberType from "../_components/regularClub/MemberType";
 import { putRegularMember, putRepresentative, submitRegularClubData, uploadImage } from "../_api/supabase";
 import { EggClubForm } from "@/types/eggclub.types";
+import ProgressBar from "../_components/ProgressBar";
+import { IoIosArrowBack } from "react-icons/io";
+import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import Introduction from "../_components/regularClub/Introduction";
 
 const RegularContent = () => {
   const router = useRouter();
@@ -41,7 +42,7 @@ const RegularContent = () => {
         main_category_id: 0,
         sub_category_id: 0,
         user_id: userId,
-        egg_club_approval: false,
+        egg_club_approval: true,
         egg_club_name: "",
         egg_club_image: "",
         egg_club_introduction: "",
@@ -237,27 +238,11 @@ const RegularContent = () => {
       case 1:
         return <Category formData={formData} setFormData={setFormData} />;
       case 2:
-        return (
-          <div className="flex flex-col gap-4">
-            <ImageUpload formData={formData} setFormData={setFormData} />
-            <ClubTitle formData={formData} setFormData={setFormData} />
-
-            <div>
-              <h1>정기모임 소개</h1>
-              <textarea
-                value={formData.egg_club_introduction}
-                maxLength={290}
-                onChange={(e) => setFormData({ ...formData, egg_club_introduction: e.target.value })}
-                className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
-              />
-              <div className="text-sm text-gray-500">{formData.egg_club_introduction.length} / 290</div>
-            </div>
-          </div>
-        );
+        return <Introduction formData={formData} setFormData={setFormData} />;
       case 3:
         return (
           <div className="flex flex-col gap-20">
-            <ApplicationMethod formData={formData} setFormData={setFormData} />
+            {/* <ApplicationMethod formData={formData} setFormData={setFormData} /> */}
             <MemberType
               formData={formData}
               setFormData={setFormData}
@@ -271,26 +256,46 @@ const RegularContent = () => {
     }
   };
 
-  return (
-    <div className="container">
-      <div className="m-4 flex flex-col gap-7">
-        <button onClick={handleBack} className="w-6 h-6 border-black border-2">
-          뒤
-        </button>
-        <div>{renderStep()}</div>
+  const isNextButtonDisabled = () => {
+    switch (step) {
+      case 1:
+        return formData.sub_category_id === 0;
+      case 2:
+        return !formData.egg_club_image || !formData.egg_club_name.trim() || !formData.egg_club_introduction.trim();
+      case 3:
+        return (
+          !selectedGender ||
+          !selectedAge ||
+          (formData.egg_club_people_limited !== null &&
+            (formData.egg_club_people_limited >= 101 || formData.egg_club_people_limited <= 1))
+        );
 
-        {step === 3 ? (
-          <button
-            onClick={handleNext}
-            className="w-[358px] h-[53px] rounded-lg hover:border-2 hover:border-black bg-red-400"
-          >
-            모임 생성
-          </button>
-        ) : (
-          <button onClick={handleNext} className="next-button">
-            다음
-          </button>
-        )}
+      default:
+        return false;
+    }
+  };
+
+  return (
+    <div className="relative flex flex-col justify-center items-center">
+      <div className="w-[390px] h-12 flex justify-start">
+        <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
+          <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
+        </div>
+      </div>
+
+      <div className="mx-4 flex flex-col">
+        <ProgressBar currentStep={step} totalSteps={3} />
+        <div>{renderStep()}</div>
+      </div>
+      <div className="fixed bottom-[50px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
+        <Button
+          onClick={handleNext}
+          disabled={isNextButtonDisabled()}
+          colorType={isNextButtonDisabled() ? undefined : "black"}
+          borderType="circle"
+        >
+          {step === 3 ? "모임 생성" : "다음"}
+        </Button>
       </div>
     </div>
   );

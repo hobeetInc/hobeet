@@ -8,9 +8,9 @@ import FullScreenModal from "./FullScreenModal";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import { ChevronRight } from "lucide-react";
-import RegularClubJoinButton from "@/components/regularClubJoinButton";
 import browserClient from "@/utils/supabase/client";
 import { CrewListProps, UserStatus } from "@/types/eggclub.types";
+import RegularClubJoinButton from "@/components/RegularClubJoinButtonCom";
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notificationData }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
@@ -159,7 +159,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
             onError={(message) => {
               alert(message);
             }}
-            className="w-full h-[50px] rounded-full bg-black text-white"
+            // className="w-full h-[50px] rounded-full bg-black text-white"
           />
         );
     }

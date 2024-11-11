@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import { AddressData, DaumPostcodeData } from "@/types/address.types";
 import { EggPopProps } from "@/types/eggpop.types";
+import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
+import SearchInput from "@/components/uiComponents/Input/SearchInput";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const AddressSearch = ({ formData, setFormData }: EggPopProps) => {
   const [addressData, setAddressData] = useState<AddressData>({
@@ -99,28 +102,25 @@ const AddressSearch = ({ formData, setFormData }: EggPopProps) => {
 
   return (
     <div>
-      <h1 className="mb-4">어디서 만날까요?</h1>
       <div className="flex flex-col gap-2">
-        <div className="flex gap-2">
-          <input
-            type="hidden"
-            value={addressData.zonecode}
-            placeholder="우편번호"
-            className="border p-2 w-24 "
-            readOnly
-          />
-          <button onClick={execDaumPostcode} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-            주소 검색
-          </button>
-        </div>
+        <Text variant="header-18">어디서 만날까요?</Text>
+        <label htmlFor="address" onClick={execDaumPostcode} className="cursor-pointer">
+          <SearchInput>
+            <input
+              id="address"
+              value={addressData.address}
+              placeholder="주소를 검색해주세요"
+              className="w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 text-gray-300"
+              readOnly
+            />
+          </SearchInput>
+        </label>
 
-        <input type="text" value={addressData.address} placeholder="주소" className="border p-2 w-full" readOnly />
-        <input
+        <ClubCreateInput
           type="text"
           value={addressData.detailAddress}
           onChange={handleDetailAddressChange}
           placeholder="상세주소를 입력해주세요(선택)"
-          className="border p-2 w-full"
         />
       </div>
     </div>

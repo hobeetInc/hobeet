@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { Text } from "../text";
 import { cn } from "@/utils/cn/util";
+import Text from "../TextComponents/Text";
 
 const tagVariants = cva("h-[19px] px-2 py-0.5 rounded-[124px] justify-center items-center inline-flex", {
   variants: {

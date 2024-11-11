@@ -1,5 +1,5 @@
 import { ProfileImageLarge, ProfileImageSmall } from "./ProfileImageLarge";
-import Tag from "./Tag";
+import Tag from "./TagComponents/Tag";
 
 // 에그장 프로필 리스트
 export const ProfileListRepresentative = ({ hostName, hostImage }) => {
@@ -9,7 +9,7 @@ export const ProfileListRepresentative = ({ hostName, hostImage }) => {
       <div className="w-[133px] flex-col justify-start items-start gap-1 inline-flex">
         <div className="self-stretch justify-start items-center gap-2 inline-flex">
           <div className="text-gray-900 text-subtitle-16">{hostName}</div>
-          <Tag tagName="에그장" variant="black" />
+          <Tag tagName="eggmaster" variant="black" />
         </div>
       </div>
     </div>
@@ -23,7 +23,7 @@ export const ProfileListCrew = ({ crewName, crewImage }) => {
     <div className="w-[200px] flex-col justify-center items-start gap-1 inline-flex">
       <div className="self-stretch justify-start items-center gap-2 inline-flex">
         <div className="text-gray-500 text-subtitle-16">{crewName}</div>
-        <Tag tagName="에그즈" />
+        <Tag tagName="eggz" />
       </div>
     </div>
   </div>;

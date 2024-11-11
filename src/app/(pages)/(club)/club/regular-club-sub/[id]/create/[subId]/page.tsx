@@ -53,7 +53,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
     return (
       <>
-        <div className="container">
+        <div>
           <DayHeader clubInfo={clubInfo} />
           <div className="flex flex-col w-full">
             <Image
@@ -115,7 +115,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
   } catch (error) {
     console.error("Error loading club information:", error);
     return (
-      <div className="container p-4">
+      <div className="p-4">
         <h1 className="text-xl font-bold">오류가 발생했습니다</h1>
         <p>모임 정보를 불러오는 중 문제가 발생했습니다.</p>
       </div>

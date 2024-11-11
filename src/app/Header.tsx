@@ -3,6 +3,10 @@ import Link from "next/link";
 import { useAuth } from "./store/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import { GoPlus } from "react-icons/go";
+import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+
+
 
 export default function Header({ className }: { className: string }) {
   const { userId } = useAuth();
@@ -25,7 +29,7 @@ export default function Header({ className }: { className: string }) {
     }
   };
   return (
-    <header className={`flex w-[390px] h-[48px] items-center flex-shrink-0 ${className || ""}`}>
+    <header className={`flex w-full h-[48px] items-center flex-shrink-0 ${className || ""}`}>
       {pathname === "/" && (
         <Link href="/">
           <div className="flex w-[96px] h-[24px] flex-shrink-0 ml-[16px] mt-[12px] mb-[12px]">
@@ -39,8 +43,7 @@ export default function Header({ className }: { className: string }) {
           <div className="flex w-[96px] h-[24px] flex-shrink-0 ml-[16px] mt-[12px] mb-[12px]">
             <div className="flex w-[35px] h-[28px]  py-[10px] items-center gap-[10px]">
               <p
-                className="text-[#000] text-center font-pretendard
-               text-[20px] not-italic font-[700px]	leading-[27px]"
+                className="text-[#000] text-center font-pretendard text-[20px] not-italic font-[700px]	leading-[27px]"
               >
                 탐색
               </p>
@@ -54,8 +57,7 @@ export default function Header({ className }: { className: string }) {
           <div className="flex w-[96px] h-[24px] flex-shrink-0 ml-[16px] mt-[12px] mb-[12px]">
             <div className="flex w-[57px] h-[28px]  py-[10px] items-center gap-[10px]">
               <p
-                className="text-[#000] text-center font-pretendard
-               text-[20px] not-italic font-[700px]	leading-[27px]"
+                className="text-[#000] text-center font-pretendard text-[20px] not-italic font-[700px]	leading-[27px]"
               >
                 내 채팅
               </p>
@@ -82,11 +84,11 @@ export default function Header({ className }: { className: string }) {
       <div className="flex items-center ml-auto gap-4 mr-3 my-3">
         {pathname === "/" || pathname === "/search" || pathname === "/myclublist" ? (
           <button onClick={handleCreateMeet} className="w-6 h-6 flex items-center justify-center">
-            <Image src="/asset/PlusIcon.png" alt="PlusIcon" width={24} height={24} className="w-full h-full" />
+            <GoPlus className="w-6 h-6" />
           </button>
         ) : null}
         <button onClick={handleAlarm} className="w-6 h-6 flex items-center justify-center">
-          <Image src="/asset/BellIcon.png" alt="BellIcon" width={24} height={24} className="w-full h-full" />
+          <Icon name="bell" />
         </button>
       </div>
     </header>
