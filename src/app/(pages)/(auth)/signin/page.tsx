@@ -43,6 +43,7 @@ const SigninPage = () => {
   };
 
   return (
+
     <div className="flex flex-col items-center justify-start   p-6">
       <div className="flex flex-col items-center w-[174px] h-[176px] mb-[116px]">
         <h1 className="text-2xl font-black text-[#0c0c0c]  mt-[160px] mb-2">EGG FRIENDS</h1>
@@ -57,6 +58,7 @@ const SigninPage = () => {
             </div>
           </div>
         </div>
+
       </div>
 
       <div className="fixed w-full mb-[129px] px-[16px] bottom-0">

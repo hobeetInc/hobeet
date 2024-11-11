@@ -57,16 +57,16 @@ export default function ClubListContent() {
   );
 
   return (
-    <div className="w-[390px] border-b">
-      <TabBar activeTab={activeTab} onTabChange={handleTabSwitch} vlaue={"myclub"} />
+    <div className="w-full border-b">
+      <TabBar activeTab={activeTab} onTabChange={handleTabSwitch} value={"myclub"} />
 
-      <div className="mt-9 px-4">
+      <div className="w-full mt-9 px-4">
         {loading ? (
           renderLoadingState()
         ) : oneTimeClubs.length === 0 && regularClubs.length === 0 ? (
           renderEmptyState()
         ) : (
-          <div className="w-[358px] h-[338px] flex-col justify-start items-start gap-4 inline-flex">
+          <div className="w-full flex-col justify-start items-start gap-4 inline-flex">
             {oneTimeClubs.map((club) => (
               <OneTimeClubCard key={club.egg_pop_id} club={club} />
             ))}

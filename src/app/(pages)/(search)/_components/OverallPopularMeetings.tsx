@@ -16,10 +16,12 @@ const OverallPopularMeetings = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="w-full flex px-4 flex-col items-start gap-4">
+    <div className="w-full flex px-4 flex-col items-center gap-4">
       {data?.map((club, index) => (
         <div key={index} className="h-[90px] flex items-center gap-[8px] ">
-          <Text variant="header-32" className="w-9">{index+1}</Text>
+          <Text variant="header-32" className="w-9 ">
+            {index + 1}
+          </Text>
           <Link
             key={club.egg_club_id}
             href={`/club/regular-club-sub/${club.egg_club_id}`}

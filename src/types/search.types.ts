@@ -90,3 +90,15 @@ export interface EggPop extends BaseClub {
 
 // 에그팝과 에그클럽 타입 정의
 export type Club = EggClub | EggPop;
+
+export interface CategoryLayoutProps {
+  children: React.ReactNode;
+  params: {
+    categoryId: string;
+  };
+}
+
+export interface MainCategoryList {
+main_category_id: number;
+main_category_name: string;
+}

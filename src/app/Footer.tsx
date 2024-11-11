@@ -38,7 +38,7 @@ export default function Footer({ className }: { className: string }) {
 
   return (
     <footer
-      className={`flex p-[8px 16px 0px 16px] justify-between items-center border-t border-solid border-[1px] border-[#F2F2F2] bg-[#fff] ${
+      className={`flex w-full p-[8px 16px 0px 16px] justify-between items-center border-t border-solid border-[1px] border-[#F2F2F2] bg-[#fff] ${
         className || ""
       }`}
     >
