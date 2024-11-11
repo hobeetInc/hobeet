@@ -16,8 +16,8 @@ export const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, vlaue })
   };
 
   return (
-    <div className="w-[390px] px-4 pt-2.5 border-b border-gray-50 flex">
-      <button className="w-[179px] text-base font-pretendard relative" onClick={() => onTabChange(true)}>
+    <div className="w-full px-4 pt-2.5 border-b border-gray-50 flex">
+      <button className="w-[50%] text-base font-semibold font-pretendard relative" onClick={() => onTabChange(true)}>
         <span
           className={`text-center text-base font-pretendard relative ${
             activeTab === true ? "text-gray-900 text-body-16" : "text-gray-300 font-pretendard"
@@ -28,7 +28,7 @@ export const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, vlaue })
         <div className={`left-0 w-full h-0.5 mt-3 ${activeTab === true ? "bg-primary-500" : "bg-gray-50"}`} />
       </button>
 
-      <button className="w-[179px] text-base font-pretendard relative" onClick={() => onTabChange(false)}>
+      <button className="w-[50%] text-base font-semibold font-pretendard relative" onClick={() => onTabChange(false)}>
         <span
           className={`text-center text-base font-pretendard relative ${
             activeTab === false ? "text-gray-900 text-body-16" : "text-gray-300 font-pretendard"
