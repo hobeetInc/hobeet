@@ -7,10 +7,12 @@ import { useAuth } from "@/app/store/AuthContext";
 import FullScreenModal from "./FullScreenModal";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
-import { ChevronRight } from "lucide-react";
 import browserClient from "@/utils/supabase/client";
 import { CrewListProps, UserStatus } from "@/types/eggclub.types";
 import RegularClubJoinButton from "@/components/RegularClubJoinButtonCom";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { IoIosArrowForward } from "react-icons/io";
+import { Button } from "@/components/uiComponents/Button/ButtonCom";
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notificationData }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
@@ -79,6 +81,11 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
     router.push("/signin");
   };
 
+  const handleWaiting = () => {
+    alert("모임장 승인을 기다리는 중입니다");
+    return;
+  };
+
   // 채팅방으로 이동하는 함수
   const handleChatClick = async () => {
     try {
@@ -104,83 +111,157 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
     // 로그아웃 상태
     if (!userId) {
       return (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
+        <div className="w-full flex justify-center items-center">
+          <Button
+            colorType="black"
+            borderType="circle"
+            onClick={(e) => {
+              e.preventDefault();
 
-            handleLoginRedirect();
-          }}
-          className="w-full h-[50px] rounded-full bg-black text-white cursor-pointer" // cursor-pointer 추가
-        >
-          참여하기
-        </button>
+              handleLoginRedirect();
+            }}
+          >
+            참여하기
+          </Button>
+        </div>
+        // <button
+        //   type="button"
+        //   onClick={(e) => {
+        //     e.preventDefault();
+
+        //     handleLoginRedirect();
+        //   }}
+        //   className="w-full h-[50px] rounded-full bg-black text-white cursor-pointer" // cursor-pointer 추가
+        // >
+        //   참여하기
+        // </button>
       );
     }
 
     if (userId === clubHostId) {
       return (
-        <div className="flex justify-center items-center gap-2">
-          <button
+        <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+          <Button
+            borderType="circle"
+            sizeType="small"
+            className="w-[50%] bg-gray-100"
             onClick={() => router.push(`/approvemembers/${clubId}`)}
-            className="flex-1 bg-yellow-100 h-[50px] rounded-full"
           >
-            에그즈 관리
-          </button>
-          <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
+            <Text variant="subtitle-16" className="text-primary-900">
+              에그즈 관리
+            </Text>
+          </Button>
+
+          <Button colorType="black" borderType="circle" sizeType="small" className="w-[50%]">
+            <Text variant="subtitle-16">에그클럽 채팅방</Text>
+          </Button>
         </div>
+        // <div className="flex justify-center items-center gap-2">
+        //   <button
+        //     onClick={() => router.push(`/approvemembers/${clubId}`)}
+        //     className="flex-1 bg-yellow-100 h-[50px] rounded-full"
+        //   >
+        //     에그즈 관리
+        //   </button>
+        //   <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
+        // </div>
       );
     }
 
     switch (participationStatus) {
       case "active":
         return (
-          <div className="flex justify-center items-center gap-2">
-            <p className="flex-1 h-[50px] pt-4 font-semibold">참여 중인 에그클럽이에요</p>
-            <button onClick={handleChatClick} className="flex-1 bg-yellow-300  h-[50px] rounded-full">
-              에그데이 채팅방
-            </button>
+          <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+            <Text variant="subtitle-16" className="w-[50%]">
+              참여 중인 에그클럽이에요
+            </Text>
+            <Button colorType="black" borderType="circle" sizeType="small" className="w-[50%]">
+              에그팝 채팅방
+            </Button>
           </div>
+
+          // <div className="flex justify-center items-center gap-2">
+          //   <p className="flex-1 h-[50px] pt-4 font-semibold">참여 중인 에그클럽이에요</p>
+          //   <button onClick={handleChatClick} className="flex-1 bg-yellow-300  h-[50px] rounded-full">
+          //     에그데이 채팅방
+          //   </button>
+          // </div>
         );
 
       case "pending":
         return (
-          <div className="flex justify-center items-center gap-2">
-            <p className="flex-1 h-[50px] pt-4 font-semibold">에그장이 승인중이예요</p>
-            <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">승인 대기중</button>
+          <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+            <Text variant="subtitle-16" className="w-[50%]">
+              에그장이 승인중이예요
+            </Text>
+            <button
+              className="w-[50%] px-2.5 py-3.5 bg-gray-50 rounded-[25px] justify-center items-center gap-2.5 inline-flex"
+              onClick={handleWaiting}
+            >
+              <Text variant="subtitle-16" className="text-gray-200">
+                승인 대기중
+              </Text>
+            </button>
           </div>
+
+          // <div className="flex justify-center items-center gap-2">
+          //   <p className="flex-1 h-[50px] pt-4 font-semibold">에그장이 승인중이예요</p>
+          //   <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">승인 대기중</button>
+          // </div>
         );
 
       case "not_applied":
         return (
-          <RegularClubJoinButton
-            clubId={clubId}
-            onSuccess={() => {}}
-            onError={(message) => {
-              alert(message);
-            }}
-            // className="w-full h-[50px] rounded-full bg-black text-white"
-          />
+          <div className="w-full flex justify-center items-center">
+            <RegularClubJoinButton
+              clubId={clubId}
+              onSuccess={() => {}}
+              onError={(message) => {
+                alert(message);
+              }}
+            />
+          </div>
         );
     }
   };
 
   return (
     <>
-      <div className="flex flex-col gap-4">
-        <div className="flex justify-between">
-          <h1 className="font-extrabold text-[20px]">{`참여중인 에그즈 ${crewList.length}명`}</h1>
-          <button onClick={() => setIsModalOpen(true)} className="text-gray-600 hover:text-black">
-            <ChevronRight />
+      <div className="w-full h-20 flex-col justify-start items-start gap-4 flex">
+        <div className="self-stretch justify-start items-start inline-flex">
+          <div className="grow shrink basis-0 h-6 justify-start items-center gap-2 flex">
+            <Text variant="subtitle-18">참여 중인 에그즈</Text>
+            <Text variant="subtitle-18">{crewList.length}명</Text>
+          </div>
+          <button onClick={() => setIsModalOpen(true)} className="w-6 h-6 text-gray-600 hover:text-black">
+            <IoIosArrowForward className="w-full h-full" />
           </button>
         </div>
-        <div className="grid grid-cols-8 grid-flow-col gap-2 w-full">{displaySlots}</div>
+        <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
+
+        <div className="w-full">
+          <NotificationList notificationData={notificationData} crewMembers={crewList} />
+        </div>
+        <div className="w-full fixed bottom-0 right-0 left-0">{renderJoinButton()}</div>
+        <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
-      <NotificationList notificationData={notificationData} crewMembers={crewList} />
-      {renderJoinButton()}
-      <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };
 
 export default CrewList;
+
+// <>
+//   <div className="flex flex-col gap-4">
+//     <div className="flex justify-between">
+//       <h1 className="font-extrabold text-[20px]">{`참여중인 에그즈 ${crewList.length}명`}</h1>
+//       <button onClick={() => setIsModalOpen(true)} className="text-gray-600 hover:text-black">
+//         <ChevronRight />
+//       </button>
+//     </div>
+//     <div className="grid grid-cols-8 grid-flow-col gap-2 w-full">{displaySlots}</div>
+//   </div>
+//   <NotificationList notificationData={notificationData} crewMembers={crewList} />
+//   {renderJoinButton()}
+//   <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+// </>

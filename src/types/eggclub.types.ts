@@ -164,6 +164,7 @@ export type NotificationListProps = {
 export type EggClubNotificationProps = {
   notificationData: InSertEggDay[];
   crewMembers: MemberInfo[];
+  egg_club_id: number;
 };
 
 // 탭 레이아웃 props

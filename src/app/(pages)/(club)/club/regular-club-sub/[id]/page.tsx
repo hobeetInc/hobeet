@@ -36,8 +36,10 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
   return (
-    <div>
-      <ClubHeader clubInfo={clubInfo} />
+    <div className="mt-12 mb-40">
+      <div className="fixed top-0 right-0 left-0 bg-white z-50">
+        <ClubHeader clubInfo={clubInfo} />
+      </div>
 
       <TabLayout>
         {/* props를 통해 데이터 전달 */}
@@ -49,7 +51,11 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
           notificationData={notificationData}
           stringCategory={stringCategory}
         />
-        <RegularNotification notificationData={notificationData} crewMembers={crewMembers} />
+        <RegularNotification
+          notificationData={notificationData}
+          crewMembers={crewMembers}
+          egg_club_id={regularClubId}
+        />
       </TabLayout>
     </div>
   );
