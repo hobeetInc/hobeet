@@ -14,7 +14,7 @@ import Tax from "../_components/oneTimeClub/Tax";
 import { EggPopForm } from "@/types/eggpop.types";
 import ProgressBar from "../_components/ProgressBar";
 import { IoIosArrowBack } from "react-icons/io";
-import { Button } from "@/components/uiComponents/Button";
+import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import Introduction from "../_components/oneTimeClub/Introduction";
 
 const OneTimeContent = () => {
