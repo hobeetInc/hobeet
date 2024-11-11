@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "@/components/uiComponents/Icon/Icon";
+import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
 import Link from "next/link";
