@@ -67,7 +67,6 @@ const EggDayPayDetail = () => {
             </div>
 
             <div className="w-[358px] h-[88px] justify-start items-center gap-2 inline-flex">
-              {/* <div className="w-[88px] h-[88px] relative bg-[#d9d9d9] rounded-xl" /> */}
               <Image
                 src={notification.egg_day_id.egg_day_image}
                 alt="payList"
@@ -87,7 +86,6 @@ const EggDayPayDetail = () => {
                 <div className="pt-[3px] justify-start items-center gap-2 inline-flex">
                   <div className="justify-start items-center gap-1 flex">
                     <div className="w-4 h-4 justify-center items-center flex">
-                      {/* <div className="w-4 h-4 relative flex-col justify-start items-start flex" /> */}
                       <LocationIcon />
                     </div>
                     <div className="text-[#8c8c8c] text-sm font-medium font-['Pretendard'] leading-tight">
@@ -100,17 +98,6 @@ const EggDayPayDetail = () => {
                 </div>
               </div>
             </div>
-            {/* <div>
-              <div className="notification-image">
-                <Image src={notification.egg_day_id.egg_day_image} alt="payList" width={100} height={100} />
-              </div>
-              <div className="notification-content">
-                <div className=" bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그데이</div>
-                <h3 className="notification-title">{notification.egg_day_id.egg_day_name}</h3>
-                <p className="notification-location">{customAddress(notification.egg_day_id.egg_day_location)}</p>
-                <p className="notification-date">{customDate(notification.egg_day_id.egg_day_date_time)}</p>
-              </div>
-            </div> */}
           </div>
         </Link>
       ))}
