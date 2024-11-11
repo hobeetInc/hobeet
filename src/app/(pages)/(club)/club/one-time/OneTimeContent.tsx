@@ -74,11 +74,6 @@ const OneTimeContent = () => {
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedGender);
   const [formData, setFormData] = useState<EggPopForm>(initialData.formData);
 
-  // 폼데이터 확인용
-  // useEffect(() => {
-  //   console.log("폼:", formData);
-  // }, [formData]);
-
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
     const newStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3 | 4 | 5 | 6;
@@ -114,83 +109,6 @@ const OneTimeContent = () => {
 
   // 다음단계 버튼 (유효성 검사 함수)
   const handleNext = () => {
-    // if (step === 1 && formData.sub_category_id === 0) {
-    //   alert("카테고리를 선택해주세요");
-    //   return;
-    // }
-
-    // if (step === 2) {
-    //   if (!formData.egg_pop_name.trim()) {
-    //     alert("모임 제목을 입력해주세요");
-    //     return;
-    //   }
-    // }
-
-    // if (step === 3) {
-    //   if (!formData.egg_pop_image) {
-    //     alert("이미지를 선택해주세요");
-    //     return;
-    //   }
-    //   if (!formData.egg_pop_introduction.trim()) {
-    //     alert("모임 소개글을 입력해주세요");
-    //     return;
-    //   }
-    // }
-    // if (step === 4) {
-    //   if (!formData.egg_pop_date_time) {
-    //     alert("날짜와 시간을 선택해주세요");
-    //     return;
-    //   }
-    // }
-
-    // if (step === 5) {
-    //   if (!formData.egg_pop_location) {
-    //     alert("모임 장소를 정해주세요");
-    //     return;
-    //   }
-    // }
-
-    // if (step === 6) {
-    //   if (!selectedGender) {
-    //     alert("성별제한을 설정해주세요");
-    //     return;
-    //   }
-
-    //   if (!selectedAge) {
-    //     alert("나이제한을 설정해주세요");
-    //     return;
-    //   }
-
-    //   if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited >= 101) {
-    //     alert("인원제한은 100명 이하로 해주세요");
-    //     return;
-    //   }
-
-    //   if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited === 0) {
-    //     alert("2명 이상 적어주세요");
-    //     return;
-    //   }
-
-    //   if (formData.egg_pop_people_limited !== null && formData.egg_pop_people_limited === 1) {
-    //     alert("2명 이상 적어주세요");
-    //     return;
-    //   }
-
-    //   if (formData.egg_pop_people_limited === null) {
-    //     setFormData({
-    //       ...formData,
-    //       egg_pop_people_limited: 100
-    //     });
-    //     return alert("정말로 인원제한을 주지 않겠습니까?");
-    //   }
-    // }
-
-    // if (step === 7) {
-    //   if (formData.egg_pop_tax === null) {
-    //     alert("금액을 입력해주세요");
-    //     return;
-    //   }
-
     if (step === 6) {
       handleSubmit();
     } else {

@@ -120,26 +120,3 @@ const Category = ({ formData, setFormData }: EggPopProps) => {
 };
 
 export default Category;
-// <div
-//   onClick={() => handleCategoryToggle(main.main_category_id)}
-//   className="next-box bg-gray-100 cursor-pointer"
-//   key={main.main_category_id}
-// >
-//   {main.main_category_name}
-//   <br />
-//   <br />
-//   {openCategoryId === main.main_category_id &&
-//     getSubCategory(main.main_category_id).map((sub) => (
-//       <button
-//         key={sub.sub_category_id}
-//         onClick={(e) => {
-//           e.stopPropagation(); // 상위 버튼 클릭 방지
-//           handleSubCategorySelect(main.main_category_id, sub.sub_category_id);
-//         }}
-//         className={`border-2 border-black p-1 m-1
-//         ${formData.sub_category_id === sub.sub_category_id && "bg-blue-200"}`}
-//       >
-//         {sub.sub_category_name}
-//       </button>
-//     ))}
-// </div>

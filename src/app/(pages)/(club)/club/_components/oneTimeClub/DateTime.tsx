@@ -83,21 +83,6 @@ const DateTime = ({ formData, setFormData }: EggPopProps) => {
             />
           </SearchInput>
         </label>
-        {/* <div className="relative">
-          <DatePicker
-            selected={startDate}
-            onChange={handleDateChange}
-            dateFormat={`yyyy년 MM월 dd일`}
-            minDate={new Date()}
-            locale={ko}
-            placeholderText="날짜를 선택해주세요"
-            className="w-full p-4 bg-gray-50 rounded-lg pr-12"
-            wrapperClassName="w-full"
-          />
-          <div className="flex items-center justify-center w-12 h-12 absolute right-0 top-0">
-            <CiSearch className="w-6 h-6" />
-          </div>
-        </div> */}
       </div>
 
       <div className="flex flex-col gap-2">

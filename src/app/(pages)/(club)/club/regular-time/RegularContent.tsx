@@ -298,31 +298,6 @@ const RegularContent = () => {
         </Button>
       </div>
     </div>
-
-    // <div>
-    //   <div className="m-4 flex flex-col gap-7">
-    //     <button onClick={handleBack} className="w-6 h-6 border-black border-2">
-    //       뒤
-    //     </button>
-    //     <div>
-    //       <ProgressBar currentStep={step} totalSteps={3} />
-    //     </div>
-    //     <div>{renderStep()}</div>
-
-    //     {step === 3 ? (
-    //       <button
-    //         onClick={handleNext}
-    //         className="w-[358px] h-[53px] rounded-lg hover:border-2 hover:border-black bg-red-400"
-    //       >
-    //         모임 생성
-    //       </button>
-    //     ) : (
-    //       <button onClick={handleNext} className="next-button">
-    //         다음
-    //       </button>
-    //     )}
-    //   </div>
-    // </div>
   );
 };
 

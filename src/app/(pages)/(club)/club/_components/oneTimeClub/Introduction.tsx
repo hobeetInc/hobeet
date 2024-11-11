@@ -48,15 +48,6 @@ const Introduction = ({ formData, setFormData }: EggPopProps) => {
     setFormData({ ...formData, egg_pop_image: file });
   };
 
-  // const handleDeleteImage = () => {
-  //   setPreviewUrl(null);
-  //   setFormData({ ...formData, egg_pop_image: null });
-
-  //   if (fileInputRef.current) {
-  //     fileInputRef.current.value = ""; //input 값 초기화
-  //   }
-  // };
-
   return (
     <div>
       <Text variant="header-18" className="flex items-center mb-6 h-11">
@@ -88,16 +79,6 @@ const Introduction = ({ formData, setFormData }: EggPopProps) => {
           )}
         </label>
 
-        {/* <input type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/png, image/jpeg" />
-        {previewUrl && (
-          <div>
-            <Image src={previewUrl} alt="모임대표이미지" width={300} height={200} />
-            <button onClick={handleDeleteImage} className="border-2 border-black p-1 my-2">
-              이미지 삭제
-            </button>
-          </div>
-        )} */}
-
         <div className="flex flex-col gap-2">
           <Text variant="body_medium-16">모임의 제목은 무엇인가요?</Text>
           <ClubCreateInput
@@ -112,20 +93,6 @@ const Introduction = ({ formData, setFormData }: EggPopProps) => {
             }
             placeholder="제목을 입력해주세요(최대 글자 36자)"
           />
-
-          {/* <input
-            type="text"
-            maxLength={36}
-            value={formData.egg_pop_name}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                egg_pop_name: e.target.value
-              })
-            }
-            className="border-2 border-black mt-4 w-[358px] h-[48px] p-2"
-          /> */}
-          {/* <div className="text-sm text-gray-500">{formData.egg_pop_name.length} / 36</div> */}
         </div>
 
         <div className="flex flex-col gap-2">
@@ -137,13 +104,6 @@ const Introduction = ({ formData, setFormData }: EggPopProps) => {
             onChange={(e) => setFormData({ ...formData, egg_pop_introduction: e.target.value })}
             placeholder="모임 소개를 작성해주세요"
           />
-          {/* <textarea
-            value={formData.egg_pop_introduction}
-            maxLength={290}
-            onChange={(e) => setFormData({ ...formData, egg_pop_introduction: e.target.value })}
-            className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
-          />
-          <div className="text-sm text-gray-500">{formData.egg_pop_introduction.length} / 290</div> */}
         </div>
       </div>
     </div>
