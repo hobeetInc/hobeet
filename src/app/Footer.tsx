@@ -47,7 +47,7 @@ export default function Footer({ className }: { className: string }) {
           <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
             <Image
               src={pathname === "/" ? "/asset/Bottom nav_Button_Home.png" : "/asset/Bottom nav_Button_Home_Default.png"}
-              alt="Bottom nav_Button_Home_Defaul"
+              alt="Bottom nav_Button_Home_Default"
               width={48}
               height={48}
             />

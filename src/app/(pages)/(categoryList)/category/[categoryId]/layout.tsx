@@ -36,11 +36,12 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
         </div>
         <div className="flex-1 flex justify-center">
           <h1 onClick={toggleModal} className="cursor-pointer flex items-center">
-            <Text variant="header-16" className='ml-10'>
+            <Text variant="header-16" className="ml-10">
               {
                 categories.filter((category) => category.main_category_id === Number(currentCategory))[0]
                   ?.main_category_name
               }
+              {currentCategory === "0" && "에그팝"}
             </Text>
             <span className="ml-2">
               {isModalOpen ? <IoIosArrowUp className="w-6 h-6" /> : <IoIosArrowDown className="w-6 h-6" />}
