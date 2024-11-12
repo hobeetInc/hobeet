@@ -125,7 +125,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
     }
 
     return (
-      <div className="w-full flex justify-center items-center">
+      <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50">
         <OneTimeClubJoinButton clubId={clubId} />
       </div>
     );
@@ -133,7 +133,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
 
   return (
     <>
-      <div className="w-full h-20 flex-col justify-start items-start gap-4 flex">
+      <div className="w-full h-20 flex-col justify-start items-start gap-4 flex mb-[155px]">
         <div className="self-stretch justify-start items-start inline-flex">
           <div className="grow shrink basis-0 h-6 justify-start items-center gap-2 flex">
             <Text variant="subtitle-18">참여 중인 에그즈</Text>
@@ -145,7 +145,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         </div>
         <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
 
-        <div className="w-full">{renderJoinButton()}</div>
+        <div className="w-full fixed bottom-[34px] right-0 left-0">{renderJoinButton()}</div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
     </>

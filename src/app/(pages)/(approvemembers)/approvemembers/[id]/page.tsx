@@ -209,7 +209,7 @@ export default function ApproveMembersPage() {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <h2 className="text-center text-gray-900  font-bold font-pretendard mb-2">에그즈 관리</h2>
-      <ApproveMemberTabBar activeTab={activeTab} onTabChange={setActiveTab} vlaue="egges" />
+      <ApproveMemberTabBar activeTab={activeTab} onTabChange={setActiveTab} value="egges" />
       <div className="flex flex-col w-full mt-4 px-4">
         <div className="text-left mb-2">
           <span>총 {activeTab ? activeMembers.length : requests.length}명</span>

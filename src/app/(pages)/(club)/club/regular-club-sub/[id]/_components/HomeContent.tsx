@@ -53,7 +53,7 @@ const HomeContent = ({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6 mt-12">
+      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6">
         <Image
           src={clubInfo.egg_club_image}
           alt={clubInfo.egg_club_name}

@@ -42,7 +42,7 @@ const NotificationList = ({ notificationData, crewMembers, children }: Notificat
   };
 
   return (
-    <div className="self-stretch h-[108px] flex-col justify-start items-start gap-4 flex">
+    <div className="self-stretch flex-col justify-start items-start gap-4 flex">
       <div className="self-stretch h-6 flex-col justify-start items-start gap-2 flex">
         <div className="self-stretch justify-start items-center gap-2 inline-flex">
           <div className="grow shrink basis-0 text-[#0c0c0c] text-lg font-semibold font-['Pretendard'] leading-normal">
@@ -63,7 +63,7 @@ const NotificationList = ({ notificationData, crewMembers, children }: Notificat
 
         <button
           onClick={() => setSelectedDate("all")}
-          className={`w-[41px] h-[68px] px-2 py-6 rounded-[25px] border justify-center items-center gap-2.5 flex ${
+          className={`w-[41px] h-[68px] rounded-[25px] border justify-center items-center gap-2.5 flex ${
             selectedDate === "all" ? " border-neutral-800 border-2" : "  border-gray-100"
           }`}
         >
@@ -92,7 +92,7 @@ const NotificationList = ({ notificationData, crewMembers, children }: Notificat
       </div>
 
       {/* 모임 카드 목록 */}
-      <div className="flex flex-col gap-4 mt-4">
+      <div className=" w-full flex flex-col gap-4 mt-4 mb-[155px]">
         {filteredNotification().map((notification) => (
           <ClubCard key={notification.egg_day_id} notification={notification} crewMembers={crewMembers} />
         ))}
