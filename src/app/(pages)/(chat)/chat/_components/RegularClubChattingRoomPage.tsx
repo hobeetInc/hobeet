@@ -49,7 +49,7 @@ const RegularClubChattingRoomPage = () => {
         });
 
         const chatData: ApiResponse = await response.json();
-        console.log(chatData);
+        // console.log(chatData);
 
         if (!response.ok) {
           throw new Error("서버에서 오류가 발생했습니다.");

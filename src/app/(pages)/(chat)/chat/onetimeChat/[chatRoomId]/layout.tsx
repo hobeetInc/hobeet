@@ -21,7 +21,7 @@ function ChatHeader() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ChattingMember, setChattingMember] = useState<EggPopChattingMemberInfo[]>();
-  console.log(egg_pop_chatting_room_member_id);
+  // console.log(egg_pop_chatting_room_member_id);
   useEffect(() => {
     const supabase = createClient();
     if (egg_pop_id) {
