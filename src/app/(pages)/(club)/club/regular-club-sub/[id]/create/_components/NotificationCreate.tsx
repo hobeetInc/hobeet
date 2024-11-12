@@ -113,14 +113,14 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
     setFormData({ ...formData, egg_day_image: file });
   };
 
-  const handleDeleteImage = () => {
-    setPreviewUrl(null);
-    setFormData({ ...formData, egg_day_image: null });
+  // const handleDeleteImage = () => {
+  //   setPreviewUrl(null);
+  //   setFormData({ ...formData, egg_day_image: null });
 
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""; //input 값 초기화
-    }
-  };
+  //   if (fileInputRef.current) {
+  //     fileInputRef.current.value = ""; //input 값 초기화
+  //   }
+  // };
 
   // const handleColor = (time: Date) => {
   //   return time.getHours() > 12 ? "text-success" : "text-error";
