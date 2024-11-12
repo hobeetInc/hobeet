@@ -246,9 +246,9 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
 
         <div className="w-full ">
-          <NotificationList notificationData={notificationData} crewMembers={crewList} />
-
-          <div className="w-full">{renderJoinButton()}</div>
+          <NotificationList notificationData={notificationData} crewMembers={crewList}>
+            <div className="w-full">{renderJoinButton()}</div>
+          </NotificationList>
         </div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>

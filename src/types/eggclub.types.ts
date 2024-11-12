@@ -158,6 +158,7 @@ export type HomeContentProps = {
 export type NotificationListProps = {
   notificationData: InSertEggDay[];
   crewMembers: MemberInfo[];
+  children?: ReactNode;
 };
 
 // 에그클럽 공지 props

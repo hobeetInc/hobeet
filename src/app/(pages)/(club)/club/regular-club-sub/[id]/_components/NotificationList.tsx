@@ -8,7 +8,7 @@ import { NotificationListProps } from "@/types/eggclub.types";
 import { InSertEggDay } from "@/types/eggday.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 
-const NotificationList = ({ notificationData, crewMembers }: NotificationListProps) => {
+const NotificationList = ({ notificationData, crewMembers, children }: NotificationListProps) => {
   const [selectedDate, setSelectedDate] = useState("all");
 
   // 날짜별로 그룹화하는 함수
@@ -97,6 +97,7 @@ const NotificationList = ({ notificationData, crewMembers }: NotificationListPro
           <ClubCard key={notification.egg_day_id} notification={notification} crewMembers={crewMembers} />
         ))}
       </div>
+      {children}
     </div>
 
     // <div className="flex flex-col gap-4">
