@@ -111,7 +111,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
     // 로그아웃 상태
     if (!userId) {
       return (
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50">
           <Button
             colorType="black"
             borderType="circle"
@@ -218,7 +218,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
 
       case "not_applied":
         return (
-          <div className="w-full  h-20 flex justify-center items-center">
+          <div className="w-full  h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50 ">
             <RegularClubJoinButton
               clubId={clubId}
               onSuccess={() => {}}
@@ -247,7 +247,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
 
         <div className="w-full ">
           <NotificationList notificationData={notificationData} crewMembers={crewList}>
-            <div className="w-full">{renderJoinButton()}</div>
+            <div className="w-full fixed bottom-[34px] right-0 left-0">{renderJoinButton()}</div>
           </NotificationList>
         </div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

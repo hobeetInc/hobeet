@@ -1,33 +1,17 @@
 "use client";
 
+import ApproveMemberTabBar from "@/components/uiComponents/ApproveMemberTapBar";
 import { TabLayoutProps } from "@/types/eggclub.types";
 import { useState } from "react";
 
 const TabLayout = ({ children }: TabLayoutProps) => {
-  const [activeTab, setActiveTab] = useState<string>("home");
+  const [activeTab, setActiveTab] = useState<boolean>(true);
 
   return (
     <>
-      <div className="flex border-b">
-        <button
-          className={`flex-1 py-4 text-center ${
-            activeTab === "home" ? "border-b-2 border-black font-semibold" : "text-gray-500"
-          }`}
-          onClick={() => setActiveTab("home")}
-        >
-          홈
-        </button>
-        <button
-          className={`flex-1 py-4 text-center ${
-            activeTab === "eggday" ? "border-b-2 border-black font-semibold" : "text-gray-500"
-          }`}
-          onClick={() => setActiveTab("eggday")}
-        >
-          에그데이
-        </button>
-      </div>
+      <ApproveMemberTabBar activeTab={activeTab} onTabChange={setActiveTab} value="eggday" />
 
-      {activeTab === "home" ? children[0] : children[1]}
+      {activeTab ? children[0] : children[1]}
     </>
   );
 };

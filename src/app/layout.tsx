@@ -33,13 +33,13 @@ export default function RootLayout({
     /^\/club\/one-time-club-sub\/.*$/,
     /^\/club\/regular-club-sub\/.*$/
   ];
-  const noHeaderRoutes = [/^\/category\/.*$/]
-const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>
-  typeof route === "string" ? route === pathname : route.test(pathname)
-);
-const showHeader = !noHeaderRoutes.some((route) =>
-  typeof route === "string" ? route === pathname : route.test(pathname)
-);
+  const noHeaderRoutes = [/^\/category\/.*$/];
+  const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>
+    typeof route === "string" ? route === pathname : route.test(pathname)
+  );
+  const showHeader = !noHeaderRoutes.some((route) =>
+    typeof route === "string" ? route === pathname : route.test(pathname)
+  );
   return (
     <html lang="ko" className={`${pretendard.variable} h-full`} suppressHydrationWarning>
       <body className="font-pretendard h-full">
@@ -48,7 +48,7 @@ const showHeader = !noHeaderRoutes.some((route) =>
             <div className="flex flex-col h-full bg-white">
               {showHeaderFooter && showHeader && <Header className="fixed top-0 w-full flex-shrink-0" />}
               <main
-                className={`flex-1 overflow-y-auto ${
+                className={`flex-1 overflow-y-auto scrollbar-hide ${
                   showHeaderFooter ? (showHeader ? "mt-[60px] mb-[60px]" : "mb-[60px]") : showHeader ? "" : ""
                 }`}
               >

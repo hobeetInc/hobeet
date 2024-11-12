@@ -1,17 +1,21 @@
 interface TabBarProps {
   activeTab: boolean;
   onTabChange: (newActiveTab: boolean) => void;
-  vlaue: string;
+  value: string;
 }
 
 // 승인 페이지 탭바
-export const ApproveMemberTabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, vlaue }) => {
+export const ApproveMemberTabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, value }) => {
   const getTabText = (tabType: boolean) => {
-    if (vlaue === "egges") {
+    if (value === "egges") {
       return tabType ? "전체 에그즈" : "승인 대기";
-    } // else if (vlaue === "mychat") {
+    } // else if (value === "mychat") {
     //   return tabType ? "에그클럽" : "에그팝";
     // }
+
+    if (value === "eggday") {
+      return tabType ? "홈" : "에그데이";
+    }
     return "";
   };
 
