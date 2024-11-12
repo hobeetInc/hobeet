@@ -3,6 +3,9 @@ import { getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import PopHeader from "./_components/PopHeader";
 import { EggMember, GetEggPop, MemberInfo } from "@/types/eggpop.types";
+import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import Tag from "@/components/uiComponents/TagComponents/Tag";
 
 const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const oneTimeClubId = Number(params.id);
@@ -46,6 +49,23 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
     }
   };
 
+  // 나이 커스텀
+  const age = (age: number) => {
+    if (age === 100) {
+      return "제한 없음";
+    } else if (age === 50) {
+      return "50대";
+    } else if (age === 49) {
+      return "40대";
+    } else if (age === 39) {
+      return "30대";
+    } else if (age === 29) {
+      return "20대";
+    } else if (age === 19) {
+      return "10대";
+    }
+  };
+
   // 인원 제한 커스텀
   const limited = (limit: number) => {
     if (limit === 100) {
@@ -67,55 +87,95 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
   return (
-    <div>
-      <PopHeader clubInfo={clubInfo} />
-      <div className="flex flex-col w-full">
-        <Image src={clubInfo.egg_pop_image} alt={clubInfo.egg_pop_name} width={100} height={100} className="w-full" />
+    <div className="flex flex-col items-center justify-center">
+      <div className="flex w-full h-[48px] fixed top-0 right-0 left-0 z-50 bg-white">
+        <PopHeader clubInfo={clubInfo} />
       </div>
 
-      <div className="flex flex-col gap-10 p-4">
-        <div className="flex flex-col mt-4">
-          <p className="text-[13px]">에그팝</p>
+      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6 mt-12">
+        <Image
+          src={clubInfo.egg_pop_image}
+          alt={clubInfo.egg_pop_name}
+          width={390}
+          height={332}
+          className="w-[390px] h-[332px] object-cover"
+        />
+      </div>
 
-          <div className="flex justify-between">
-            <h1 className="font-bold text-[23px] mt-4">{clubInfo.egg_pop_name}</h1>
-            <p>♡</p>
-          </div>
+      <div className="w-full flex-col justify-start items-start gap-8 px-4 inline-flex">
+        <div className="self-stretch flex-col justify-start items-start gap-5 flex">
+          {/* 여기  */}
 
-          <div className="flex justify-first items-center gap-2 mt-2 border-b-4 border-red-600 mb-7 pb-4">
-            <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full">
-              <Image
-                src={hostInfo?.userImage || ""}
-                alt={hostInfo?.userName || "호스트"}
-                width={50}
-                height={50}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex flex-col justify-center gap-1">
-              <div className="flex ">
-                <p>{hostInfo?.userName}</p>
-                <p className="text-[13px]">에그장</p>
+          <div className="self-stretch flex-col justify-start items-start gap-1 flex">
+            <Tag tagName="eggpop" />
+            <div className="self-stretch justify-start items-center gap-1.5 inline-flex">
+              <Text variant="subtitle-20"> {clubInfo.egg_pop_name}</Text>
+              <div className="w-8 h-8 justify-center items-center flex">
+                <div className="w-8 h-8 relative flex-col justify-start items-start flex" />
               </div>
-              <p className="text-[13px]">참여도</p>
             </div>
           </div>
-
-          <div className="flex flex-col gap-1">
-            <h1 className="text-lg font-semibold mb-2">상세 정보</h1>
-            <p>일시: {formDate}</p>
-            <p>장소: {currentLocation}</p>
-            <p>나이: {clubInfo.egg_pop_age}세 이하</p>
-            <p>성별: {gender(clubInfo.egg_pop_gender)}</p>
-            <p>인원: {limited(clubInfo.egg_pop_people_limited)}</p>
-            <p>참가비: {currentTax}</p>
-          </div>
-
-          <div className="flex flex-col gap-2 mt-10">
-            <h1 className="text-[20px] font-semibold">모임 소개</h1>
-            <p>{clubInfo.egg_pop_introduction}</p>
+          <div className="w-[252px] justify-start items-center gap-3 inline-flex">
+            <ProfileImageLarge image={hostInfo?.userImage} />
+            <div className="w-[133px] flex-col justify-start items-start gap-1 inline-flex">
+              <div className="self-stretch justify-start items-center gap-2 inline-flex">
+                <Text variant="subtitle-16">{hostInfo?.userName}</Text>
+                <Tag tagName="eggmaster" variant="yellow" />
+              </div>
+            </div>
           </div>
         </div>
+        <div className="self-stretch h-[0px] border border-solid border-gray-50"></div>
+        <div className="self-stretch h-[200px] flex-col justify-start items-start gap-4 flex">
+          <div className="self-stretch h-6 flex-col justify-start items-start gap-2 flex">
+            <div className="self-stretch justify-start items-center gap-2 inline-flex">
+              <Text variant="subtitle-18">상세 정보</Text>
+            </div>
+          </div>
+          <div className="self-stretch h-40 flex-col justify-start items-start gap-2 flex">
+            <div className="self-stretch justify-start items-center gap-4 inline-flex">
+              <Text variant="subtitle-14">일시</Text>
+              <Text variant="body-14">{formDate}</Text>
+            </div>
+            <div className="self-stretch justify-start items-center gap-4 inline-flex">
+              <Text variant="subtitle-14">장소</Text>
+              <Text variant="body-14">{currentLocation}</Text>
+            </div>
+            <div className="self-stretch justify-start items-center gap-4 inline-flex">
+              <Text variant="subtitle-14">나이</Text>
+              <Text variant="body-14">{age(clubInfo.egg_pop_age)}</Text>
+            </div>
+            <div className="self-stretch justify-start items-center gap-4 inline-flex">
+              <Text variant="subtitle-14">성별</Text>
+              <Text variant="body-14"> {gender(clubInfo.egg_pop_gender)}</Text>
+            </div>
+            <div className="self-stretch justify-start items-center gap-4 inline-flex">
+              <Text variant="subtitle-14">인원</Text>
+              <Text variant="body-14">{limited(clubInfo.egg_pop_people_limited)}</Text>
+            </div>
+            <div className="self-stretch justify-start items-center gap-4 inline-flex">
+              <Text variant="subtitle-14">참가비</Text>
+              <Text variant="body-14">{currentTax}</Text>
+            </div>
+          </div>
+        </div>
+        <div className="self-stretch h-[0px] border border-solid border-gray-50"></div>
+
+        {/* 여기 */}
+
+        <div className="self-stretch flex-col justify-start items-start gap-4 flex">
+          <div className="self-stretch h-6 flex-col justify-start items-start gap-2 flex">
+            <div className="self-stretch justify-start items-center gap-2 inline-flex">
+              <Text variant="subtitle-18">모임 소개</Text>
+            </div>
+          </div>
+
+          <Text variant="body-14" className="self-stretch text-gray-800">
+            {clubInfo.egg_pop_introduction}
+          </Text>
+        </div>
+
+        <div className="self-stretch h-[0px] border border-solid border-gray-50"></div>
 
         <CrewList crewMembers={crewMembers} clubId={oneTimeClubId} clubHostId={clubInfo.user_id} />
       </div>

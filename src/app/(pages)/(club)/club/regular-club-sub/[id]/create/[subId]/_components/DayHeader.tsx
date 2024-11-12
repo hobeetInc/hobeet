@@ -12,7 +12,7 @@ const DayHeader = ({ clubInfo }: DayHeaderProps) => {
   };
 
   return (
-    <div className="flex items-center justify-between h-[48px] p-4 relative">
+    <div className="w-full flex items-center justify-between h-[48px] p-4 relative">
       <button onClick={handleBack} className="absolute left-4">
         <ChevronLeft />
       </button>
