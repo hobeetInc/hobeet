@@ -53,7 +53,7 @@ const SearchPage = () => {
 
 
   return (
-    <div className="flex flex-col items-center w-full  mx-auto px-4 pt-4">
+    <div className="flex flex-col items-start w-full  mx-auto px-4 ">
       <form onSubmit={handleSearch} className="relative flex items-center w-full bg-[#f2f2f2] rounded-[22px] py-2 px-5">
         <input
           className="w-full h-[11 px] bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
@@ -111,7 +111,7 @@ const SearchPage = () => {
       {searchResults.length === 0 && (
         <>
           <button className="w-full" onClick={handleCreateClub}>
-            <div className="w-full h-[80px] mt-6 rounded-xl flex items-center  bg-primary-200 p-4 justify-center">
+            <div className="w-full h-[80px] mt-6 rounded-xl flex items-center bg-primary-200 p-4 justify-center">
               <div className="flex flex-col">
                 <div className="w-[213px]">
                   <Text variant="subtitle-16" className="text-gray-900">
@@ -127,8 +127,8 @@ const SearchPage = () => {
               </div>
             </div>
           </button>
-          <div className="flex w-full mt-8 p-[16px] flex-col items-start">
-            <p className="text-[18px] font-semibold leading-[135%]">전체 인기 모임</p>
+          <div className="flex w-full mt-8 flex-col items-start">
+            <p className="text-[18px] font-semibold pb-4 leading-[135%]">전체 인기 모임</p>
           </div>
           <OverallPopularMeetings />
         </>

@@ -54,7 +54,7 @@ export default function RootLayout({
               >
                 {children}
               </main>
-              {showHeaderFooter && <Footer className="fixed bottom-0 w-full flex-shrink-0" />}
+              {showHeaderFooter && <Footer className="fixed bottom-0 w-full mt-3  flex-shrink-0" />}
             </div>
           </Providers>
         </AuthProvider>

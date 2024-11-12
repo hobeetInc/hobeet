@@ -4,7 +4,8 @@ import Image from "next/image";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { HeartImage } from "./HeartImage";
 import Tag from "./TagComponents/Tag";
-import { Icon } from "./IconComponents/Icon";
+import Text from "./TextComponents/Text";
+import { FaHeart } from "react-icons/fa";
 
 // eggPop 상세정보, hostName(모임장 이름), memberCount(모임 참여 인원) 프롭스
 // 에그팝 모임 리스트 (medium)
@@ -43,8 +44,8 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImag, m
         <Tag tagName="eggpop" />
 
         {/* 모임 제목 */}
-        <div className="self-stretch text-gray-900 text-subtitle-16">{eggPop.egg_pop_name}</div>
-
+        {/* <div className="self-stretch text-gray-900 text-subtitle-16">{eggPop.egg_pop_name}</div> */}
+        <Text variant="subtitle-16">{eggPop.egg_pop_name}</Text>
         {/* 위치 정보 */}
         <div className="self-stretch pt-0.5 justify-start items-center gap-0.5 inline-flex">
           <div className="w-4 h-4 justify-center items-center flex">
@@ -53,15 +54,22 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImag, m
             </span>
           </div>
 
-          <div className="grow shrink basis-0 text-gray-400 text-body_medium-14">
-            {CustomAddress(eggPop.egg_pop_location)}
+          <div className="grow shrink basis-0">
+            <Text variant="body_medium-14" className="text-gray-400">
+              {CustomAddress(eggPop.egg_pop_location)}
+            </Text>
           </div>
         </div>
 
         {/* 날짜와 시간 */}
         <div className="justify-start items-center gap-2 inline-flex">
-          <div className="text-gray-400 text-body_medium-14 ">{date}</div>
-          <div className="text-gray-400 text-body-medium-14 ">{time}</div>
+          <Text variant="body_medium-14" className="text-gray-400">
+            {date}
+          </Text>
+
+          <Text variant="body_medium-14" className="text-gray-400">
+            {time}
+          </Text>
         </div>
 
         {/* 호스트와 멤버 정보 */}
@@ -76,13 +84,17 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImag, m
                 className="rounded-full object-cover w-[22px] h-[22px]"
               />
             </div>
-            <div className="grow shrink basis-0 text-gray-400 text-body-medium-14">{hostName}</div>
+            <div className="grow shrink basis-0">
+              <Text variant="body_medium-14" className="text-gray-400 ">
+                {hostName}
+              </Text>
+            </div>
           </div>
           <div className="justify-start items-center gap-0.5 flex">
-            <div className="text-gray-400 text-body-medium-14">멤버</div>
-            <div className="text-gray-400 text-body-medium-14">
-              {memberCount}/{eggPop.egg_pop_people_limited}
-            </div>
+            <Text variant="body_medium-14" className="text-gray-400">멤버</Text>
+            <Text variant="body_medium-14" className="text-gray-400">
+              {memberCount} / {eggPop.egg_pop_people_limited}
+            </Text>
           </div>
         </div>
       </div>
@@ -123,7 +135,9 @@ export const VerticalContentsListMediumEggClub = ({
         <Tag tagName="eggclub" />
 
         {/* 모임 제목 */}
-        <div className="self-stretch text-gray-900 text-subtitle-16">{eggClub.egg_club_name}</div>
+        <div className="self-stretch text-gray-900 text-subtitle-16">
+          <Text variant="subtitle-16">{eggClub.egg_club_name}</Text>
+        </div>
 
         {/* 호스트 및 멤버 정보 */}
         <div className="self-stretch justify-start items-center gap-1 inline-flex">
@@ -140,23 +154,31 @@ export const VerticalContentsListMediumEggClub = ({
               />
             </div>
             {/* 호스트 이름 */}
-            <div className="grow shrink basis-0 text-gray-400 text-body_medium-14">{hostName}</div>
+            <div className="grow shrink basis-0 ">
+              <Text variant="body_medium-14" className="text-gray-400">
+                {hostName}
+              </Text>
+            </div>
           </div>
 
           {/* 멤버 카운트 */}
-          <div className="justify-start items-center gap-0.5 flex">
-            <div className=" text-gray-400 text-body-medium-14">멤버</div>
-            <div className=" text-gray-400 text-body-medium-14">
-              {memberCount}/{eggClub.egg_club_people_limited}
-            </div>
-          </div>
+          <Text className="justify-start items-center gap-0.5 flex">
+            <Text variant="body_medium-14" className=" text-gray-400">
+              멤버
+            </Text>
+            <Text variant="body_medium-14" className=" text-gray-400">
+              {memberCount} / {eggClub.egg_club_people_limited}
+            </Text>
+          </Text>
         </div>
 
         {/* 찜하기 정보 */}
         <div className="pt-1 justify-start items-center gap-0.5 inline-flex">
           <div className="justify-start items-center flex gap-[2px]">
-            <Icon name="heart" />
-            <div className="text-gray-400 text-body-12">{wishListCount > 100 ? "100+" : wishListCount}</div>
+            <FaHeart color="#F02A49" />
+
+            <Text variant="body-12" className="text-gray-400 ml-[2px]">
+              {wishListCount > 100 ? "100+" : wishListCount}</Text>
           </div>
         </div>
       </div>

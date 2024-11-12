@@ -3,9 +3,9 @@ import Link from "next/link";
 import { useAuth } from "./store/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import { GoPlus } from "react-icons/go";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import Text from "@/components/uiComponents/TextComponents/Text";
+import { BsPlusLg } from "react-icons/bs";
 
 
 
@@ -43,10 +43,7 @@ export default function Header({ className }: { className: string }) {
         <Link href="/search">
           <div className="flex w-[96px] h-[24px] flex-shrink-0 ml-[16px] mt-[12px] mb-[12px]">
             <div className="flex w-[35px] h-[27px]  py-[10px] items-center gap-[10px]">
-              <Text
-                variant="header-20"
-                className="text-[#000] text-center"
-              >
+              <Text variant="header-20" className="text-[#000] text-center">
                 탐색
               </Text>
             </div>
@@ -81,7 +78,7 @@ export default function Header({ className }: { className: string }) {
       <div className="flex items-center ml-auto gap-4 mr-3 my-3">
         {pathname === "/" || pathname === "/search" || pathname === "/myclublist" ? (
           <button onClick={handleCreateMeet} className="w-6 h-6 flex items-center justify-center">
-            <GoPlus className="w-6 h-6" />
+            <BsPlusLg className="w-6 h-6" />
           </button>
         ) : null}
         <button onClick={handleAlarm} className="w-6 h-6 flex items-center justify-center">

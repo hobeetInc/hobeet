@@ -2,6 +2,7 @@
 import { Category } from "@/types/category.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Text from "./uiComponents/TextComponents/Text";
 
 
 const categories: Category[] = [
@@ -22,20 +23,20 @@ const CategorySlider = () => {
   };
 
   return (
-    <div className="relative w-full max-w-full mx-auto px-4">
+    <div className="relative w-full max-w-full mx-auto px-4 mt-4">
       <div className="overflow-x-auto scrollbar-hide">
-        <div className="inline-flex items-center gap-2 py-2">
+        <div className="inline-flex items-center py-2">
           {categories.map((category) => (
             <button
               key={category.id}
-              className="flex w-20 flex-col justify-center items-center gap-1 flex-shrink-0"
+              className="flex w-20 flex-col justify-center items-center  flex-shrink-0"
               onClick={() => handleCategory(category.id)}
             >
-              <div className="flex w-16 h-16 p-2 justify-center items-center rounded-full bg-[#fff1cc]">
+              <div className="flex w-16 h-16  justify-center items-center justify-items-center rounded-full bg-[#fff1cc]">
                 <Image width={48} height={48} src={category.icon} alt={category.alt} className="w-12 h-12" />
               </div>
-              <div className="self-stretch text-center text-xs leading-[135%]">
-                <p>{category.name}</p>
+              <div className="self-stretch text-center mt-1">
+                <Text variant="body-12" >{category.name}</Text>
               </div>
             </button>
           ))}

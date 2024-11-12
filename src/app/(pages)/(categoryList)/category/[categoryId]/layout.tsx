@@ -6,10 +6,10 @@ import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import Link from "next/link";
-import { GoPlus } from 'react-icons/go';
 import { HiOutlineChevronLeft } from 'react-icons/hi';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { IoSearchOutline } from 'react-icons/io5';
+import { BsPlusLg } from 'react-icons/bs';
 
 export default function CategoryLayout({ children, params }: CategoryLayoutProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,47 +48,74 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
             </span>
           </h1>
           {isModalOpen && (
-            <div className="absolute top-12 bg-[#ffffff]  min-w-[358px] ml-[30px] rounded-[8px] border border-solid border-gray-50 shadow-lg z-50 justify-items-center">
-              <ul className="grid grid-cols-3 text-center">
-                <li className="cursor-pointer border border-solid border-gray-100 w-full h-full">
-                  <Text variant="body_medium-12" className="w-[119px] h-[48px] content-center">
+            <div className="absolute top-12 bg-white min-w-[358px] ml-[30px] rounded-[8px] border border-solid border-gray-50 shadow-lg z-50 justify-items-center">
+              <div className="w-[358px] h-36 px-[0.50px] bg-white rounded-lg border-2 border-gray-50 grid grid-cols-3 grid-rows-3 gap-0.5">
+                <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-solid border-gray-100 justify-center items-center gap-2 flex">
+                  <Text variant="body_medium-12" className="text-gray-900">
                     에그팝
                   </Text>
-                </li>
-                {categories.map((category) => (
-                  <li
-                    key={category.main_category_id}
-                    className="cursor-pointer border border-solid border-gray-100 w-full h-full"
-                    onClick={() => {
-                      setIsModalOpen(false);
-                    }}
-                  >
-                    <Link href={`/category/${category.main_category_id}`}>
-                      <Text variant="body_medium-12" className="text-gray-900 w-[119px] h-[48px] content-center">
-                        {category.main_category_name}
-                      </Text>
-                    </Link>
-                  </li>
-                ))}
-                <li className="cursor-pointer border border-solid border-gray-100 w-full h-full">
-                  <Text variant="body_medium-12" className="text-gray-300 w-[119px] h-[48px] content-center">
+                </div>
+                <Link href={`/category/${categories[0].main_category_id}`}>
+                  <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-solid border-gray-100 justify-center items-center gap-2 flex">
+                    <Text variant="body_medium-12" className="text-gray-900">
+                      {categories[0].main_category_name}
+                    </Text>
+                  </div>
+                </Link>
+                <Link href={`/category/${categories[1].main_category_id}`}>
+                <div className="w-[119px] h-12 p-2 bg-white border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
+                  <Text variant="body_medium-12" className="text-gray-900">
+                    {categories[1].main_category_name}
+                  </Text>
+                </div>
+                </Link>
+                <Link href={`/category/${categories[2].main_category_id}`}>
+                <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
+                  <Text variant="body_medium-12" className="text-gray-900">
+                    {categories[2].main_category_name}
+                  </Text>
+                </div>
+                </Link>
+                <Link href={`/category/${categories[3].main_category_id}`}>
+                <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
+                  <Text variant="body_medium-12" className="text-gray-900">
+                    {categories[3].main_category_name}
+                  </Text>
+                </div>
+                </Link>
+                <Link href={`/category/${categories[4].main_category_id}`}>
+                <div className="w-[119px] h-12 p-2 bg-white border-b border-gray-100 justify-center border-solid items-center gap-2 flex">
+                  <Text variant="body_medium-12" className="text-gray-900">
+                    {categories[4].main_category_name}
+                  </Text>
+                </div>
+                </Link>
+                <Link href={`/category/${categories[5].main_category_id}`}>
+                <div className="w-[119px] h-12 p-2 bg-white border-r border-gray-100 justify-center border-solid items-center gap-2 flex">
+                  <Text variant="body_medium-12" className="text-gray-900">
+                    {categories[5].main_category_name}
+                  </Text>
+                </div>
+                </Link>
+                <div className="w-[119px] h-12 p-2 bg-white border-r border-gray-100 justify-center border-solid items-center gap-2 flex">
+                  <Text variant="body_medium-12" className="text-gray-300">
                     곧 생겨요!
                   </Text>
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
           )}
         </div>
         <div className="flex items-center space-x-2">
           <button onClick={() => router.push("/club")} className="w-6 h-6 flex items-center justify-center">
-            <GoPlus className="w-6 h-6" />
+            <BsPlusLg className="w-6 h-6" />
           </button>
           <button onClick={() => router.push("/search")} className="w-6 h-6 flex items-center justify-center">
-            <IoSearchOutline className="w-5 h-5" />
+            <IoSearchOutline className="w-6 h-6" />
           </button>
         </div>
       </header>
-      <div className="flex-1 overflow-hidden overflow-y-auto ">{children}</div>
+      <div className="flex-1 overflow-hidden overflow-y-auto">{children}</div>
     </div>
   );
 }

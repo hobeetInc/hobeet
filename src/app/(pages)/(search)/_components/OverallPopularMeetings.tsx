@@ -16,9 +16,9 @@ const OverallPopularMeetings = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="w-full flex flex-col items-center gap-4 ml-4">
+    <div className="flex flex-col items-start">
       {data?.map((club, index) => (
-        <div key={index} className="h-[90px] flex items-center">
+        <div key={index} className="h-[90px] mb-4 flex items-center">
           <Text variant="header-32" className="w-9 ">
             {index + 1}
           </Text>
