@@ -3,6 +3,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/store/AuthContext";
 import { ClubCardProps } from "@/types/eggclub.types";
+import Tag from "@/components/uiComponents/TagComponents/Tag";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 
 const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
   const router = useRouter();
@@ -45,8 +48,47 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
   };
 
   return (
-    <div onClick={handleClick} className="flex m-4 bg-yellow-200 rounded-lg p-4 gap-4">
-      <Image src={notification.egg_day_image} alt={notification.egg_day_name} width={80} height={80} />
+    <button onClick={handleClick} className="flex gap-2 w-full">
+      <div className="w-[102px] h-102px overflow-hidden flex items-center justify-center rounded-[12px]">
+        <Image
+          src={notification.egg_day_image}
+          alt={notification.egg_day_name}
+          width={102}
+          height={102}
+          className="object-cover w-[102px] h-[102px] rounded-[12px]"
+        />
+      </div>
+
+      <div className="flex-1 py-0.5 flex-col justify-start items-start gap-0.5 inline-flex">
+        <Tag tagName="eggday" />
+        <Text variant="subtitle-14">{notification.egg_day_name}</Text>
+
+        <div className="flex items-center gap-1">
+          <Icon name="location" />
+
+          <div className="flex gap-2">
+            <Text variant="body_medium-14" className="text-gray-400">
+              {addressCustom(notification.egg_day_location)}
+            </Text>
+
+            <Text variant="body_medium-14" className="text-gray-400">
+              {DateTimeCustom(notification.egg_day_date_time)}
+            </Text>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-1">
+          <Text variant="body_medium-14" className="text-gray-400">
+            참여 인원
+          </Text>
+
+          <Text variant="body_medium-14" className="text-gray-400">
+            {notification.egg_day_member[0].count}
+          </Text>
+        </div>
+      </div>
+
+      {/* <Image src={notification.egg_day_image} alt={notification.egg_day_name} width={80} height={80} />
 
       <div>
         <p>에그데이</p>
@@ -57,8 +99,8 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
           <p>{DateTimeCustom(notification.egg_day_date_time)}</p>
         </div>
         <p>맴버 {notification.egg_day_member[0].count}명</p>
-      </div>
-    </div>
+      </div> */}
+    </button>
   );
 };
 

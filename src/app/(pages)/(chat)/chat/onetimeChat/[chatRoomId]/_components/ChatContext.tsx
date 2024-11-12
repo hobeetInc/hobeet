@@ -59,7 +59,7 @@ export function ChatProvider({ children, roomId }: { children: React.ReactNode; 
     },
     enabled: !!roomId && !!userId
   });
-  console.log("chatData", chatData);
+  // console.log("chatData", chatData);
 
   return (
     <ChatContext.Provider

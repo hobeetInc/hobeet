@@ -1,9 +1,10 @@
 "use client";
 
-import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PopHeaderProps } from "@/types/eggpop.types";
 import { useEffect } from "react";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { IoIosArrowBack } from "react-icons/io";
 
 const PopHeader = ({ clubInfo }: PopHeaderProps) => {
   const router = useRouter();
@@ -39,13 +40,15 @@ const PopHeader = ({ clubInfo }: PopHeaderProps) => {
   };
 
   return (
-    <div className="flex items-center justify-between h-[48px] p-4 relative">
-      <button onClick={handleBack} className="absolute left-4">
-        <ChevronLeft />
-      </button>
-      <h1 className="flex-1 text-center text-lg font-semibold">
-        {clubInfo.egg_pop_name.length > 8 ? `${clubInfo.egg_pop_name.slice(0, 8)}...` : clubInfo.egg_pop_name}
-      </h1>
+    <div className="flex justify-center items-center w-full">
+      <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
+        <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
+      </div>
+      <div className="flex-1 text-center pr-7">
+        <Text variant="header-16">
+          {clubInfo.egg_pop_name.length > 8 ? `${clubInfo.egg_pop_name.slice(0, 8)}...` : clubInfo.egg_pop_name}
+        </Text>
+      </div>
     </div>
   );
 };
