@@ -9,6 +9,10 @@ import { useAuth } from "@/app/store/AuthContext";
 import { FaCamera } from "react-icons/fa6";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
+import DateScrollPicker from "../_components/DateScrollPicker";
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import Link from "next/link";
+
 
 const NAME_REGEX = /^[가-힣]{2,5}$/;
 
@@ -20,7 +24,15 @@ const SignupSecondPage = () => {
   const [profileFile, setProfileFile] = useState<File | null>(null);
   const [nameError, setNameError] = useState("");
   const [genderError, setGenderError] = useState("");
+  
   const [birthDateError, setBirthDateError] = useState("");
+
+const [showYearPicker, setShowYearPicker] = useState(false);
+const [showMonthPicker, setShowMonthPicker] = useState(false);
+const [showDayPicker, setShowDayPicker] = useState(false);
+const [isFormComplete, setIsFormComplete] = useState(false);
+
+
 
   const router = useRouter();
   const params = useParams();
@@ -198,20 +210,42 @@ const SignupSecondPage = () => {
     }
   };
 
+  const checkFormCompletion = () => {
+    if (birthYear && birthMonth && birthDay && userName && userGender) {
+      setIsFormComplete(true);
+    } else {
+      setIsFormComplete(false);
+    }
+  };
+
+  useEffect(() => {
+    checkFormCompletion();
+  }, [birthYear, birthMonth, birthDay, userName, userGender]);
+
+
+const years = [...Array(100)].map((_, i) => 2024 - i);
+const months = [...Array(12)].map((_, i) => i + 1);
+const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].map((_, i) => i + 1);
   return (
-    <div className="flex flex-col items-center gap-[48px]">
-      <div className=" h-12 absolute  bg-white flex justify-center items-center">
-        <Text as="h1" variant="header-16">
-          회원가입
-        </Text>
+    <div className="flex flex-col items-center">
+      <div className="flex w-full h-12 bg-white items-center">
+        <div className="left-0 m-3">
+          <Link href="/signin">
+        <HiOutlineChevronLeft className="w-6 h-6" />
+          </Link>
+        </div>
+        <div className="flex flex-grow justify-center">
+          <Text variant="header-16" className="text-gray-900">
+        회원가입
+          </Text>
+        </div>
+        <div className="w-6 m-3"></div>
       </div>
 
-      <div className="h-auto absolute top-[112px] left-[16px] flex flex-col gap-12">
+      <div className=" mt-4 left-[16px] flex flex-col gap-12">
         <div className="flex flex-col gap-2">
-          <Text as="h2" variant="subtitle-18">
-            프로필
-          </Text>
-          <div className="relative w-[78px] h-[78px]">
+          <Text variant="subtitle-18">프로필</Text>
+          <div className="relative w-[78px] h-[78px] mt-2">
             <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden">
               {userProfileImg && (
                 <Image src={userProfileImg} alt="프로필 이미지" width={78} height={78} className="object-cover" />
@@ -229,10 +263,8 @@ const SignupSecondPage = () => {
 
         <div className="flex flex-col gap-2">
           <label className="flex items-center">
-            <Text as="span" variant="subtitle-18">
-              이름
-            </Text>
-            <Text as="span" variant="subtitle-18" className="text-red">
+            <Text variant="subtitle-18">이름</Text>
+            <Text variant="subtitle-18" className="text-red">
               *
             </Text>
           </label>
@@ -244,7 +276,7 @@ const SignupSecondPage = () => {
             className="w-full h-12 px-5 bg-gray-50 rounded-lg text-body-14 font-normal"
           />
           {nameError && (
-            <Text as="p" variant="body-14" className="text-red">
+            <Text variant="body-14" className="text-red">
               {nameError}
             </Text>
           )}
@@ -252,10 +284,8 @@ const SignupSecondPage = () => {
 
         <div className="flex flex-col gap-2">
           <label className="flex items-center">
-            <Text as="span" variant="subtitle-18">
-              성별
-            </Text>
-            <Text as="span" variant="subtitle-18" className="text-red">
+            <Text variant="subtitle-18">성별</Text>
+            <Text variant="subtitle-18" className="text-red">
               *
             </Text>
           </label>
@@ -284,78 +314,95 @@ const SignupSecondPage = () => {
             </button>
           </div>
           {genderError && (
-            <Text as="p" variant="body-14" className="text-red">
+            <Text variant="body-14" className="text-red">
               {genderError}
             </Text>
           )}
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 ">
           <label className="flex items-center">
-            <Text as="span" variant="subtitle-18">
-              생년월일
-            </Text>
-            <Text as="span" variant="subtitle-18" className="text-red">
+            <Text variant="subtitle-18">생년월일</Text>
+            <Text variant="subtitle-18" className="text-red">
               *
             </Text>
           </label>
-          <div className="flex gap-3">
-            <select
-              value={birthYear}
-              onChange={(e) => setBirthYear(e.target.value)}
-              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-center text-subtitle-14"
+          <div className="flex gap-3 ">
+            <button
+              type="button"
+              onClick={() => setShowYearPicker(true)}
+              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-end text-subtitle-14"
             >
-              <option value="">년</option>
-              {[...Array(100)].map((_, i) => (
-                <option key={i} value={2024 - i}>
-                  {2024 - i}
-                </option>
-              ))}
-            </select>
-            <select
-              value={birthMonth}
-              onChange={(e) => setBirthMonth(e.target.value)}
-              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-center text-subtitle-14"
+              {birthYear ? `${birthYear}년` : "년"}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowMonthPicker(true)}
+              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-end text-subtitle-14"
             >
-              <option value="">월</option>
-              {[...Array(12)].map((_, i) => (
-                <option key={i} value={i + 1}>
-                  {i + 1}
-                </option>
-              ))}
-            </select>
-            <select
-              value={birthDay}
-              onChange={(e) => setBirthDay(e.target.value)}
-              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-center text-subtitle-14"
+              {birthMonth ? `${birthMonth}월` : "월"}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowDayPicker(true)}
+              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-end text-subtitle-14"
             >
-              <option value="">일</option>
-              {[...Array(31)].map((_, i) => (
-                <option key={i} value={i + 1}>
-                  {i + 1}
-                </option>
-              ))}
-            </select>
+              {birthDay ? `${birthDay}일` : "일"}
+            </button>
           </div>
           {birthDateError && (
-            <Text as="p" variant="body-14" className="text-red">
+            <Text variant="body-14" className="text-red">
               {birthDateError}
             </Text>
+          )}
+
+          {showYearPicker && (
+            <DateScrollPicker
+              values={years}
+              selectedValue={Number(birthYear)}
+              onSelect={(value) => setBirthYear(String(value))}
+              suffix="년"
+              onClose={() => setShowYearPicker(false)}
+            />
+          )}
+
+          {showMonthPicker && (
+            <DateScrollPicker
+              values={months}
+              selectedValue={Number(birthMonth)}
+              onSelect={(value) => setBirthMonth(String(value))}
+              suffix="월"
+              onClose={() => setShowMonthPicker(false)}
+            />
+          )}
+
+          {showDayPicker && (
+            <DateScrollPicker
+              values={days}
+              selectedValue={Number(birthDay)}
+              onSelect={(value) => setBirthDay(String(value))}
+              suffix="일"
+              onClose={() => setShowDayPicker(false)}
+            />
           )}
         </div>
       </div>
 
-      <div className="fixed ml-[16px] mr-[16px] w-full bottom-0 mb-[54px]">
-        <Button
-          colorType="orange"
-          borderType="rectangle"
-          className="ml-[16px] mr-[16px] text-white"
-          onClick={handleSubmit}
-        >
-          <Text as="span" variant="subtitle-16">
+      <div className="fixed ml-[16px] mr-[16px] w-full bottom-0 mb-[54px] justify-items-center">
+        {isFormComplete ? (
+          <Button
+            colorType="orange"
+            borderType="rectangle"
+            className="ml-[16px] mr-[16px] text-white text-subtitle-16"
+            onClick={handleSubmit}
+          >
             다음
-          </Text>
-        </Button>
+          </Button>
+        ) : (
+          <Button disabled className="ml-[16px] mr-[16px] text-subtitle-16">
+            다음
+          </Button>
+        )}
       </div>
     </div>
   );

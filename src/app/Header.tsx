@@ -75,6 +75,18 @@ export default function Header({ className }: { className: string }) {
         </Link>
       )}
 
+      {pathname === "/mypage/profile" && (
+        <Link href="/mypage/profile">
+          <div className="flex w-[96px] h-[24px] flex-shrink-0 ml-[16px] mt-[12px] mb-[12px]">
+            <div className="flex w-[57px] h-[27px]  py-[10px] items-center gap-[10px]">
+              <Text variant="header-20" className="text-[#000] text-center">
+                마이
+              </Text>
+            </div>
+          </div>
+        </Link>
+      )}
+
       <div className="flex items-center ml-auto gap-4 mr-3 my-3">
         {pathname === "/" || pathname === "/search" || pathname === "/myclublist" ? (
           <button onClick={handleCreateMeet} className="w-6 h-6 flex items-center justify-center">

@@ -5,6 +5,9 @@ import React, { useEffect, useState } from "react";
 import { sanitizeFileName } from "@/utils/sanitizeFileName";
 // import { useAuth } from "@/app/store/AuthContext";
 import { FaCamera } from "react-icons/fa6";
+import Link from "next/link";
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const ProfileEditPage = () => {
   const [email, setEmail] = useState("");
@@ -98,12 +101,24 @@ const ProfileEditPage = () => {
   };
 
   return (
-    <div className="p-5 max-w-lg mx-auto">
-      <h1 className="text-center text-2xl font-bold mb-5">내 프로필 수정</h1>
+    <div className="w-full flex flex-col items-center">
+      <div className="flex w-full h-12 bg-white items-center">
+        <div className="left-0 m-3">
+          <Link href="/mypage/profile">
+            <HiOutlineChevronLeft className="w-6 h-6" />
+          </Link>
+        </div>
+        <div className="flex flex-grow justify-center">
+          <Text variant="header-16" className="text-gray-900">
+            내 프로필 수정
+          </Text>
+        </div>
+        <div className="w-6 m-3"></div>
+      </div>
 
       <div className="relative flex justify-center mb-5">
         <div className="relative w-[78px] h-[78px]">
-          <div className="rounded-full overflow-hidden w-[78px] h-[78px]">
+          <div className="rounded-full overflow-hidden w-[78px] h-[78px] mt-9">
             <Image
               src={userProfileImg}
               alt="프로필 이미지"
@@ -114,103 +129,102 @@ const ProfileEditPage = () => {
           </div>
           <label
             htmlFor="profileImg"
-            className="absolute w-[30px] h-[30px] left-[48px] top-[48px] bg-white rounded-full border border-solid border-gray-50 flex items-center justify-center cursor-pointer"
+            className="absolute w-[30px] h-[30px] mt-9 left-[48px] top-[48px] bg-white rounded-full border border-solid border-gray-50 flex items-center justify-center cursor-pointer"
           >
             <FaCamera />
           </label>
           <input type="file" id="profileImg" className="hidden" onChange={handleImageChange} />
         </div>
       </div>
-
-      <div className=" h-20 flex flex-col justify-start items-start gap-2 mb-[36px]">
-        <label htmlFor="userName" className="text-gray-900 text-lg font-semibold leading-normal font-['Pretendard']">
-          이름
-        </label>
-
-        <input
-          id="userName"
-          type="text"
-          value={userName || ""}
-          readOnly
-          className="w-full h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-sm font-normal leading-tight font-['Pretendard'] bg-gray-100"
-        />
-      </div>
-
-      <div className=" h-[105px] flex flex-col justify-start items-start gap-2 mb-[36px]">
-        <label htmlFor="email" className="text-gray-900 text-lg font-semibold leading-normal font-['Pretendard']">
-          이메일
-        </label>
-
-        <input
-          id="email"
-          type="email"
-          value={email}
-          readOnly
-          className="w-full h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-sm font-normal leading-tight font-['Pretendard'] bg-gray-100"
-        />
-
-        <p className="text-gray-900 text-xs font-normal leading-[17.4px] font-['Pretendard'] mt-1">
-          {`${provider}로 가입한 계정이에요`}
-        </p>
-      </div>
-
-      <div className=" h-20 flex flex-col justify-start items-start gap-2 mb-[36px]">
-        <label className="text-gray-900 text-lg font-semibold leading-normal font-['Pretendard']">성별</label>
-
-        <div className="self-stretch flex justify-between items-center">
-          <div
-            className={`w-[173px] h-12 px-4 rounded-lg flex justify-center items-center gap-2.5 ${
-              userGender === "남성"
-                ? "border-2 border-solid border-[#fdb800] text-[#fdb800] font-semibold"
-                : "border border-solid border-[#d9d9d9] text-neutral-800 font-normal"
-            }`}
-          >
-            <span className="text-center text-sm font-['Pretendard'] leading-[18.90px]">남성</span>
-          </div>
-
-          <div
-            className={`w-[173px] h-12 px-4 rounded-lg flex justify-center items-center gap-2.5 ${
-              userGender === "여성"
-                ? "border-2 border-solid border-[#fdb800] text-[#fdb800] font-semibold"
-                : "border border-solid border-[#d9d9d9] text-neutral-800 font-normal"
-            }`}
-          >
-            <span className="text-center text-sm font-['Pretendard'] leading-[18.90px]">여성</span>
+      <div>
+        <div className="w-full flex flex-col justify-start items-start gap-2 my-[36px]">
+          <Text variant="subtitle-18" className="text-gray-900 ml-4">
+            이름
+          </Text>
+          <div className="w-[358px] h-12 mx-4">
+            <input
+              id="userName"
+              type="text"
+              value={userName || ""}
+              readOnly
+              className="flex-1 w-[358px] h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-body-14 bg-gray-50"
+            />
           </div>
         </div>
-      </div>
 
-      <div className=" h-20 flex flex-col justify-start items-end gap-2">
-        <label className="self-stretch text-gray-900 text-lg font-semibold leading-normal font-['Pretendard']">
-          생년월일
-        </label>
-
-        <div className="self-stretch flex justify-start items-center gap-3">
-          <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
-            <span className="text-center text-gray-100 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
-              {userBirth ? userBirth.split("-")[0] : "----"}
-            </span>
-            <span className="text-center text-gray-900 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
-              년
-            </span>
+        <div className="w-full flex flex-col justify-start items-start gap-2 mb-[36px]">
+          <Text variant="subtitle-18" className="text-gray-900 ml-4">
+            이메일
+          </Text>
+          <div className="w-[358px] h-12 mx-4">
+            <input
+              id="email"
+              type="email"
+              value={email}
+              readOnly
+              className="flex-1 w-[358px] h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-body-14 bg-gray-50"
+            />
           </div>
+          <Text className="text-gray-900 text-xs font-normal leading-[17.4px]  ml-4 ">
+            {`${provider}로 가입한 계정이에요`}
+          </Text>
+        </div>
 
-          <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
-            <span className="text-center text-gray-100 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
-              {userBirth ? userBirth.split("-")[1] : "--"}
-            </span>
-            <span className="text-center text-gray-900 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
-              월
-            </span>
+        <div className="w-full flex flex-col justify-start items-start gap-2 mb-[36px]">
+          <Text variant="subtitle-14" className="text-gray-900 ml-4">
+            성별
+          </Text>
+          <div className="flex gap-3 mx-4">
+            <div
+              className={`w-[173px] h-12 rounded-lg flex justify-center items-center ${
+                userGender === "남성"
+                  ? "border-2 border-solid border-[#fdb800] text-[#fdb800] font-semibold"
+                  : "border border-solid border-[#d9d9d9] text-neutral-800 font-normal"
+              }`}
+            >
+              <Text variant="subtitle-14" className="text-center">
+                남성
+              </Text>
+            </div>
+            <div
+              className={`w-[173px] h-12 rounded-lg flex justify-center items-center ${
+                userGender === "여성"
+                  ? "border-2 border-solid border-[#fdb800] text-[#fdb800] font-semibold"
+                  : "border border-solid border-[#d9d9d9] text-neutral-800 font-normal"
+              }`}
+            >
+              <Text className="text-center text-sm leading-[18.90px]">여성</Text>
+            </div>
           </div>
+        </div>
 
-          <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
-            <span className="text-center text-gray-100 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
-              {userBirth ? userBirth.split("-")[2] : "--"}
-            </span>
-            <span className="text-center text-gray-900 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
-              일
-            </span>
+        <div className="w-full flex flex-col justify-start items-start gap-2">
+          <Text className="text-gray-900 text-lg font-semibold leading-normal ml-4">생년월일</Text>
+          <div className="self-stretch flex justify-start items-center gap-3 ml-4">
+            <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
+              <Text variant="subtitle-14" className="text-center text-gray-100">
+                {userBirth ? userBirth.split("-")[0] : "----"}
+              </Text>
+              <Text variant="subtitle-14" className="text-center text-gray-900 ">
+                년
+              </Text>
+            </div>
+            <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
+              <Text variant="subtitle-14" className="text-center text-gray-100 ">
+                {userBirth ? userBirth.split("-")[1] : "--"}
+              </Text>
+              <Text variant="subtitle-14" className="text-center text-gray-900 ">
+                월
+              </Text>
+            </div>
+            <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
+              <Text variant="subtitle-14" className="text-center text-gray-100 ">
+                {userBirth ? userBirth.split("-")[2] : "--"}
+              </Text>
+              <Text variant="subtitle-14" className="text-center text-gray-900 ">
+                일
+              </Text>
+            </div>
           </div>
         </div>
       </div>
