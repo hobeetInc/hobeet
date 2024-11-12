@@ -14,7 +14,8 @@ const tagVariants = cva("h-[19px] px-2 py-0.5 rounded-[124px] justify-center ite
     },
     variant: {
       black: "bg-gray-800 text-white",
-      yellow: "bg-primary-500 text-gray-900"
+      yellow: "bg-primary-500 text-gray-900",
+      day: "bg-primary-300 text-gray-900"
     }
   },
   defaultVariants: {
@@ -52,7 +53,7 @@ const Tag = ({ tagName, variant, className }: TagProps) => {
       className={cn(
         tagVariants({
           type: tagName,
-          variant: tagName === "eggmaster" ? (variant as "black" | "yellow") : undefined
+          variant: tagName === "eggmaster" ? (variant as "black" | "yellow" | "day") : undefined
         }),
         className
       )}

@@ -86,7 +86,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
               <div className="w-[133px] flex-col justify-start items-start gap-1 inline-flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                   <Text variant="subtitle-16">{hostInfo?.userName}</Text>
-                  <Tag tagName="eggmaster" variant="yellow" />
+                  <Tag tagName="eggmaster" variant="day" />
                 </div>
               </div>
             </div>
@@ -98,7 +98,27 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
                 <Text variant="subtitle-18">상세 정보</Text>
               </div>
             </div>
-            <div className="self-stretch h-40 flex-col justify-start items-start gap-2 flex">
+            <div className="self-stretch flex-col justify-start items-start gap-2 flex">
+              <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
+                <Text variant="subtitle-14" className="w-[40px]">
+                  일시
+                </Text>
+                <Text variant="body-14">{formDate}</Text>
+              </div>
+              <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
+                <Text variant="subtitle-14" className="w-[40px]">
+                  장소
+                </Text>
+                <Text variant="body-14">{currentLocation}</Text>
+              </div>
+              <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
+                <Text variant="subtitle-14" className="w-[40px]">
+                  참가비
+                </Text>
+                <Text variant="body-14">{currentTax}</Text>
+              </div>
+            </div>
+            {/* <div className="self-stretch h-40 flex-col justify-start items-start gap-2 flex">
               <div className="self-stretch justify-start items-center gap-4 inline-flex">
                 <Text variant="subtitle-14">일시</Text>
                 <Text variant="body-14">{formDate}</Text>
@@ -111,7 +131,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
                 <Text variant="subtitle-14">참가비</Text>
                 <Text variant="body-14">{currentTax}</Text>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="self-stretch h-[0px] border border-solid border-gray-50"></div>
 

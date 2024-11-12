@@ -4,6 +4,7 @@ import { HomeContentProps } from "@/types/eggclub.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
+import WishListHeart from "./WishListHeart";
 
 const HomeContent = ({
   clubInfo,
@@ -52,7 +53,7 @@ const HomeContent = ({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6 mt-12">
+      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6">
         <Image
           src={clubInfo.egg_club_image}
           alt={clubInfo.egg_club_name}
@@ -72,10 +73,10 @@ const HomeContent = ({
                 {stringCategory}
               </Text>
             </div>
-            <div className="self-stretch justify-start items-center gap-1.5 inline-flex">
+            <div className="w-full justify-between items-center gap-1.5 inline-flex">
               <Text variant="subtitle-20"> {clubInfo.egg_club_name}</Text>
               <div className="w-8 h-8 justify-center items-center flex">
-                <div className="w-8 h-8 relative flex-col justify-start items-start flex" />
+                <WishListHeart egg_club_id={clubInfo.egg_club_id} />
               </div>
             </div>
           </div>

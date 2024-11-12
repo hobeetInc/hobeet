@@ -133,28 +133,40 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
             </div>
           </div>
           <div className="self-stretch h-40 flex-col justify-start items-start gap-2 flex">
-            <div className="self-stretch justify-start items-center gap-4 inline-flex">
-              <Text variant="subtitle-14">일시</Text>
+            <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
+              <Text variant="subtitle-14" className="w-[40px]">
+                일시
+              </Text>
               <Text variant="body-14">{formDate}</Text>
             </div>
-            <div className="self-stretch justify-start items-center gap-4 inline-flex">
-              <Text variant="subtitle-14">장소</Text>
+            <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
+              <Text variant="subtitle-14" className="w-[40px]">
+                장소
+              </Text>
               <Text variant="body-14">{currentLocation}</Text>
             </div>
-            <div className="self-stretch justify-start items-center gap-4 inline-flex">
-              <Text variant="subtitle-14">나이</Text>
+            <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
+              <Text variant="subtitle-14" className="w-[40px]">
+                나이
+              </Text>
               <Text variant="body-14">{age(clubInfo.egg_pop_age)}</Text>
             </div>
-            <div className="self-stretch justify-start items-center gap-4 inline-flex">
-              <Text variant="subtitle-14">성별</Text>
-              <Text variant="body-14"> {gender(clubInfo.egg_pop_gender)}</Text>
+            <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
+              <Text variant="subtitle-14" className="w-[40px]">
+                성별
+              </Text>
+              <Text variant="body-14">{gender(clubInfo.egg_pop_gender)}</Text>
             </div>
-            <div className="self-stretch justify-start items-center gap-4 inline-flex">
-              <Text variant="subtitle-14">인원</Text>
+            <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
+              <Text variant="subtitle-14" className="w-[40px]">
+                인원
+              </Text>
               <Text variant="body-14">{limited(clubInfo.egg_pop_people_limited)}</Text>
             </div>
-            <div className="self-stretch justify-start items-center gap-4 inline-flex">
-              <Text variant="subtitle-14">참가비</Text>
+            <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
+              <Text variant="subtitle-14" className="w-[40px]">
+                참가비
+              </Text>
               <Text variant="body-14">{currentTax}</Text>
             </div>
           </div>

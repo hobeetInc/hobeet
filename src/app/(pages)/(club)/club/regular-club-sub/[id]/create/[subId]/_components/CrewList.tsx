@@ -128,7 +128,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
     }
 
     return (
-      <div className="w-full flex justify-center items-center">
+      <div className="w-full h-20 bg-white flex justify-center items-center">
         <Button
           colorType="yellow"
           borderType="circle"
