@@ -96,33 +96,36 @@ const PaymentConfirmPage = () => {
   const clubImageUrl = (clubType === "true" ? oneTimeClubData?.egg_pop_image : regularClubData?.egg_day_image) || "";
 
   return (
-    <div className="p-5 max-w-md mx-auto">
+    <div className="px-4">
       <div className="flex items-center mb-4">
         <h2 className="flex-1 text-center font-bold">결제하기</h2>
       </div>
-      <div className="flex items-center mb-6">
-        <Image src={clubImageUrl} alt="모임 이미지" width={88} height={88} className="rounded-lg mr-4 object-cover" />
+      <div className="flex items-center">
+        <div className="overflow-hidden w-[88px] h-[88px] mr-2">
+          <Image
+            src={clubImageUrl}
+            alt="모임 이미지"
+            width={88}
+            height={88}
+            className="rounded-lg object-cover w-[88px] h-[88px]"
+          />
+        </div>
         <div>
-          {/* <span className="text-xs bg-gray-200 py-1 px-2 rounded-full">
-            {clubType === "true"
-            ? oneTimeClubData?.main_category?.main_category_name
-            : Array.isArray(regularClubData?.egg_club_id.main_category_id)
-            ? regularClubData?.egg_club_id.main_category_id[0]?.main_category_name
-            : regularClubData?.egg_club_id.main_category_id?.main_category_name}
-            </span> */}
-          <Tag tagName={`${clubType === "true" ? "eggpop" : "eggday"}`} />
-          <div className="text-lg font-semibold">
+          <Tag tagName={`${clubType === "true" ? "eggpop" : "eggday"}`} className="mb-[4px]" />
+          <div className="text-lg font-semibold mb-[5px]">
             {clubType === "true" ? oneTimeClubData?.egg_pop_name : regularClubData?.egg_day_name}
           </div>
           <div className="flex items-center text-xs text-gray-600">
             <span className="text-sm text-gray-600 flex items-center">
-              <LocationIcon />
-              <span className="text-sm text-gray-600 mx-[2px]"></span>
+              <span>
+                <LocationIcon />
+              </span>
+              <span className="text-sm text-gray-600 mx-[4px]"></span>
               {clubType === "true"
                 ? `${CustomAddress(oneTimeClubData?.egg_pop_location || "")}`
                 : CustomAddress(regularClubData?.egg_day_location || "")}
             </span>
-            <span className="text-sm text-gray-600 mx-[2px]"></span>
+            <span className="text-sm text-gray-600 mx-[4px]"></span>
             <span className="text-sm text-gray-600">
               {clubType === "true"
                 ? CustomDateNotWeek(oneTimeClubData?.egg_pop_date_time)
@@ -134,7 +137,12 @@ const PaymentConfirmPage = () => {
       <div className="border-t border-b py-4 mb-[64px]">
         <div className="flex justify-between text-lg font-semibold">
           <span>결제 금액</span>
-          <span>{clubType === "true" ? oneTimeClubData?.egg_pop_tax : regularClubData?.egg_day_tax}원</span>
+          <span>
+            {clubType === "true"
+              ? new Intl.NumberFormat("ko-KR").format(oneTimeClubData?.egg_pop_tax || 0)
+              : new Intl.NumberFormat("ko-KR").format(regularClubData?.egg_day_tax || 0)}
+            원
+          </span>
         </div>
       </div>
 
@@ -172,7 +180,7 @@ const PaymentConfirmPage = () => {
         <span className="ml-2 text-sm">주문 내용을 확인했으며, 결제에 동의합니다</span>
       </label>
 
-      <div className="h-[50px] px-2.5 py-3.5 bg-neutral-800 rounded-[25px] justify-center items-center gap-2.5 inline-flex">
+      <div className="h-[50px] px-2.5 py-3.5  bg-neutral-800 rounded-[25px] justify-center items-center gap-2.5 inline-flex">
         <PaymentButton clubId={parseInt(clubId || "0")} clubType={clubType === "true"} agreeChecked={agreeChecked} />
       </div>
     </div>

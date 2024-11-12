@@ -66,7 +66,7 @@ const WishClubListPage = () => {
   }
 
   return (
-    <div className="w-[390px] h-[844px] relative bg-white px-[16px]">
+    <div className="h-[844px] relative bg-white px-[16px]">
       <h1 className="text-xl font-bold text-center mb-4">내가 찜한 클럽</h1>
       {wishData.length === 0 ? (
         <p className="text-center text-gray-500">찜한 클럽이 없습니다.</p>
@@ -78,14 +78,16 @@ const WishClubListPage = () => {
               key={index}
               className="w-[174px] flex-col justify-start items-start gap-2 inline-flex"
             >
-              <div className="w-[174px] flex-col justify-start items-start gap-2 inline-flex">
-                <Image
-                  src={item.egg_club_id.egg_club_image}
-                  alt={item.egg_club_id.egg_club_name}
-                  width={150}
-                  height={150}
-                  className="w-full h-32 object-cover rounded-md"
-                />
+              <div className="flex-col justify-start items-start gap-2 inline-flex min-h-[306px]">
+                <div className="w-[174px] h-[174px] overflow-hidden">
+                  <Image
+                    src={item.egg_club_id.egg_club_image}
+                    alt={item.egg_club_id.egg_club_name}
+                    width={174}
+                    height={174}
+                    className="w-[174px] h-[174px] object-cover rounded-[12px]"
+                  />
+                </div>
                 <div className="self-stretch h-[124px] flex-col justify-start items-start gap-1.5 flex">
                   <div className="px-2 py-0.5 bg-neutral-800 rounded-[124px] justify-center items-center inline-flex">
                     <div className="text-white text-[10px] font-normal font-['Pretendard'] leading-[14.50px]">
