@@ -28,7 +28,7 @@ const ProfileEditPage = () => {
       const { data, error } = await supabase.auth.getUser();
       const userId = data?.user.id;
       setUserId(userId);
-      const {data: userData} = await supabase.from("user").select("*").eq("user_id", userId).single();
+      const { data: userData } = await supabase.from("user").select("*").eq("user_id", userId).single();
       const userEmail = userData?.user_email;
       setEmail(userEmail);
       const userName = userData?.user_name;
@@ -114,8 +114,7 @@ const ProfileEditPage = () => {
           </div>
           <label
             htmlFor="profileImg"
-            className="absolute w-[30px] h-[30px] left-[48px] top-[48px] bg-white rounded-full border border-[#f2f2f2] flex items-center justify-center cursor-pointer"
-            style={{ border: "solid 1px #f2f2f2" }}
+            className="absolute w-[30px] h-[30px] left-[48px] top-[48px] bg-white rounded-full border border-solid border-gray-50 flex items-center justify-center cursor-pointer"
           >
             <FaCamera />
           </label>
@@ -124,7 +123,7 @@ const ProfileEditPage = () => {
       </div>
 
       <div className=" h-20 flex flex-col justify-start items-start gap-2 mb-[36px]">
-        <label htmlFor="userName" className="text-[#0c0c0c] text-lg font-semibold leading-normal font-['Pretendard']">
+        <label htmlFor="userName" className="text-gray-900 text-lg font-semibold leading-normal font-['Pretendard']">
           이름
         </label>
 
@@ -133,12 +132,12 @@ const ProfileEditPage = () => {
           type="text"
           value={userName || ""}
           readOnly
-          className="w-full h-12 pl-5 rounded-lg border border-[#d9d9d9] text-[#a5a5a5] text-sm font-normal leading-tight font-['Pretendard'] bg-[#f9f9f9]"
+          className="w-full h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-sm font-normal leading-tight font-['Pretendard'] bg-gray-100"
         />
       </div>
 
       <div className=" h-[105px] flex flex-col justify-start items-start gap-2 mb-[36px]">
-        <label htmlFor="email" className="text-[#0c0c0c] text-lg font-semibold leading-normal font-['Pretendard']">
+        <label htmlFor="email" className="text-gray-900 text-lg font-semibold leading-normal font-['Pretendard']">
           이메일
         </label>
 
@@ -147,16 +146,16 @@ const ProfileEditPage = () => {
           type="email"
           value={email}
           readOnly
-          className="w-full h-12 pl-5 rounded-lg border border-[#d9d9d9] text-[#a5a5a5] text-sm font-normal leading-tight font-['Pretendard'] bg-[#f9f9f9]"
+          className="w-full h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-sm font-normal leading-tight font-['Pretendard'] bg-gray-100"
         />
 
-        <p className="text-[#0c0c0c] text-xs font-normal leading-[17.4px] font-['Pretendard'] mt-1">
+        <p className="text-gray-900 text-xs font-normal leading-[17.4px] font-['Pretendard'] mt-1">
           {`${provider}로 가입한 계정이에요`}
         </p>
       </div>
 
       <div className=" h-20 flex flex-col justify-start items-start gap-2 mb-[36px]">
-        <label className="text-[#0c0c0c] text-lg font-semibold leading-normal font-['Pretendard']">성별</label>
+        <label className="text-gray-900 text-lg font-semibold leading-normal font-['Pretendard']">성별</label>
 
         <div className="self-stretch flex justify-between items-center">
           <div
@@ -182,34 +181,34 @@ const ProfileEditPage = () => {
       </div>
 
       <div className=" h-20 flex flex-col justify-start items-end gap-2">
-        <label className="self-stretch text-[#0c0c0c] text-lg font-semibold leading-normal font-['Pretendard']">
+        <label className="self-stretch text-gray-900 text-lg font-semibold leading-normal font-['Pretendard']">
           생년월일
         </label>
 
         <div className="self-stretch flex justify-start items-center gap-3">
-          <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-[#d9d9d9] flex justify-end items-center gap-3">
-            <span className="text-center text-[#a5a5a5] text-sm font-semibold leading-[18.90px] font-['Pretendard']">
+          <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
+            <span className="text-center text-gray-100 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
               {userBirth ? userBirth.split("-")[0] : "----"}
             </span>
-            <span className="text-center text-[#0c0c0c] text-sm font-semibold leading-[18.90px] font-['Pretendard']">
+            <span className="text-center text-gray-900 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
               년
             </span>
           </div>
 
-          <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-[#d9d9d9] flex justify-end items-center gap-3">
-            <span className="text-center text-[#a5a5a5] text-sm font-semibold leading-[18.90px] font-['Pretendard']">
+          <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
+            <span className="text-center text-gray-100 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
               {userBirth ? userBirth.split("-")[1] : "--"}
             </span>
-            <span className="text-center text-[#0c0c0c] text-sm font-semibold leading-[18.90px] font-['Pretendard']">
+            <span className="text-center text-gray-900 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
               월
             </span>
           </div>
 
-          <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-[#d9d9d9] flex justify-end items-center gap-3">
-            <span className="text-center text-[#a5a5a5] text-sm font-semibold leading-[18.90px] font-['Pretendard']">
+          <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
+            <span className="text-center text-gray-100 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
               {userBirth ? userBirth.split("-")[2] : "--"}
             </span>
-            <span className="text-center text-[#0c0c0c] text-sm font-semibold leading-[18.90px] font-['Pretendard']">
+            <span className="text-center text-gray-900 text-sm font-semibold leading-[18.90px] font-['Pretendard']">
               일
             </span>
           </div>
