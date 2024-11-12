@@ -6,7 +6,7 @@ import Tag from "./TagComponents/Tag";
 
 export const EggPopHorizontalList = ({ eggPop }) => {
   return (
-    <div className="w-[248px] h-[91px] py-0.5 flex-col justify-start items-start gap-0.5 inline-flex">
+    <div className="min-w-[190px] h-[91px] py-0.5 flex-col justify-start items-start gap-0.5 inline-flex">
       <Tag tagName="eggpop" />
 
       <div className="self-stretch text-gray-900 text-subtitle-14">{eggPop.egg_pop_name}</div>
@@ -37,7 +37,7 @@ export const EggPopHorizontalList = ({ eggPop }) => {
 
 export const EggClubHorizontalList = ({ eggClub }) => {
   return (
-    <div className="w-[248px] h-[90px] flex-col justify-start items-start gap-1.5 inline-flex">
+    <div className="min-w-[190px] h-[90px] flex-col justify-start items-start gap-1.5 inline-flex">
       <Tag tagName="eggclub" />
       <div className="self-stretch h-[65px] flex-col justify-start items-start gap-[5px] flex">
         <div className="self-stretch h-[43px] flex-col justify-start items-start gap-0.5 flex">

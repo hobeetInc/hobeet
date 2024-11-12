@@ -49,10 +49,10 @@ const CategoryPage = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex fixed w-full h-auto overflow-x-auto p-4 gap-2 bg-white z-10 mb-10">
+      <div className="flex fixed w-full overflow-x-auto bg-white z-10 mb-10 ml-4 pt-3">
         <button
           onClick={() => setSelectedCategory(0)}
-          className={`flex-shrink-0 py-2 px-3 rounded-lg transition-colors ${
+          className={`flex-shrink-0 py-2 px-3 mr-3 rounded-lg transition-colors ${
             selectedCategory === 0 ? "bg-[#FDB800] text-white" : "bg-[#F2F2F2]"
           }`}
         >
@@ -62,7 +62,7 @@ const CategoryPage = () => {
           <button
             key={subCategory.sub_category_id}
             onClick={() => setSelectedCategory(subCategory.sub_category_id)}
-            className={`flex-shrink-0 py-2 px-3 rounded-lg transition-colors ${
+            className={`flex-shrink-0 py-2 px-3 mr-3 rounded-lg transition-colors ${
               selectedCategory === subCategory.sub_category_id ? "bg-[#FDB800] text-white" : "bg-[#F2F2F2] "
             }`}
           >
@@ -70,7 +70,7 @@ const CategoryPage = () => {
           </button>
         ))}
       </div>
-      <div className="flex-1 mt-16 overflow-y-auto">
+      <div className="flex-1 mt-12 overflow-y-auto">
         <CategoryList categoryId={categoryId} selectedCategory={selectedCategory} />
       </div>
     </div>
