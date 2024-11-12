@@ -3,36 +3,33 @@
 import React, { useState } from "react";
 import EggPopPayDetail from "../../_components/eggPopPayDetail";
 import EggDayPayDetail from "../../_components/eggDayPayDetail";
+import TabBar from "@/components/uiComponents/TapBar";
+import Link from "next/link";
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const PaymentHistory = () => {
-  const [selectedTab, setSelectedTab] = useState<"eggpop" | "eggday">("eggpop");
-
-  const handleTabClick = (tab: "eggpop" | "eggday") => {
-    setSelectedTab(tab);
-  };
+  const [selectedTab, setSelectedTab] = useState<boolean>(true);
 
   return (
-    <div className="payment-history">
-      <div className="flex justify-around border-b-2 border-gray-200">
-        <button
-          className={`flex-1 py-3 text-center font-medium ${
-            selectedTab === "eggpop" ? "text-yellow-500 border-b-2 border-yellow-500" : "text-gray-500"
-          }`}
-          onClick={() => handleTabClick("eggpop")}
-        >
-          에그팝
-        </button>
-        <button
-          className={`flex-1 py-3 text-center font-medium ${
-            selectedTab === "eggday" ? "text-yellow-500 border-b-2 border-yellow-500" : "text-gray-500"
-          }`}
-          onClick={() => handleTabClick("eggday")}
-        >
-          에그데이
-        </button>
+    <div>
+      <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
+        <div className="left-0 m-3">
+          <Link href="/mypage/profile">
+            <HiOutlineChevronLeft className="w-6 h-6" />
+          </Link>
+        </div>
+        <div className="flex flex-grow justify-center">
+          <Text variant="header-16" className="text-gray-900">
+            내 결제 내역
+          </Text>
+        </div>
+        <div className="w-6 m-3"></div>
       </div>
-
-      <div className="p-4 mt-4">{selectedTab === "eggpop" ? <EggPopPayDetail /> : <EggDayPayDetail />}</div>
+      <div className="w-full fixed top-12 right-0 left-0">
+        <TabBar value="payment" activeTab={selectedTab} onTabChange={setSelectedTab} />
+      </div>
+      <div className="mt-[60px]">{selectedTab ? <EggPopPayDetail /> : <EggDayPayDetail />}</div>
     </div>
   );
 };

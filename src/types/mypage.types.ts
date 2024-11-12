@@ -58,11 +58,12 @@ export interface WishListResponse {
 //에그팝 아이디를 가지고 있는 타입
 export type EggPopIdInfo = {
   egg_pop_id: EggPopIdResponse;
+  egg_pop_kakaopay_create_at: string;
 };
 
 export type EggPopIdResponse = {
   egg_pop_id: number;
-  egg_pop_kakaopay_create_at: string;
+  // egg_pop_kakaopay_create_at: string;
   egg_pop_name: string;
   egg_pop_date_time: string;
   egg_pop_location: string;

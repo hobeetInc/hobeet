@@ -10,6 +10,11 @@ import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDateNotWeek } from "@/utils/CustomDate";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { LocationIcon } from "@/components/uiComponents/IconComponents/Icons";
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { addHours, format, parseISO } from "date-fns";
+import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+import { Button } from "@/components/uiComponents/Button/ButtonCom";
 
 interface EggClubIdType {
   egg_club_id: number;
@@ -139,7 +144,7 @@ const PaymentSuccesspage = () => {
         if (isOneTimeClub) {
           const { data, error } = await supabase
             .from("egg_pop_kakaopay")
-            .select("egg_pop_kakaopay_cid, egg_pop_kakaopay_tid")
+            .select("egg_pop_kakaopay_cid, egg_pop_kakaopay_tid, egg_pop_kakaopay_create_at")
             .eq("user_id", requestUserId)
             .eq("egg_pop_id", parseInt(clubId))
             .limit(1)
@@ -154,7 +159,7 @@ const PaymentSuccesspage = () => {
         } else {
           const { data, error } = await supabase
             .from("egg_day_kakaopay")
-            .select("egg_day_kakaopay_cid, egg_day_kakaopay_tid")
+            .select("egg_day_kakaopay_cid, egg_day_kakaopay_tid, egg_day_kakaopay_create_at")
             .eq("user_id", requestUserId)
             .eq("egg_day_id", parseInt(clubId))
             .limit(1)
@@ -287,72 +292,182 @@ const PaymentSuccesspage = () => {
     }
   };
 
+  const customDateFormat = (dateString: string | null | undefined) => {
+    if (!dateString) {
+      console.log("데이트", dateString);
+      return "날짜 정보 없음";
+    }
+
+    try {
+      const parsedDate = parseISO(dateString);
+      return format(parsedDate, "yyyy. MM. dd");
+    } catch (error) {
+      console.error("날짜 포멧팅 실패:", dateString, error);
+      return "유효하지 않은 날짜 형식";
+    }
+  };
+
+  type DateTimeFormat = {
+    date: string;
+    time: string;
+  };
+
+  const customDate = (dateString: string | null | undefined): DateTimeFormat => {
+    if (!dateString) {
+      return {
+        date: "유효하지 않은 날짜",
+        time: "유효하지 않은 시간"
+      };
+    }
+
+    try {
+      const parsedDate = parseISO(dateString);
+      const adjustedDate = addHours(parsedDate, 9);
+      return {
+        date: format(adjustedDate, "MM월 dd일"),
+        time: format(adjustedDate, "HH:mm")
+      };
+    } catch (error) {
+      console.error("날짜 포멧팅 실패:", dateString, error);
+      return {
+        date: "유효하지 않은 날짜",
+        time: "유효하지 않은 시간"
+      };
+    }
+  };
+
   return (
     <div className="p-4  flex flex-col">
-      <h2 className="text-center text-lg font-bold mb-2">주문완료</h2>
-      <Image src={"/asset/Egg.png"} alt="egg" width={62} height={32} className="self-center mb-[8px]" />
-      <p className="text-center text-gray-600 mb-1">모임 참여 신청이 완료됐어요!</p>
-
-      <div className="border-b border-gray-200 my-4"></div>
-
-      <div className="flex items-center mb-6">
-        <div className="w-[88px] h-[88px] mr-2">
-          <Image
-            src={clubImageUrl}
-            alt="모임 이미지"
-            width={88}
-            height={88}
-            className="rounded-lg mr-2 object-cover w-[88px] h-[88px]"
-          />
+      <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
+        <div className="left-0 m-3">
+          <button
+            onClick={() => {
+              router.back();
+            }}
+          >
+            <HiOutlineChevronLeft className="w-6 h-6" />
+          </button>
         </div>
-        <div>
-          {/* <div className="text-xs text-gray-400">
-            {queryParams.clubType === "true"
-              ? oneTimeClubData?.main_category?.main_category_name
-              : regularClubData?.egg_club_id.main_category_id.main_category_name}
-          </div> */}
-          <Tag tagName={`${queryParams.clubType === "true" ? "eggpop" : "eggday"}`} className="mb-[4px]" />
-          <div className="text-base font-semibold mb-[5px]">
-            {queryParams.clubType === "true" ? oneTimeClubData?.egg_pop_name : regularClubData?.egg_day_name}
-          </div>
-          <div className="flex items-center text-xs text-gray-600">
-            <LocationIcon />
-            <span className="mx-[4px]"></span>
-            <span>
-              {queryParams.clubType === "true"
-                ? CustomAddress(oneTimeClubData?.egg_pop_location || "주소 정보 없음")
-                : CustomAddress(regularClubData?.egg_day_location || "주소 정보 없음")}
-            </span>
-            <span className="mx-[4px]"></span>
-            <span>
-              {queryParams.clubType === "true"
-                ? CustomDateNotWeek(oneTimeClubData?.egg_pop_date_time || "날짜 정보 없음")
-                : CustomDateNotWeek(regularClubData?.egg_day_date_time || "날짜 정보 없음")}
-            </span>
-          </div>
+        <div className="flex flex-grow justify-center">
+          <Text variant="header-16" className="text-gray-900">
+            주문완료
+          </Text>
         </div>
+        <div className="w-6 m-3"></div>
       </div>
 
-      <div className="border-t border-gray-200 py-4">
-        <span className="text-[#0c0c0c] text-lg font-medium font-['Pretendard'] leading-normal">결제 정보</span>
-        <div className="flex justify-between mb-2">
-          <span className="text-sm text-gray-600">이름</span>
-          <span className="text-sm font-semibold">{userName}</span>
-        </div>
-        <div className="flex justify-between mb-2">
-          <span className="text-sm text-gray-600">결제방법</span>
-          <span className="text-sm font-semibold">카카오페이</span>
-        </div>
-        <div className="flex justify-between mb-2">
-          <span className="text-sm text-gray-600">결제 금액</span>
-          <span className="text-sm font-semibold">{new Intl.NumberFormat("ko-KR").format(paymentAmount)}원</span>
-        </div>
-      </div>
+      <div className="flex items-center justify-center">
+        <div className="w-[390px]">
+          <div className="flex flex-col gap-2 mt-8">
+            <Image
+              src={"/asset/Egg.png"}
+              alt="egg"
+              width={62}
+              height={32}
+              className="self-center mb-[8px] w-[62px] h-8 object-cover"
+            />
 
-      <div className="h-[50px] px-2.5 py-3.5 bg-neutral-800 rounded-[25px] justify-center items-center gap-2.5 inline-flex">
-        <button className="text-white text-base font-semibold leading-snug" onClick={handleGoToMyClub}>
-          내 모임으로 가기
-        </button>
+            <Text variant="header-18" className="text-center text-gray-900 mb-1">
+              모임 참여 신청이 완료됐어요!
+            </Text>
+
+            <div className="border-b border-gray-200 my-4"></div>
+
+            <div className="w-full h-[35px] flex items-center">
+              <Text variant="subtitle-14">
+                {" "}
+                {queryParams.clubType === "true"
+                  ? customDateFormat(oneTimeClubPayData?.egg_pop_kakaopay_create_at)
+                  : customDateFormat(regularClubPayData?.egg_day_kakaopay_create_at)}
+              </Text>
+            </div>
+
+            <div className="flex items-center h-[131px] border-b-2 border-solid border-gray-50 pb-[35px]">
+              <div className="w-[88px] h-[88px] mr-2">
+                <Image
+                  src={clubImageUrl}
+                  alt="모임 이미지"
+                  width={88}
+                  height={88}
+                  className="rounded-lg mr-2 object-cover w-[88px] h-[88px]"
+                />
+              </div>
+
+              <div>
+                <Tag tagName={`${queryParams.clubType === "true" ? "eggpop" : "eggday"}`} className="mb-[4px]" />
+
+                <Text variant="subtitle-14">
+                  {queryParams.clubType === "true" ? oneTimeClubData?.egg_pop_name : regularClubData?.egg_day_name}
+                </Text>
+
+                <div className="flex items-center text-xs text-gray-600 gap-1">
+                  <div className="mr-1 w-4 h-4">
+                    <Icon name="location" />
+                  </div>
+
+                  <Text variant="body_medium-14">
+                    {queryParams.clubType === "true"
+                      ? CustomAddress(oneTimeClubData?.egg_pop_location || "주소 정보 없음")
+                      : CustomAddress(regularClubData?.egg_day_location || "주소 정보 없음")}
+                  </Text>
+                  <Text variant="body_medium-14">
+                    {queryParams.clubType === "true"
+                      ? customDate(oneTimeClubData?.egg_pop_date_time || "날짜 정보 없음").date
+                      : customDate(regularClubData?.egg_day_date_time || "날짜 정보 없음").date}
+                  </Text>
+                  <Text variant="body_medium-14">
+                    {queryParams.clubType === "true"
+                      ? customDate(oneTimeClubData?.egg_pop_date_time || "날짜 정보 없음").time
+                      : customDate(regularClubData?.egg_day_date_time || "날짜 정보 없음").time}
+                  </Text>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 w-[359px] h-[116px] flex-col justify-start items-start gap-4 inline-flex">
+            <div className="self-stretch h-6 flex-col justify-start items-start gap-2 flex">
+              <div className="self-stretch justify-start items-center gap-2 inline-flex">
+                <Text variant="body_medium-18" className="grow shrink basis-0">
+                  결제 정보
+                </Text>
+              </div>
+            </div>
+            <div className="self-stretch h-[76px] flex-col justify-start items-start gap-2 flex">
+              <div className="self-stretch justify-start items-center gap-4 inline-flex">
+                <Text variant="subtitle-14" className="w-[49px]">
+                  이름
+                </Text>
+                <div className="w-[230px] text-gray-900 text-sm font-normal font-['Pretendard'] leading-tight">
+                  {userName}
+                </div>
+              </div>
+              <div className="self-stretch justify-start items-center gap-4 inline-flex">
+                <Text variant="subtitle-14" className="w-[49px]">
+                  결제방법
+                </Text>
+
+                <div className="w-[230px] text-gray-900 text-sm font-normal font-['Pretendard'] leading-tight">
+                  카카오페이
+                </div>
+              </div>
+              <div className="self-stretch justify-start items-center gap-4 inline-flex">
+                <Text variant="subtitle-14" className="w-[49px]">
+                  결제금액
+                </Text>
+                <div className="w-[230px] text-gray-900 text-sm font-normal font-['Pretendard'] leading-tight">
+                  {new Intl.NumberFormat("ko-KR").format(paymentAmount)}원
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full h-[82px] flex items-center justify-center fixed bottom-[34px] right-0 left-0">
+            <Button colorType="black" borderType="circle" onClick={handleGoToMyClub}>
+              내 모임으로 가기
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -6,6 +6,11 @@ import Image from "next/image";
 import { WishListResponse } from "@/types/mypage.types";
 import { useRouter } from "next/navigation";
 import { WishHeart } from "@/components/uiComponents/IconComponents/Icons";
+import { HeartImage } from "@/components/uiComponents/HeartImage";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import Tag from "@/components/uiComponents/TagComponents/Tag";
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import Link from "next/link";
 
 const WishClubListPage = () => {
   const supabase = browserClient;
@@ -66,12 +71,28 @@ const WishClubListPage = () => {
   }
 
   return (
-    <div className="h-[844px] relative bg-white px-[16px]">
-      <h1 className="text-xl font-bold text-center mb-4">내가 찜한 클럽</h1>
+    <div className="relative">
+      <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
+        <div className="left-0 m-3">
+          <Link href="/mypage/profile">
+            <HiOutlineChevronLeft className="w-6 h-6" />
+          </Link>
+        </div>
+        <div className="flex flex-grow justify-center">
+          <Text variant="header-16" className="text-gray-900">
+            내가 찜한 클럽
+          </Text>
+        </div>
+        <div className="w-6 m-3"></div>
+      </div>
+
+      {/* <div className="h-12 w-full bg-pink-300">내가 찜한 클럽</div> */}
       {wishData.length === 0 ? (
-        <p className="text-center text-gray-500">찜한 클럽이 없습니다.</p>
+        <Text variant="subtitle-14" className="text-gray-500">
+          찜한 클럽이 없습니다
+        </Text>
       ) : (
-        <div className="w-[358px] h-[652px] justify-start items-start gap-2.5 grid grid-cols-2">
+        <div className="flex flex-wrap justify-center items-center gap-2.5 p-4">
           {wishData.map((item, index) => (
             <div
               onClick={() => handleClick(item.egg_club_id.egg_club_id)}
@@ -79,7 +100,7 @@ const WishClubListPage = () => {
               className="w-[174px] flex-col justify-start items-start gap-2 inline-flex"
             >
               <div className="flex-col justify-start items-start gap-2 inline-flex min-h-[306px]">
-                <div className="w-[174px] h-[174px] overflow-hidden">
+                <div className="w-[174px] h-[174px] overflow-hidden relative">
                   <Image
                     src={item.egg_club_id.egg_club_image}
                     alt={item.egg_club_id.egg_club_name}
@@ -87,16 +108,16 @@ const WishClubListPage = () => {
                     height={174}
                     className="w-[174px] h-[174px] object-cover rounded-[12px]"
                   />
+                  <div className="absolute bottom-3 right-3">
+                    <HeartImage selectedId={2} />
+                  </div>
                 </div>
+
                 <div className="self-stretch h-[124px] flex-col justify-start items-start gap-1.5 flex">
-                  <div className="px-2 py-0.5 bg-neutral-800 rounded-[124px] justify-center items-center inline-flex">
-                    <div className="text-white text-[10px] font-normal font-['Pretendard'] leading-[14.50px]">
-                      에그클럽
-                    </div>
-                  </div>
-                  <div className="self-stretch text-[#0c0c0c] text-base font-semibold font-['Pretendard'] leading-snug">
-                    {item.egg_club_id.egg_club_name}
-                  </div>
+                  <Tag tagName="eggclub" />
+
+                  <Text variant="subtitle-16"> {item.egg_club_id.egg_club_name}</Text>
+
                   <div className="self-stretch justify-start items-center gap-1 inline-flex">
                     <div className="justify-start items-center gap-0.5 flex">
                       <div className="w-[22px] h-[22px] relative">
@@ -105,28 +126,30 @@ const WishClubListPage = () => {
                           alt={item.egg_club_id.user_id.user_name}
                           width={24}
                           height={24}
-                          className="w-[22px] h-[22px] left-0 top-0 absolute bg-[#d9d9d9] rounded-full"
+                          className="w-[22px] h-[22px] left-0 top-0 absolute bg-gray-100 rounded-full"
                         />
                       </div>
-                      <div className="grow shrink basis-0 text-[#8c8c8c] text-sm font-medium font-['Pretendard'] leading-tight">
+
+                      <Text variant="body_medium-14" className="text-gray-400">
                         {item.egg_club_id.user_id.user_name}
-                      </div>
+                      </Text>
                     </div>
                     <div className="justify-start items-center gap-0.5 flex">
-                      <div className="text-[#8c8c8c] text-sm font-medium font-['Pretendard'] leading-tight">멤버</div>
-                      <div className="text-[#8c8c8c] text-sm font-medium font-['Pretendard'] leading-tight">
+                      <Text variant="body_medium-14" className="text-gray-400">
+                        멤버
+                      </Text>
+                      <Text variant="body_medium-14" className="text-gray-400">
                         {item.egg_club_id.egg_club_member[0]?.count || 0}/{item.egg_club_id.egg_club_people_limited}
-                      </div>
+                      </Text>
                     </div>
                   </div>
                   <div className="pt-1 justify-start items-center gap-0.5 inline-flex">
-                    <div className="justify-start items-center flex">
-                      <span>
-                        <WishHeart />
-                      </span>
-                      <div className="text-[#8c8c8c] text-xs font-normal font-['Pretendard'] leading-[17.40px]">
-                        <span>찜수 {item.egg_club_id.wish_list[0]?.count || 0}</span>
-                      </div>
+                    <div className="justify-start items-center flex gap-[2px]">
+                      <WishHeart />
+
+                      <Text variant="body_medium-14" className="text-gray-400">
+                        찜수 {item.egg_club_id.wish_list[0]?.count || 0}
+                      </Text>
                     </div>
                   </div>
                 </div>

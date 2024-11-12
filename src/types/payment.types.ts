@@ -41,12 +41,14 @@ export type EggClubData = {
 export type EggPopPay = {
   egg_pop_kakaopay_cid: string;
   egg_pop_kakaopay_tid: string;
+  egg_pop_kakaopay_create_at: string;
 };
 
 // 에그 클럽 지불 타입
 export type EggClubPay = {
   egg_day_kakaopay_cid: string;
   egg_day_kakaopay_tid: string;
+  egg_day_kakaopay_create_at: string;
 };
 
 // 에그팝 참가비 없는 버전
