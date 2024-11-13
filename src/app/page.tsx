@@ -84,9 +84,18 @@ export default function Home() {
       </div>
       <RegularClubList />
 
-      <div className="w-full  relative justify-center	 flex flex-shrink-0  mt-[64px]">
-        <Image width={358} height={226} src="/asset/Frame 2307.png" alt="Frame 2307" className="object-cover w-full " />
+      <div className="flex mx-4 justify-center items-center">
+        <div className="w-full  justify-center	 flex flex-shrink-0  overflow-hidden mt-[64px] mx-4">
+          <Image
+            width={358}
+            height={226}
+            src="/asset/Frame 2307.png"
+            alt="Frame 2307"
+            className="object-cover w-full "
+          />
+        </div>
       </div>
+
       <div className="w-full">
         <Text variant="subtitle-18" className="mt-[20px] mx-4">
           가을 감성 충전! 지금 가기 좋은 여행지 5곳 🍂
