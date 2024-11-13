@@ -8,11 +8,11 @@ import Text from "./uiComponents/TextComponents/Text";
 const categories: Category[] = [
   { id: 0, name: "에그팝", icon: "/asset/Category icon_voltage.png", alt: "에그팝" },
   { id: 1, name: "아웃도어/여행", icon: "/asset/Category icon_airplane.png", alt: "아웃도어/여행" },
-  { id: 2, name: "운동/스포츠관람", icon: "/asset/Category icon_tennis.png", alt: "운동/스포츠관람" },
+  { id: 5, name: "운동/스포츠관람", icon: "/asset/Category icon_tennis.png", alt: "운동/스포츠관람" },
   { id: 3, name: "사교/인맥", icon: "/asset/Category icon_hot-beverage.png", alt: "사교/인맥" },
-  { id: 4, name: "문화/공연/축제", icon: "/asset/Category icon_guitar.png", alt: "문화/공연/축제" },
-  { id: 5, name: "사진/영상", icon: "/asset/Category icon_clapper-board.png", alt: "사진/영상" },
-  { id: 6, name: "댄스/무용", icon: "/asset/Category icon_woman-dancing.png", alt: "댄스/무용" }
+  { id: 6, name: "문화/공연/축제", icon: "/asset/Category icon_guitar.png", alt: "문화/공연/축제" },
+  { id: 4, name: "사진/영상", icon: "/asset/Category icon_clapper-board.png", alt: "사진/영상" },
+  { id: 2, name: "댄스/무용", icon: "/asset/Category icon_woman-dancing.png", alt: "댄스/무용" }
 ];
 
 const CategorySlider = () => {
