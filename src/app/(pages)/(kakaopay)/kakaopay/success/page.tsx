@@ -282,9 +282,11 @@ const PaymentSuccesspage = () => {
     if (!clubId) return;
 
     if (clubType === "true") {
+      localStorage.setItem("fromKakaoPay", "true");
       router.push(`/club/one-time-club-sub/${clubId}`);
     } else {
       if (eggClubId) {
+        localStorage.setItem("fromKakaoPay", "true");
         router.push(`/club/regular-club-sub/${eggClubId.egg_club_id}/create/${clubId}`);
       }
     }
@@ -338,9 +340,7 @@ const PaymentSuccesspage = () => {
     <div className="p-4  flex flex-col">
       <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
         <div className="left-0 m-3">
-          <button
-            onClick={handleGoToMyClub}
-          >
+          <button onClick={handleGoToMyClub}>
             <HiOutlineChevronLeft className="w-6 h-6" />
           </button>
         </div>
