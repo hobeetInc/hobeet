@@ -19,7 +19,10 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
     const hours = date.getHours();
     const minutes = date.getMinutes();
 
-    return `${month}월 ${day}일 ${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+    return {
+      date: `${month}월 ${day}일`,
+      time: `${hours}:${minutes}`
+    };
   };
 
   // 주소 커스텀
@@ -72,7 +75,11 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
             </Text>
 
             <Text variant="body_medium-14" className="text-gray-400">
-              {DateTimeCustom(notification.egg_day_date_time)}
+              {DateTimeCustom(notification.egg_day_date_time).date}
+            </Text>
+
+            <Text variant="body_medium-14" className="text-gray-400">
+              {DateTimeCustom(notification.egg_day_date_time).time}
             </Text>
           </div>
         </div>

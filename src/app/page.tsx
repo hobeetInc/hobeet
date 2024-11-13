@@ -33,7 +33,7 @@ export default function Home() {
       <div className="flex flex-col items-start gap-[8px]">
         <Text variant="subtitle-18" className="mt-[34px] ml-[16px]">
           이런 모임 어때요?
-          </Text>
+        </Text>
         {/* <p className="text-[18px] not-italic	font-semibold leading-[24.3px] mt-[34px] ml-[16px] font-pretendard">
           이런 모임 어때요?
         </p> */}
@@ -50,17 +50,24 @@ export default function Home() {
       <div className="relative flex justify-center mx-4 mt-16">
         <div className="relative w-full ">
           <Image width={358} height={173} src="/asset/Rectangle 20.png" alt="Rectangle 20" className="w-full h-auto" />
-          <Text variant="subtitle-18" className="absolute inset-0 flex justify-start items-center mt-[40px] ml-[14px] mb-9 text-white">
+          <Text
+            variant="subtitle-18"
+            className="absolute inset-0 flex justify-start items-center mt-[40px] ml-[14px] mb-9 text-white"
+          >
             Night Run🏃🏻‍♂
-            </Text>️‍
+          </Text>
+          ️‍
           {/* <p className="absolute inset-0 flex justify-start items-center mt-[40px] ml-[14px] leading-[24.3px] text-white not-italic font-bold text-[18px]">
             Night Run🏃🏻‍♂️‍
           </p> */}
-          <Text variant="body-16" className="absolute inset-0 flex justify-start items-center mt-[113px] ml-[14px] mb-8 text-white">
+          <Text
+            variant="body-16"
+            className="absolute inset-0 flex justify-start items-center mt-[113px] ml-[14px] mb-8 text-white"
+          >
             쌀쌀한 가을
             <br />
             한강 밤러닝 함께 달리러 가요
-            </Text>
+          </Text>
           {/* <p className="absolute inset-0 flex justify-start items-center mt-[113px] ml-[14px] leading-[20.3px] text-white not-italic font-medium text-[16px] font-pretendard">
             쌀쌀한 가을
             <br />
@@ -78,13 +85,7 @@ export default function Home() {
       <RegularClubList />
 
       <div className="w-full  relative justify-center	 flex flex-shrink-0  mt-[64px]">
-        <Image
-          width={358}
-          height={226}
-          src="/asset/Frame 2307.png"
-          alt="Frame 2307"
-          className="object-cover w-full "
-        />
+        <Image width={358} height={226} src="/asset/Frame 2307.png" alt="Frame 2307" className="object-cover w-full " />
       </div>
       <div className="w-full">
         <Text variant="subtitle-18" className="mt-[20px] mx-4">
