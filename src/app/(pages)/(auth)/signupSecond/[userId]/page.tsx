@@ -13,7 +13,6 @@ import DateScrollPicker from "../_components/DateScrollPicker";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Link from "next/link";
 
-
 const NAME_REGEX = /^[가-힣]{2,5}$/;
 
 const SignupSecondPage = () => {
@@ -24,15 +23,13 @@ const SignupSecondPage = () => {
   const [profileFile, setProfileFile] = useState<File | null>(null);
   const [nameError, setNameError] = useState("");
   const [genderError, setGenderError] = useState("");
-  
+
   const [birthDateError, setBirthDateError] = useState("");
 
-const [showYearPicker, setShowYearPicker] = useState(false);
-const [showMonthPicker, setShowMonthPicker] = useState(false);
-const [showDayPicker, setShowDayPicker] = useState(false);
-const [isFormComplete, setIsFormComplete] = useState(false);
-
-
+  const [showYearPicker, setShowYearPicker] = useState(false);
+  const [showMonthPicker, setShowMonthPicker] = useState(false);
+  const [showDayPicker, setShowDayPicker] = useState(false);
+  const [isFormComplete, setIsFormComplete] = useState(false);
 
   const router = useRouter();
   const params = useParams();
@@ -222,33 +219,38 @@ const [isFormComplete, setIsFormComplete] = useState(false);
     checkFormCompletion();
   }, [birthYear, birthMonth, birthDay, userName, userGender]);
 
-
-const years = [...Array(100)].map((_, i) => 2024 - i);
-const months = [...Array(12)].map((_, i) => i + 1);
-const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].map((_, i) => i + 1);
+  const years = [...Array(100)].map((_, i) => 2024 - i);
+  const months = [...Array(12)].map((_, i) => i + 1);
+  const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].map((_, i) => i + 1);
   return (
     <div className="flex flex-col items-center">
       <div className="flex w-full h-12 bg-white items-center">
         <div className="left-0 m-3">
           <Link href="/signin">
-        <HiOutlineChevronLeft className="w-6 h-6" />
+            <HiOutlineChevronLeft className="w-6 h-6" />
           </Link>
         </div>
         <div className="flex flex-grow justify-center">
           <Text variant="header-16" className="text-gray-900">
-        회원가입
+            회원가입
           </Text>
         </div>
         <div className="w-6 m-3"></div>
       </div>
 
-      <div className=" mt-4 left-[16px] flex flex-col gap-12">
+      <div className=" mt-4 left-[16px] flex flex-col gap-12 lg:mt-[287px] lg:mx-[272px] lg:w-[480px] lg:h-[438px] lg:gap-10">
         <div className="flex flex-col gap-2">
           <Text variant="subtitle-18">프로필</Text>
           <div className="relative w-[78px] h-[78px] mt-2">
-            <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden">
+            <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden flex items-center justify-center">
               {userProfileImg && (
-                <Image src={userProfileImg} alt="프로필 이미지" width={78} height={78} className="object-cover" />
+                <Image
+                  src={userProfileImg}
+                  alt="프로필 이미지"
+                  width={78}
+                  height={78}
+                  className="object-cover w-[78px] h-[78px]"
+                />
               )}
             </div>
             <label
@@ -293,7 +295,7 @@ const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].m
             <button
               type="button"
               onClick={() => setUserGender("남성")}
-              className={`w-[173px] h-12 px-4 rounded-lg border-2 ${
+              className={`w-[173px] h-12 px-4 rounded-lg border-2 lg:w-[234px] ${
                 userGender === "남성"
                   ? "border-primary-500 text-primary-500 text-header-16"
                   : "border-gray-100 text-black text-subtitle-14"
@@ -304,7 +306,7 @@ const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].m
             <button
               type="button"
               onClick={() => setUserGender("여성")}
-              className={`w-[173px] h-12 px-4 rounded-lg border-2 text-header-16 ${
+              className={`w-[173px] h-12 px-4 rounded-lg border-2 text-header-16 lg:w-[234px] ${
                 userGender === "여성"
                   ? "border-primary-500 text-primary-500 text-header-16"
                   : "border-gray-100 text-black text-subtitle-14"
@@ -331,21 +333,21 @@ const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].m
             <button
               type="button"
               onClick={() => setShowYearPicker(true)}
-              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-end text-subtitle-14"
+              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-end text-subtitle-14 lg:w-[152px]"
             >
               {birthYear ? `${birthYear}년` : "년"}
             </button>
             <button
               type="button"
               onClick={() => setShowMonthPicker(true)}
-              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-end text-subtitle-14"
+              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-end text-subtitle-14 lg:w-[152px]"
             >
               {birthMonth ? `${birthMonth}월` : "월"}
             </button>
             <button
               type="button"
               onClick={() => setShowDayPicker(true)}
-              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-end text-subtitle-14"
+              className="w-[111px] h-12 px-5 rounded-lg border border-gray-100 text-end text-subtitle-14 lg:w-[152px]"
             >
               {birthDay ? `${birthDay}일` : "일"}
             </button>
@@ -388,7 +390,7 @@ const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].m
         </div>
       </div>
 
-      <div className="fixed ml-[16px] mr-[16px] w-full bottom-0 mb-[54px] justify-items-center">
+      <div className="fixed ml-[16px] mr-[16px] w-full bottom-0 mb-[524px] justify-items-center">
         {isFormComplete ? (
           <Button
             colorType="orange"
