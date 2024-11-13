@@ -100,7 +100,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
   const renderJoinButton = () => {
     if (isHost) {
       return (
-        <div className="w-full h-20 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+        <div className="px-4 w-full h-20 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
           <div className="w-[50%] px-2.5 py-3.5 bg-primary-300 rounded-[25px] justify-center items-center gap-2 inline-flex">
             <Text variant="subtitle-16">{`참여 ${crewList.length}명`}</Text>
           </div>
@@ -113,7 +113,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
 
     if (isAlreadJoined) {
       return (
-        <div className="w-full h-20 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+        <div className="px-4 w-full h-20 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
           <Text variant="subtitle-16" className="w-[50%]">
             참여 중인 에그팝이에요
           </Text>

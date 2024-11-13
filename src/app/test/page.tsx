@@ -3,8 +3,6 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import { Bell, Home, MessageCircle, Clapperboard } from "lucide-react";
 import React from "react";
 
-
-
 const ICON_MAP = {
   home: Home,
   chat: MessageCircle,

@@ -11,6 +11,8 @@ export const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, value })
       return tabType ? "내가 에그장" : "내가 에그즈";
     } else if (value === "mychat") {
       return tabType ? "에그클럽" : "에그팝";
+    } else if (value === "payment") {
+      return tabType ? "에그팝" : "에그데이";
     }
     return "";
   };
