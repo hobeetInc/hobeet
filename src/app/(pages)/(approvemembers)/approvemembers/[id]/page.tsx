@@ -63,7 +63,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ isOpen, onClose, onConfirm 
 
 const ActiveMembersTab = ({ activeMembers }: { activeMembers: ParticipationRequest[] }) => {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 ">
       {activeMembers.map((member, index) => (
         <div key={member.egg_club_participation_request_id} className="flex items-center gap-3">
           <Image
@@ -208,7 +208,7 @@ export default function ApproveMembersPage() {
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      <h2 className="text-center text-gray-900  font-bold font-pretendard mb-2">에그즈 관리</h2>
+      <h2 className="text-center h-12 text-gray-900 content-center font-bold font-pretendard mb-2">에그즈 관리</h2>
       <ApproveMemberTabBar activeTab={activeTab} onTabChange={setActiveTab} value="egges" />
       <div className="flex flex-col w-full mt-4 px-4">
         <div className="text-left mb-2">

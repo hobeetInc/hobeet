@@ -33,7 +33,11 @@ export default function RootLayout({
     /^\/club\/one-time-club-sub\/.*$/,
     /^\/club\/regular-club-sub\/.*$/,
     /^\/signupSecond\/.*$/,
-    "/mypage/profileUpdate"
+    "/mypage/profileUpdate",
+    "/mypage/inquiry",
+    "/kakaopay/paymentConfirm",
+    "/kakaopay/success",
+    /^\/approvemembers\/.*$/
   ];
   const noHeaderRoutes = [/^\/category\/.*$/];
   const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>

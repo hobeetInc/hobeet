@@ -11,17 +11,21 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
 
   return (
     <div className="fixed inset-0 bg-white z-50">
-      <div className="h-screen flex flex-col">
-        <div className="flex items-center justify-start h-[48px] mb-4">
+  
+        <div className="fixed flex items-center justify-between h-[60px] w-full px-4">
           <button onClick={onClose} className="w-12 h-full flex items-center justify-center">
             <IoIosArrowBack className="w-6 h-6" />
           </button>
-          <Text variant="header-16" className="flex-1 text-center">
-            전체 에그즈
-          </Text>
+          <div className="flex-1 text-center">
+            <Text variant="header-16">
+              전체 에그즈
+            </Text>
+          </div>
+          <div className="w-12"></div>
         </div>
 
-        <div className="flex flex-col gap-8">
+
+        <div className="flex flex-col gap-8 mt-16">
           <div className="px-4 h-[116px] flex-col justify-start items-start gap-4 inline-flex">
             <div className="self-stretch h-6 flex-col justify-start items-start gap-2 flex">
               <div className="self-stretch justify-start items-center gap-2 inline-flex">
@@ -89,7 +93,7 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
           </div>
         </div>
       </div>
-    </div>
+
 
     // <div className="fixed inset-0 bg-white z-50">
     //   <div className="h-screen flex flex-col">
