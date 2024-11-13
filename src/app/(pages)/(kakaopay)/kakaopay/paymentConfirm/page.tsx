@@ -9,8 +9,6 @@ import { EggClubData, EggPopData } from "@/types/payment.types";
 import Radio from "@/components/uiComponents/Radio";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { CustomAddress } from "@/utils/CustomAddress";
-import { CustomDateNotWeek } from "@/utils/CustomDate";
-import Link from "next/link";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";

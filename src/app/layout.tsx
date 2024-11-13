@@ -31,7 +31,9 @@ export default function RootLayout({
     "/club/regular-time",
     /^\/chat\/onetimeChat\/.*$/,
     /^\/club\/one-time-club-sub\/.*$/,
-    /^\/club\/regular-club-sub\/.*$/
+    /^\/club\/regular-club-sub\/.*$/,
+    /^\/signupSecond\/.*$/,
+    "/mypage/profileUpdate"
   ];
   const noHeaderRoutes = [/^\/category\/.*$/];
   const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>

@@ -9,6 +9,8 @@ import { logOut } from "../../_components/logout";
 import { useEffect, useState } from "react";
 import browserClient from "@/utils/supabase/client";
 import Text from "@/components/uiComponents/TextComponents/Text";
+import { FaCamera } from "react-icons/fa6";
+
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -37,7 +39,7 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className="max-w-md mx-auto p-5">
+    <div className="max-w-md mx-auto p-4">
       <div
         className="flex items-center bg-primary-200 p-4 rounded-lg mb-6 justify-between cursor-pointer"
         onClick={() => router.push("/mypage/profileUpdate")}
@@ -50,6 +52,7 @@ const ProfilePage = () => {
             height={78}
             className="object-cover w-[78px] h-[78px]"
           />
+
           <input
             type="file"
             id="profileImg"
@@ -65,6 +68,11 @@ const ProfilePage = () => {
               }
             }}
           />
+
+            <span className="absolute w-[30px] h-[30px] mt-9 left-[43px] top-[13px] bg-white rounded-full border border-solid border-gray-50 flex items-center justify-center z-10">
+              <FaCamera />
+            </span>
+
         </div>
         <div className="ml-4 flex-1">
           <Text variant="subtitle-18" className="text-gray-800 text-left">
