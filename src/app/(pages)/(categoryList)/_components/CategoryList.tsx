@@ -3,7 +3,8 @@ import { getCategoryList, getUserId } from "../_api/supabase";
 import { useQuery } from "@tanstack/react-query";
 import { EggClubForm } from "@/types/cardlist.types";
 import { CategoryListProps } from "@/types/category.types";
-import { VerticalContentsListMediumEggClub } from "@/components/uiComponents/VerticalContentsListMedium";
+
+import { VerticalContentsListLargeEggClub } from "@/components/uiComponents/VerticalContentsListLarge";
 
 
 const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) => {
@@ -38,10 +39,10 @@ const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) =
           <p className="text-[14px] font-[500px] leading-[145%]">전체 {data?.length}</p>
         </div>
       </div>
-      <div className="flex ml-4 items-start content-start gap-10 self-stretch flex-wrap">
+      <div className="flex justify-center gap-[10px] self-stretch flex-wrap  ">
         {data?.map((club) => (
           <div key={club.egg_club_id} className="flex flex-col">
-            <VerticalContentsListMediumEggClub
+            <VerticalContentsListLargeEggClub
               eggClub={club}
               hostName={club.user_id.user_name}
               hostImage={club.user_id.user_profile_img}

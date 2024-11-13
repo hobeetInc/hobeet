@@ -12,18 +12,20 @@ const ErrorPage = () => {
   return (
     <div className="w-full">
       <div className="mt-[292px] flex flex-col justify-center items-center text-center">
-        <div className="flex items-center mb-[20px]">
-          <div className="w-[90px] h-[90px] z-10">
+        <div className="flex  mb-[20px]">
+
+
+          
+          <div className="w-[90px] h-[90px] -scale-y-100 " >
             <Icon name="whiteEgg" />
           </div>
-          <div className="w-[90px] h-[90px] -ml-2 ">
+          <div className="w-[90px] h-[90px]  ">
             <Icon name="yellowEgg" />
           </div>
         </div>
 
         <Text variant="header-20" className="w-46 text-center text-gray-500">
-          에러에러ㅗ
-          <br />첫 모임을 기다리는 중!
+          에러에러
         </Text>
       </div>
 

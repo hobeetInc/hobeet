@@ -145,7 +145,7 @@ const PaymentConfirmPage = () => {
         <div className="w-6 m-3"></div>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-16">
         <div className="flex justify-center items-center">
           <div className="flex items-center gap-2 mb-6 w-[390px] px-4">
             <div className="overflow-hidden w-[88px] h-[88px] flex justify-center items-center rounded-xl">

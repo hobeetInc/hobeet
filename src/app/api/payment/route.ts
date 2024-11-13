@@ -56,13 +56,18 @@ export async function POST(req: Request) {
         quantity: 1,
         total_amount: amount,
         tax_free_amount: 0,
+        // approval_url: `http://localhost:3000/kakaopay/isSuccess?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
         approval_url: `https://www.eggfriends.site/kakaopay/isSuccess?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}`,
+        // cancel_url: "http://localhost:3000/",
         cancel_url: "https://www.eggfriends.site/",
+        // fail_url: "http://localhost:3000/"
         fail_url: "https://www.eggfriends.site/"
       })
     });
 
+    
     if (!response.ok) {
+          // if (!response.ok) {
       const errorData = await response.json();
       console.error(`Payment failed with status: ${response.status}`, errorData);
       throw new Error(`Payment failed with status: ${response.status}`);
