@@ -248,7 +248,7 @@ const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].m
           <div className="relative w-[78px] h-[78px] mt-2">
             <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden">
               {userProfileImg && (
-                <Image src={userProfileImg} alt="프로필 이미지" width={78} height={78} className="object-cover" />
+                <Image src={userProfileImg} alt="프로필 이미지" width={78} height={78} className="object-cover w-[78px] h-[78px]" />
               )}
             </div>
             <label
