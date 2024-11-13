@@ -77,9 +77,15 @@ export interface EggDayMember {
   };
 }
 
+interface Params {
+  clubId: string;
+  dayId: string;
+}
+
 // 에그데이 헤더 props
 export type DayHeaderProps = {
   clubInfo: EggDayInfo | undefined;
+  params: Params;
 };
 
 // 에그데이 모달 props
