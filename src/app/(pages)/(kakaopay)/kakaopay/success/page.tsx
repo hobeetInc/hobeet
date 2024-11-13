@@ -281,17 +281,13 @@ const PaymentSuccesspage = () => {
 
     if (!clubId) return;
 
-    localStorage.setItem("fromKakaoPay", "true");
-
-    setTimeout(() => {
-      if (clubType === "true") {
-        localStorage.setItem("fromKakaoPay", "true");
-      } else {
-        if (eggClubId) {
-          router.push(`/club/regular-club-sub/${eggClubId.egg_club_id}/create/${clubId}`);
-        }
+    if (clubType === "true") {
+      router.push(`/club/one-time-club-sub/${clubId}`);
+    } else {
+      if (eggClubId) {
+        router.push(`/club/regular-club-sub/${eggClubId.egg_club_id}/create/${clubId}`);
       }
-    }, 500);
+    }
   };
 
   const customDateFormat = (dateString: string | null | undefined) => {
