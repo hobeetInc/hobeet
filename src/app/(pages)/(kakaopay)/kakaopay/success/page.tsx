@@ -339,9 +339,7 @@ const PaymentSuccesspage = () => {
       <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
         <div className="left-0 m-3">
           <button
-            onClick={() => {
-              router.back();
-            }}
+            onClick={handleGoToMyClub}
           >
             <HiOutlineChevronLeft className="w-6 h-6" />
           </button>
@@ -354,7 +352,7 @@ const PaymentSuccesspage = () => {
         <div className="w-6 m-3"></div>
       </div>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center mt-12">
         <div className="w-[390px]">
           <div className="flex flex-col gap-2 mt-8">
             <Image
