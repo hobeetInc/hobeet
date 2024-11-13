@@ -16,6 +16,7 @@ import ProgressBar from "../_components/ProgressBar";
 import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import Introduction from "../_components/oneTimeClub/Introduction";
+import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -107,14 +108,15 @@ const OneTimeContent = () => {
     );
   }, [formData, selectedGender, selectedAge]);
 
-  // 다음단계 버튼 (유효성 검사 함수)
-  const handleNext = () => {
+  // 쓰로틀링된 다음 단계 핸들러
+  const throttledHandleNext = useThrottle(() => {
     if (step === 6) {
-      handleSubmit();
+      throttledHandleSubmit();
     } else {
       setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6);
     }
-  };
+  }, 300);
+
   // step이 변경될 때마다 URL 업데이트
   useEffect(() => {
     router.push(`?step=${step}`);
@@ -128,6 +130,11 @@ const OneTimeContent = () => {
       setStep((prev) => (prev - 1) as 1 | 2 | 3 | 4 | 5 | 6);
     }
   };
+
+  // 쓰로틀링된 제출 핸들러
+  const throttledHandleSubmit = useThrottle(() => {
+    handleSubmit();
+  }, 300);
 
   // 슈퍼베이스 제출 버튼
   const handleSubmit = async () => {
@@ -235,7 +242,7 @@ const OneTimeContent = () => {
       </div>
       <div className="fixed bottom-[50px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
         <Button
-          onClick={handleNext}
+          onClick={throttledHandleNext}
           disabled={isNextButtonDisabled()}
           colorType={isNextButtonDisabled() ? undefined : "orange"}
           borderType="circle"
