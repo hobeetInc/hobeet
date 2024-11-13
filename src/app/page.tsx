@@ -15,6 +15,7 @@ export default function Home() {
   useEffect(() => {
     localStorage.removeItem(ONETIME_CLUB_CREATE);
     localStorage.removeItem(REGULAR_CLUB_CREATE);
+    localStorage.removeItem("justCreated");
   }, []);
 
   return (

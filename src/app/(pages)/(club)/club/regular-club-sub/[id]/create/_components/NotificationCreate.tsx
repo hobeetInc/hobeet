@@ -16,6 +16,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
 import ClubCreateTextArea from "@/components/uiComponents/Input/Textarea";
 import SearchInput from "@/components/uiComponents/Input/SearchInput";
+import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 
 // 커스텀 스타일
 const customStyles = `
@@ -113,31 +114,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
     setFormData({ ...formData, egg_day_image: file });
   };
 
-  // const handleDeleteImage = () => {
-  //   setPreviewUrl(null);
-  //   setFormData({ ...formData, egg_day_image: null });
-
-  //   if (fileInputRef.current) {
-  //     fileInputRef.current.value = ""; //input 값 초기화
-  //   }
-  // };
-
-  // const handleColor = (time: Date) => {
-  //   return time.getHours() > 12 ? "text-success" : "text-error";
-  // };
-
-  // // FormData에 선택된 날짜와 시간을 저장
-  // const handleDateChange = (date: Date | null) => {
-  //   setStartDate(date);
-
-  //   if (date) {
-  //     const utcDate = new Date(date.getTime());
-  //     setFormData({
-  //       ...formData,
-  //       r_c_notification_date_time: utcDate.toISOString() // toISOString()하면 아홉시간 빠지게 됨
-  //     });
-  //   }
-  // };
   // 날짜 변경 처리
   const handleDateChange = (date: Date | null) => {
     setStartDate(date);
@@ -351,7 +327,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
       //  데이터 저장
       const data = await submitRegularClubNotification(finalFormData);
-      // console.log("이거 지금 생성함!!!!!!!!!", data);
 
       const hostInfo = {
         egg_day_id: data.egg_day_id,
@@ -360,7 +335,11 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
       await submitRegularMember(hostInfo);
 
-      alert("정기모임 안의 공지글을 생성하였습니다");
+      alert("에그데이를 생성하였습니다");
+
+      // 생성 직후임을 로컬 스토리지에 표시
+      localStorage.setItem("justCreated", "true");
+
       router.push(`/club/regular-club-sub/${params.id}/create/${data.egg_day_id}`); // 성공 시 이동할 페이지
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
@@ -368,6 +347,11 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
       alert(`모임 생성 중 오류가 발생했습니다: ${errorMessage}`);
     }
   };
+
+  // 쓰로틀링된 제출 핸들러
+  const throttledHandleSubmit = useThrottle(() => {
+    handleSubmit();
+  }, 20000);
 
   return (
     <div>
@@ -410,21 +394,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
             )}
           </label>
 
-          {/* <div>
-          <h1 className="mb-4 text-[20px] font-semibold">모임 사진</h1>
-          <div className="flex flex-col gap-4">
-            <input type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/png, image/jpeg" />
-            {previewUrl && (
-              <div>
-                <Image src={previewUrl} alt="모임대표이미지" width={300} height={200} />
-                <button onClick={handleDeleteImage} className="border-2 border-black p-1 my-2">
-                  이미지 삭제
-                </button>
-              </div>
-            )}
-          </div>
-        </div> */}
-
           <div className="flex flex-col gap-2">
             <Text variant="body_medium-16">모임의 제목은 무엇인가요?</Text>
             <ClubCreateInput
@@ -440,25 +409,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
               placeholder="제목을 입력해주세요(최대 글자 36자)"
             />
           </div>
-
-          {/* <div>
-            <h1 className="mb-4 text-[20px] font-semibold">모임 제목</h1>
-
-            <input
-              type="text"
-              placeholder="모임 제목을 작성해주세요"
-              value={formData.egg_day_name}
-              maxLength={36}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  egg_day_name: e.target.value
-                })
-              }
-              className="border-2 border-black mt-4 w-[358px] h-[48px] p-2"
-            />
-            <div className="text-gray-500 text-sm">{formData.egg_day_name.length} / 36</div>
-          </div> */}
 
           <div className="flex flex-col gap-8">
             <style>{customStyles}</style>
@@ -507,45 +457,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
             </div>
           </div>
 
-          {/* <div>
-            <h1 className="text-[20px] font-semibold mb-4">모임 장소</h1>
-
-            <div className="relative">
-              <DatePicker
-                selected={startDate}
-                onChange={handleDateChange}
-                dateFormat={`yyyy년 MM월 dd일`}
-                minDate={new Date()}
-                locale={ko}
-                placeholderText="날짜를 선택해주세요"
-                className="w-full p-4 bg-gray-50 rounded-lg pr-12"
-                wrapperClassName="w-full"
-              />
-            </div>
-
-            <div className="mt-6">
-              <h2 className="text-[20px] font-semibold mb-4">모임 시간</h2>
-
-              <div className="relative">
-                <DatePicker
-                  selected={startTime}
-                  onChange={handleTimeChange}
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={30}
-                  timeCaption="시간"
-                  dateFormat="aa h:mm"
-                  locale={ko}
-                  placeholderText="시간을 선택해주세요"
-                  className="w-full p-4 bg-gray-50 rounded-lg pr-12"
-                  wrapperClassName="w-full"
-                  filterTime={filterTime}
-                  disabled={!startDate}
-                />
-              </div>
-            </div>
-          </div> */}
-
           <div className="flex flex-col gap-2">
             <Text variant="body_medium-16">어떤 모임인가요?</Text>
 
@@ -556,17 +467,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
               placeholder="모임 소개를 작성해주세요"
             />
           </div>
-          {/* <div>
-            <h1 className="text-[20px] font-semibold mb-4">설명</h1>
-
-            <textarea
-              value={formData.egg_day_content}
-              maxLength={290}
-              onChange={(e) => setFormData({ ...formData, egg_day_content: e.target.value })}
-              className="mt-4 p-2 border-2 border-black w-[358px] h-[218px]"
-            />
-            <div className="text-gray-500 text-sm">{formData.egg_day_content.length} / 290</div>
-          </div> */}
 
           <div className="flex flex-col gap-2">
             <Text variant="header-18">참가비가 있나요?</Text>
@@ -614,39 +514,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
               )}
             </div>
           </div>
-          {/* <div>
-            <h1 className="mb-4 text-[20px] font-semibold">참가비</h1>
-            <div className="flex justify-center gap-2">
-              <button
-                onClick={() => handleTaxToggle(true)}
-                className={`w-[175px] h-[57px]  ${showTaxInput ? "bg-blue-100" : "bg-gray-100 "}`}
-              >
-                있음
-              </button>
-              <button
-                onClick={() => handleTaxToggle(false)}
-                className={`w-[175px] h-[57px] ${!showTaxInput ? "bg-blue-100" : "bg-gray-100 "}`}
-              >
-                없음
-              </button>
-            </div>
-            {showTaxInput && (
-              <div className="next-box bg-blue-100">
-                <input
-                  type="text"
-                  value={formData.egg_day_tax || ""}
-                  onChange={handleTaxAmount}
-                  placeholder="참가비를 입력해주세요"
-                  className="w-[328px] h-8 rounded-lg p-2"
-                />
-                {inputError && <div className="text-red-500 text-sm mt-1">{inputError}</div>}
-
-                {formData.egg_day_tax !== null && formData.egg_day_tax > 0 && !inputError && (
-                  <div className="py-4 px-1 text-gray-600">{formData.egg_day_tax.toLocaleString()}원</div>
-                )}
-              </div>
-            )}
-          </div> */}
 
           <div className="flex flex-col gap-2">
             <Text variant="header-18">어디서 만날까요?</Text>
@@ -669,44 +536,8 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
               placeholder="상세주소를 입력해주세요(선택)"
             />
           </div>
-          {/* 
-          <div>
-            <h1 className="mb-4 text-[20px] font-semibold">장소</h1>
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2">
-                <input
-                  type="hidden"
-                  value={addressData.zonecode}
-                  placeholder="우편번호"
-                  className="border p-2 w-24"
-                  readOnly
-                />
-                <button
-                  onClick={execDaumPostcode}
-                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                >
-                  주소 검색
-                </button>
-              </div>
 
-              <input
-                type="text"
-                value={addressData.address}
-                placeholder="주소"
-                className="border p-2 w-full"
-                readOnly
-              />
-              <input
-                type="text"
-                value={addressData.detailAddress}
-                onChange={handleDetailAddressChange}
-                placeholder="상세주소를 입력해주세요(선택)"
-                className="border p-2 w-full"
-              />
-            </div>
-          </div> */}
-
-          <button onClick={handleSubmit} className="w-full h-[59px] bg-primary-300 rounded-full">
+          <button onClick={throttledHandleSubmit} className="w-full h-[59px] bg-primary-300 rounded-full">
             에그데이 생성
           </button>
         </div>

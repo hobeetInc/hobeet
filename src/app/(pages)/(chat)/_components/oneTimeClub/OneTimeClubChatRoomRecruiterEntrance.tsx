@@ -11,10 +11,11 @@ export async function OneTimeClubChatRoomRecruiterEntrance(egg_pop_id: EggPopId)
       `https://www.eggfriends.site/api/oneTimeClubChattingRoom?egg_pop_id=${egg_pop_id.egg_pop_id}`,
       {
         method: "GET"
-      });
-// const response = await fetch(`http://localhost:3000/api/oneTimeClubChattingRoom?egg_pop_id=${egg_pop_id.egg_pop_id}`, {
-//   method: "GET"
-// });
+      }
+    );
+    // const response = await fetch(`http://localhost:3000/api/oneTimeClubChattingRoom?egg_pop_id=${egg_pop_id.egg_pop_id}`, {
+    //   method: "GET"
+    // });
 
     if (!response.ok) {
       throw new Error("일회성 모임 정보를 가져오는 데 실패했습니다.");
