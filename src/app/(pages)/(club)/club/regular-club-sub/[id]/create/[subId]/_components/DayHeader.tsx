@@ -8,7 +8,9 @@ import { useEffect } from "react";
 const DayHeader = ({ clubInfo }: DayHeaderProps) => {
   const router = useRouter();
   const params = useParams();
-  const clubId = params.clubId; // URL에서 clubId 파라미터 추출
+  const { id } = params;
+
+  // console.log("params:", params);
 
   useEffect(() => {
     const isJustCreated = localStorage.getItem("justCreated") === "true";
@@ -18,7 +20,7 @@ const DayHeader = ({ clubInfo }: DayHeaderProps) => {
 
       const handlePopState = () => {
         window.history.pushState(null, "", window.location.href);
-        router.push(`/club/regular-club-sub/${clubId}`); // clubId를 사용하여 상위 페이지로 이동
+        router.push(`/club/regular-club-sub/${id}`);
       };
 
       window.addEventListener("popstate", handlePopState);
@@ -29,13 +31,13 @@ const DayHeader = ({ clubInfo }: DayHeaderProps) => {
         window.removeEventListener("popstate", handlePopState);
       };
     }
-  }, [router, clubId]);
+  }, [router, id]);
 
   const handleBack = () => {
     if (localStorage.getItem("justCreated") !== "true") {
       router.back();
     } else {
-      router.push(`/club/regular-club-sub/${clubId}`); // clubId를 사용하여 상위 페이지로 이동
+      router.push(`/club/regular-club-sub/${id}`);
     }
   };
 
