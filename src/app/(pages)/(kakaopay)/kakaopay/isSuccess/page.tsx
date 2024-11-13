@@ -21,7 +21,7 @@ const Page = () => {
 
     const insertMember = async () => {
       if (clubType === "true") {
-        localStorage.setItem("fromKakaoPay", "true");
+        // localStorage.setItem("fromKakaoPay", "true");
 
         await clubApi.insertMember(clubId, requestUserId);
         setIsMemberInserted(true);

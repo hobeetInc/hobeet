@@ -98,7 +98,6 @@ const DayHeader = ({ clubInfo }: DayHeaderProps) => {
       };
 
       window.addEventListener("popstate", handlePaymentPopState);
-      localStorage.removeItem("fromKakaoPay");
 
       return () => {
         window.removeEventListener("popstate", handlePaymentPopState);
@@ -109,8 +108,8 @@ const DayHeader = ({ clubInfo }: DayHeaderProps) => {
   const handleBack = () => {
     if (localStorage.getItem("justCreated") !== "true") {
       // 결제 페이지에서 왔으면 클럽 메인으로
-      if (document.referrer.includes("kakaopay")) {
-        router.push("/club");
+      if (localStorage.getItem("fromKakaoPay") === "true") {
+        router.push(`/club/regular-club-sub/${id}`);
       } else {
         router.back();
       }
