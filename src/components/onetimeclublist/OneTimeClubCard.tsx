@@ -1,15 +1,91 @@
+// import { useEffect, useState } from "react";
+// import { format } from "date-fns";
+// import { createClient } from "@/utils/supabase/client";
+// import { EggPop } from "@/types/cardlist.types";
+// import Image from "next/image";
+// import { useRouter } from "next/navigation";
+
+// const supabase = createClient();
+
+// export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
+//   const [memberCount, setMemberCount] = useState<number>(0);
+//   const router = useRouter();
+
+//   useEffect(() => {
+//     fetchMemberCount();
+//   }, []);
+
+//   const fetchMemberCount = async () => {
+//     const { count } = await supabase
+//       .from("egg_pop_member")
+//       .select("*", { count: "exact" })
+//       .eq("egg_pop_id", club.egg_pop_id);
+
+//     setMemberCount(count || 0);
+//   };
+
+//   const currentLocation = club.egg_pop_location.split(" ").slice(1, 3).join(" ");
+
+//   const handleClick = () => {
+//     router.push(`/club/one-time-club-sub/${club.egg_pop_id}`);
+//   };
+
+//   return (
+//     <div
+//       onClick={handleClick}
+//       className="w-full hover:bg-gray-50 transition-colors duration-200 cursor-pointer border-b border-gray-100 last:border-b-0"
+//     >
+//       <div className=" flex gap-2">
+//         <div className="w-[102px] h-[102px] relative overflow-hidden rounded-[12px] bg-gray-100">
+//           <Image
+//             src={club.egg_pop_image}
+//             alt={club.egg_pop_name}
+//             width={102}
+//             height={102}
+//             className="w-full h-full object-cover"
+//           />
+//         </div>
+
+//         <div className="h-[19px] flex-1 flex flex-col justify-between">
+//           <div>
+//             <div className="inline-flex px-2 py-0.5 bg-primary-500 rounded-[124px] text-[10px] text-gray-900 font-pretendard font-normal leading-[14.50px]">
+//               에그팝
+//             </div>
+//             <h3 className="text-sm font-semibold mt-2">{club.egg_pop_name}</h3>
+//             <div className="flex items-center mt-1 text-gray-400 text-sm">
+//               <span>
+//                 <Image src={"/asset/Icon/Icon-Location.png"} alt="지도" width={16} height={16} />
+//               </span>
+//               <span className="ml-1">{currentLocation}</span>
+//               <span className="ml-2">{format(new Date(club.egg_pop_date_time), "MM월 dd일 HH:mm")}</span>
+//             </div>
+//           </div>
+
+//           <div className="flex items-center mt-2">
+//             <div className="text-sm text-gray-400">
+//               멤버 <span className=" text-gray-400">{memberCount}</span>
+//               <span className="text-gray-400"> / {club.egg_pop_people_limited}</span>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { createClient } from "@/utils/supabase/client";
 import { EggPop } from "@/types/cardlist.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import useScreenSizeStore from "@/app/store/useScreenSizeStore";
 
 const supabase = createClient();
 
 export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
   const [memberCount, setMemberCount] = useState<number>(0);
   const router = useRouter();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   useEffect(() => {
     fetchMemberCount();
@@ -33,42 +109,74 @@ export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
   return (
     <div
       onClick={handleClick}
-      className="w-full hover:bg-gray-50 transition-colors duration-200 cursor-pointer border-b border-gray-100 last:border-b-0"
+      className={`cursor-pointer transition-colors duration-200 border-gray-100 ${
+        isLargeScreen
+          ? "w-[228px] h-[383px] flex-col inline-flex p-4 bg-white shadow-lg rounded-2xl hover:bg-gray-50"
+          : "w-full border-b flex flex-row p-2 hover:bg-gray-50"
+      }`}
     >
-      <div className=" flex gap-2">
-        <div className="w-[102px] h-[102px] relative overflow-hidden rounded-[12px] bg-gray-100">
-          <Image
-            src={club.egg_pop_image}
-            alt={club.egg_pop_name}
-            width={102}
-            height={102}
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        <div className="h-[19px] flex-1 flex flex-col justify-between">
-          <div>
-            <div className="inline-flex px-2 py-0.5 bg-primary-500 rounded-[124px] text-[10px] text-gray-900 font-pretendard font-normal leading-[14.50px]">
+      {isLargeScreen ? (
+        // 웹 디자인
+        <>
+          <div className="w-[228px] h-[228px] relative overflow-hidden rounded-2xl bg-gray-100">
+            <Image src={club.egg_pop_image} alt={club.egg_pop_name} layout="fill" className="object-cover" />
+          </div>
+          <div className="mt-3 flex flex-col justify-start items-start gap-1">
+            <div className="px-2 py-0.5 bg-[#fdb800] rounded-[124px] text-[10px] text-gray-900 font-pretendard font-normal leading-[14.50px]">
               에그팝
             </div>
-            <h3 className="text-sm font-semibold mt-2">{club.egg_pop_name}</h3>
-            <div className="flex items-center mt-1 text-gray-400 text-sm">
-              <span>
+            <h3 className="text-base font-semibold leading-snug">{club.egg_pop_name}</h3>
+            <div className="flex items-center text-sm text-gray-500 mt-1">
+              <span className="flex items-center gap-1">
                 <Image src={"/asset/Icon/Icon-Location.png"} alt="지도" width={16} height={16} />
+                {currentLocation}
               </span>
-              <span className="ml-1">{currentLocation}</span>
-              <span className="ml-2">{format(new Date(club.egg_pop_date_time), "MM월 dd일 HH:mm")}</span>
+            </div>
+            <div className="text-sm text-gray-500 mt-1">
+              {format(new Date(club.egg_pop_date_time), "MM월 dd일 HH:mm")}
+            </div>
+            <div className="text-sm text-gray-500 mt-1">
+              멤버 {memberCount} / {club.egg_pop_people_limited}
             </div>
           </div>
+        </>
+      ) : (
+        // 모바일 디자인
+        <div className="flex gap-2">
+          <div className="w-[102px] h-[102px] relative overflow-hidden rounded-[12px] bg-gray-100">
+            <Image
+              src={club.egg_pop_image}
+              alt={club.egg_pop_name}
+              width={102}
+              height={102}
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-          <div className="flex items-center mt-2">
-            <div className="text-sm text-gray-400">
-              멤버 <span className=" text-gray-400">{memberCount}</span>
-              <span className="text-gray-400"> / {club.egg_pop_people_limited}</span>
+          <div className="flex-1 flex flex-col justify-between">
+            <div>
+              <div className="inline-flex px-2 py-0.5 bg-primary-500 rounded-[124px] text-[10px] text-gray-900 font-pretendard font-normal leading-[14.50px]">
+                에그팝
+              </div>
+              <h3 className="text-sm font-semibold mt-2">{club.egg_pop_name}</h3>
+              <div className="flex items-center mt-1 text-gray-400 text-sm">
+                <span>
+                  <Image src={"/asset/Icon/Icon-Location.png"} alt="지도" width={16} height={16} />
+                </span>
+                <span className="ml-1">{currentLocation}</span>
+                <span className="ml-2">{format(new Date(club.egg_pop_date_time), "MM월 dd일 HH:mm")}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center mt-2">
+              <div className="text-sm text-gray-400">
+                멤버 <span className=" text-gray-400">{memberCount}</span>
+                <span className="text-gray-400"> / {club.egg_pop_people_limited}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
