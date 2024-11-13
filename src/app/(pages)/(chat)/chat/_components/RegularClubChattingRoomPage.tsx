@@ -4,7 +4,6 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import { ApiResponse, EggClubChattingRoom } from "@/types/eggclubchat.types";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const RegularClubChattingRoomPage = () => {
@@ -162,7 +161,7 @@ const RegularClubChattingRoomPage = () => {
           {chatRooms.length > 0 ? (
             chatRooms.map((room: EggClubChattingRoom) => (
               <div key={room.egg_day_chatting_room_id} className="border-b">
-                <Link
+                <a
                   href={`/chat/regularChat/${room.egg_day_chatting_room_id}`}
                   className="flex items-center p-4 w-full hover:bg-gray-50"
                 >
@@ -200,7 +199,7 @@ const RegularClubChattingRoomPage = () => {
                       {room.last_message}
                     </Text>
                   </div>
-                </Link>
+                </a>
               </div>
             ))
           ) : (
