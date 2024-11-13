@@ -13,6 +13,7 @@ import ProgressBar from "../_components/ProgressBar";
 import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import Introduction from "../_components/regularClub/Introduction";
+import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 
 const RegularContent = () => {
   const router = useRouter();
@@ -119,68 +120,19 @@ const RegularContent = () => {
     }
   };
 
-  // 다음단계 버튼 (유효성 검사 함수)
-  const handleNext = () => {
-    if (step === 1 && formData.sub_category_id === 0) {
-      alert("카테고리를 선택해주세요");
-      return;
-    }
+  // 쓰로틀링된 제출 핸들러
+  const throttledHandleSubmit = useThrottle(() => {
+    handleSubmit();
+  }, 20000);
 
-    if (step === 2) {
-      if (!formData.egg_club_image) {
-        alert("이미지를 선택해주세요");
-        return;
-      }
-
-      if (!formData.egg_club_name.trim()) {
-        alert("모임 제목을 입력해주세요");
-        return;
-      }
-      if (!formData.egg_club_introduction.trim()) {
-        alert("모임 소개글을 입력해주세요");
-        return;
-      }
-    }
-
+  // 쓰로틀링된 다음 단계 핸들러
+  const throttledHandleNext = useThrottle(() => {
     if (step === 3) {
-      if (!selectedGender) {
-        alert("성별제한을 설정해주세요");
-        return;
-      }
-
-      if (!selectedAge) {
-        alert("나이제한을 설정해주세요");
-        return;
-      }
-
-      if (formData.egg_club_people_limited !== null && formData.egg_club_people_limited === 0) {
-        alert("2명 이상 적어주세요");
-        return;
-      }
-
-      if (formData.egg_club_people_limited !== null && formData.egg_club_people_limited === 1) {
-        alert("2명 이상 적어주세요");
-        return;
-      }
-
-      if (formData.egg_club_people_limited !== null && formData.egg_club_people_limited >= 101) {
-        alert("인원제한은 100명 이하로 해주세요");
-        return;
-      }
-
-      if (formData.egg_club_people_limited === null) {
-        setFormData({
-          ...formData,
-          egg_club_people_limited: 100
-        });
-        return alert("정말로 인원제한을 주지 않겠습니까?");
-      }
-
-      handleSubmit();
+      throttledHandleSubmit();
     } else {
       setStep((prev) => (prev + 1) as 1 | 2 | 3);
     }
-  };
+  }, 300);
 
   // 슈퍼베이스 제출 버튼
   const handleSubmit = async () => {
@@ -289,7 +241,7 @@ const RegularContent = () => {
       </div>
       <div className="fixed bottom-[50px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
         <Button
-          onClick={handleNext}
+          onClick={throttledHandleNext}
           disabled={isNextButtonDisabled()}
           colorType={isNextButtonDisabled() ? undefined : "black"}
           borderType="circle"

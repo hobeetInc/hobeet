@@ -134,7 +134,7 @@ const OneTimeContent = () => {
   // 쓰로틀링된 제출 핸들러
   const throttledHandleSubmit = useThrottle(() => {
     handleSubmit();
-  }, 300);
+  }, 20000);
 
   // 슈퍼베이스 제출 버튼
   const handleSubmit = async () => {
