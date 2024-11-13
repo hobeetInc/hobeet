@@ -110,6 +110,16 @@ const OneTimeContent = () => {
 
   // 쓰로틀링된 다음 단계 핸들러
   const throttledHandleNext = useThrottle(() => {
+    if (step === 5) {
+      if (formData.egg_pop_people_limited === null) {
+        setFormData({
+          ...formData,
+          egg_pop_people_limited: 100
+        });
+        return alert("정말로 인원제한을 주지 않겠습니까?");
+      }
+    }
+
     if (step === 6) {
       throttledHandleSubmit();
     } else {
@@ -161,7 +171,7 @@ const OneTimeContent = () => {
       await putOneTimeMember(member);
       // 모임장 채팅방 생성 및 입장
       await OneTimeClubChatRoom(data.egg_pop_name, data.egg_pop_id, userId);
-      alert("일회성 모임 생성에 성공했습니다");
+      alert("에그팝 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(ONETIME_CLUB_CREATE);
 

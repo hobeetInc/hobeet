@@ -335,7 +335,11 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
       await submitRegularMember(hostInfo);
 
-      alert("정기모임 안의 공지글을 생성하였습니다");
+      alert("에그데이를 생성하였습니다");
+
+      // 생성 직후임을 로컬 스토리지에 표시
+      localStorage.setItem("justCreated", "true");
+
       router.push(`/club/regular-club-sub/${params.id}/create/${data.egg_day_id}`); // 성공 시 이동할 페이지
     } catch (error) {
       console.error("제출 중 오류 발생:", error);

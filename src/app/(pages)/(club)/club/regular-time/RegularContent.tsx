@@ -128,6 +128,14 @@ const RegularContent = () => {
   // 쓰로틀링된 다음 단계 핸들러
   const throttledHandleNext = useThrottle(() => {
     if (step === 3) {
+      if (formData.egg_club_people_limited === null) {
+        setFormData({
+          ...formData,
+          egg_club_people_limited: 100
+        });
+        return alert("정말로 인원제한을 주지 않겠습니까?");
+      }
+
       throttledHandleSubmit();
     } else {
       setStep((prev) => (prev + 1) as 1 | 2 | 3);
@@ -172,9 +180,12 @@ const RegularContent = () => {
       // 모임장 채팅방 생성 및 입장
       await RegularClubChatRoom(data.egg_club_name, data.egg_club_id, userId);
 
-      alert("정기적 모임 생성에 성공했습니다");
+      alert("에그클럽 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(REGULAR_CLUB_CREATE);
+
+      // 생성 직후임을 로컬 스토리지에 표시
+      localStorage.setItem("justCreated", "true");
 
       // 다른 페이지로 이동
       router.replace(`/club/regular-club-sub/${data.egg_club_id}`);
@@ -183,6 +194,10 @@ const RegularContent = () => {
       alert("정기적 모임 생성 중 오류가 발생했습니다.");
     }
   };
+
+  // useEffect(() => {
+  //   console.log("우울", formData);
+  // }, [formData]);
 
   // 렌더링 함수
   const renderStep = () => {
