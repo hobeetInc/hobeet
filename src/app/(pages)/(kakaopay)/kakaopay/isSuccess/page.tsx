@@ -27,7 +27,7 @@ const Page = () => {
         // router.push(
         //   `http://localhost:3000/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}&pg_token=${pgToken}`
         // );
-         router.push(
+        router.push(
           `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}&pg_token=${pgToken}`
         );
       } else {

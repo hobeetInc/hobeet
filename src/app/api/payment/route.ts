@@ -65,9 +65,8 @@ export async function POST(req: Request) {
       })
     });
 
-    
     if (!response.ok) {
-          // if (!response.ok) {
+      // if (!response.ok) {
       const errorData = await response.json();
       console.error(`Payment failed with status: ${response.status}`, errorData);
       throw new Error(`Payment failed with status: ${response.status}`);
