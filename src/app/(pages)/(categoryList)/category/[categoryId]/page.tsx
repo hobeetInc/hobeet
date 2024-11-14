@@ -6,7 +6,6 @@ import { getSubCategory } from "../../_api/supabase";
 import CategoryList from "../../_components/CategoryList";
 import { SubCategory } from "@/types/category.types";
 
-
 const CategoryPage = () => {
   const params = useParams();
   const categoryId = Number(params.categoryId);
@@ -49,7 +48,7 @@ const CategoryPage = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex fixed w-full overflow-x-auto  bg-white z-10 mb-10 ml-4 pt-3">
+      <div className="flex fixed w-full overflow-x-auto scrollbar-hide bg-white z-10 mb-10 ml-4 pt-3">
         <button
           onClick={() => setSelectedCategory(0)}
           className={`flex-shrink-0 py-2 px-3 mr-3 rounded-lg transition-colors ${
@@ -70,7 +69,7 @@ const CategoryPage = () => {
           </button>
         ))}
       </div>
-      <div className="flex-1 mt-12 overflow-y-auto ">
+      <div className="flex-1 mt-12 overflow-y-auto scrollbar-hide">
         <CategoryList categoryId={categoryId} selectedCategory={selectedCategory} />
       </div>
     </div>

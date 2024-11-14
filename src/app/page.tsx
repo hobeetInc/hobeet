@@ -20,7 +20,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full ">
+    <div className="w-full mb-14 ">
       <div className="flex mx-4 justify-center items-center">
         <div className="w-full flex-shrink-0 rounded-[50px] bg-[#d9d9d9] overflow-hidden mt-[22px]">
           <Image
