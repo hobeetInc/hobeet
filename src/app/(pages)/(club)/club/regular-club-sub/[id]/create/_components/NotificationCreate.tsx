@@ -147,7 +147,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
   // 날짜와 시간을 합쳐서 FormData에 저장
   const updateDateTime = (date: Date | null, time: Date | null) => {
     if (date && time) {
-      const combinedDate = new Date(date.setHours(time.getHours(), time.getMinutes()));
+      const combinedDate = new Date(date.setHours(time.getHours() + 9, time.getMinutes()));
       setFormData({
         ...formData,
         egg_day_date_time: combinedDate.toISOString()

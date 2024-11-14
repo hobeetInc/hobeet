@@ -199,14 +199,14 @@ const ChatPage: React.FC = () => {
   };
 
   if (isLoadingMessages) {
-    return <div className="p-4 text-center">메시지를 불러오는 중...</div>;
+    return <div className="p-4 text-center mt-[120px]">메시지를 불러오는 중...</div>;
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full ">
       {/* 메시지 출력 */}
       <div className="flex-grow overflow-y-auto">
-        <div className="p-4">
+        <div className="p-4 ">
           {Object.keys(groupedMessages).length > 0 ? (
             Object.keys(groupedMessages).map((dateString) => (
               <div key={dateString} className="mb-6">
@@ -278,7 +278,7 @@ const ChatPage: React.FC = () => {
               </div>
             ))
           ) : (
-            <div className="text-center">메시지가 없습니다.</div>
+            <div className="text-center mt-[120px]">메시지가 없습니다.</div>
           )}
           <div ref={messagesEndRef} />
         </div>

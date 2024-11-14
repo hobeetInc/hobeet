@@ -209,7 +209,7 @@ const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full ">
       {/* 메시지 출력 */}
       <div className="flex-grow overflow-y-auto">
         <div className="p-4">
@@ -284,7 +284,7 @@ const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
               </div>
             ))
           ) : (
-            <div className="text-center">메시지가 없습니다.</div>
+            <div className="text-center mt-[120px]">메시지가 없습니다.</div>
           )}
           <div ref={messagesEndRef} />
         </div>

@@ -10,7 +10,7 @@ import { CustomAddress } from "@/utils/CustomAddress";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { addHours, format, parseISO } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 
@@ -315,17 +315,16 @@ const PaymentSuccesspage = () => {
   const customDate = (dateString: string | null | undefined): DateTimeFormat => {
     if (!dateString) {
       return {
-        date: "유효하지 않은 날짜",
+        date: "유효하지 ��은 날짜",
         time: "유효하지 않은 시간"
       };
     }
 
     try {
       const parsedDate = parseISO(dateString);
-      const adjustedDate = addHours(parsedDate, 9);
       return {
-        date: format(adjustedDate, "MM월 dd일"),
-        time: format(adjustedDate, "HH:mm")
+        date: format(parsedDate, "MM월 dd일"),
+        time: format(parsedDate, "HH:mm")
       };
     } catch (error) {
       console.error("날짜 포멧팅 실패:", dateString, error);
