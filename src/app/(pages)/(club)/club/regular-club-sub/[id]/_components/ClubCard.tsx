@@ -18,10 +18,11 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
     const day = date.getDate();
     const hours = date.getHours();
     const minutes = date.getMinutes();
+    const addZero = (num: number) => String(num).padStart(2, "0");
 
     return {
       date: `${month}월 ${day}일`,
-      time: `${hours}:${minutes}`
+      time: `${hours}:${addZero(minutes)}`
     };
   };
 
@@ -79,7 +80,7 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
             </Text>
 
             <Text variant="body_medium-14" className="text-gray-400">
-              {DateTimeCustom(notification.egg_day_date_time).time}
+              {(DateTimeCustom(notification.egg_day_date_time).time)}
             </Text>
           </div>
         </div>

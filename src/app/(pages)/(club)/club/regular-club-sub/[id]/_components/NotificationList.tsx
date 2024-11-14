@@ -95,7 +95,7 @@ const NotificationList = ({ notificationData, crewMembers, children }: Notificat
         <div className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth pb-2">
           <button
             onClick={() => setSelectedDate("all")}
-            className={`min-w-[41px] h-[68px] rounded-[25px] border justify-center items-center gap-2.5 flex ${
+            className={`min-w-[41px] max-w-[41px] h-[68px] rounded-[25px] border justify-center items-center gap-2.5 flex ${
               selectedDate === "all" ? "border-neutral-800 border-2" : "border-gray-100"
             }`}
           >
@@ -111,7 +111,7 @@ const NotificationList = ({ notificationData, crewMembers, children }: Notificat
             <button
               key={date}
               onClick={() => setSelectedDate(date)}
-              className={`min-w-[41px] h-[68px] px-2 py-3 bg-white rounded-[25px] border flex-col justify-center items-center gap-1 inline-flex ${
+              className={`min-w-[41px] max-w-[41px] h-[68px] px-2 py-3 bg-white rounded-[25px] border flex-col justify-center items-center gap-1 inline-flex ${
                 selectedDate === date ? "border-neutral-800 border-2" : "border-gray-100"
               }`}
             >
