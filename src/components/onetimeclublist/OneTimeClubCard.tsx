@@ -87,6 +87,8 @@ export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
   const router = useRouter();
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
+  console.log("isLargeScreen in component:", isLargeScreen); // 디버그 로그 추가
+
   useEffect(() => {
     fetchMemberCount();
   }, []);
@@ -116,13 +118,13 @@ export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
       }`}
     >
       {isLargeScreen ? (
-        // 웹 디자인
-        <>
+        // 모바일 디자인
+        <div className="w-[228px] h-[383px] flex-col justify-start items-start gap-3 inline-flex">
           <div className="w-[228px] h-[228px] relative overflow-hidden rounded-2xl bg-gray-100">
             <Image src={club.egg_pop_image} alt={club.egg_pop_name} layout="fill" className="object-cover" />
           </div>
           <div className="mt-3 flex flex-col justify-start items-start gap-1">
-            <div className="px-2 py-0.5 bg-[#fdb800] rounded-[124px] text-[10px] text-gray-900 font-pretendard font-normal leading-[14.50px]">
+            <div className="px-2 py-0.5 bg-primary-500 rounded-[124px] text-[10px] text-gray-900 font-pretendard font-normal leading-[14.50px]">
               에그팝
             </div>
             <h3 className="text-base font-semibold leading-snug">{club.egg_pop_name}</h3>
@@ -139,9 +141,9 @@ export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
               멤버 {memberCount} / {club.egg_pop_people_limited}
             </div>
           </div>
-        </>
+        </div>
       ) : (
-        // 모바일 디자인
+        // 웹 디자인
         <div className="flex gap-2">
           <div className="w-[102px] h-[102px] relative overflow-hidden rounded-[12px] bg-gray-100">
             <Image
