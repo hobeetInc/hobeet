@@ -7,6 +7,7 @@ import { AuthProvider } from "./store/AuthContext";
 import Footer from "./Footer";
 import Header from "./Header";
 import { usePathname } from "next/navigation";
+import ScreenSizeInitializer from "@/components/uiComponents/ResponsiveDesign/ScreenSizeInitializer";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -49,6 +50,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${pretendard.variable} h-full`} suppressHydrationWarning>
       <body className="font-pretendard h-full">
+        <ScreenSizeInitializer />
         <AuthProvider>
           <Providers>
             <div className="flex flex-col h-full bg-white">

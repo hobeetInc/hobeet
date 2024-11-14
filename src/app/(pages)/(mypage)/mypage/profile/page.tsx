@@ -10,13 +10,14 @@ import { useEffect, useState } from "react";
 import browserClient from "@/utils/supabase/client";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { FaCamera } from "react-icons/fa6";
-
+import useScreenSizeStore from "@/app/store/useScreenSizeStore";
 
 const ProfilePage = () => {
   const router = useRouter();
   // const { userName, userProfileImg, setUserProfileImg } = useAuth();
   const [userName, setUserName] = useState("");
   const [userProfileImg, setUserProfileImg] = useState("");
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const supabase = browserClient;
 
   useEffect(() => {
@@ -39,9 +40,9 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className="max-w-md mx-auto p-4">
+    <div className="max-w-md mx-auto p-4 lg:max-w-[1024px] lg:mx-0 lg:mt-[135px]">
       <div
-        className="flex items-center bg-primary-200 p-4 rounded-lg mb-6 justify-between cursor-pointer"
+        className="flex items-center bg-primary-200 p-4 rounded-lg mb-6 justify-between cursor-pointer lg:w-full lg:justify-start"
         onClick={() => router.push("/mypage/profileUpdate")}
       >
         <div className="relative w-[78px] h-[78px] rounded-full overflow-hidden ">
@@ -69,10 +70,9 @@ const ProfilePage = () => {
             }}
           />
 
-            <span className="absolute w-[30px] h-[30px] mt-9 left-[43px] top-[13px] bg-white rounded-full border border-solid border-gray-50 flex items-center justify-center z-10">
-              <FaCamera />
-            </span>
-
+          <span className="absolute w-[30px] h-[30px] mt-9 left-[43px] top-[13px] bg-white rounded-full border border-solid border-gray-50 flex items-center justify-center z-10">
+            <FaCamera />
+          </span>
         </div>
         <div className="ml-4 flex-1">
           <Text variant="subtitle-18" className="text-gray-800 text-left">
@@ -112,15 +112,20 @@ const ProfilePage = () => {
             <SlArrowRight />
           </span>
         </div>
-        <div
-          onClick={() => logOut()}
-          className="flex items-center justify-between px-4 py-4 cursor-pointer border-solid border-b-[1px] border-gray-50"
-        >
-          <Text variant="body_medium-16">로그아웃</Text>
-          <span className="text-gray-500 w-[16px] h-[16px]">
-            <SlArrowRight />
-          </span>
-        </div>
+
+        {isLargeScreen ? (
+          ""
+        ) : (
+          <div
+            onClick={() => logOut()}
+            className="flex items-center justify-between px-4 py-4 cursor-pointer border-solid border-b-[1px] border-gray-50"
+          >
+            <Text variant="body_medium-16">로그아웃</Text>
+            <span className="text-gray-500 w-[16px] h-[16px]">
+              <SlArrowRight />
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

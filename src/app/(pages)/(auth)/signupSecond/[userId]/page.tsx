@@ -12,6 +12,7 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import DateScrollPicker from "../_components/DateScrollPicker";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Link from "next/link";
+import useScreenSizeStore from "@/app/store/useScreenSizeStore";
 
 const NAME_REGEX = /^[가-힣]{2,5}$/;
 
@@ -30,7 +31,7 @@ const SignupSecondPage = () => {
   const [showMonthPicker, setShowMonthPicker] = useState(false);
   const [showDayPicker, setShowDayPicker] = useState(false);
   const [isFormComplete, setIsFormComplete] = useState(false);
-
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const router = useRouter();
   const params = useParams();
   const userIdParam = params.userId;
@@ -238,11 +239,11 @@ const SignupSecondPage = () => {
         <div className="w-6 m-3"></div>
       </div>
 
-      <div className=" mt-4 left-[16px] flex flex-col gap-12 lg:mt-[287px] lg:mx-[272px] lg:w-[480px] lg:h-[438px] lg:gap-10">
+      <div className="mt-4 left-[16px] flex flex-col gap-12 lg:fixed lg:top-[287px] lg:mx-[272px] lg:left-0 lg:w-[480px] lg:mt-0 lg:h-[438px] lg:gap-10">
         <div className="flex flex-col gap-2">
-          <Text variant="subtitle-18">프로필</Text>
-          <div className="relative w-[78px] h-[78px] mt-2">
-            <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden flex items-center justify-center">
+          {!isLargeScreen ? <Text variant="subtitle-18">프로필</Text> : ""}
+          <div className="relative w-[78px] h-[78px] mt-2 lg:mt-0">
+            <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden flex items-center justify-center lg:w-[78px] lg:h-[78px]">
               {userProfileImg && (
                 <Image
                   src={userProfileImg}
@@ -390,18 +391,24 @@ const SignupSecondPage = () => {
         </div>
       </div>
 
-      <div className="fixed ml-[16px] mr-[16px] w-full bottom-0 mb-[524px] justify-items-center">
+      <div className="fixed ml-[16px] mr-[16px] w-full bottom-0 mb-[54px] justify-items-center lg:mb-[524px] lg:w-[480px] lg:mx-0 lg:justify-items-center">
         {isFormComplete ? (
           <Button
             colorType="orange"
             borderType="rectangle"
-            className="ml-[16px] mr-[16px] text-white text-subtitle-16"
+            className="ml-[16px] mr-[16px] text-white text-subtitle-16 lg:mx-[272px]"
+            sizeType={isLargeScreen ? "web" : "large"}
             onClick={handleSubmit}
           >
             다음
           </Button>
         ) : (
-          <Button disabled className="ml-[16px] mr-[16px] text-subtitle-16">
+          <Button
+            borderType="rectangle"
+            sizeType={isLargeScreen ? "web" : "large"}
+            disabled
+            className="ml-[16px] mr-[16px] text-subtitle-16 lg:mx-[272px]"
+          >
             다음
           </Button>
         )}
