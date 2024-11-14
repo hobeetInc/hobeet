@@ -4,7 +4,7 @@ import Text from '@/components/uiComponents/TextComponents/Text';
 import { CategoryLayoutProps, MainCategoryList } from '@/types/search.types';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from "next/link";
 import { HiOutlineChevronLeft } from 'react-icons/hi';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
@@ -18,11 +18,15 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
   const router = useRouter();
 
   const supabase = createClient();
+
+useEffect(() => {
   const fetchCategories = async () => {
-    const { data } = await supabase.from('main_category').select('*');
+    const { data } = await supabase.from("main_category").select("*");
     setCategories(data);
   };
   fetchCategories();
+}, [currentCategory]);  
+  
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
