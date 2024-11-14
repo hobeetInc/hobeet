@@ -7,12 +7,14 @@ import { getSearchedClubs } from "../_api/supabase";
 import Link from "next/link";
 import { Club } from "@/types/search.types";
 import Image from "next/image";
-import { HorizontalContentsListLargeEggClub, HorizontalContentsListLargeEggPop } from "@/components/uiComponents/HorizontalContentsListLarge";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import {
+  HorizontalContentsListLargeEggClub,
+  HorizontalContentsListLargeEggPop
+} from "@/components/uiComponents/HorizontalContentsListLarge";
+// import Text from "@/components/uiComponents/TextComponents/Text";
 
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
-
 
 const SearchPage = () => {
   const router = useRouter();
@@ -51,12 +53,11 @@ const SearchPage = () => {
     setSearchTerm(e.target.value);
   };
 
-
   return (
     <div className="flex flex-col items-start w-full  mx-auto px-4 ">
       <form onSubmit={handleSearch} className="relative flex items-center w-full bg-[#f2f2f2] rounded-[22px] py-2 px-5">
         <input
-          className="w-full h-[11 px] bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
+          className="            w-full h-[11 px] bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
           type="text"
           placeholder="검색어를 입력하세요"
           value={searchTerm}
@@ -100,7 +101,7 @@ const SearchPage = () => {
                     className="w-[160px] h-[311px] mr-4"
                   >
                     <HorizontalContentsListLargeEggPop eggPop={club} />
-                    </Link>
+                  </Link>
                 </div>
               )}
             </div>
@@ -110,7 +111,17 @@ const SearchPage = () => {
 
       {searchResults.length === 0 && (
         <>
-          <button className="w-full" onClick={handleCreateClub}>
+          <Image
+            src="/asset/smallBanner.svg"
+            alt="smallBanner"
+            width={358}
+            height={80}
+            onClick={handleCreateClub}
+            className="rounded-xl w-[358px] h-[80px] mt-[24px]"
+          />
+
+          <p className="text-[18px] font-semibold py-4 leading-[135%] mt-4">전체 인기 모임</p>
+          {/* <button className="w-full" onClick={handleCreateClub}>
             <div className="w-full h-[80px] mt-6 rounded-xl flex items-center bg-primary-200 p-4 justify-center">
               <div className="flex flex-col">
                 <div className="w-[213px]">
@@ -126,10 +137,11 @@ const SearchPage = () => {
                 </div>
               </div>
             </div>
-          </button>
-          <div className="flex w-full mt-8 flex-col items-start">
+          </button> */}
+
+          {/* <div className="flex w-full mt-8 flex-col items-start h-[56px]">
             <p className="text-[18px] font-semibold pb-4 leading-[135%]">전체 인기 모임</p>
-          </div>
+          </div> */}
           <OverallPopularMeetings />
         </>
       )}
