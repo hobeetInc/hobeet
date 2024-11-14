@@ -6,7 +6,6 @@ import { getSubCategory } from "../../_api/supabase";
 import CategoryList from "../../_components/CategoryList";
 import { SubCategory } from "@/types/category.types";
 
-
 const CategoryPage = () => {
   const params = useParams();
   const categoryId = Number(params.categoryId);

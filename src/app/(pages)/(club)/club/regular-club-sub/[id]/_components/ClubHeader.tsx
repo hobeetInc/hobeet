@@ -37,14 +37,21 @@ const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   const handleBack = () => {
     if (clubInfo.egg_club_id === Number(currentPath)) {
       router.push("/");
+      return;
+    }
+
+    if (localStorage.getItem("fromKakaoPay") === "true") {
+      router.push("/");
+      return;
     }
 
     // 생성 직후가 아닐 때만 뒤로가기 허용
     if (localStorage.getItem("justCreated") !== "true") {
-      // router.back();
       router.back();
+      return;
     } else {
       router.push("/");
+      return;
     }
   };
 
