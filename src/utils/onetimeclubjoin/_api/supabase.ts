@@ -1,3 +1,4 @@
+import { OneTimeClubChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/oneTimeClub/OneTimeClubChatRoomRecruiterEntrance";
 import { createClient } from "@/utils/supabase/client";
 
 export class ClubJoinError extends Error {
@@ -97,7 +98,7 @@ export class SupabaseClubAPI {
       user_id: userId
     });
 
-    // await OneTimeClubChatRoomRecruiterEntrance({ egg_pop_id: Number(clubId) });
+    await OneTimeClubChatRoomRecruiterEntrance({ egg_pop_id: Number(clubId) });
     if (error) {
       throw new ClubJoinError("모임 가입 처리 중 오류가 발생했습니다.");
     }
@@ -109,7 +110,7 @@ export class SupabaseClubAPI {
       user_id: userId
     });
 
-    // await OneTimeClubChatRoomRecruiterEntrance({ egg_pop_id: Number(clubId) });
+    await OneTimeClubChatRoomRecruiterEntrance({ egg_pop_id: Number(clubId) });
     if (error) {
       throw new ClubJoinError("모임 가입 처리 중 오류가 발생했습니다.");
     }

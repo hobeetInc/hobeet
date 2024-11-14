@@ -93,7 +93,7 @@ const AllRegularClubListPage = () => {
                   <Image
                     width={16}
                     height={16}
-                    src="/asset/Icon/Icon-Heart.png"
+                    src="/asset/Icon/Heart-Filled.svg"
                     alt="Heart"
                     className="flex w-4 h-4 justify-center items-center"
                   />

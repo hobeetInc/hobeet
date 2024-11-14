@@ -1,20 +1,55 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/app/store/AuthContext";
 import { ClubHeaderProps } from "@/types/eggclub.types";
 import { IoIosArrowBack } from "react-icons/io";
+import { useEffect } from "react";
 
 const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   const router = useRouter();
   const { userId } = useAuth();
+  const currentPath = useParams();
+
+  useEffect(() => {
+    const isJustCreated = localStorage.getItem("justCreated") === "true";
+
+    if (isJustCreated) {
+      // 뒤로가기 방지를 위한 history 조작
+      window.history.pushState(null, "", window.location.href);
+
+      const handlePopState = () => {
+        window.history.pushState(null, "", window.location.href);
+        router.push("/"); // 또는 다른 페이지로 리다이렉트
+      };
+
+      window.addEventListener("popstate", handlePopState);
+
+      // cleanup
+      localStorage.removeItem("justCreated");
+
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
+    }
+  }, [router]);
 
   const handleBack = () => {
-    router.back();
+    if (clubInfo.egg_club_id === Number(currentPath)) {
+      router.push("/");
+    }
+
+    // 생성 직후가 아닐 때만 뒤로가기 허용
+    if (localStorage.getItem("justCreated") !== "true") {
+      // router.back();
+      router.back();
+    } else {
+      router.push("/");
+    }
   };
 
   const handleCreate = () => {
-    router.push(`/club/regular-club-sub/${clubInfo.egg_club_id}/create`);
+    router.replace(`/club/regular-club-sub/${clubInfo.egg_club_id}/create`);
   };
 
   return (

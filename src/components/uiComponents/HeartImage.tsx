@@ -9,7 +9,7 @@ export const HeartImage = ({ selectedId }: { selectedId: number }) => {
     },
     {
       id: 2,
-      src: "/asset/Icon/Icon-Heart.png",
+      src: "/asset/Icon/Heart-Filled.svg",
       alt: "red heart" //빨간색 채워진 하트
     },
     {

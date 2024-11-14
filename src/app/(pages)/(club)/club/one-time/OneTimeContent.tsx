@@ -16,6 +16,7 @@ import ProgressBar from "../_components/ProgressBar";
 import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import Introduction from "../_components/oneTimeClub/Introduction";
+import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -107,14 +108,25 @@ const OneTimeContent = () => {
     );
   }, [formData, selectedGender, selectedAge]);
 
-  // 다음단계 버튼 (유효성 검사 함수)
-  const handleNext = () => {
+  // 쓰로틀링된 다음 단계 핸들러
+  const throttledHandleNext = useThrottle(() => {
+    if (step === 5) {
+      if (formData.egg_pop_people_limited === null) {
+        setFormData({
+          ...formData,
+          egg_pop_people_limited: 100
+        });
+        return alert("정말로 인원제한을 주지 않겠습니까?");
+      }
+    }
+
     if (step === 6) {
-      handleSubmit();
+      throttledHandleSubmit();
     } else {
       setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5 | 6);
     }
-  };
+  }, 300);
+
   // step이 변경될 때마다 URL 업데이트
   useEffect(() => {
     router.push(`?step=${step}`);
@@ -128,6 +140,11 @@ const OneTimeContent = () => {
       setStep((prev) => (prev - 1) as 1 | 2 | 3 | 4 | 5 | 6);
     }
   };
+
+  // 쓰로틀링된 제출 핸들러
+  const throttledHandleSubmit = useThrottle(() => {
+    handleSubmit();
+  }, 20000);
 
   // 슈퍼베이스 제출 버튼
   const handleSubmit = async () => {
@@ -154,7 +171,7 @@ const OneTimeContent = () => {
       await putOneTimeMember(member);
       // 모임장 채팅방 생성 및 입장
       await OneTimeClubChatRoom(data.egg_pop_name, data.egg_pop_id, userId);
-      alert("일회성 모임 생성에 성공했습니다");
+      alert("에그팝 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(ONETIME_CLUB_CREATE);
 
@@ -235,7 +252,7 @@ const OneTimeContent = () => {
       </div>
       <div className="fixed bottom-[50px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
         <Button
-          onClick={handleNext}
+          onClick={throttledHandleNext}
           disabled={isNextButtonDisabled()}
           colorType={isNextButtonDisabled() ? undefined : "orange"}
           borderType="circle"

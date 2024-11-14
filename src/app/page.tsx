@@ -15,6 +15,8 @@ export default function Home() {
   useEffect(() => {
     localStorage.removeItem(ONETIME_CLUB_CREATE);
     localStorage.removeItem(REGULAR_CLUB_CREATE);
+    localStorage.removeItem("justCreated");
+    localStorage.removeItem("fromKakaoPay");
   }, []);
 
   return (
@@ -22,7 +24,7 @@ export default function Home() {
       <div className="flex mx-4 justify-center items-center">
         <div className="w-full flex-shrink-0 rounded-[18px] bg-[#d9d9d9] overflow-hidden mt-[22px]">
           <Image
-            src={"/asset/banner.png"}
+            src={"/asset/banner.svg"}
             alt="MainBanner"
             width={358}
             height={296}
