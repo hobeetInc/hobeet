@@ -164,7 +164,7 @@ export default function ChatRoomLayout({ children, params }: LayoutProps) {
     <ChatProvider roomId={params.chatRoomId}>
       <div className="flex flex-col h-screen">
         <ChatHeader />
-        <div className="flex-1 overflow-hidden mt-10">{children}</div>
+        <div className="flex-1 overflow-hidden mt-[40px]">{children}</div>
       </div>
     </ChatProvider>
   );
