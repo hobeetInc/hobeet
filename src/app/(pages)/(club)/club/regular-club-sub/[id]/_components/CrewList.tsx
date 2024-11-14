@@ -144,16 +144,15 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
           <Button
             borderType="circle"
             sizeType="small"
-            className="w-[50%] bg-gray-100"
+            className="w-[50%] bg-gray-100 text-primary-900"
             onClick={() => router.push(`/approvemembers/${clubId}`)}
           >
-            <Text variant="subtitle-16" className="text-primary-900">
+
               에그즈 관리
-            </Text>
           </Button>
 
           <Button colorType="black" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
-            <Text variant="subtitle-16">에그클럽 채팅방</Text>
+에그클럽 채팅방
           </Button>
         </div>
         // <div className="flex justify-center items-center gap-2">

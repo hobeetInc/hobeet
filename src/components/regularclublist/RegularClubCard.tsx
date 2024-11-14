@@ -96,7 +96,7 @@ export const RegularClubCard = ({ club }: { club: EggClub }) => {
               </div>
             </div>
             <div className="flex items-center mt-1">
-              <Image src="/asset/Icon/Icon-Heart.png" alt="heart" width={16} height={16} className="mr-1" />
+              <Image src="/asset/Icon/Heart-Filled.svg" alt="heart" width={16} height={16} className="mr-1" />
               <span className="text-xs text-gray-400">{wishlistCount > 100 ? "100+" : wishlistCount}</span>
             </div>
           </div>
