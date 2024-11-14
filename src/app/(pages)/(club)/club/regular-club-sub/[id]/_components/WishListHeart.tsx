@@ -70,7 +70,7 @@ const WishListHeart = ({ egg_club_id }: WishListHeartProps) => {
   return (
     <button onClick={toggleWishList} disabled={isLoading} className="relative w-6 h-6">
       <Image
-        src={isWished ? "/asset/Icon/Icon-Heart.png" : "/asset/Icon/Heart-Outline.png"}
+        src={isWished ? "/asset/Icon/Heart-Filled.svg" : "/asset/Icon/Heart-Outline.png"}
         alt={isWished ? "찜됨" : "찜하기"}
         width={24}
         height={24}
