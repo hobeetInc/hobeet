@@ -36,33 +36,31 @@ export default function Footer() {
     }
   };
 
-const noHeaderFooterRoutes = [
-  "/signin",
-  "/register",
-  /^\/chat\/regularChat\/.*$/,
-  "/club",
-  "/club/one-time",
-  "/club/regular-time",
-  /^\/chat\/onetimeChat\/.*$/,
-  /^\/club\/one-time-club-sub\/.*$/,
-  /^\/club\/regular-club-sub\/.*$/,
-  /^\/signupSecond\/.*$/,
-  "/mypage/profileUpdate",
-  "/mypage/inquiry",
-  "/kakaopay/paymentConfirm",
-  "/kakaopay/success",
-  /^\/approvemembers\/.*$/
-];
-const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>
-  typeof route === "string" ? route === pathname : route.test(pathname)
-);
-
-
+  const noHeaderFooterRoutes = [
+    "/signin",
+    "/register",
+    /^\/chat\/regularChat\/.*$/,
+    "/club",
+    "/club/one-time",
+    "/club/regular-time",
+    /^\/chat\/onetimeChat\/.*$/,
+    /^\/club\/one-time-club-sub\/.*$/,
+    /^\/club\/regular-club-sub\/.*$/,
+    /^\/signupSecond\/.*$/,
+    "/mypage/profileUpdate",
+    "/mypage/inquiry",
+    "/kakaopay/paymentConfirm",
+    "/kakaopay/success",
+    /^\/approvemembers\/.*$/
+  ];
+  const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>
+    typeof route === "string" ? route === pathname : route.test(pathname)
+  );
 
   return (
     showHeaderFooter && (
       <footer
-        className={`flex w-full p-[8px 16px 0px 16px]  justify-between items-center border-t border-solid border-[1px] border-[#F2F2F2] bg-[#fff] fixed bottom-0 mt-3  flex-shrink-0`}
+        className={`flex w-full p-[8px 16px 0px 16px]  justify-between items-center border-t border-solid border-[1px] border-[#F2F2F2] bg-[#fff] fixed bottom-[15px] mt-3  flex-shrink-0`}
       >
         <div className="flex justify-around w-full">
           <Link href="/">
