@@ -8,6 +8,8 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 
+export const revalidate = 0; // 페이지 상단에 추가
+
 const SubSubPage = async ({ params }: SubSubPageProps) => {
   const { id, subId } = params;
   const secondId = Number(subId);
