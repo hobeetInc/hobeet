@@ -147,12 +147,11 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
             className="w-[50%] bg-gray-100 text-primary-900"
             onClick={() => router.push(`/approvemembers/${clubId}`)}
           >
-
-              에그즈 관리
+            에그즈 관리
           </Button>
 
           <Button colorType="black" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
-에그클럽 채팅방
+            에그클럽 채팅방
           </Button>
         </div>
         // <div className="flex justify-center items-center gap-2">
@@ -246,7 +245,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
 
         <div className="w-full ">
           <NotificationList notificationData={notificationData} crewMembers={crewList}>
-            <div className="w-full fixed bottom-[34px] right-0 left-0">{renderJoinButton()}</div>
+            <div className="w-full fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
           </NotificationList>
         </div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
