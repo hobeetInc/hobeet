@@ -108,16 +108,15 @@ const PopHeader = ({ clubInfo }: PopHeaderProps) => {
   }, [router]);
 
   const handleBack = () => {
-    // 생성 직후가 아닐 때만 뒤로가기 허용
-    if (localStorage.getItem("justCreated") !== "true") {
-      // 결제 페이지에서 왔으면 클럽 메인으로
+    const isJustCreated = localStorage.getItem("justCreated") === "true";
+    const isFromKakaoPay = localStorage.getItem("fromKakaoPay") === "true";
 
-      if (localStorage.getItem("fromKakaoPay") === "true") {
-        router.push("/");
-      } else {
-        router.back();
-      }
+    if (isJustCreated || (isFromKakaoPay && !isJustCreated)) {
+      router.push("/");
+      return;
     }
+
+    router.back();
   };
 
   return (
