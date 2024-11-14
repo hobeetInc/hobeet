@@ -147,7 +147,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
   // 날짜와 시간을 합쳐서 FormData에 저장
   const updateDateTime = (date: Date | null, time: Date | null) => {
     if (date && time) {
-      const combinedDate = new Date(date.setHours(time.getHours(), time.getMinutes()));
+      const combinedDate = new Date(date.setHours(time.getHours() + 9, time.getMinutes()));
       setFormData({
         ...formData,
         egg_day_date_time: combinedDate.toISOString()
@@ -426,6 +426,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
                     placeholderText="날짜를 선택해주세요"
                     className="w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 text-gray-300"
                     wrapperClassName="w-full"
+                    autoComplete="off"
                   />
                 </SearchInput>
               </label>
@@ -451,6 +452,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
                     wrapperClassName="w-full"
                     filterTime={filterTime}
                     disabled={!startDate}
+                    autoComplete="off"
                   />
                 </SearchInput>
               </label>
