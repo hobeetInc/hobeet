@@ -80,6 +80,7 @@ const DateTime = ({ formData, setFormData }: EggPopProps) => {
               placeholderText="날짜를 선택해주세요"
               className="w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 text-gray-300"
               wrapperClassName="w-full"
+              autoComplete="off"
             />
           </SearchInput>
         </label>
@@ -105,6 +106,7 @@ const DateTime = ({ formData, setFormData }: EggPopProps) => {
               wrapperClassName="w-full"
               filterTime={filterTime}
               disabled={!startDate}
+              autoComplete="off"
             />
           </SearchInput>
         </label>
