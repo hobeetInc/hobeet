@@ -101,8 +101,6 @@ const PopHeader = ({ clubInfo }: PopHeaderProps) => {
 
       window.addEventListener("popstate", handlePaymentPopState);
 
-      localStorage.removeItem("fromKakaoPay");
-
       return () => {
         window.removeEventListener("popstate", handlePaymentPopState);
       };
@@ -113,8 +111,9 @@ const PopHeader = ({ clubInfo }: PopHeaderProps) => {
     // 생성 직후가 아닐 때만 뒤로가기 허용
     if (localStorage.getItem("justCreated") !== "true") {
       // 결제 페이지에서 왔으면 클럽 메인으로
-      if (document.referrer.includes("kakaopay")) {
-        router.push("/club");
+
+      if (localStorage.getItem("fromKakaoPay") === "true") {
+        router.push("/");
       } else {
         router.back();
       }

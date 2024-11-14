@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { createClient } from "@/utils/supabase/client";
 import { Bell, Home, MessageCircle, Clapperboard } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
+import { getNotificationData } from "../(pages)/(club)/club/_api/supabase";
 
 const ICON_MAP = {
   home: Home,
@@ -21,7 +22,7 @@ const Icon = ({ name }: IconProps) => {
   const IconComponent = ICON_MAP[name];
   return <IconComponent className="w-6 h-6" />;
 };
-  const supabase = createClient();
+const supabase = createClient();
 
 const loginTest = async () => {
   const { error } = await supabase.auth.signInWithPassword({
@@ -35,14 +36,21 @@ const loginTest = async () => {
   }
 };
 
-
 const Playground = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getNotificationData(125);
+
+      console.log("데이터", data);
+      return data;
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
-        <button onClick={loginTest}>
-        로그인
-      </button>
+      <button onClick={loginTest}>로그인</button>
 
       <div className="p-8 space-y-8">
         <section>
