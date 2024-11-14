@@ -340,7 +340,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
       // 생성 직후임을 로컬 스토리지에 표시
       localStorage.setItem("justCreated", "true");
 
-      router.push(`/club/regular-club-sub/${params.id}/create/${data.egg_day_id}`); // 성공 시 이동할 페이지
+      router.replace(`/club/regular-club-sub/${params.id}/create/${data.egg_day_id}`); // 성공 시 이동할 페이지
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       const errorMessage = error instanceof Error ? error.message : "알 수 없는 오류가 발생했습니다";

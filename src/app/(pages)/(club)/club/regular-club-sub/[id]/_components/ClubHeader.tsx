@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/app/store/AuthContext";
 import { ClubHeaderProps } from "@/types/eggclub.types";
 import { IoIosArrowBack } from "react-icons/io";
@@ -9,6 +9,7 @@ import { useEffect } from "react";
 const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   const router = useRouter();
   const { userId } = useAuth();
+  const currentPath = useParams();
 
   useEffect(() => {
     const isJustCreated = localStorage.getItem("justCreated") === "true";
@@ -34,14 +35,21 @@ const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   }, [router]);
 
   const handleBack = () => {
+    if (clubInfo.egg_club_id === Number(currentPath)) {
+      router.push("/");
+    }
+
     // 생성 직후가 아닐 때만 뒤로가기 허용
     if (localStorage.getItem("justCreated") !== "true") {
+      // router.back();
       router.back();
+    } else {
+      router.push("/");
     }
   };
 
   const handleCreate = () => {
-    router.push(`/club/regular-club-sub/${clubInfo.egg_club_id}/create`);
+    router.replace(`/club/regular-club-sub/${clubInfo.egg_club_id}/create`);
   };
 
   return (

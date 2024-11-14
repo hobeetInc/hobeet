@@ -227,6 +227,7 @@ export const getParticipationStatus = async ({ userId, clubId }: GetParticipatio
 
 // 정기적 모임안의 공지 정보 가져오기
 export const getNotificationData = async (clubId: number) => {
+  console.log("클럽아이디", clubId);
   const { data, error } = await browserClient.from("egg_day").select("*").eq("egg_club_id", clubId);
 
   if (error) throw error;
