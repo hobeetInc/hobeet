@@ -66,7 +66,7 @@ export default function ClubListContent() {
         ) : oneTimeClubs.length === 0 && regularClubs.length === 0 ? (
           renderEmptyState()
         ) : (
-          <div className="w-full h-[338px] flex-col justify-start items-start gap-4 inline-flex">
+          <div className="w-full mb-5 flex-col justify-start items-start gap-4 inline-flex">
             {oneTimeClubs.map((club) => (
               <OneTimeClubCard key={club.egg_pop_id} club={club} />
             ))}
