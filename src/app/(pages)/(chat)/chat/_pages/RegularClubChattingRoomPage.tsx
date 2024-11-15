@@ -2,6 +2,7 @@
 
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { ApiResponse, EggClubChattingRoom } from "@/types/eggclubchat.types";
+import { cn } from "@/utils/cn/util";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -146,9 +147,9 @@ const RegularClubChattingRoomPage = () => {
   if (errorMessage) {
     return (
       <>
-        <div className="flex flex-col">
-          <div className="flex flex-col h-[10px] border-b border-[#D9D9D9]"></div>
-          <div className="text-center">{errorMessage}</div>
+        <div className={cn("flex flex-col")}>
+          <div className={cn("flex flex-col h-[10px] border-b border-[#D9D9D9]")}></div>
+          <div className={cn("text-center")}>{errorMessage}</div>
         </div>
       </>
     );
@@ -156,37 +157,37 @@ const RegularClubChattingRoomPage = () => {
 
   return (
     <>
-      <div className="flex flex-col h-[calc(100%-91px)]">
-        <div className="flex flex-col overflow-y-auto">
+      <div className={cn("flex flex-col h-[calc(100%-91px)]")}>
+        <div className={cn("flex flex-col overflow-y-auto")}>
           {chatRooms.length > 0 ? (
             chatRooms.map((room: EggClubChattingRoom) => (
-              <div key={room.egg_day_chatting_room_id} className="border-b">
+              <div key={room.egg_day_chatting_room_id} className={cn("border-b")}>
                 <a
                   href={`/chat/regularChat/${room.egg_day_chatting_room_id}`}
-                  className="flex items-center p-4 w-full hover:bg-gray-50"
+                  className={cn("flex items-center p-4 w-full hover:bg-gray-50")}
                 >
-                  <div className="w-[52px] h-[52px] flex-shrink-0">
+                  <div className={cn("w-[52px] h-[52px] flex-shrink-0")}>
                     <Image
                       src={room.egg_club_image}
                       alt={room.egg_club_name}
                       width={52}
                       height={52}
-                      className="w-full h-full object-cover rounded-full border"
+                      className={cn("w-full h-full object-cover rounded-full border")}
                     />
                   </div>
 
-                  <div className="flex-1 ml-4">
-                    <div className="flex justify-between items-center mb-1 ">
-                      <Text variant="subtitle-16" className="text-gray-900 font-medium truncate max-w-[200px]">
+                  <div className={cn("flex-1 ml-4")}>
+                    <div className={cn("flex justify-between items-center mb-1")}>
+                      <Text variant="subtitle-16" className={cn("text-gray-900 font-medium truncate max-w-[200px]")}>
                         {room.egg_day_chatting_room_name}
                       </Text>
-                      <div className="flex items-center gap-4">
+                      <div className={cn("flex items-center gap-4")}>
                         {room.egg_day_chatting[0].count > 0 && (
-                          <Text variant="subtitle-16" className="text-gray-200">
+                          <Text variant="subtitle-16" className={cn("text-gray-200")}>
                             {room.egg_day_chatting[0].count}{" "}
                           </Text>
                         )}
-                        <Text variant="body-12" className="text-gray-400">
+                        <Text variant="body-12" className={cn("text-gray-400")}>
                           {room.last_message_time_value}
                         </Text>
                       </div>
@@ -194,7 +195,7 @@ const RegularClubChattingRoomPage = () => {
 
                     <Text
                       variant="body_medium-12"
-                      className=" w-[252px] text-gray-400 line-clamp-2 text-ellipsis overflow-hidden"
+                      className={cn("w-[252px] text-gray-400 line-clamp-2 text-ellipsis overflow-hidden")}
                     >
                       {room.last_message}
                     </Text>
@@ -203,7 +204,7 @@ const RegularClubChattingRoomPage = () => {
               </div>
             ))
           ) : (
-            <div className="text-center py-8 ">
+            <div className={cn("text-center py-8")}>
               <Text variant="body_medium-16">채팅방이 없습니다.</Text>
             </div>
           )}
