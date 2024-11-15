@@ -1,5 +1,6 @@
 import { EggPopChatRoom } from "@/types/eggpopchat.types";
 import { EggPopChattingMember, EggPopId } from "@/types/eggpopchat.types";
+import { createClient } from "@/utils/supabase/client";
 
 export async function createOneTimeChatRoomAndEnterAsAdmin(
   egg_pop_name: string,
@@ -72,5 +73,66 @@ export async function enterOneTimeChatRoom(egg_pop_id: EggPopId) {
     await postResponse.json();
   } catch (error) {
     console.error("처리 중 오류가 발생했습니다: ", error);
+  }
+}
+
+export async function fetchEggPopChatRoomWithMembers(roomId: string, userId: string) {
+  const supabase = createClient();
+  try {
+    // 채팅방 정보 조회
+    const { data: roomData, error: roomError } = await supabase
+      .from("egg_pop_chatting_room")
+      .select("*")
+      .eq("egg_pop_chatting_room_id", roomId)
+      .single();
+
+    if (roomError) throw roomError;
+
+    // 채팅 멤버 정보 조회
+    const { data: chatMember, error: chatMemberError } = await supabase
+      .from("egg_pop_member")
+      .select("egg_pop_member_id")
+      .eq("user_id", userId)
+      .eq("egg_pop_id", roomData.egg_pop_id)
+      .single();
+
+    if (chatMemberError) throw chatMemberError;
+
+    // 채팅방 멤버 정보 조회
+    const { data: chattingData, error: chattingError } = await supabase
+      .from("egg_pop_chatting_room_member")
+      .select("*")
+      .eq("egg_pop_chatting_room_id", roomId)
+      .eq("egg_pop_member_id", chatMember.egg_pop_member_id)
+      .single();
+
+    if (chattingError) throw chattingError;
+
+    return {
+      roomData,
+      chatMember,
+      chattingData
+    };
+  } catch (error) {
+    console.error("Error fetching chat room data:", error);
+    throw error;
+  }
+}
+
+export async function fetchChatRoomMembers(egg_pop_id: number) {
+  const supabase = createClient();
+  try {
+    const { data, error } = await supabase
+      .from("egg_pop_chatting_room_member")
+      .select(`* , egg_pop_member_id(* , user_id(*))`)
+      .eq("egg_pop_id", egg_pop_id)
+      .eq("active", true);
+
+    if (error) throw error;
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching chat room members:", error);
+    throw error;
   }
 }

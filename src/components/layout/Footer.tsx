@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuth } from "../../store/AuthContext";
 import Image from "next/image";
+import { useAuth } from "@/store/AuthContext";
 import { cn } from "@/utils/cn/util";
 
 type NavItem = {
@@ -14,8 +14,71 @@ type NavItem = {
   };
   alt: string;
   requiresAuth?: boolean;
-  onClick?: () => void;
 };
+
+const navItems: NavItem[] = [
+  {
+    path: "/",
+    icon: {
+      active: "/asset/Bottom nav_Button_Home.png",
+      default: "/asset/Bottom nav_Button_Home_Default.png"
+    },
+    alt: "Bottom nav_Button_Home_Default"
+  },
+  {
+    path: "/search",
+    icon: {
+      active: "/asset/Bottom nav_Button_Search.png",
+      default: "/asset/Bottom nav_Button_Search_Default.png"
+    },
+    alt: "Bottom nav_Button_Search_Default"
+  },
+  {
+    path: "/myclublist",
+    icon: {
+      active: "/asset/Bottom nav_Button__My gathering.png",
+      default: "/asset/Bottom nav_Button__My gathering_Default.png"
+    },
+    alt: "Bottom nav_Button__My gathering_Default",
+    requiresAuth: true
+  },
+  {
+    path: "/chat",
+    icon: {
+      active: "/asset/Bottom nav_Button_My chat.png",
+      default: "/asset/Bottom nav_Button_My chat_Default.png"
+    },
+    alt: "Bottom nav_Button_My chat_Default",
+    requiresAuth: true
+  },
+  {
+    path: "/mypage/profile",
+    icon: {
+      active: "/asset/Bottom nav_Button_My page.png",
+      default: "/asset/Bottom nav_Button_My page_Default.png"
+    },
+    alt: "Bottom nav_Button_My page_Default",
+    requiresAuth: true
+  }
+];
+
+const noHeaderFooterRoutes = [
+  "/signin",
+  "/register",
+  /^\/chat\/regularChat\/.*$/,
+  "/club",
+  "/club/one-time",
+  "/club/regular-time",
+  /^\/chat\/onetimeChat\/.*$/,
+  /^\/club\/one-time-club-sub\/.*$/,
+  /^\/club\/regular-club-sub\/.*$/,
+  /^\/signupSecond\/.*$/,
+  "/mypage/profileUpdate",
+  "/mypage/inquiry",
+  "/kakaopay/paymentConfirm",
+  "/kakaopay/success",
+  /^\/approvemembers\/.*$/
+];
 
 export default function Footer() {
   const pathname = usePathname();
@@ -32,115 +95,54 @@ export default function Footer() {
     return true;
   };
 
-  const navItems: NavItem[] = [
-    {
-      path: "/",
-      icon: {
-        active: "/asset/Bottom nav_Button_Home.png",
-        default: "/asset/Bottom nav_Button_Home_Default.png"
-      },
-      alt: "Bottom nav_Button_Home_Default"
-    },
-    {
-      path: "/search",
-      icon: {
-        active: "/asset/Bottom nav_Button_Search.png",
-        default: "/asset/Bottom nav_Button_Search_Default.png"
-      },
-      alt: "Bottom nav_Button_Search_Default"
-    },
-    {
-      path: "/myclublist",
-      icon: {
-        active: "/asset/Bottom nav_Button__My gathering.png",
-        default: "/asset/Bottom nav_Button__My gathering_Default.png"
-      },
-      alt: "Bottom nav_Button__My gathering_Default",
-      requiresAuth: true
-    },
-    {
-      path: "/chat",
-      icon: {
-        active: "/asset/Bottom nav_Button_My chat.png",
-        default: "/asset/Bottom nav_Button_My chat_Default.png"
-      },
-      alt: "Bottom nav_Button_My chat_Default",
-      requiresAuth: true
-    },
-    {
-      path: "/mypage/profile",
-      icon: {
-        active: "/asset/Bottom nav_Button_My page.png",
-        default: "/asset/Bottom nav_Button_My page_Default.png"
-      },
-      alt: "Bottom nav_Button_My page_Default",
-      requiresAuth: true
-    }
-  ];
-
   const NavButton = ({ item }: { item: NavItem }) => {
     const isActive = pathname === item.path;
     const iconSrc = isActive ? item.icon.active : item.icon.default;
 
-    const handleClick = () => {
-      if (item.requiresAuth) {
-        handleAuthRequired(item.path);
-      }
-    };
-
     const ButtonContent = () => (
-      <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
+      <div className={cn("flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0")}>
         <Image src={iconSrc} alt={item.alt} width={48} height={48} />
       </div>
     );
 
-    return item.requiresAuth ? (
-      <button onClick={handleClick}>
-        <ButtonContent />
-      </button>
-    ) : (
+    if (item.requiresAuth) {
+      return (
+        <button onClick={() => handleAuthRequired(item.path)}>
+          <ButtonContent />
+        </button>
+      );
+    }
+
+    return (
       <Link href={item.path}>
         <ButtonContent />
       </Link>
     );
   };
 
-  // 헤더/푸터를 표시하지 않을 라우트 패턴
-  const noHeaderFooterRoutes = [
-    "/signin",
-    "/register",
-    /^\/chat\/regularChat\/.*$/,
-    "/club",
-    "/club/one-time",
-    "/club/regular-time",
-    /^\/chat\/onetimeChat\/.*$/,
-    /^\/club\/one-time-club-sub\/.*$/,
-    /^\/club\/regular-club-sub\/.*$/,
-    /^\/signupSecond\/.*$/,
-    "/mypage/profileUpdate",
-    "/mypage/inquiry",
-    "/kakaopay/paymentConfirm",
-    "/kakaopay/success",
-    /^\/approvemembers\/.*$/
-  ];
-
   const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>
     typeof route === "string" ? route === pathname : route.test(pathname)
   );
 
+  if (!showHeaderFooter) return null;
+
   return (
-    showHeaderFooter && (
-      <footer
-        className={cn(
-          "flex w-full p-[8px 16px 0px 16px] justify-between items-center border-t border-solid border-[1px] border-[#F2F2F2] bg-[#fff] fixed bottom-[15px] mt-3 flex-shrink-0"
-        )}
-      >
-        <div className="flex justify-around w-full">
-          {navItems.map((item, index) => (
-            <NavButton key={index} item={item} />
-          ))}
-        </div>
-      </footer>
-    )
+    <footer
+      className={cn(
+        "flex w-full h-[60px]",
+        "p-[8px 16px 0px 16px]",
+        "justify-between items-center",
+        "border-t border-solid border-[1px] border-[#F2F2F2]",
+        "bg-[#fff]",
+        "fixed bottom-[15px]",
+        "flex-shrink-0"
+      )}
+    >
+      <div className={cn("flex justify-around w-full")}>
+        {navItems.map((item, index) => (
+          <NavButton key={index} item={item} />
+        ))}
+      </div>
+    </footer>
   );
 }

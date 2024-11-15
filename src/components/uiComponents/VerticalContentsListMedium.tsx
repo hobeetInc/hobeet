@@ -24,7 +24,7 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImag, m
     <div className="h-[311px] flex-col justify-start items-start gap-2 inline-flex">
       {/* 썸네일 이미지 */}
       <div className="relative ">
-        <div
+        {/* <div
           className="relative flex justify-end items-center "
           style={{
             width: "160px",
@@ -35,6 +35,14 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImag, m
             display: "flex",
             alignItems: "center"
           }}
+        /> */}
+        <Image
+          src={`${eggPop.egg_pop_image}`}
+          width={160}
+          height={160}
+          className="p-[112px 0px 0px 112px] rounded-[12px] w-[160px] h-[160px]"
+          alt={`${eggPop.egg_pop_image}`}
+          priority
         />
       </div>
 
@@ -91,7 +99,9 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImag, m
             </div>
           </div>
           <div className="justify-start items-center gap-0.5 flex">
-            <Text variant="body_medium-14" className="text-gray-400">멤버</Text>
+            <Text variant="body_medium-14" className="text-gray-400">
+              멤버
+            </Text>
             <Text variant="body_medium-14" className="text-gray-400">
               {memberCount} / {eggPop.egg_pop_people_limited}
             </Text>
