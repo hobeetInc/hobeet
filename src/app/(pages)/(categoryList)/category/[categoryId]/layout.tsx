@@ -8,7 +8,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { IoSearchOutline } from "react-icons/io5";
 import { BsPlusLg } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 
