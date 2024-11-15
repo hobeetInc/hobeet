@@ -56,21 +56,21 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
       const member = crewList[index];
       return member ? (
         // 멤버가 있는 경우
-        <div key={member.userId} className="w-[37px]">
-          <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">
+        <div key={member.userId} className="w-[40px]">
+          <div className="relative w-[40px] h-[40px] overflow-hidden rounded-full">
             <Image
               src={member.userImage}
               alt={member.userName}
-              width={37}
-              height={37}
+              width={40}
+              height={40}
               className="w-full h-full object-cover border-2 border-black"
             />
           </div>
         </div>
       ) : (
         // 빈 슬롯
-        <div key={`empty-${index}`} className="w-[37px]">
-          <div className="w-[37px] h-[37px] rounded-full border-2 border-gray-200 bg-gray-50"></div>
+        <div key={`empty-${index}`} className="w-[40px]">
+          <div className="w-[40px] h-[40px] rounded-full border-2 border-gray-200 bg-gray-50"></div>
         </div>
       );
     });
@@ -242,6 +242,8 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
           </button>
         </div>
         <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
+
+        <div className="self-stretch h-[0px] mt-[15px] mb-4 border border-solid border-gray-50"></div>
 
         <div className="w-full ">
           <NotificationList notificationData={notificationData} crewMembers={crewList}>

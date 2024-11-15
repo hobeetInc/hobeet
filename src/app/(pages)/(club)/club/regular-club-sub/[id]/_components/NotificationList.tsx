@@ -117,6 +117,11 @@ const NotificationList = ({ notificationData, crewMembers, children }: Notificat
             >
               <Text variant="body-10" className={`${selectedDate === date ? "text-neutral-800" : "text-gray-400"}`}>
                 {date}
+              </Text>
+              <Text
+                variant="body_medium-14"
+                className={`${selectedDate === date ? "text-neutral-800" : "text-gray-400"}`}
+              >
                 {format(parseISO(groupedNotifications[date][0].egg_day_date_time), "eee", { locale: ko })}
               </Text>
             </button>
