@@ -112,7 +112,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { User } from "@/types/user.types";
-import { useAuthStore } from "@/app/store/authStore";
+import { useAuthStore } from "@/store/authStore";
 
 const supabase = createClient();
 
