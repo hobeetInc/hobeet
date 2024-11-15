@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 // 컴포넌트 임포트
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import { OneTimeClubChatRoom } from "@/app/(pages)/(chat)/_components/oneTimeClub/OneTimeClubChatRoom";
 import { ONETIME_CLUB_CREATE } from "../_utils/localStorage";
 import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../_api/supabase";

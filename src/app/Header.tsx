@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useAuth } from "./store/AuthContext";
+import { useAuth } from "../store/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
@@ -125,7 +125,11 @@ export default function Header({ children }) {
           </div>
         </header>
       )}
-      <main className={`flex-1 overflow-y-auto scrollbar-hide ${showHeaderFooter ? (showHeader ? "mt-[60px] mb-[60px]" : "mb-[60px]") : showHeader ? "" : ""}`}>
+      <main
+        className={`flex-1 overflow-y-auto scrollbar-hide ${
+          showHeaderFooter ? (showHeader ? "mt-[60px] mb-[60px]" : "mb-[60px]") : showHeader ? "" : ""
+        }`}
+      >
         {children}
       </main>
     </>

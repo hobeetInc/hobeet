@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuth } from "./store/AuthContext";
+import { useAuth } from "../store/AuthContext";
 import Image from "next/image";
 
 export default function Footer() {

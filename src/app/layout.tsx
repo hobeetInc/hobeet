@@ -1,13 +1,13 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "./providers/queryProvider";
-import { AuthProvider } from "./store/AuthContext";
+import { AuthProvider } from "../store/AuthContext";
 import Footer from "./Footer";
 import Header from "./Header";
 import { Metadata } from "next";
 
 const pretendard = localFont({
-  src: "./fonts/PretendardVariable.woff2",
+  src: "../fonts/PretendardVariable.woff2",
   display: "swap",
   weight: "45 920",
   variable: "--font-pretendard"
@@ -27,7 +27,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
   return (
     <html lang="ko" className={`${pretendard.variable} h-full`} suppressHydrationWarning>
       <body className="font-pretendard h-full">
