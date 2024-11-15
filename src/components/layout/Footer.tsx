@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuth } from "./store/AuthContext";
+
 import Image from "next/image";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+import { useAuth } from "@/store/AuthContext";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -78,7 +79,7 @@ export default function Footer() {
           </Link>
           <Link href="/search">
             <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
-              {pathname === "/search" ?  <Icon name="searchIcon" /> : <Icon name="emptySearchIcon" />}
+              {pathname === "/search" ? <Icon name="searchIcon" /> : <Icon name="emptySearchIcon" />}
 
               {/* <Image
                 src={
@@ -112,7 +113,9 @@ export default function Footer() {
             <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
               <Image
                 src={
-                  pathname === "/chat" ? "/asset/Bottom nav_Button_My chat.png" : "/asset/Bottom nav_Button_My chat_Default.png"
+                  pathname === "/chat"
+                    ? "/asset/Bottom nav_Button_My chat.png"
+                    : "/asset/Bottom nav_Button_My chat_Default.png"
                 }
                 alt="Bottom nav_Button_My chat_Default"
                 width={48}

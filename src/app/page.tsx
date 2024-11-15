@@ -1,13 +1,14 @@
 "use client";
 import Image from "next/image";
-import CategorySlider from "@/components/CategorySlider";
-import OneTimeClubList from "@/components/OneTimeClubList";
-import RegularClubList from "@/components/RegularClubList";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./(pages)/(club)/club/_utils/localStorage";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Text from "@/components/uiComponents/TextComponents/Text";
+
+import OneTimeClubList from "./_components/OneTimeClubList";
+import RegularClubList from "./_components/RegularClubList";
+import CategorySlider from "./_components/CategorySlider";
 
 export default function Home() {
   const router = useRouter();

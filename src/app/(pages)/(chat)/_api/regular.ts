@@ -1,7 +1,47 @@
-import { EggClubChattingMember, EggClubId } from "@/types/eggclubchat.types";
+import { EggClubChatRoom, EggClubChattingMember, EggClubId } from "@/types/eggclubchat.types";
 
-// 정기 모임 입장 함수(자동 가입시)
-export async function RegularClubChatRoomRecruiterEntrance(club: EggClubId) {
+export async function createRegularChatRoomAndEnterAsAdmin(
+  egg_club_name: string,
+  clubId: number,
+  userId: string | null
+) {
+  try {
+    const response = await fetch("/api/createChatRoom", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ egg_club_name, userId, clubId })
+    });
+
+    const { data, error }: { data: EggClubChatRoom[] | null; error?: string } = await response.json();
+
+    if (response.ok && data && data.length > 0) {
+      const [clubChatRoom] = data;
+      await enterChatRoomAsAdmin(clubChatRoom);
+    } else {
+      console.error("채팅방 생성 실패:", error || "Unknown error");
+    }
+  } catch (error) {
+    console.error("서버 오류:", error);
+  }
+}
+
+export async function enterChatRoomAsAdmin(clubChatRoom: EggClubChatRoom) {
+  try {
+    await fetch("/api/chatRoomMeetingPlace", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ clubChatRoom })
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function enterRegularChatRoom(club: EggClubId) {
   try {
     const response = await fetch(`/api/regularClubChattingRoom?egg_club_id=${club.egg_club_id}`, {
       method: "GET",
@@ -15,7 +55,6 @@ export async function RegularClubChatRoomRecruiterEntrance(club: EggClubId) {
     }
 
     const data: EggClubChattingMember = await response.json();
-    // console.log(data);
 
     const postResponse = await fetch("/api/chatRoomRecruiterEntrance", {
       method: "POST",
@@ -30,18 +69,17 @@ export async function RegularClubChatRoomRecruiterEntrance(club: EggClubId) {
     }
 
     await postResponse.json();
-    // console.log(chatRoomRecruiterEntrance);
   } catch (error) {
     console.error("처리 중 오류가 발생했습니다: ", error);
   }
 }
+
 interface ClubParams {
-  egg_club_id: number; // 또는 string (clubId의 타입에 따라)
+  egg_club_id: number;
   user_id: string;
 }
 
-//승인 시 채팅방 입장 함수
-export async function RegularClubApproveChatRoomRecruiterEntrance(params: ClubParams) {
+export async function enterRegularChatRoomAfterApproval(params: ClubParams) {
   try {
     const response = await fetch(`/api/regularClubChattingRoom?eggclubid=${params.egg_club_id}`, {
       method: "GET",
@@ -55,7 +93,6 @@ export async function RegularClubApproveChatRoomRecruiterEntrance(params: ClubPa
     }
 
     const data: EggClubChattingMember = await response.json();
-    // console.log(data);
 
     const postResponse = await fetch("/api/chatRoomApproveRecruiterEntrance", {
       method: "POST",
@@ -73,7 +110,6 @@ export async function RegularClubApproveChatRoomRecruiterEntrance(params: ClubPa
     }
 
     await postResponse.json();
-    // console.log(chatRoomRecruiterEntrance);
   } catch (error) {
     console.error("처리 중 오류가 발생했습니다: ", error);
   }

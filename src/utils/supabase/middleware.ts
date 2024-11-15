@@ -28,8 +28,6 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user }
   } = await supabase.auth.getUser();
-  // console.log(user);
-  // console.log(request.nextUrl.pathname);
 
   if (user && request.nextUrl.pathname.startsWith("/signin")) {
     // return NextResponse.redirect(new URL("/", request.url));
@@ -64,23 +62,36 @@ export async function updateSession(request: NextRequest) {
   //   }
   // }
 
-  if (
-    !user &&
-    (request.nextUrl.pathname.startsWith("/mypage") ||
-      request.nextUrl.pathname.startsWith("/chat") ||
-      request.nextUrl.pathname.startsWith("/myclublist") ||
-      request.nextUrl.pathname.startsWith("/club") ||
-      (request.nextUrl.pathname.startsWith("/club/one-time") && request.nextUrl.searchParams.has("step")) ||
-      (request.nextUrl.pathname.startsWith("/club/regular-time") && request.nextUrl.searchParams.has("step")) ||
-      request.nextUrl.pathname.startsWith("/clubmyclublist") ||
-      request.nextUrl.pathname.startsWith("/kakaopay/paymentConfirm") ||
-      request.nextUrl.pathname.startsWith("/kakaopay/isSuccess") ||
-      request.nextUrl.pathname.startsWith("/kakaopay/success") ||
-      request.nextUrl.pathname.startsWith("/chat/onetimeChat") ||
-      request.nextUrl.pathname.startsWith("/chat/regularChat") ||
-      request.nextUrl.pathname.startsWith("/approvemembers") ||
-      request.nextUrl.pathname.match(/^\/club\/regular-club-sub\/[^\/]+\/create/))
-  ) {
+  // 보호된 경로 정의
+  const PROTECTED_PATHS = [
+    "/mypage",
+    "/chat",
+    "/myclublist",
+    "/club",
+    "/clubmyclublist",
+    "/kakaopay/paymentConfirm",
+    "/kakaopay/isSuccess",
+    "/kakaopay/success",
+    "/chat/onetimeChat",
+    "/chat/regularChat",
+    "/approvemembers"
+  ];
+
+  // 특별한 조건이 필요한 경로 검증
+  const hasSpecialConditions = (pathname: string, searchParams: URLSearchParams) => {
+    return (
+      (pathname.startsWith("/club/one-time") && searchParams.has("step")) ||
+      (pathname.startsWith("/club/regular-time") && searchParams.has("step")) ||
+      pathname.match(/^\/club\/regular-club-sub\/[^\/]+\/create/)
+    );
+  };
+
+  // 보호된 경로 검증
+  const isProtectedRoute = (pathname: string, searchParams: URLSearchParams) => {
+    return PROTECTED_PATHS.some((path) => pathname.startsWith(path)) || hasSpecialConditions(pathname, searchParams);
+  };
+
+  if (!user && isProtectedRoute(request.nextUrl.pathname, request.nextUrl.searchParams)) {
     const url = request.nextUrl.clone();
     url.pathname = "/signin";
     return NextResponse.redirect(url);

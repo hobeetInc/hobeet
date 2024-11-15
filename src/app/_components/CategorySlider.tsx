@@ -2,7 +2,7 @@
 import { Category } from "@/types/category.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Text from "./uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const categories: Category[] = [
   { id: 0, name: "에그팝", icon: "/asset/Category icon_voltage.png", alt: "eggpop" },

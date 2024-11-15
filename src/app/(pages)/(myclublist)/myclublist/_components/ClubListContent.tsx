@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { OneTimeClubCard } from "@/components/onetimeclublist/OneTimeClubCard";
-import { RegularClubCard } from "@/components/regularclublist/RegularClubCard";
+import { OneTimeClubCard } from "@/app/(pages)/(myclublist)/myclublist/_components/OneTimeClubCard";
+import { RegularClubCard } from "@/app/(pages)/(myclublist)/myclublist/_components/RegularClubCard";
 import { EggClub, EggPop } from "@/types/cardlist.types";
 import { createClient } from "@/utils/supabase/client";
-import { fetchCreatedClubs, fetchJoinedClubs } from "./_api/ClubListContentApi";
-import TabBar from "../uiComponents/TapBar";
+import { fetchCreatedClubs, fetchJoinedClubs } from "../_apis/ClubListContentApi";
+import TabBar from "@/components/uiComponents/TapBar";
 
 const supabase = createClient();
 

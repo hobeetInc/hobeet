@@ -5,14 +5,13 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { sanitizeFileName } from "@/utils/sanitizeFileName";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import { FaCamera } from "react-icons/fa6";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import DateScrollPicker from "../_components/DateScrollPicker";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Link from "next/link";
-
 
 const NAME_REGEX = /^[가-힣]{2,5}$/;
 
@@ -24,15 +23,13 @@ const SignupSecondPage = () => {
   const [profileFile, setProfileFile] = useState<File | null>(null);
   const [nameError, setNameError] = useState("");
   const [genderError, setGenderError] = useState("");
-  
+
   const [birthDateError, setBirthDateError] = useState("");
 
-const [showYearPicker, setShowYearPicker] = useState(false);
-const [showMonthPicker, setShowMonthPicker] = useState(false);
-const [showDayPicker, setShowDayPicker] = useState(false);
-const [isFormComplete, setIsFormComplete] = useState(false);
-
-
+  const [showYearPicker, setShowYearPicker] = useState(false);
+  const [showMonthPicker, setShowMonthPicker] = useState(false);
+  const [showDayPicker, setShowDayPicker] = useState(false);
+  const [isFormComplete, setIsFormComplete] = useState(false);
 
   const router = useRouter();
   const params = useParams();
@@ -222,21 +219,20 @@ const [isFormComplete, setIsFormComplete] = useState(false);
     checkFormCompletion();
   }, [birthYear, birthMonth, birthDay, userName, userGender]);
 
-
-const years = [...Array(100)].map((_, i) => 2024 - i);
-const months = [...Array(12)].map((_, i) => i + 1);
-const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].map((_, i) => i + 1);
+  const years = [...Array(100)].map((_, i) => 2024 - i);
+  const months = [...Array(12)].map((_, i) => i + 1);
+  const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].map((_, i) => i + 1);
   return (
     <div className="flex flex-col items-center">
       <div className="flex w-full h-12 bg-white items-center">
         <div className="left-0 m-3">
           <Link href="/signin">
-        <HiOutlineChevronLeft className="w-6 h-6" />
+            <HiOutlineChevronLeft className="w-6 h-6" />
           </Link>
         </div>
         <div className="flex flex-grow justify-center">
           <Text variant="header-16" className="text-gray-900">
-        회원가입
+            회원가입
           </Text>
         </div>
         <div className="w-6 m-3"></div>
@@ -248,7 +244,13 @@ const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].m
           <div className="relative w-[78px] h-[78px] mt-2">
             <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden">
               {userProfileImg && (
-                <Image src={userProfileImg} alt="프로필 이미지" width={78} height={78} className="object-cover w-[78px] h-[78px]" />
+                <Image
+                  src={userProfileImg}
+                  alt="프로필 이미지"
+                  width={78}
+                  height={78}
+                  className="object-cover w-[78px] h-[78px]"
+                />
               )}
             </div>
             <label
