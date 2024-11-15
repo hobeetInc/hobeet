@@ -39,7 +39,7 @@ export type EggClubProps = {
   setFormData: React.Dispatch<SetStateAction<EggClubForm>>;
 };
 
-export type MemeberTypeProps = EggClubProps & {
+export type MemberTypeProps = EggClubProps & {
   selectedGender: string;
   setSelectedGender: (value: string) => void;
   selectedAge: string;

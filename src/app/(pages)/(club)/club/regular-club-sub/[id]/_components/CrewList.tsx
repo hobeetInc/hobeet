@@ -27,14 +27,14 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
       try {
         const memberResult = await getRegularMember(clubId);
 
-        const newCrewMemebers = memberResult.map((member) => ({
+        const newCrewMembers = memberResult.map((member) => ({
           memberId: member.r_c_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img
         }));
 
-        setCrewList(newCrewMemebers);
+        setCrewList(newCrewMembers);
 
         if (userId) {
           const statusResult = await getParticipationStatus({ userId, clubId });

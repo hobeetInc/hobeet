@@ -25,14 +25,14 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
       try {
         const data = await getOneTimeMember(clubId);
 
-        const newCrewMemebers = data.map((member) => ({
+        const newCrewMembers = data.map((member) => ({
           memberId: member.egg_pop_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img
         }));
 
-        setCrewList(newCrewMemebers);
+        setCrewList(newCrewMembers);
       } catch (error) {
         console.error("크루인원 가져오는 중 오류:", error);
       }

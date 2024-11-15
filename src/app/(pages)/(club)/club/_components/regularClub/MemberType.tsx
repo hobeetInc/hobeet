@@ -2,7 +2,7 @@
 
 import NumberSpinner from "@/components/uiComponents/Input/NumberSpinner";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { MemeberTypeProps } from "@/types/eggclub.types";
+import { MemberTypeProps } from "@/types/eggclub.types";
 import { useState } from "react";
 
 const MemberType = ({
@@ -12,7 +12,7 @@ const MemberType = ({
   setSelectedGender,
   selectedAge,
   setSelectedAge
-}: MemeberTypeProps) => {
+}: MemberTypeProps) => {
   // 인원수 입력값을 관리할 state 추가
   const [peopleLimit, setPeopleLimit] = useState<string>("");
 
