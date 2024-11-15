@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/store/AuthContext";
-import { RegularClubChatRoom } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoom";
 import { REGULAR_CLUB_CREATE } from "../_utils/localStorage";
 import Category from "../_components/regularClub/Category";
 import MemberType from "../_components/regularClub/MemberType";
@@ -14,6 +13,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import Introduction from "../_components/regularClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
+import { createRegularChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/regular";
 
 const RegularContent = () => {
   const router = useRouter();
@@ -178,7 +178,7 @@ const RegularContent = () => {
       // 승인된 맴버 테이블에 넣기
       await putRegularMember(member);
       // 모임장 채팅방 생성 및 입장
-      await RegularClubChatRoom(data.egg_club_name, data.egg_club_id, userId);
+      await createRegularChatRoomAndEnterAsAdmin(data.egg_club_name, data.egg_club_id, userId);
 
       alert("에그클럽 생성에 성공했습니다");
       // 성공 시 처리
