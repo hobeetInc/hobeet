@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuth } from "../store/AuthContext";
+import { useAuth } from "../../store/AuthContext";
 import Image from "next/image";
 import { cn } from "@/utils/cn/util";
 

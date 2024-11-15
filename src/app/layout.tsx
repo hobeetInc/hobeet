@@ -2,8 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "./providers/queryProvider";
 import { AuthProvider } from "../store/AuthContext";
-import Footer from "./Footer";
-import Header from "./Header";
+import { Footer, Header } from "@/components/layout";
 import { Metadata } from "next";
 
 const pretendard = localFont({

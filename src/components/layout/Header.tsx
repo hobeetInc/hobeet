@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useAuth } from "../store/AuthContext";
+import { useAuth } from "../../store/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
