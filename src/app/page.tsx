@@ -1,13 +1,13 @@
 "use client";
 import Image from "next/image";
-import CategorySlider from "@/components/CategorySlider";
-import OneTimeClubList from "@/components/OneTimeClubList";
-import RegularClubList from "@/components/RegularClubList";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./(pages)/(club)/club/_utils/localStorage";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Text from "@/components/uiComponents/TextComponents/Text";
+import CategorySlider from "./_components/CategorySlider";
+import OneTimeClubList from "./_components/OneTimeClubList";
+import RegularClubList from "./_components/RegularClubList";
 
 export default function Home() {
   const router = useRouter();
@@ -23,13 +23,7 @@ export default function Home() {
     <div className="w-full mb-14 ">
       <div className="flex mx-4 justify-center items-center">
         <div className="w-full flex-shrink-0 rounded-[50px] bg-[#d9d9d9] overflow-hidden mt-[22px]">
-          <Image
-            src={"/asset/banner.svg"}
-            alt="MainBanner"
-            width={358}
-            height={296}
-            className="w-full "
-          />
+          <Image src={"/asset/banner.svg"} alt="MainBanner" width={358} height={296} className="w-full " />
         </div>
       </div>
       <div className="flex flex-col items-start gap-[8px]">

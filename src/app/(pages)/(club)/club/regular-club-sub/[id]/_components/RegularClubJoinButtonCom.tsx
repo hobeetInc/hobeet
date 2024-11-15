@@ -1,13 +1,13 @@
 "use client";
 
-import { RegularClubChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
 import { EggClubJoinButtonProps } from "@/types/join.types";
 import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { regularClubJoin } from "@/utils/regularclubjoin/join";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 
-import { Button } from "./uiComponents/Button/ButtonCom";
+import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import { enterRegularChatRoom } from "@/app/(pages)/(chat)/_api/regular";
 
 export default function RegularClubJoinButton({ clubId, onSuccess, onError }: EggClubJoinButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +34,7 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError }: Eg
 
       if (result.success) {
         onSuccess?.();
-        RegularClubChatRoomRecruiterEntrance({ egg_club_id: clubId }); // 모임원 채팅방 입장(자동 승인)
+        enterRegularChatRoom({ egg_club_id: clubId }); // 모임원 채팅방 입장(자동 승인)
         alert(result.message);
         location.reload();
       }
@@ -54,11 +54,7 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError }: Eg
 
   return (
     <Button colorType="black" borderType="circle" onClick={handleJoin} disabled={isLoading}>
-{isLoading ? "처리중..." : "참여하기"}
+      {isLoading ? "처리중..." : "참여하기"}
     </Button>
-
-    // <button onClick={handleJoin} disabled={isLoading} className={className}>
-    //   {isLoading ? "처리중..." : "참여하기"}
-    // </button>
   );
 }

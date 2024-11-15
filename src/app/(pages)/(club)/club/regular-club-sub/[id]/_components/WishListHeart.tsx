@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { deleteWishList, getWishList, submitWishList } from "../../../_api/supabase";
 import Image from "next/image";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import { useRouter } from "next/navigation";
 import { WishList, WishListHeartProps } from "@/types/eggclub.types";
 

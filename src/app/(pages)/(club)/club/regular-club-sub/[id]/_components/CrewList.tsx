@@ -3,13 +3,13 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getParticipationStatus, getRegularMember } from "../../../_api/supabase";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import FullScreenModal from "./FullScreenModal";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import browserClient from "@/utils/supabase/client";
 import { CrewListProps, UserStatus } from "@/types/eggclub.types";
-import RegularClubJoinButton from "@/components/RegularClubJoinButtonCom";
+import RegularClubJoinButton from "@/app/(pages)/(club)/club/regular-club-sub/[id]/_components/RegularClubJoinButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
@@ -147,12 +147,11 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
             className="w-[50%] bg-gray-100 text-primary-900"
             onClick={() => router.push(`/approvemembers/${clubId}`)}
           >
-
-              에그즈 관리
+            에그즈 관리
           </Button>
 
           <Button colorType="black" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
-에그클럽 채팅방
+            에그클럽 채팅방
           </Button>
         </div>
         // <div className="flex justify-center items-center gap-2">

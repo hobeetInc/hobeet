@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { RegularClubApproveChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
 import ApproveMemberTabBar from "@/components/uiComponents/ApproveMemberTapBar";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Text from "@/components/uiComponents/TextComponents/Text";
+import { enterRegularChatRoomAfterApproval } from "@/app/(pages)/(chat)/_api/regular";
 
 export interface ParticipationRequest {
   egg_club_participation_request_id: number;
@@ -66,7 +66,6 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ isOpen, onClose, onConfirm 
 const ActiveMembersTab = ({ activeMembers }: { activeMembers: ParticipationRequest[] }) => {
   return (
     <div className="flex flex-col gap-6 ">
-
       {activeMembers.map((member, index) => (
         <div key={member.egg_club_participation_request_id} className="flex items-center gap-3">
           <Image
@@ -151,7 +150,7 @@ export default function ApproveMembersPage() {
   const supabase = createClient();
   const params = useParams();
   const clubId = Number(params.id);
-const router = useRouter();
+  const router = useRouter();
   useEffect(() => {
     const fetchPendingAndActiveRequests = async () => {
       const { data: pendingData, error: pendingError } = await supabase
@@ -194,7 +193,7 @@ const router = useRouter();
       });
       const user_id = data.user_id as string;
 
-      await RegularClubApproveChatRoomRecruiterEntrance({ egg_club_id: clubId, user_id: user_id }); // 모임원 채팅방 입장(가입 승인 시)
+      await enterRegularChatRoomAfterApproval({ egg_club_id: clubId, user_id: user_id }); // 모임원 채팅방 입장(가입 승인 시)
 
       if (!error) {
         alert("가입이 승인되었습니다.");
@@ -208,9 +207,9 @@ const router = useRouter();
       location.reload();
     }
   };
-  const handleBack = () =>{
-router.back();
-  }
+  const handleBack = () => {
+    router.back();
+  };
 
   return (
     <div className="flex flex-col justify-center items-center w-full">

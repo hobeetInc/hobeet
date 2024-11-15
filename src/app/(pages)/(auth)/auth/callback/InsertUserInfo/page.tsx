@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";

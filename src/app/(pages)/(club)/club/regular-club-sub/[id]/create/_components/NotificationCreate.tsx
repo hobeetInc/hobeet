@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import { submitRegularClubNotification, submitRegularMember, uploadImage } from "../../../../_api/supabase";
 import { useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
