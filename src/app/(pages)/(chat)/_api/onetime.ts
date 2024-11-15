@@ -1,6 +1,6 @@
 import { EggPopChatRoom } from "@/types/eggpopchat.types";
 import { EggPopChattingMember, EggPopId } from "@/types/eggpopchat.types";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/client";
 
 export async function createOneTimeChatRoomAndEnterAsAdmin(
   egg_pop_name: string,
