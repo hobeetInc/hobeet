@@ -6,7 +6,7 @@ import { regularClubJoin } from "@/utils/regularclubjoin/join";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 
-import { Button } from "./uiComponents/Button/ButtonCom";
+import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import { enterRegularChatRoom } from "@/app/(pages)/(chat)/_api/regular";
 
 export default function RegularClubJoinButton({ clubId, onSuccess, onError }: EggClubJoinButtonProps) {
@@ -56,9 +56,5 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError }: Eg
     <Button colorType="black" borderType="circle" onClick={handleJoin} disabled={isLoading}>
       {isLoading ? "처리중..." : "참여하기"}
     </Button>
-
-    // <button onClick={handleJoin} disabled={isLoading} className={className}>
-    //   {isLoading ? "처리중..." : "참여하기"}
-    // </button>
   );
 }

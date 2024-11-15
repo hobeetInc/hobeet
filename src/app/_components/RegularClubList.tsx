@@ -7,7 +7,7 @@ import { getRegularClubList } from "@/app/(pages)/(club)/club/_api/supabase";
 
 import { useAuth } from "@/store/AuthContext";
 import { EggClubForm } from "@/types/cardlist.types";
-import { VerticalContentsListMediumEggClub } from "./uiComponents/VerticalContentsListMedium";
+import { VerticalContentsListMediumEggClub } from "@/components/uiComponents/VerticalContentsListMedium";
 
 const RegularClubList = () => {
   const {

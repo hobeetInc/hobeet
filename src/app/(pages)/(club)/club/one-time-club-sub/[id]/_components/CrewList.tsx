@@ -8,7 +8,7 @@ import { useAuth } from "@/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { CrewListProps } from "@/types/eggpop.types";
-import OneTimeClubJoinButton from "@/components/OneTimeClubJoinButtonCom";
+import OneTimeClubJoinButton from "./OneTimeClubJoinButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";

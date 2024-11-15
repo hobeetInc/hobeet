@@ -5,7 +5,7 @@ import Link from "next/link";
 import { getOneTimeClub } from "@/app/(pages)/(club)/club/_api/supabase";
 
 import { EggPopForm } from "@/types/eggpop.types";
-import { VerticalContentsListMediumEggPop } from "./uiComponents/VerticalContentsListMedium";
+import { VerticalContentsListMediumEggPop } from "@/components/uiComponents/VerticalContentsListMedium";
 
 const OneTimeClubList = () => {
   const [list, setList] = useState<EggPopForm[]>([]);

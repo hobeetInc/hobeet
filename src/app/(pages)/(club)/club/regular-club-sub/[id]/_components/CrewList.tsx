@@ -9,7 +9,7 @@ import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import browserClient from "@/utils/supabase/client";
 import { CrewListProps, UserStatus } from "@/types/eggclub.types";
-import RegularClubJoinButton from "@/components/RegularClubJoinButtonCom";
+import RegularClubJoinButton from "@/app/(pages)/(club)/club/regular-club-sub/[id]/_components/RegularClubJoinButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";

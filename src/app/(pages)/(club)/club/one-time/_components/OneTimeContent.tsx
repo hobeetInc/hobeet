@@ -3,18 +3,18 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 // 컴포넌트 임포트
 import { useAuth } from "@/store/AuthContext";
-import { ONETIME_CLUB_CREATE } from "../_utils/localStorage";
-import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../_api/supabase";
-import Category from "../_components/oneTimeClub/Category";
-import DateTime from "../_components/oneTimeClub/DateTime";
-import AddressSearch from "../_components/oneTimeClub/AddressSearch";
-import MemberType from "../_components/oneTimeClub/MemberType";
-import Tax from "../_components/oneTimeClub/Tax";
+import { ONETIME_CLUB_CREATE } from "../../_utils/localStorage";
+import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../../_api/supabase";
+import Category from "../../_components/oneTimeClub/Category";
+import DateTime from "../../_components/oneTimeClub/DateTime";
+import AddressSearch from "../../_components/oneTimeClub/AddressSearch";
+import MemberType from "../../_components/oneTimeClub/MemberType";
+import Tax from "../../_components/oneTimeClub/Tax";
 import { EggPopForm } from "@/types/eggpop.types";
-import ProgressBar from "../_components/ProgressBar";
+import ProgressBar from "../../_components/ProgressBar";
 import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
-import Introduction from "../_components/oneTimeClub/Introduction";
+import Introduction from "../../_components/oneTimeClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 import { createOneTimeChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/onetime";
 

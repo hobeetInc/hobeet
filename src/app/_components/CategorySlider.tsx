@@ -2,8 +2,7 @@
 import { Category } from "@/types/category.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Text from "./uiComponents/TextComponents/Text";
-
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const categories: Category[] = [
   { id: 0, name: "에그팝", icon: "/asset/Category icon_voltage.png", alt: "에그팝" },
@@ -36,7 +35,7 @@ const CategorySlider = () => {
                 <Image width={48} height={48} src={category.icon} alt={category.alt} className="w-12 h-12" />
               </div>
               <div className="self-stretch text-center mt-1">
-                <Text variant="body-12" >{category.name}</Text>
+                <Text variant="body-12">{category.name}</Text>
               </div>
             </button>
           ))}
