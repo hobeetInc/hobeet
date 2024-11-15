@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import Providers from "./providers/queryProvider";
-import { AuthProvider } from "../store/AuthContext";
+import Providers from "@/components/providers/queryProvider";
+import { AuthProvider } from "@/store/AuthContext";
 import { Footer, Header } from "@/components/layout";
 import { Metadata } from "next";
 
