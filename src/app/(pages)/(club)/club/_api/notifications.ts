@@ -1,5 +1,6 @@
 import browserClient from "@/utils/supabase/client";
-import { EggDay, InsertEggDayMember } from "@/types/eggday.types";
+import { EggDay, EggDayMember, EggDayMemberRequired, EggDayRequired } from "@/types/안끝난거/eggday.types";
+import { Tables } from "@/types/database.types";
 
 export const getRegularNotification = async (clubId: number) => {
   const { data, error } = await browserClient
@@ -11,13 +12,13 @@ export const getRegularNotification = async (clubId: number) => {
   return data;
 };
 
-export const submitRegularClubNotification = async (finalData: EggDay) => {
+export const submitRegularClubNotification = async (finalData: EggDayRequired) => {
   const { data, error } = await browserClient.from("egg_day").insert([finalData]).select("*").single();
   if (error) throw error;
   return data;
 };
 
-export const submitRegularMember = async (member: InsertEggDayMember) => {
+export const submitRegularMember = async (member: EggDayMemberRequired) => {
   const { data, error } = await browserClient.from("egg_day_member").insert(member).select("*").single();
   if (error) throw error;
   return data;

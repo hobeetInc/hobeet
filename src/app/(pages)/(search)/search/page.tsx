@@ -3,9 +3,8 @@
 import { useRouter } from "next/navigation";
 import OverallPopularMeetings from "../_components/OverallPopularMeetings";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { getSearchedClubs } from "../_api/supabase";
+import { getSearchedRegularClubs, getSearchedOneTimeClubs } from "../_api/supabase";
 import Link from "next/link";
-import { Club } from "@/types/search.types";
 import Image from "next/image";
 import {
   HorizontalContentsListLargeEggClub,
@@ -15,11 +14,13 @@ import {
 
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
+import { EggClubSearchResults, EggPopSearchResults } from "@/types/search.types";
 
 const SearchPage = () => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<Club[]>([]);
+  const [regularClubs, setRegularClubs] = useState<EggClubSearchResults[]>([]);
+  const [oneTimeClubs, setOneTimeClubs] = useState<EggPopSearchResults[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
   const handleCreateClub = () => {
@@ -30,8 +31,13 @@ const SearchPage = () => {
       if (!searchTerm.trim() || !isSearching) return;
 
       try {
-        const results = await getSearchedClubs(searchTerm);
-        setSearchResults(results);
+        const [regularResults, oneTimeResults] = await Promise.all([
+          getSearchedRegularClubs(searchTerm),
+          getSearchedOneTimeClubs(searchTerm)
+        ]);
+
+        setRegularClubs(regularResults);
+        setOneTimeClubs(oneTimeResults);
         setIsSearching(false);
       } catch (error) {
         console.error("검색 중 에러 발생:", error);
@@ -74,42 +80,27 @@ const SearchPage = () => {
       </form>
 
       {/* 검색 결과 표시 */}
-      {searchResults.length > 0 && (
+      {regularClubs.length > 0 || oneTimeClubs.length > 0 ? (
         <div className="w-full mt-4">
-          {searchResults.map((club) => (
-            <div
-              key={club.type === "eggClub" ? club.egg_club_id : club.egg_pop_id}
-              className="p-4 bg-white rounded-lg mb-2 shadow-sm"
-            >
-              {club.type === "eggClub" ? (
-                // 정규 모임 표시
-                <div>
-                  <Link
-                    key={club.egg_club_id}
-                    href={`/club/regular-club-sub/${club.egg_club_id}`}
-                    className=" h-[90px] flex items-center gap-[8px] mx-4"
-                  >
-                    <HorizontalContentsListLargeEggClub eggClub={club} />
-                  </Link>
-                </div>
-              ) : (
-                // 일회성 모임 표시
-                <div>
-                  <Link
-                    href={`/club/one-time-club-sub/${club.egg_pop_id}`}
-                    key={club.egg_pop_id}
-                    className="w-[160px] h-[311px] mr-4"
-                  >
-                    <HorizontalContentsListLargeEggPop eggPop={club} />
-                  </Link>
-                </div>
-              )}
+          {regularClubs.map((club) => (
+            <div key={club.egg_club_id} className="p-4 bg-white rounded-lg mb-2 shadow-sm">
+              <Link
+                href={`/club/regular-club-sub/${club.egg_club_id}`}
+                className="h-[90px] flex items-center gap-[8px] mx-4"
+              >
+                <HorizontalContentsListLargeEggClub eggClub={club} />
+              </Link>
+            </div>
+          ))}
+          {oneTimeClubs.map((club) => (
+            <div key={club.egg_pop_id} className="p-4 bg-white rounded-lg mb-2 shadow-sm">
+              <Link href={`/club/one-time-club-sub/${club.egg_pop_id}`} className="w-[160px] h-[311px] mr-4">
+                <HorizontalContentsListLargeEggPop eggPop={club} />
+              </Link>
             </div>
           ))}
         </div>
-      )}
-
-      {searchResults.length === 0 && (
+      ) : (
         <>
           <Image
             src="/asset/smallBanner.svg"

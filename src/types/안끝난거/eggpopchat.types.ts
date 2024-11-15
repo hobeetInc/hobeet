@@ -1,4 +1,4 @@
-import { User } from "./user.types";
+import { User } from "../user.types";
 
 // 에그팝 채팅방 생성을 위한 에그팝 아이디 타입
 export interface EggPopId {
@@ -130,18 +130,17 @@ export type EggPopChatInfo = {
   created_at: string;
 };
 
-// 에그팝 채팅 메세지 확장된 버전
-export type ExtendEggPopMessage = {
-  egg_pop_chatting_room_message_id: number;
-  egg_pop_chatting_room_member_id: number;
-  egg_pop_chatting_room_id: number;
-  egg_pop_member_id: number;
-  egg_pop_id: number;
-  user: User;
-  user_id: string;
-  egg_pop_chatting_room_message_content: string;
+export interface ExtendEggPopMessage {
   created_at: string;
-};
+  egg_pop_chatting_room_id: number;
+  egg_pop_chatting_room_member_id: number;
+  egg_pop_chatting_room_message_content: string;
+  egg_pop_chatting_room_message_id: number;
+  egg_pop_id: number;
+  egg_pop_member_id: number;
+  user_id: string;
+  user: User;
+}
 
 export type EggPopChatRoom = {
   egg_pop_chatting_room_id: number;

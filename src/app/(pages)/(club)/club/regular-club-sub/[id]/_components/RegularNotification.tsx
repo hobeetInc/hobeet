@@ -1,6 +1,6 @@
 import Text from "@/components/uiComponents/TextComponents/Text";
 import ClubCard from "./ClubCard";
-import { EggClubNotificationProps } from "@/types/eggclub.types";
+import { EggClubNotificationProps } from "@/types/안끝난거/eggclub.types";
 
 const RegularNotification = ({ notificationData, crewMembers }: EggClubNotificationProps) => {
   return (

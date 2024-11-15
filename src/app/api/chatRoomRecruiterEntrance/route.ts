@@ -27,9 +27,9 @@ export async function POST(req: Request) {
 
     const egg_club_member_id = memberData.egg_club_member_id;
 
-    const { EggClubChattingMember } = await req.json();
+    const { eggClubChattingMember } = await req.json();
     // console.log("채팅방 정보: ", regularClubMember);
-    const chatRoomData = EggClubChattingMember.data[0];
+    const chatRoomData = eggClubChattingMember.data[0];
 
     const { error: insertError } = await supabase.from("egg_day_chatting").insert({
       egg_day_chatting_room_id: chatRoomData.egg_day_chatting_room_id,

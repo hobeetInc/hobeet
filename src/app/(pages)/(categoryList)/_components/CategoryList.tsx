@@ -1,13 +1,17 @@
-import { FC } from "react";
 import { getCategoryList, getUserId } from "../_api/supabase";
 import { useQuery } from "@tanstack/react-query";
 import { EggClubForm } from "@/types/cardlist.types";
-import { CategoryListProps } from "@/types/category.types";
 
 import { VerticalContentsListLargeEggClub } from "@/components/uiComponents/VerticalContentsListLarge";
 import Link from "next/link";
 
-const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) => {
+// 카테고리 리스트 props
+interface CategoryListProps {
+  categoryId: number;
+  selectedCategory: number;
+};
+
+const CategoryList = ({ categoryId, selectedCategory }: CategoryListProps) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["categoryList", categoryId, selectedCategory],
     queryFn: () => getCategoryList(categoryId, selectedCategory),
@@ -27,7 +31,7 @@ const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) =
     return <div>Error: {error.toString()}</div>;
   }
 
-  const isWishedByUser = (club: EggClubForm): boolean => {
+  const isWishedByUser = (club: EggClubForm) => {
     if (!userId) return false;
     return club.wish_list?.some((wish) => wish.user_id === userId) || false;
   };
@@ -45,8 +49,8 @@ const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) =
             <div className="flex flex-col">
               <VerticalContentsListLargeEggClub
                 eggClub={club}
-                hostName={club.user_id.user_name}
-                hostImage={club.user_id.user_profile_img}
+                hostName={club.user.user_name}
+                hostImage={club.user.user_profile_img}
                 memberCount={club.egg_club_member[0].count}
                 isWished={isWishedByUser(club)}
                 wishListCount={club.wish_list.length}

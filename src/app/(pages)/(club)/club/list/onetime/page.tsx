@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDate } from "@/utils/CustomDate";
-import { StringEggPopForm } from "@/types/eggpop.types";
+import { StringEggPopForm } from "@/types/안끝난거/eggpop.types";
 
 const AllOneTimeClubListPage = () => {
   const [loading, setLoading] = useState<boolean>(true);

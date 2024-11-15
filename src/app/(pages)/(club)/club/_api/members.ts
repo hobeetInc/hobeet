@@ -1,6 +1,6 @@
 import browserClient from "@/utils/supabase/client";
-import { EggClubRequest, InsertMember } from "@/types/eggclub.types";
-import { EggPopMember } from "@/types/eggpop.types";
+import { EggClubRequest, InsertMember } from "@/types/안끝난거/eggclub.types";
+import { EggPopMember } from "@/types/안끝난거/eggpop.types";
 
 export const putRepresentative = async (representative: EggClubRequest) => {
   const { data, error } = await browserClient
@@ -39,6 +39,7 @@ export const getRegularMember = async (clubId: number) => {
     .select(`*, egg_club(*), user(user_name, user_profile_img)`)
     .eq("egg_club_id", clubId);
   if (error) throw error;
+
   return data;
 };
 

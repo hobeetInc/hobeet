@@ -18,7 +18,7 @@ interface EggClubIdType {
   egg_club_id: number;
 }
 
-const PaymentSuccesspage = () => {
+const PaymentSuccessPage = () => {
   const [oneTimeClubPayData, setOneTimeClubPayData] = useState<EggPopPay | null>(null);
   const [regularClubPayData, setRegularClubPayData] = useState<EggClubPay | null>(null);
   const [oneTimeClubData, setOneTimeClubData] = useState<EggPopDataNoTax | null>();
@@ -68,7 +68,7 @@ const PaymentSuccesspage = () => {
           const { data: oneTimeClubFetchData, error: oneTimeClubFetchError } = await supabase
             .from("egg_pop")
             .select(
-              "egg_pop_name, egg_pop_location, egg_pop_date_time, egg_pop_image, main_category_id, main_category:main_category_id(main_category_name)"
+              "egg_pop_name, egg_pop_location, egg_pop_date_time, egg_pop_image, main_category_id, main_category:(main_category_name)"
             )
             .eq("egg_pop_id", parseInt(clubId))
             .single();
@@ -79,20 +79,21 @@ const PaymentSuccesspage = () => {
           }
 
           setOneTimeClubData(Array.isArray(oneTimeClubFetchData) ? oneTimeClubFetchData[0] : oneTimeClubFetchData);
-          // console.log(oneTimeClubFetchData);
         } else {
           const { data: regularClubFetchData, error: regularClubFetchError } = await supabase
             .from("egg_day")
             .select(
               `
-                egg_day_name,
-                egg_day_location,
-                egg_day_date_time,
-                egg_day_image,
-                egg_club_id (
-                  main_category_id (main_category_name)
+              egg_day_name,
+              egg_day_location,
+              egg_day_date_time,
+              egg_day_image,
+              egg_club (
+                main_category (
+                  main_category_name
                 )
-              `
+              )
+            `
             )
             .eq("egg_day_id", parseInt(clubId))
             .single();
@@ -102,14 +103,14 @@ const PaymentSuccesspage = () => {
             return;
           }
 
-          const formattedData: EggClubDataNoTax = {
+          const formattedData = {
             egg_day_name: regularClubFetchData.egg_day_name,
             egg_day_location: regularClubFetchData.egg_day_location,
             egg_day_date_time: regularClubFetchData.egg_day_date_time,
             egg_day_image: regularClubFetchData.egg_day_image,
-            egg_club_id: {
-              main_category_id: {
-                main_category_name: regularClubFetchData.egg_club_id[0]?.main_category_id[0]?.main_category_name || ""
+            egg_club: {
+              main_category: {
+                main_category_name: regularClubFetchData.egg_club.main_category.main_category_name || ""
               }
             }
           };
@@ -315,7 +316,7 @@ const PaymentSuccesspage = () => {
   const customDate = (dateString: string | null | undefined): DateTimeFormat => {
     if (!dateString) {
       return {
-        date: "유효하지 ��은 날짜",
+        date: "유효하지 않은 날짜",
         time: "유효하지 않은 시간"
       };
     }
@@ -467,4 +468,4 @@ const PaymentSuccesspage = () => {
     </div>
   );
 };
-export default PaymentSuccesspage;
+export default PaymentSuccessPage;

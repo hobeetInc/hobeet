@@ -8,12 +8,11 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import { useRouter } from "next/navigation";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
-import { EggDayUserIdData } from "@/types/mypage.types";
 
 const EggDayPayDetail = () => {
   const router = useRouter();
 
-  const { data, isLoading } = useQuery<EggDayUserIdData[]>({
+  const { data, isLoading } = useQuery({
     queryKey: ["eggDayPayData"],
     queryFn: getEggDayPayList
   });
@@ -75,10 +74,10 @@ const EggDayPayDetail = () => {
     <div className="mx-4 mb-4">
       {data?.map((notification) => (
         <div
-          key={notification.egg_day_id.egg_day_id}
+          key={notification.egg_day.egg_day_id}
           onClick={() => {
             router.push(
-              `/club/regular-club-sub/${notification.egg_club_id}/create/${notification.egg_day_id.egg_day_id}`
+              `/club/regular-club-sub/${notification.egg_club_id}/create/${notification.egg_day.egg_day_id}`
             );
           }}
           className="flex flex-col w-full h-[163px] border-b border-solid border-gray-100 mt-4 mb-[32px]"
@@ -90,7 +89,7 @@ const EggDayPayDetail = () => {
           <div className="w-[358px] h-[88px] justify-start items-center gap-2 inline-flex mt-2">
             <div className="h-[88px] justify-start items-center gap-2 inline-flex">
               <Image
-                src={notification.egg_day_id.egg_day_image}
+                src={notification.egg_day.egg_day_image}
                 alt="payList"
                 width={88}
                 height={88}
@@ -100,7 +99,7 @@ const EggDayPayDetail = () => {
             <div className="w-[248px] py-0.5 flex-col justify-start items-start gap-0.5 inline-flex">
               <Tag tagName="eggday" />
 
-              <Text variant="subtitle-14">{notification.egg_day_id.egg_day_name}</Text>
+              <Text variant="subtitle-14">{notification.egg_day.egg_day_name}</Text>
               <div className="pt-[3px] justify-start items-center gap-2 inline-flex">
                 <div className="justify-start items-center gap-1 flex">
                   <div className="w-4 h-4 justify-center items-center flex">
@@ -108,15 +107,15 @@ const EggDayPayDetail = () => {
                   </div>
 
                   <Text variant="body_medium-14" className="text-gray-400">
-                    {customAddress(notification.egg_day_id.egg_day_location)}
+                    {customAddress(notification.egg_day.egg_day_location)}
                   </Text>
                 </div>
 
                 <Text variant="body_medium-14" className="text-gray-400">
-                  {customDate(notification.egg_day_id.egg_day_date_time).date}
+                  {customDate(notification.egg_day.egg_day_date_time).date}
                 </Text>
                 <Text variant="body_medium-14" className="text-gray-400">
-                  {customDate(notification.egg_day_id.egg_day_date_time).time}
+                  {customDate(notification.egg_day.egg_day_date_time).time}
                 </Text>
               </div>
             </div>

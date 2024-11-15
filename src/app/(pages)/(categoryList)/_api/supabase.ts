@@ -1,4 +1,3 @@
-import { SubCategory } from "@/types/category.types";
 import { createClient } from "@/utils/supabase/client";
 
 const supabase = createClient();
@@ -12,7 +11,7 @@ export const getSubCategory = async (main_category_id: number) => {
     }
     // console.log(data);
 
-    return data as SubCategory[];
+    return data;
   } catch (error) {
     console.error("getSubCategory 함수 에러:", error);
     throw error;
@@ -23,7 +22,14 @@ export const getCategoryList = async (main_category_id: number, sub_category_id:
   try {
     const { data, error } = await supabase
       .from("egg_club")
-      .select(`*, user_id("user_profile_img", "user_name") , egg_club_member(count), wish_list(count)`)
+      .select(
+        `
+        *,
+        user(user_profile_img, user_name),
+        egg_club_member(count),
+        wish_list(*)
+      `
+      )
       .eq("main_category_id", main_category_id)
       .eq(
         sub_category_id === 0 ? "main_category_id" : "sub_category_id",
@@ -43,7 +49,7 @@ export const getCategoryList = async (main_category_id: number, sub_category_id:
 
 export const getUserId = async () => {
   try {
-    const {data} = await supabase.auth.getUser();
+    const { data } = await supabase.auth.getUser();
     if (data) {
       return data.user.id;
     }
@@ -51,4 +57,4 @@ export const getUserId = async () => {
     console.error("getUserId 함수 에러:", error);
     throw error;
   }
-}
+};

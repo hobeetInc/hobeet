@@ -6,12 +6,13 @@ export const getOneTimeClub = async () => {
     .select(
       `
       *,
-      user_id(user_name, user_profile_img),
+      user(user_name, user_profile_img),
       egg_pop_member(count)
     `
     )
     .order("egg_pop_create_at", { ascending: false })
     .limit(10);
+
   if (error) throw error;
   return data;
 };
@@ -19,9 +20,10 @@ export const getOneTimeClub = async () => {
 export const getRegularClubList = async () => {
   const { data, error } = await browserClient
     .from("egg_club")
-    .select(`*, user_id(user_name, user_profile_img), egg_club_member(count), wish_list(*)`)
+    .select(`*, user(user_name, user_profile_img), egg_club_member(count), wish_list(*)`)
     .order("egg_club_create_at", { ascending: false })
     .limit(10);
+
   if (error) throw error;
   return data;
 };
@@ -32,11 +34,12 @@ export const getAllOneTimeClub = async () => {
     .select(
       `
       *,
-      user_id(user_name, user_profile_img),
+      user(user_name, user_profile_img),
       egg_pop_member(count)
     `
     )
     .order("egg_pop_create_at", { ascending: false });
+
   if (error) throw error;
   return data;
 };
@@ -44,7 +47,7 @@ export const getAllOneTimeClub = async () => {
 export const getAllRegularClubList = async () => {
   const { data, error } = await browserClient
     .from("egg_club")
-    .select(`*, user_id(user_name, user_profile_img), egg_club_member(count), wish_list(*)`)
+    .select(`*, user(user_name, user_profile_img), egg_club_member(count), wish_list(*)`)
     .order("egg_club_create_at", { ascending: false });
   if (error) throw error;
   return data;

@@ -1,6 +1,5 @@
 "use client";
 
-import { EggClubJoinButtonProps } from "@/types/join.types";
 import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { regularClubJoin } from "@/utils/regularclubjoin/join";
 import { createClient } from "@/utils/supabase/client";
@@ -8,6 +7,13 @@ import { useState } from "react";
 
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import { enterRegularChatRoom } from "@/app/(pages)/(chat)/_api/regular";
+
+interface EggClubJoinButtonProps {
+  clubId: number;
+  onSuccess?: (currentMembers?: number) => void;
+  onError?: (message: string) => void;
+  className?: string;
+}
 
 export default function RegularClubJoinButton({ clubId, onSuccess, onError }: EggClubJoinButtonProps) {
   const [isLoading, setIsLoading] = useState(false);

@@ -8,7 +8,7 @@ import FullScreenModal from "./FullScreenModal";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import browserClient from "@/utils/supabase/client";
-import { CrewListProps, UserStatus } from "@/types/eggclub.types";
+import { CrewListProps, UserStatus } from "@/types/안끝난거/eggclub.types";
 import RegularClubJoinButton from "@/app/(pages)/(club)/club/regular-club-sub/[id]/_components/RegularClubJoinButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";
@@ -28,7 +28,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         const memberResult = await getRegularMember(clubId);
 
         const newCrewMembers = memberResult.map((member) => ({
-          memberId: member.r_c_member_id,
+          memberId: member.egg_club_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img

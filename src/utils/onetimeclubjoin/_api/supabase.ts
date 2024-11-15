@@ -8,42 +8,10 @@ export class ClubJoinError extends Error {
   }
 }
 
-export interface OneTimeClub {
-  egg_pop_id: number;
-  main_category_id: number;
-  user_id: string;
-  egg_pop_name: string;
-  egg_pop_introduction: string;
-  egg_pop_date_time: string;
-  egg_pop_location: string;
-  egg_pop_people_limited: number;
-  egg_pop_tax: number;
-  egg_pop_gender: string;
-  egg_pop_age: number;
-  egg_pop_image: string;
-  egg_pop_create_at: string;
-}
-
-export interface User {
-  user_id: string;
-  user_email: string;
-  user_nickname: string;
-  user_gender: string;
-  user_age: number;
-  user_profile_img: string;
-  user_roletype: boolean;
-  user_create_at: string;
-}
-
-export interface ClubMember {
-  egg_pop_id: number;
-  user_id: string;
-}
-
 export class SupabaseClubAPI {
   private supabase = createClient();
 
-  async getUserData(userId: string): Promise<User> {
+  async getUserData(userId: string) {
     const { data, error } = await this.supabase.from("user").select("*").eq("user_id", userId).single();
 
     if (error) {
@@ -53,7 +21,7 @@ export class SupabaseClubAPI {
     return data;
   }
 
-  async getClubData(clubId: number): Promise<OneTimeClub> {
+  async getClubData(clubId: number) {
     const { data, error } = await this.supabase.from("egg_pop").select("*").eq("egg_pop_id", clubId).single();
 
     if (error) {
@@ -94,7 +62,7 @@ export class SupabaseClubAPI {
   // 가입
   async insertMember(clubId: string | null, userId: string | null): Promise<void> {
     const { error } = await this.supabase.from("egg_pop_member").insert({
-      egg_pop_id: clubId,
+      egg_pop_id: Number(clubId),
       user_id: userId
     });
 
@@ -106,7 +74,7 @@ export class SupabaseClubAPI {
   // 에그 데이 가입
   async eggDayInsertMember(clubId: string | null, userId: string | null): Promise<void> {
     const { error } = await this.supabase.from("egg_day_member").insert({
-      egg_day_id: clubId,
+      egg_day_id: Number(clubId),
       user_id: userId
     });
 

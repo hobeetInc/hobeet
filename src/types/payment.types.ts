@@ -1,41 +1,10 @@
-//페이먼트 버튼 props
-export type PaymentButtonProps = {
-  clubType: boolean;
-  clubId: number;
-  agreeChecked: boolean;
-};
+import { Tables } from "./database.types";
 
 // 에그팝 데이터 타입
-export type EggPopData = {
-  egg_pop_name: string;
-  egg_pop_location: string;
-  egg_pop_date_time: string;
-  egg_pop_image: string | null;
-  egg_pop_tax: number;
-  main_category: {
-    main_category_name: string;
-  };
-};
+export type EggPopData = Partial<Tables<"egg_pop">>;
 
 // 에그클럽 데이터 타입
-export type EggClubData = {
-  egg_day_name: string;
-  egg_day_location: string;
-  egg_day_date_time: string;
-  egg_day_image: string;
-  egg_day_tax: number;
-  egg_club_id:
-    | {
-        main_category_id: {
-          main_category_name: string;
-        };
-      }
-    | {
-        main_category_id: Array<{
-          main_category_name: string;
-        }>;
-      };
-};
+export type EggClubData = Partial<Tables<"egg_club">>;
 
 // 에그팝 지불 타입
 export type EggPopPay = {
@@ -68,8 +37,8 @@ export type EggClubDataNoTax = {
   egg_day_location: string;
   egg_day_date_time: string;
   egg_day_image: string;
-  egg_club_id: {
-    main_category_id: {
+  egg_club: {
+    main_category: {
       main_category_name: string;
     };
   };

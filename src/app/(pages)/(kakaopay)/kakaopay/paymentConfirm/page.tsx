@@ -40,7 +40,7 @@ const PaymentConfirmPage = () => {
           const { data: oneTimeClubFetchData, error: oneTimeClubFetchError } = await supabase
             .from("egg_pop")
             .select(
-              "egg_pop_name, egg_pop_location, egg_pop_date_time, egg_pop_tax, egg_pop_image, main_category_id, main_category:main_category_id(main_category_name)"
+              "egg_pop_name, egg_pop_location, egg_pop_date_time, egg_pop_tax, egg_pop_image, main_category_id, main_category(main_category_name)"
             )
             .eq("egg_pop_id", parseInt(clubId))
             .single();
@@ -62,8 +62,9 @@ const PaymentConfirmPage = () => {
                 egg_day_date_time,
                 egg_day_image,
                 egg_day_tax,
-                egg_club_id (
-                  main_category_id (main_category_name)
+                egg_club_id,
+                egg_club(
+                  main_category(main_category_name)
                 )
               `
             )
@@ -83,7 +84,7 @@ const PaymentConfirmPage = () => {
             egg_day_image: regularClubFetchData.egg_day_image,
             egg_day_tax: regularClubFetchData.egg_day_tax,
             egg_club_id: Array.isArray(regularClubFetchData.egg_club_id)
-              ? { main_category_id: regularClubFetchData.egg_club_id[0].main_category_id }
+              ? { main_category_id: regularClubFetchData.egg_club.main_category_id }
               : regularClubFetchData.egg_club_id
           };
 

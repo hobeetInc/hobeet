@@ -57,7 +57,7 @@
 
 "use client";
 
-import { DayHeaderProps } from "@/types/eggday.types";
+import { DayHeaderProps } from "@/types/안끝난거/eggday.types";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect } from "react";
 import { IoIosArrowBack } from "react-icons/io";

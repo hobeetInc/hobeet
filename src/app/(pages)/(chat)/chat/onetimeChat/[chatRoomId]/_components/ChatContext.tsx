@@ -2,7 +2,7 @@
 import { createContext, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/store/AuthContext";
-import { EggPopChatContextType } from "@/types/eggpopchat.types";
+import { EggPopChatContextType } from "@/types/안끝난거/eggpopchat.types";
 import { fetchEggPopChatRoomWithMembers } from "@/app/(pages)/(chat)/_api/onetime";
 
 const ChatContext = createContext<EggPopChatContextType>({

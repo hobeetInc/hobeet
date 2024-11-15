@@ -3,7 +3,7 @@ import React from "react";
 import { getNotificationData, getNotificationMember } from "../../../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import DayHeader from "./_components/DayHeader";
-import { EggDayInfo, EggDayMember, SubSubPageProps } from "@/types/eggday.types";
+import { SubSubPageProps } from "@/types/안끝난거/eggday.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
@@ -16,7 +16,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
   const clubId = Number(id);
 
   try {
-    const data: EggDayInfo[] = await getNotificationData(clubId);
+    const data = await getNotificationData(clubId);
 
     const clubInfo = data.find((club) => club.egg_day_id === secondId);
 
@@ -24,7 +24,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
       throw new Error("Club information not found");
     }
 
-    const member: EggDayMember[] = await getNotificationMember(secondId);
+    const member = await getNotificationMember(secondId);
 
     // 날짜 커스텀
     const date = clubInfo.egg_day_date_time;

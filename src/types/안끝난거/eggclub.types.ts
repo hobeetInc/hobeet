@@ -1,6 +1,7 @@
 import { ReactNode, SetStateAction } from "react";
-import { User } from "./user.types";
-import { InSertEggDay } from "./eggday.types";
+import { User } from "../user.types";
+import { EggDay } from "./eggday.types";
+import { Tables } from "../database.types";
 
 // 정기적 모임 타입
 export interface EggClubForm {
@@ -63,11 +64,7 @@ export interface EggClubMember {
 }
 
 // 위시리스트 타입(Get)
-export interface WishList {
-  wish_list_id: number;
-  user_id: string | null;
-  egg_club_id: number;
-}
+export type WishList = Tables<"wish_list">;
 
 // 위시리스트 타입(Insert)
 export type WishListData = Omit<WishList, "wish_list_id">;
@@ -110,9 +107,6 @@ export interface Member {
   };
 }
 
-// 클럽 카드 props
-export type ClubCardProps = { notification: InSertEggDay; crewMembers: MemberInfo[] };
-
 // 클럽 헤더 props
 export type ClubHeaderProps = {
   clubInfo: getEggClub;
@@ -126,7 +120,7 @@ export type CrewListProps = {
   crewMembers: MemberInfo[];
   clubId: number;
   clubHostId: string;
-  notificationData: InSertEggDay[];
+  notificationData: EggDay[];
 };
 
 // 모달 props
@@ -149,13 +143,6 @@ export type HomeContentProps = {
   egg_club_id: number;
   notificationData: InSertEggDay[];
   stringCategory: string | undefined;
-};
-
-// 노티피케이션 props
-export type NotificationListProps = {
-  notificationData: InSertEggDay[];
-  crewMembers: MemberInfo[];
-  children?: ReactNode;
 };
 
 // 에그클럽 공지 props

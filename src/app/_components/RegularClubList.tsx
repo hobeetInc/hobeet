@@ -43,8 +43,8 @@ const RegularClubList = () => {
             >
               <VerticalContentsListMediumEggClub
                 eggClub={club}
-                hostName={club.user_id.user_name}
-                hostImage={club.user_id.user_profile_img}
+                hostName={club.user.user_name}
+                hostImage={club.user.user_profile_img}
                 memberCount={club.egg_club_member[0].count}
                 isWished={isWishedByUser(club)}
                 wishListCount={club.wish_list.length}

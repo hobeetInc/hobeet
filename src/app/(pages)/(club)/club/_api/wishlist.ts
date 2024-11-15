@@ -1,5 +1,5 @@
 import browserClient from "@/utils/supabase/client";
-import { WishListData } from "@/types/eggclub.types";
+import { WishListData } from "@/types/안끝난거/eggclub.types";
 
 export const addClubToWishList = async (wish: WishListData) => {
   const { data, error } = await browserClient.from("wish_list").insert(wish).select("*").single();

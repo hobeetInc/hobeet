@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useAuth } from "@/store/AuthContext";
 import { useRouter } from "next/navigation";
-import { WishListHeartProps } from "@/types/eggclub.types";
+import { WishListHeartProps } from "@/types/안끝난거/eggclub.types";
 import { useClubWishlist } from "@/hooks";
 
 const WishListHeart = ({ egg_club_id }: WishListHeartProps) => {
@@ -33,7 +33,7 @@ const WishListHeart = ({ egg_club_id }: WishListHeartProps) => {
       }
     } catch (error) {
       console.error("위시리스트 토글 중 오류 발생:", error);
-    } 
+    }
   };
 
   return (

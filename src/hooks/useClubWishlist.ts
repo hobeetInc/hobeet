@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "./utils/queryKeys";
-import { WishListHeartProps } from "@/types/eggclub.types";
+import { WishListHeartProps } from "@/types/안끝난거/eggclub.types";
 import {
   addClubToWishList,
   getClubWishListStatus,

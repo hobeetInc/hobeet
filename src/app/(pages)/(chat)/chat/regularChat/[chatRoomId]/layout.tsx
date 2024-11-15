@@ -6,17 +6,22 @@ import { ChatProvider, useChatContext } from "./_components/ChatContext";
 import { ChatRoomExit } from "@/app/api/_ChatRoomExit/ChatRoomExit";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
-import { EggClubChattingMemberInfo, LayoutProps } from "@/types/eggclubchat.types";
+import { EggClubChattingMemberInfo } from "@/types/eggclubchat.types";
 import { IoCloseOutline } from "react-icons/io5";
 
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
 
-
+interface LayoutProps {
+  children: React.ReactNode;
+  params: {
+    chatRoomId: string;
+  };
+}
 
 function ChatHeader() {
   const { roomName, isLoading, egg_day_chatting_id, egg_club_id } = useChatContext();
-  const [userId , setUserId] = useState("");
+  const [userId, setUserId] = useState("");
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ChattingMember, setChattingMember] = useState<EggClubChattingMemberInfo[]>();
@@ -25,19 +30,26 @@ function ChatHeader() {
     const supabase = createClient();
     if (egg_club_id) {
       const fetchRegularClubId = async () => {
-      const userId = (await supabase.auth.getUser()).data.user?.id;
-      
+        const userId = (await supabase.auth.getUser()).data.user?.id;
+
         const { data, error } = await supabase
           .from("egg_day_chatting")
-          .select(`* , egg_club_member_id(* , user_id(*))`)
+          .select(
+            `* , 
+            egg_club_member(* , 
+              user(*)
+            )
+          `
+          )
           .eq("egg_club_id", egg_club_id)
           .eq("active", true);
         if (error) {
           console.error(error);
           return;
         }
+
         setUserId(userId);
-        setChattingMember(data);
+        setChattingMember(data as unknown as EggClubChattingMemberInfo[]);
       };
       fetchRegularClubId();
     }
@@ -67,7 +79,9 @@ function ChatHeader() {
           <ChevronLeft className="w-6 h-6" />
         </button>
 
-        <Text variant="header-16" className="text-gray-900">{isLoading ? "로딩중..." : roomName}</Text>
+        <Text variant="header-16" className="text-gray-900">
+          {isLoading ? "로딩중..." : roomName}
+        </Text>
 
         <button onClick={() => setIsModalOpen(true)} className="p-2">
           <Menu className="w-6 h-6" />
@@ -88,54 +102,50 @@ function ChatHeader() {
             <div>
               <ul className="space-y-4">
                 {/* 현재 사용자 먼저 렌더링 */}
-                {ChattingMember?.filter((member) => member.egg_club_member_id.user_id.user_id === userId).map(
-                  (member) => (
-                    <li key={member.egg_club_member_id.egg_club_member_id}>
-                      <div className="flex items-center justify-between py-2 px-4 rounded-md border-solid border-gray-50 border-b-2">
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 overflow-hidden rounded-full mr-2">
-                            <Image
-                              src={member.egg_club_member_id.user_id.user_profile_img}
-                              alt="프로필 이미지"
-                              width={40}
-                              height={40}
-                              className="rounded-full"
-                            />
-                          </div>
-                          <Text variant="subtitle-16" className="text-gray-900">
-                            {member.egg_club_member_id.user_id.user_name}
-                          </Text>
-                          {member.admin && <Tag tagName="eggmaster" variant="black" className="ml-2" />}
+                {ChattingMember?.filter((member) => member.egg_club_member.user.user_id === userId).map((member) => (
+                  <li key={member.egg_club_member.egg_club_member_id}>
+                    <div className="flex items-center justify-between py-2 px-4 rounded-md border-solid border-gray-50 border-b-2">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 overflow-hidden rounded-full mr-2">
+                          <Image
+                            src={member.egg_club_member.user.user_profile_img}
+                            alt="프로필 이미지"
+                            width={40}
+                            height={40}
+                            className="rounded-full"
+                          />
                         </div>
+                        <Text variant="subtitle-16" className="text-gray-900">
+                          {member.egg_club_member.user.user_name}
+                        </Text>
+                        {member.admin && <Tag tagName="eggmaster" variant="black" className="ml-2" />}
                       </div>
-                    </li>
-                  )
-                )}
+                    </div>
+                  </li>
+                ))}
 
                 {/* 나머지 사용자들 렌더링 */}
-                {ChattingMember?.filter((member) => member.egg_club_member_id.user_id.user_id !== userId).map(
-                  (member) => (
-                    <li key={member.egg_club_member_id.egg_club_member_id}>
-                      <div className="flex items-center justify-between py-2 px-4 rounded-md">
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 overflow-hidden rounded-full mr-2">
-                            <Image
-                              src={member.egg_club_member_id.user_id.user_profile_img}
-                              alt="프로필 이미지"
-                              width={40}
-                              height={40}
-                              className="rounded-full"
-                            />
-                          </div>
-                          <Text variant="subtitle-16" className="text-gray-900">
-                            {member.egg_club_member_id.user_id.user_name}
-                          </Text>
-                          {member.admin && <Tag tagName="eggmaster" variant="black" className="ml-2" />}
+                {ChattingMember?.filter((member) => member.egg_club_member.user.user_id !== userId).map((member) => (
+                  <li key={member.egg_club_member.egg_club_member_id}>
+                    <div className="flex items-center justify-between py-2 px-4 rounded-md">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 overflow-hidden rounded-full mr-2">
+                          <Image
+                            src={member.egg_club_member.user.user_profile_img}
+                            alt="프로필 이미지"
+                            width={40}
+                            height={40}
+                            className="rounded-full"
+                          />
                         </div>
+                        <Text variant="subtitle-16" className="text-gray-900">
+                          {member.egg_club_member.user.user_name}
+                        </Text>
+                        {member.admin && <Tag tagName="eggmaster" variant="black" className="ml-2" />}
                       </div>
-                    </li>
-                  )
-                )}
+                    </div>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="absolute bottom-0 w-full p-4 border-t border-gray-200">

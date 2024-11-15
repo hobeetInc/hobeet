@@ -1,4 +1,10 @@
+import { DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES } from "react";
+import { Tables } from "./database.types";
 import { User } from "./user.types";
+
+export type EggClub = Tables<"egg_club">;
+// 에그 데이 멤버 = 에그 클럽의 멤버
+export type EggDayMember = Tables<"egg_day_member">;
 
 // 에그클럽 채팅방 생성을 위한 에그클럽 아이디 타입
 export interface EggClubId {
@@ -6,45 +12,18 @@ export interface EggClubId {
 }
 
 // 에그클럽 채팅 타입
-export interface BaseEggClubChatting {
-  admin: boolean;
-  egg_club_id: number;
-  egg_club_member_id: number;
-  egg_day_chatting_id: number;
-  egg_day_chatting_room_id: number;
-}
-
-// 에그클럽 채팅 멤버 타입
-export interface EggClubChattingMember {
-  egg_club_id: number;
-  egg_club_member_id: number;
-  egg_club_participation_request_id: number;
-  user_id: string;
-  egg_day_chatting: EggClubChatting[];
-}
-
-// 에그클럽 메세지 타입
-export interface EggClubChatMessage {
-  egg_day_chatting_message_content: string;
-  egg_day_chatting_message_create_at: string;
-}
+export type BaseEggClubChatting = Tables<"egg_day_chatting">;
+export type EggClubChatMessage = Tables<"egg_day_chatting_message">;
 
 // 에그클럽 채팅방 타입
-export interface EggClubChattingRoom {
-  user_id: string;
-  egg_club_id: number;
-  egg_day_chatting_room_id: number;
-  egg_day_chatting_room_name: string;
+export interface EggClubChattingRoom extends Tables<"egg_day_chatting_room"> {
   egg_club_image: string;
   egg_club_name: string;
   last_message: string;
   last_message_time: string;
   last_message_time_value: string;
   active: boolean;
-  egg_day_chatting: EggDayChatting[];
-}
-interface EggDayChatting {
-  count: number;
+  egg_day_chatting: { count: DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES }[];
 }
 
 // Chatting이 EggClubChatting을 확장
@@ -54,34 +33,13 @@ export interface EggClubChatting extends BaseEggClubChatting {
   egg_day_chatting_message: EggClubChatMessage[];
 }
 
-// 에그클럽 타입
-interface EggClub {
-  main_category_id: number;
-  sub_category_id: number;
-  user_id: string;
+// 에그클럽 채팅 멤버 타입
+export interface EggClubChattingMember {
   egg_club_id: number;
-  egg_club_age?: number | null;
-  egg_club_name: string;
-  egg_club_image: string;
-  egg_club_gender?: string | null;
-  egg_club_approval: boolean;
-  egg_club_create_at: string;
-  egg_club_introduction: string;
-  egg_club_people_limited?: number | null;
-}
-
-// 에그클럽 멤버 타입
-interface EggClubMember {
   egg_club_member_id: number;
   user_id: string;
-  egg_club_id: number;
+  egg_club_participation_request_id: number;
   egg_day_chatting: EggClubChatting[];
-  egg_club: EggClub;
-}
-
-// 데이터 응답값 타입
-export interface ApiResponse {
-  data: EggClubMember[];
 }
 
 // 에그클럽 채팅 콘텍스트 타입
@@ -92,26 +50,16 @@ export interface EggClubChatContextType {
   egg_club_id?: number;
 }
 
-// 에그클럽 레이아웃 프롭스
-export interface LayoutProps {
-  children: React.ReactNode;
-  params: {
-    chatRoomId: string;
-  };
-}
-
-
-
 // 에그클럽 채팅방 멤버 상세 정보 타입
 export type EggClubChattingMemberInfo = {
   active: boolean;
   admin: boolean;
   egg_club_id: number;
-  egg_club_member_id: {
+  egg_club_member: {
     egg_club_id: number;
     egg_club_member_id: number;
     egg_club_participation_request_status: string;
-    user_id: {
+    user: {
       user_age: number;
       user_create_at: string;
       user_email: string;

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getOneTimeClub } from "@/app/(pages)/(club)/club/_api/supabase";
 
-import { EggPopForm } from "@/types/eggpop.types";
+import { EggPopForm } from "@/types/안끝난거/eggpop.types";
 import { VerticalContentsListMediumEggPop } from "@/components/uiComponents/VerticalContentsListMedium";
 
 const OneTimeClubList = () => {
@@ -14,7 +14,7 @@ const OneTimeClubList = () => {
     const fetchData = async () => {
       try {
         const data = await getOneTimeClub();
-        setList(data);
+        setList(data as unknown as EggPopForm[]);
       } catch (error) {
         console.error("일회성모임 리스트 가져오는 중 오류가 발생했습니다", error);
       }

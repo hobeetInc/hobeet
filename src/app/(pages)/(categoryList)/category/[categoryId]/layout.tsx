@@ -1,7 +1,6 @@
 "use client";
 
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { CategoryLayoutProps, MainCategoryList } from "@/types/search.types";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -10,23 +9,30 @@ import { HiOutlineChevronLeft } from "react-icons/hi";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoSearchOutline } from "react-icons/io5";
 import { BsPlusLg } from "react-icons/bs";
+import { MainCategory } from "@/types/category.types";
+
+interface CategoryLayoutProps {
+  children: React.ReactNode;
+  params: {
+    categoryId: string;
+  };
+}
 
 export default function CategoryLayout({ children, params }: CategoryLayoutProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [categories, setCategories] = useState<MainCategoryList[]>([]);
+  const [categories, setCategories] = useState<MainCategory[]>([]);
   const currentCategory = params.categoryId;
   const router = useRouter();
 
   const supabase = createClient();
 
-useEffect(() => {
-  const fetchCategories = async () => {
-    const { data } = await supabase.from("main_category").select("*");
-    setCategories(data);
-  };
-  fetchCategories();
-}, [currentCategory]);  
-  
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { data } = await supabase.from("main_category").select("*");
+      setCategories(data);
+    };
+    fetchCategories();
+  }, [currentCategory]);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);

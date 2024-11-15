@@ -7,7 +7,7 @@ import { REGULAR_CLUB_CREATE } from "../_utils/localStorage";
 import Category from "../_components/regularClub/Category";
 import MemberType from "../_components/regularClub/MemberType";
 import { putRegularMember, putRepresentative, submitRegularClubData, uploadImage } from "../_api/supabase";
-import { EggClubForm } from "@/types/eggclub.types";
+import { EggClubForm } from "@/types/안끝난거/eggclub.types";
 import ProgressBar from "../_components/ProgressBar";
 import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";

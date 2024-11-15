@@ -4,8 +4,8 @@ import ClubHeader from "./_components/ClubHeader";
 import HomeContent from "./_components/HomeContent";
 import RegularNotification from "./_components/RegularNotification";
 import { SubCategory } from "@/types/category.types";
-import { getEggClub, Member, MemberInfo } from "@/types/eggclub.types";
-import { InSertEggDay } from "@/types/eggday.types";
+import { getEggClub, Member, MemberInfo } from "@/types/안끝난거/eggclub.types";
+import { EggDay } from "@/types/안끝난거/eggday.types";
 
 const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const regularClubId = Number(params.id);
@@ -14,7 +14,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
     getRegularMember(regularClubId),
     getRegularClubNotification(regularClubId),
     fetchSubCategories()
-  ])) as [Member[], InSertEggDay[], SubCategory[]];
+  ])) as [Member[], EggDay[], SubCategory[]];
 
   // 클럽 정보만 추출
   const clubInfo: getEggClub = memberData[0]?.egg_club;

@@ -5,13 +5,13 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { EggClubChatInfo, ExtendEggClubMessage } from "@/types/eggclubchat.types";
+import { ExtendEggClubMessage } from "@/types/eggclubchat.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 
 const supabase = createClient();
 
-const ChatPage: React.FC = () => {
+const ChatPage = () => {
   const params = useParams();
   const roomId = params.chatRoomId;
   const [newMessage, setNewMessage] = useState<string>("");
@@ -63,12 +63,12 @@ const ChatPage: React.FC = () => {
   });
 
   // 채팅방 정보 조회
-  const { data: chatInfo } = useQuery<EggClubChatInfo>({
+  const { data: chatInfo } = useQuery({
     queryKey: ["chatInfo", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("egg_day_chatting")
-        .select(`*, egg_day_chatting_room (*)`)
+        .select(`*, egg_day_chatting_room(*)`)
         .eq("egg_day_chatting_room_id", roomId)
         .eq("egg_club_member_id", memberData?.egg_club_member_id)
         .single();
@@ -81,7 +81,7 @@ const ChatPage: React.FC = () => {
   // console.log(chatInfo?.chat_room_entry_time);
 
   // 메시지 목록 조회
-  const { data: messages = [], isLoading: isLoadingMessages } = useQuery<ExtendEggClubMessage[]>({
+  const { data: messages = [], isLoading: isLoadingMessages } = useQuery({
     queryKey: ["messages", roomId, chatInfo?.chat_room_entry_time],
     queryFn: async () => {
       if (!chatInfo?.chat_room_entry_time) {
@@ -90,7 +90,7 @@ const ChatPage: React.FC = () => {
 
       const { data, error } = await supabase
         .from("egg_day_chatting_message")
-        .select(`*, user:user_id(*)`)
+        .select(`*, user(*)`)
         .eq("egg_day_chatting_room_id", roomId)
         .gte("egg_day_chatting_message_create_at", chatInfo.chat_room_entry_time)
         .order("egg_day_chatting_message_create_at", { ascending: true });
@@ -118,7 +118,7 @@ const ChatPage: React.FC = () => {
 
       const { error } = await supabase.from("egg_day_chatting_message").insert([
         {
-          egg_day_chatting_room_id: roomId,
+          egg_day_chatting_room_id: Number(roomId),
           user_id: currentUser.id,
           egg_day_chatting_id: chatInfo.egg_day_chatting_id,
           egg_club_member_id: chatInfo.egg_club_member_id,
@@ -192,7 +192,7 @@ const ChatPage: React.FC = () => {
     }, {});
   };
 
-  const groupedMessages = groupMessagesByDate(messages);
+  const groupedMessages = groupMessagesByDate(messages as unknown as ExtendEggClubMessage[]);
 
   const handleSendMessage = () => {
     if (newMessage.trim() === "") return;

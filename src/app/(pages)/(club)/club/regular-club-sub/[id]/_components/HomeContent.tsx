@@ -1,6 +1,6 @@
 import Image from "next/image";
 import CrewList from "./CrewList";
-import { HomeContentProps } from "@/types/eggclub.types";
+import { HomeContentProps } from "@/types/안끝난거/eggclub.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
 import Tag from "@/components/uiComponents/TagComponents/Tag";

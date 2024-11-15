@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
-import { EggPopForm } from "@/types/eggpop.types";
+import { EggPopForm } from "@/types/안끝난거/eggpop.types";
 
 // 주소 커스텀 함수
 const customAddress = (address: string) => {

@@ -2,45 +2,10 @@ import { enterRegularChatRoom } from "@/app/(pages)/(chat)/_api/regular";
 import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { createClient } from "@/utils/supabase/client";
 
-export interface RegularClub {
-  egg_club_id: number;
-  main_category_id: number;
-  user_id: string;
-  egg_club_name: string;
-  egg_club_introduction: string;
-  egg_club_people_limited: number;
-  egg_club_gender: string | null;
-  egg_club_age: number;
-  egg_club_image: string;
-  egg_club_approval: boolean;
-  egg_club_create_at: string;
-  sub_category_id: number;
-}
-
-export interface RCMember {
-  egg_club_member_id: number;
-  egg_club_participation_request_id: number;
-  egg_club_id: number;
-  user_id: string;
-  joined_at: string;
-  egg_club_request_status: "active" | "pending";
-}
-
-export interface User {
-  user_id: string;
-  user_email: string;
-  user_nickname: string;
-  user_gender: string;
-  user_age: number;
-  user_profile_img: string;
-  user_roletype: boolean;
-  user_create_at: string;
-}
-
 export class RegularClubAPI {
   private supabase = createClient();
 
-  async validateJoinConditions(userId: string, clubId: number): Promise<void> {
+  async validateJoinConditions(userId: string, clubId: number) {
     const [user, club, memberCount] = await Promise.all([
       this.getUserData(userId),
       this.getClubData(clubId),
@@ -75,7 +40,7 @@ export class RegularClubAPI {
     }
   }
 
-  async applyForMembership(clubId: number, userId: string): Promise<void> {
+  async applyForMembership(clubId: number, userId: string) {
     const isExistingMember = await this.checkExistingMember(userId, clubId);
     if (isExistingMember) {
       throw new ClubJoinError("이미 가입된 모임입니다.");
@@ -94,44 +59,18 @@ export class RegularClubAPI {
       await this.supabase.from("egg_club_participation_request").insert({
         egg_club_id: clubId,
         user_id: userId,
-        egg_club_participation_request_status: "pending",
-        egg_club_participation_request_create_at: new Date()
+        egg_club_participation_request_status: "pending"
       });
     } else {
       await this.insertMember(clubId, userId);
     }
   }
 
-  async approveMembership(clubId: number, userId: string): Promise<void> {
-    const { data: club, error } = await this.supabase
-      .from("egg_club")
-      .select("user_id")
-      .eq("egg_club_id", clubId)
-      .single();
-    if (error || !club) {
-      throw new ClubJoinError("모임 정보를 찾을 수 없습니다.");
-    }
-
-    const { data: currentUser, error: userError } = await this.supabase.auth.getUser();
-    if (userError || !currentUser.user) {
-      throw new ClubJoinError("사용자 정보를 찾을 수 없습니다.");
-    }
-
-    const { error: trxError } = await this.supabase.rpc("approve_club_membership", {
-      p_club_id: clubId,
-      p_user_id: userId
-    });
-
-    if (trxError) {
-      throw new ClubJoinError("승인 처리 중 오류가 발생했습니다.");
-    }
-  }
-
-  async insertMember(clubId: number, userId: string): Promise<void> {
+  async insertMember(clubId: number, userId: string) {
     const now = new Date();
     const utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
     const koreaTimeDiff = 9 * 60 * 60 * 1000;
-    const koreaTime = new Date(utc + koreaTimeDiff);
+    const koreaTime = new Date(utc + koreaTimeDiff).toISOString();
     const { data } = await this.supabase
       .from("egg_club_participation_request")
       .insert({
@@ -154,13 +93,13 @@ export class RegularClubAPI {
     }
   }
 
-  async getUserData(userId: string): Promise<User> {
+  async getUserData(userId: string) {
     const { data, error } = await this.supabase.from("user").select("*").eq("user_id", userId).single();
     if (error) throw new ClubJoinError("사용자 정보를 찾을 수 없습니다.");
     return data;
   }
 
-  async getClubData(clubId: number): Promise<RegularClub> {
+  async getClubData(clubId: number) {
     const { data, error } = await this.supabase
       .from("egg_club")
       .select("*, user:user_id")
@@ -170,7 +109,7 @@ export class RegularClubAPI {
     return data;
   }
 
-  async getCurrentMemberCount(clubId: number): Promise<number> {
+  async getCurrentMemberCount(clubId: number) {
     const { count, error } = await this.supabase
       .from("egg_club_member")
       .select("*", { count: "exact" })
@@ -185,7 +124,7 @@ export class RegularClubAPI {
     return count ?? 0;
   }
 
-  async checkExistingMember(userId: string, clubId: number): Promise<boolean> {
+  async checkExistingMember(userId: string, clubId: number) {
     const { data, error } = await this.supabase
       .from("egg_club_member")
       .select("*")

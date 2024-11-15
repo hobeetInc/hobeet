@@ -1,7 +1,7 @@
 "use client";
 import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { EggPopProps } from "@/types/eggpop.types";
+import { EggPopProps } from "@/types/안끝난거/eggpop.types";
 import { useState } from "react";
 
 const Tax = ({ formData, setFormData }: EggPopProps) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { ApiResponse, EggClubChattingRoom } from "@/types/eggclubchat.types";
+import { EggClubChattingRoom } from "@/types/eggclubchat.types";
 import { cn } from "@/utils/cn/util";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
@@ -48,7 +48,7 @@ const RegularClubChattingRoomPage = () => {
           body: JSON.stringify({ userId })
         });
 
-        const chatData: ApiResponse = await response.json();
+        const chatData = await response.json();
         // console.log(chatData);
 
         if (!response.ok) {
@@ -182,7 +182,7 @@ const RegularClubChattingRoomPage = () => {
                         {room.egg_day_chatting_room_name}
                       </Text>
                       <div className={cn("flex items-center gap-4")}>
-                        {room.egg_day_chatting[0].count > 0 && (
+                        {typeof room.egg_day_chatting[0].count === "number" && room.egg_day_chatting[0].count > 0 && (
                           <Text variant="subtitle-16" className={cn("text-gray-200")}>
                             {room.egg_day_chatting[0].count}{" "}
                           </Text>

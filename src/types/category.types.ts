@@ -1,21 +1,7 @@
-// 대분류 카테고리 타입
-export interface MainCategory {
-  main_category_id: number;
-  main_category_name: string;
-}
+import { Tables } from "./database.types";
 
-// 중분류 카테고리 타입
-export interface SubCategory {
-  sub_category_id: number;
-  main_category_id: number;
-  sub_category_name: string;
-}
-
-// 카테고리 리스트 props
-export type CategoryListProps = {
-  categoryId: number;
-  selectedCategory: number;
-};
+export type MainCategory = Tables<"main_category">;
+export type SubCategory = Tables<"sub_category">;
 
 // 대분류 카테고리 타입
 export interface Category {

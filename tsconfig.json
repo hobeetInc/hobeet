@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
+    "noImplicitAny": false,
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -23,6 +24,13 @@
       "@/database.types": ["./database.types.ts"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/hooks/useClubWishlist.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/hooks/useClubWishlist.ts"
+  ],
   "exclude": ["node_modules"]
 }

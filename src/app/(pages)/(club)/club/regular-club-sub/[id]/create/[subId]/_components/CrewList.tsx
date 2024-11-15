@@ -6,7 +6,7 @@ import { useAuth } from "@/store/AuthContext";
 import { getNotificationMember, submitRegularMember } from "@/app/(pages)/(club)/club/_api/supabase";
 import FullScreenModal from "./FullScreenModal";
 import { useRouter } from "next/navigation";
-import { CrewListProps } from "@/types/eggday.types";
+import { CrewListProps } from "@/types/안끝난거/eggday.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import { IoIosArrowForward } from "react-icons/io";

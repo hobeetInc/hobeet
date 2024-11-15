@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
-import { WishListResponse } from "@/types/mypage.types";
 import { useRouter } from "next/navigation";
 import { WishHeart } from "@/components/uiComponents/IconComponents/Icons";
 import { HeartImage } from "@/components/uiComponents/HeartImage";
@@ -14,7 +13,7 @@ import Link from "next/link";
 
 const WishClubListPage = () => {
   const supabase = browserClient;
-  const [wishData, setWishData] = useState<WishListResponse[]>([]);
+  const [wishData, setWishData] = useState([]);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
@@ -29,14 +28,14 @@ const WishClubListPage = () => {
         const { data: rawData, error: fetchError } = await supabase
           .from("wish_list")
           .select(
-            `egg_club_id(
+            `egg_club(
               egg_club_id,
               egg_club_name,
               egg_club_image, 
               egg_club_people_limited,
               egg_club_member(count),
               wish_list(count),
-              user_id(
+              user(
                 user_name, 
                 user_profile_img
               )
@@ -49,9 +48,7 @@ const WishClubListPage = () => {
 
         // console.log("Fetched data:", rawData); // 데이터 구조 확인
 
-        // 타입 안전성을 위해 unknown으로 먼저 변환
-        const data = rawData as unknown as WishListResponse[];
-        setWishData(data);
+        setWishData(rawData);
         setError(null);
       } catch (err) {
         console.error("찜 목록 가져오기 에러:", err);
@@ -95,15 +92,15 @@ const WishClubListPage = () => {
         <div className="flex flex-wrap justify-center items-center gap-2.5 p-4">
           {wishData.map((item, index) => (
             <div
-              onClick={() => handleClick(item.egg_club_id.egg_club_id)}
+              onClick={() => handleClick(item.egg_club.egg_club_id)}
               key={index}
               className="w-[174px] flex-col justify-start items-start gap-2 inline-flex"
             >
               <div className="flex-col justify-start items-start gap-2 inline-flex min-h-[306px]">
                 <div className="w-[174px] h-[174px] overflow-hidden relative">
                   <Image
-                    src={item.egg_club_id.egg_club_image}
-                    alt={item.egg_club_id.egg_club_name}
+                    src={item.egg_club.egg_club_image}
+                    alt={item.egg_club.egg_club_name}
                     width={174}
                     height={174}
                     className="w-[174px] h-[174px] object-cover rounded-[12px]"
@@ -116,14 +113,14 @@ const WishClubListPage = () => {
                 <div className="self-stretch h-[124px] flex-col justify-start items-start gap-1.5 flex">
                   <Tag tagName="eggclub" />
 
-                  <Text variant="subtitle-16"> {item.egg_club_id.egg_club_name}</Text>
+                  <Text variant="subtitle-16"> {item.egg_club.egg_club_name}</Text>
 
                   <div className="self-stretch justify-start items-center gap-1 inline-flex">
                     <div className="justify-start items-center gap-0.5 flex">
                       <div className="w-[22px] h-[22px] relative">
                         <Image
-                          src={item.egg_club_id.user_id.user_profile_img}
-                          alt={item.egg_club_id.user_id.user_name}
+                          src={item.egg_club.user_id.user_profile_img}
+                          alt={item.egg_club.user_id.user_name}
                           width={24}
                           height={24}
                           className="w-[22px] h-[22px] left-0 top-0 absolute bg-gray-100 rounded-full"
@@ -131,7 +128,7 @@ const WishClubListPage = () => {
                       </div>
 
                       <Text variant="body_medium-14" className="text-gray-400">
-                        {item.egg_club_id.user_id.user_name}
+                        {item.egg_club.user_id.user_name}
                       </Text>
                     </div>
                     <div className="justify-start items-center gap-0.5 flex">
@@ -139,7 +136,7 @@ const WishClubListPage = () => {
                         멤버
                       </Text>
                       <Text variant="body_medium-14" className="text-gray-400">
-                        {item.egg_club_id.egg_club_member[0]?.count || 0}/{item.egg_club_id.egg_club_people_limited}
+                        {item.egg_club.egg_club_member[0]?.count || 0}/{item.egg_club.egg_club_people_limited}
                       </Text>
                     </div>
                   </div>
@@ -148,7 +145,7 @@ const WishClubListPage = () => {
                       <WishHeart />
 
                       <Text variant="body_medium-14" className="text-gray-400">
-                        찜수 {item.egg_club_id.wish_list[0]?.count || 0}
+                        찜수 {item.egg_club.wish_list[0]?.count || 0}
                       </Text>
                     </div>
                   </div>
@@ -156,8 +153,8 @@ const WishClubListPage = () => {
               </div>
               {/* <div className="relative">
                 <Image
-                  src={item.egg_club_id.egg_club_image}
-                  alt={item.egg_club_id.egg_club_name}
+                  src={item.egg_club.egg_club_image}
+                  alt={item.egg_club.egg_club_name}
                   width={150}
                   height={150}
                   className="w-full h-32 object-cover rounded-md"
@@ -166,25 +163,25 @@ const WishClubListPage = () => {
               </div>
 
               <div className="mt-3 text-sm font-semibold text-gray-800 leading-tight">
-                {item.egg_club_id.egg_club_name}
+                {item.egg_club.egg_club_name}
               </div>
 
               <div className="flex items-center mt-2">
                 <Image
-                  src={item.egg_club_id.user_id.user_profile_img}
-                  alt={item.egg_club_id.user_id.user_name}
+                  src={item.egg_club.user_id.user_profile_img}
+                  alt={item.egg_club.user_id.user_name}
                   width={24}
                   height={24}
                   className="w-6 h-6 rounded-full mr-2"
                 />
                 <p className="text-xs text-gray-500">
-                  {item.egg_club_id.user_id.user_name} 멤버 {item.egg_club_id.egg_club_member[0]?.count || 0}/
-                  {item.egg_club_id.egg_club_people_limited}
+                  {item.egg_club.user_id.user_name} 멤버 {item.egg_club.egg_club_member[0]?.count || 0}/
+                  {item.egg_club.egg_club_people_limited}
                 </p>
               </div>
 
               <div className="flex items-center mt-2 text-xs text-gray-500">
-                찜수+ {item.egg_club_id.wish_list[0]?.count || 0}
+                찜수+ {item.egg_club.wish_list[0]?.count || 0}
               </div> */}
             </div>
           ))}

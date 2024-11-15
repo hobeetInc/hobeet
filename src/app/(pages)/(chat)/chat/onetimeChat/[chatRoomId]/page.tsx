@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { EggPopChatInfo, ExtendEggPopMessage } from "@/types/eggpopchat.types";
+import { ExtendEggPopMessage } from "@/types/안끝난거/eggpopchat.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import { cn } from "@/utils/cn/util";
@@ -62,12 +62,12 @@ const ChatPage: React.FC = () => {
     enabled: !!currentUser?.id && isRecFetched
   });
 
-  const { data: chatInfo } = useQuery<EggPopChatInfo>({
+  const { data: chatInfo } = useQuery({
     queryKey: ["oneTimeChatInfo", roomId],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("egg_pop_chatting_room_member")
-        .select(`*, egg_pop_chatting_room (*)`)
+        .select(`*, egg_pop_chatting_room(*)`)
         .eq("egg_pop_chatting_room_id", roomId)
         .eq("egg_pop_member_id", memberData?.egg_pop_member_id)
         .single();
@@ -80,7 +80,7 @@ const ChatPage: React.FC = () => {
   // console.log(chatInfo?.chat_room_entry_time);
 
   // 메시지 목록 조회
-  const { data: oneTimeMessages = [], isLoading: isLoadingMessages } = useQuery<ExtendEggPopMessage[]>({
+  const { data: oneTimeMessages = [], isLoading: isLoadingMessages } = useQuery({
     queryKey: ["oneTimeMessages", roomId, chatInfo?.created_at],
     queryFn: async () => {
       if (!chatInfo?.created_at) {
@@ -89,13 +89,22 @@ const ChatPage: React.FC = () => {
 
       const { data, error } = await supabase
         .from("egg_pop_chatting_room_message")
-        .select(`*, user:user_id(*)`)
+        .select(
+          `
+          *,
+          user:user_id (
+            user_id,
+            user_name,
+            user_profile_img
+          )
+        `
+        )
         .eq("egg_pop_chatting_room_id", roomId)
         .gte("created_at", chatInfo.created_at)
         .order("created_at", { ascending: true });
 
       if (error) throw error;
-      return data || [];
+      return (data || []) as unknown as ExtendEggPopMessage[];
     },
     enabled: !!roomId && !!chatInfo?.created_at
   });
@@ -117,7 +126,7 @@ const ChatPage: React.FC = () => {
 
       const { error } = await supabase.from("egg_pop_chatting_room_message").insert([
         {
-          egg_pop_chatting_room_id: roomId,
+          egg_pop_chatting_room_id: Number(roomId),
           user_id: currentUser.id,
           egg_pop_chatting_room_member_id: chatInfo.egg_pop_chatting_room_member_id,
           egg_pop_member_id: chatInfo.egg_pop_member_id,

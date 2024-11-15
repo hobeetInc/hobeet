@@ -6,7 +6,7 @@ import { ChatProvider, useChatContext } from "./_components/ChatContext";
 import { ChatRoomExit } from "@/app/api/_ChatRoomExit/ChatRoomExit";
 import { createClient } from "@/utils/supabase/client";
 import { cn } from "@/utils/cn/util";
-import { EggPopChattingMemberInfo, LayoutProps } from "@/types/eggpopchat.types";
+import { EggPopChattingMemberInfo, LayoutProps } from "@/types/안끝난거/eggpopchat.types";
 import { IoCloseOutline } from "react-icons/io5";
 import Image from "next/image";
 import Text from "@/components/uiComponents/TextComponents/Text";

@@ -7,7 +7,7 @@ import FullScreenModal from "./FullScreenModal";
 import { useAuth } from "@/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
-import { CrewListProps } from "@/types/eggpop.types";
+import { CrewListProps } from "@/types/안끝난거/eggpop.types";
 import OneTimeClubJoinButton from "./OneTimeClubJoinButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";

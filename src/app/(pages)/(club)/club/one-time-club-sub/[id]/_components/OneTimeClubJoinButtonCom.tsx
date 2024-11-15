@@ -1,4 +1,3 @@
-import { JoinClubButtonProps } from "@/types/join.types";
 import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { oneTimeClubJoin } from "@/utils/onetimeclubjoin/join";
 import { createClient } from "@/utils/supabase/client";
@@ -6,6 +5,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 
+interface JoinClubButtonProps {
+  clubId: number;
+  onSuccess?: () => void;
+  onError?: (message: string) => void;
+}
 export default function OneTimeClubJoinButton({ clubId, onError }: JoinClubButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const supabase = createClient();

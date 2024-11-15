@@ -58,7 +58,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { PopHeaderProps } from "@/types/eggpop.types";
+import { PopHeaderProps } from "@/types/안끝난거/eggpop.types";
 import { useEffect } from "react";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowBack } from "react-icons/io";

@@ -2,10 +2,17 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/store/AuthContext";
-import { ClubCardProps } from "@/types/eggclub.types";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+import { EggDay } from "@/types/안끝난거/eggday.types";
+import { User } from "@/types/user.types";
+
+// 클럽 카드 props
+interface ClubCardProps {
+  notification: EggDay;
+  crewMembers: User[];
+}
 
 const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
   const router = useRouter();

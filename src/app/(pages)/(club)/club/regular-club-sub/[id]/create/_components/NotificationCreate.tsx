@@ -8,7 +8,7 @@ import { useAuth } from "@/store/AuthContext";
 import { submitRegularClubNotification, submitRegularMember, uploadImage } from "../../../../_api/supabase";
 import { useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
-import { EggDay } from "@/types/eggday.types";
+import { EggDay, EggDayRequired } from "@/types/안끝난거/eggday.types";
 import { AddressData, DaumPostcodeData } from "@/types/address.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import ImageUpload from "@/components/uiComponents/Image/ImageUpload";
@@ -49,7 +49,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<Date | null>(null);
 
-  const [formData, setFormData] = useState<EggDay>({
+  const [formData, setFormData] = useState<Omit<EggDay, "egg_day_image"> & { egg_day_image: string | File }>({
     user_id: userId,
     egg_day_name: "",
     egg_day_content: "",
@@ -311,6 +311,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
       let finalFormData = { ...formData };
 
       // 이미지 업로드 처리
+      // @ts-ignore
       if (formData.egg_day_image instanceof File) {
         try {
           const imageUrl = await uploadImage(formData.egg_day_image);
@@ -326,7 +327,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
       }
 
       //  데이터 저장
-      const data = await submitRegularClubNotification(finalFormData);
+      const data = await submitRegularClubNotification(finalFormData as EggDayRequired);
 
       const hostInfo = {
         egg_day_id: data.egg_day_id,

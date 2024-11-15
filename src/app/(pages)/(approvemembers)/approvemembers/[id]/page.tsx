@@ -151,25 +151,26 @@ export default function ApproveMembersPage() {
   const params = useParams();
   const clubId = Number(params.id);
   const router = useRouter();
+
   useEffect(() => {
     const fetchPendingAndActiveRequests = async () => {
       const { data: pendingData, error: pendingError } = await supabase
         .from("egg_club_participation_request")
-        .select(`*,user_id("*")`)
+        .select(`*, user(*)`)
         .eq("egg_club_participation_request_status", "pending")
         .eq("egg_club_id", clubId);
 
       const { data: activeData, error: activeError } = await supabase
         .from("egg_club_participation_request")
-        .select(`*,user_id("*")`)
+        .select(`*, user(*)`)
         .eq("egg_club_participation_request_status", "active")
         .eq("egg_club_id", clubId);
 
       if (pendingError || activeError) {
         console.error("Error fetching requests:", pendingError || activeError);
       } else {
-        setRequests(pendingData as ParticipationRequest[]);
-        setActiveMembers(activeData as ParticipationRequest[]);
+        setRequests(pendingData as unknown as ParticipationRequest[]);
+        setActiveMembers(activeData as unknown as ParticipationRequest[]);
       }
     };
 

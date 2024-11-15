@@ -5,7 +5,7 @@ import ImageUpload from "@/components/uiComponents/Image/ImageUpload";
 import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
 import ClubCreateTextArea from "@/components/uiComponents/Input/Textarea";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { EggClubProps } from "@/types/eggclub.types";
+import { EggClubProps } from "@/types/안끝난거/eggclub.types";
 
 const Introduction = ({ formData, setFormData }: EggClubProps) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);

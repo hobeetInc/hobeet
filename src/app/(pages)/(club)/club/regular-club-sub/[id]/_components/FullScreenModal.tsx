@@ -2,7 +2,7 @@
 
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { FullScreenModalProps } from "@/types/eggclub.types";
+import { FullScreenModalProps } from "@/types/안끝난거/eggclub.types";
 import Image from "next/image";
 import { IoIosArrowBack } from "react-icons/io";
 

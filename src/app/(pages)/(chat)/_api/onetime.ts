@@ -1,5 +1,5 @@
-import { EggPopChatRoom } from "@/types/eggpopchat.types";
-import { EggPopChattingMember, EggPopId } from "@/types/eggpopchat.types";
+import { EggPopChatRoom } from "@/types/안끝난거/eggpopchat.types";
+import { EggPopChattingMember, EggPopId } from "@/types/안끝난거/eggpopchat.types";
 import { createClient } from "@/utils/supabase/client";
 
 export async function createOneTimeChatRoomAndEnterAsAdmin(
@@ -124,7 +124,7 @@ export async function fetchChatRoomMembers(egg_pop_id: number) {
   try {
     const { data, error } = await supabase
       .from("egg_pop_chatting_room_member")
-      .select(`* , egg_pop_member_id(* , user_id(*))`)
+      .select(`* , egg_pop_member(* , user(*))`)
       .eq("egg_pop_id", egg_pop_id)
       .eq("active", true);
 
