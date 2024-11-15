@@ -3,6 +3,7 @@ import { Category } from "@/types/category.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Text from "@/components/uiComponents/TextComponents/Text";
+import { cn } from "@/utils/cn/util";
 
 const categories: Category[] = [
   { id: 0, name: "에그팝", icon: "/asset/Category icon_voltage.png", alt: "eggpop" },
@@ -22,18 +23,20 @@ const CategorySlider = () => {
   };
 
   return (
-    <div className="relative w-full max-w-full mx-auto px-4 mt-4 overflow-x-auto scrollbar-hide whitespace-nowrap">
-      <div className="flex items-center space-x-4">
+    <div
+      className={cn("relative w-full max-w-full mx-auto px-4 mt-4 overflow-x-auto scrollbar-hide whitespace-nowrap")}
+    >
+      <div className={cn("flex items-center space-x-4")}>
         {categories.map((category) => (
           <button
             key={category.id}
-            className="flex flex-col items-center flex-shrink-0"
+            className={cn("flex flex-col items-center flex-shrink-0")}
             onClick={() => handleCategory(category.id)}
           >
-            <div className="flex w-16 h-16 justify-center items-center rounded-full bg-[#fff1cc]">
-              <Image width={48} height={48} src={category.icon} alt={category.alt} className="w-12 h-12" />
+            <div className={cn("flex w-16 h-16 justify-center items-center rounded-full bg-[#fff1cc]")}>
+              <Image width={48} height={48} src={category.icon} alt={category.alt} className={cn("w-12 h-12")} />
             </div>
-            <div className="text-center mt-1">
+            <div className={cn("text-center mt-1")}>
               <Text variant="body-12">{category.name}</Text>
             </div>
           </button>
