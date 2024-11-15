@@ -3,7 +3,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 // 컴포넌트 임포트
 import { useAuth } from "@/store/AuthContext";
-import { OneTimeClubChatRoom } from "@/app/(pages)/(chat)/_components/oneTimeClub/OneTimeClubChatRoom";
 import { ONETIME_CLUB_CREATE } from "../_utils/localStorage";
 import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../_api/supabase";
 import Category from "../_components/oneTimeClub/Category";
@@ -17,6 +16,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import Introduction from "../_components/oneTimeClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
+import { createOneTimeChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/onetime";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -170,7 +170,7 @@ const OneTimeContent = () => {
 
       await putOneTimeMember(member);
       // 모임장 채팅방 생성 및 입장
-      await OneTimeClubChatRoom(data.egg_pop_name, data.egg_pop_id, userId);
+      await createOneTimeChatRoomAndEnterAsAdmin(data.egg_pop_name, data.egg_pop_id, userId);
       alert("에그팝 생성에 성공했습니다");
       // 성공 시 처리
       localStorage.removeItem(ONETIME_CLUB_CREATE);
