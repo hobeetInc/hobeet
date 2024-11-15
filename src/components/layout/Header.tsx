@@ -43,7 +43,9 @@ export default function Header({ children }) {
     "/mypage/inquiry",
     "/kakaopay/paymentConfirm",
     "/kakaopay/success",
-    /^\/approvemembers\/.*$/
+    /^\/approvemembers\/.*$/,
+    "/club/list/onetime",
+    "/club/list/regular"
   ];
   const noHeaderRoutes = [/^\/category\/.*$/];
   const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>

@@ -77,7 +77,9 @@ const noHeaderFooterRoutes = [
   "/mypage/inquiry",
   "/kakaopay/paymentConfirm",
   "/kakaopay/success",
-  /^\/approvemembers\/.*$/
+  /^\/approvemembers\/.*$/,
+  "/club/list/onetime",
+  "/club/list/regular"
 ];
 
 export default function Footer() {

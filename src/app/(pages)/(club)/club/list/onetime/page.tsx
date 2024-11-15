@@ -7,11 +7,16 @@ import Image from "next/image";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDate } from "@/utils/CustomDate";
 import { StringEggPopForm } from "@/types/eggpop.types";
+import { IoIosArrowBack } from "react-icons/io";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { useRouter } from "next/navigation";
+import Tag from "@/components/uiComponents/TagComponents/Tag";
 
 const AllOneTimeClubListPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [allOneTimeClubList, setAllOneTimeClubList] = useState<StringEggPopForm[]>([]);
   const [error, setError] = useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchAllRegularClubList = async () => {
@@ -42,8 +47,17 @@ const AllOneTimeClubListPage = () => {
 
   return (
     <div>
+      <div className="flex justify-center items-center w-full mb-4">
+        <div onClick={() => router.back()} className="h-12 w-12 p-3 inline-flex">
+          <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
+        </div>
+        <div className="flex-1 text-center pr-7">
+          <Text variant="header-16">따끈따끈 에그팝</Text>
+        </div>
+      </div>
+
       <div className="flex w-[390px] py-2 px-4 items-center gap-[10px]">
-        <p className="text-[14px] font-[500px] leading-[145%]">총 {allOneTimeClubList?.length}개</p>
+        <Text variant="body_medium-14">총 {allOneTimeClubList?.length}개</Text>
       </div>
       {allOneTimeClubList.map((club: StringEggPopForm) => (
         <div key={club.egg_pop_id} className="flex items-start gap-2 self-stretch mb-4">
@@ -62,44 +76,32 @@ const AllOneTimeClubListPage = () => {
                 />
               </div>
               <div className="flex w-[248px] h-[87px] flex-col items-start gap-[4px]">
-                <div
-                  className="flex py-[2px] px-[8px] justify-center items-center
-                rounded-[128px] bg-[#fdb800]"
-                >
-                  <p className="font-pretendard text-[10px] not-italic leading-[14.5px] font-normal">에그팝</p>
-                </div>
+                <Tag tagName="eggpop" />
+
                 <div className="w-[160px]">
-                  <p
-                    className="font-pretendard text-[14px] font-[600] overflow-hidden text-overflow-ellipsis"
-                    style={
-                      {
-                        display: "-webkit-box",
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 2,
-                        alignSelf: "stretch",
-                        color: "var(--Gray-scale-900, #0D0D0D)",
-                        lineHeight: "135%"
-                      } as React.CSSProperties
-                    }
-                  >
-                    {club.egg_pop_name}
-                  </p>
+                  <Text variant="subtitle-14"> {club.egg_pop_name}</Text>
                 </div>
                 <div className="flex pt-[2px] items-center gap-[2px]">
                   <Image src="/asset/Icon/Icon-Location.png" alt="LocationIcon" width={16} height={16} />
-                  <p className="text-[12px] font-[400px] leading-[145%]">{CustomAddress(club.egg_pop_location)}</p>
-                  <div className="flex items-center gap-2 w-[125px] h-[20px]">
-                    <p className="text-[12px] font-[400px] leading-[145%]">{CustomDate(club.egg_pop_date_time)}</p>
+
+                  <div className="flex items-center gap-2 w-full h-[20px] ">
+                    <Text variant="body_medium-14" className="text-gray-400">
+                      {CustomAddress(club.egg_pop_location)}
+                    </Text>
+
+                    <Text variant="body_medium-14" className="text-gray-400">
+                      {CustomDate(club.egg_pop_date_time)}
+                    </Text>
                   </div>
                 </div>
 
                 <div className="flex max-w-[160px] items-center gap-[2px]">
-                  <p className="font-pretendard leading-[20.3px] text-[14px] ml-[8px] text-[#8c8c8c] font-[500px]">
+                  <Text variant="body_medium-14" className="text-gray-400">
                     멤버
-                  </p>
-                  <p className="font-pretendard leading-[20.3px] text-[14px] ml-[2px] text-[#8c8c8c] font-[500px]">
+                  </Text>
+                  <Text variant="body_medium-14" className="text-gray-400">
                     {club.egg_pop_member[0].count} / {club.egg_pop_people_limited}
-                  </p>
+                  </Text>
                 </div>
               </div>
             </div>

@@ -171,7 +171,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
           </button>
         </div>
         <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
-        <div className="w-full fixed bottom-[34px] right-0 left-0">{renderJoinButton()}</div>
+        <div className="w-full fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
     </>
