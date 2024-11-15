@@ -94,17 +94,17 @@ const DateScrollPicker = ({ values, selectedValue, onSelect, suffix = "", onClos
           </div>
         </div>
       </div>
-<div className="justify-items-center">
-      <Button
-        onClick={() => {
-          onSelect(selectedValue);
-          onClose();
-        }}
-        className="w-full py-3 bg-primary-500 text-subtitle-16  rounded-[8px] mx-4 text-white font-medium my-12 hover:bg-primary-500 transition-colors"
-      >
-        선택완료
-      </Button>
-</div>
+      <div className="justify-items-center">
+        <Button
+          onClick={() => {
+            onSelect(selectedValue);
+            onClose();
+          }}
+          className="w-full py-3 bg-primary-500 text-subtitle-16  rounded-[8px] mx-4 text-white font-medium my-12 hover:bg-primary-500 transition-colors"
+        >
+          선택완료
+        </Button>
+      </div>
       <style jsx>{`
         .scrollbar-hide::-webkit-scrollbar {
           display: none;

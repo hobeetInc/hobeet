@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import { ClubHeaderProps } from "@/types/eggclub.types";
 import { IoIosArrowBack } from "react-icons/io";
 import { useEffect } from "react";

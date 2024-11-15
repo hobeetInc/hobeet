@@ -12,28 +12,28 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: {
-          200: "var(--Primary-200, #FFF1CC)",
-          300: "var(--Primary-300, #FFE399)",
-          400: "var(--Primary-400, #FFD566)",
-          500: "var(--Primary-500, #FDB800)",
-          600: "var(--Primary-600, #CC9400)",
-          700: "var(--Primary-700, #996F00)",
-          800: "var(--Primary-800, #664A00)",
-          900: "var(--Primary-900, #0D0D0D)"
+          200: "#FFF1CC",
+          300: "#FFE399",
+          400: "#FFD566",
+          500: "#FDB800",
+          600: "#CC9400",
+          700: "#996F00",
+          800: "#664A00",
+          900: "#0D0D0D"
         },
-        white: "var(--White, #FFF)",
-        red: "var(--Red, #F02A49)",
+        white: "#FFF",
+        red: "#F02A49",
         gray: {
-          50: "var(--Gray-50, #F2F2F2)",
-          100: "var(--Gray-100, #D9D9D9)",
-          200: "var(--Gray-200, #BFBFBF)",
-          300: "var(--Gray-300, #A6A6A6)",
-          400: "var(--Gray-400, #8C8C8C)",
-          500: "var(--Gray-500, #737373)",
-          600: "var(--Gray-600, #595959)",
-          700: "var(--Gray-700, #404040)",
-          800: "var(--Gray-800, #262626)",
-          900: "var(--Gray-900, #0D0D0D)"
+          50: "#F2F2F2",
+          100: "#D9D9D9",
+          200: "#BFBFBF",
+          300: "#A6A6A6",
+          400: "#8C8C8C",
+          500: "#737373",
+          600: "#595959",
+          700: "#404040",
+          800: "#262626",
+          900: "#0D0D0D"
         }
       },
       fontFamily: {

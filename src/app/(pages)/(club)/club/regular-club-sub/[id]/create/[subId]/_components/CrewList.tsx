@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import { getNotificationMember, submitRegularMember } from "@/app/(pages)/(club)/club/_api/supabase";
 import FullScreenModal from "./FullScreenModal";
 import { useRouter } from "next/navigation";

@@ -29,7 +29,7 @@ export interface StringEggClubForm {
   egg_club_people_limited: number;
   user_id: User;
   egg_club_member: Array<{ count: number }>;
-  wish_list: InsertWishList[];
+  wish_list: WishListData[];
   created_at: string;
   updated_at: string;
 }
@@ -39,7 +39,7 @@ export type EggClubProps = {
   setFormData: React.Dispatch<SetStateAction<EggClubForm>>;
 };
 
-export type MemeberTypeProps = EggClubProps & {
+export type MemberTypeProps = EggClubProps & {
   selectedGender: string;
   setSelectedGender: (value: string) => void;
   selectedAge: string;
@@ -70,10 +70,7 @@ export interface WishList {
 }
 
 // 위시리스트 타입(Insert)
-export interface InsertWishList {
-  user_id: string | null;
-  egg_club_id: number;
-}
+export type WishListData = Omit<WishList, "wish_list_id">;
 
 // 에그클럽 맴버 정보 (공통)
 export type MemberInfo = {

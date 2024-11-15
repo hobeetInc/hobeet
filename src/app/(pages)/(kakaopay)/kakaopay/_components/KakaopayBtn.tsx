@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import { PaymentButtonProps } from "@/types/payment.types";
 
 const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) => {

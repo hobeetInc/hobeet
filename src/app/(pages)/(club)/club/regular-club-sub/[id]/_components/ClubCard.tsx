@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import { ClubCardProps } from "@/types/eggclub.types";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
@@ -80,7 +80,7 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
             </Text>
 
             <Text variant="body_medium-14" className="text-gray-400">
-              {(DateTimeCustom(notification.egg_day_date_time).time)}
+              {DateTimeCustom(notification.egg_day_date_time).time}
             </Text>
           </div>
         </div>

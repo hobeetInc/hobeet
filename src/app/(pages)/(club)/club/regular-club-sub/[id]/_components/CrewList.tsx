@@ -3,13 +3,13 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getParticipationStatus, getRegularMember } from "../../../_api/supabase";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import FullScreenModal from "./FullScreenModal";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import browserClient from "@/utils/supabase/client";
 import { CrewListProps, UserStatus } from "@/types/eggclub.types";
-import RegularClubJoinButton from "@/components/RegularClubJoinButtonCom";
+import RegularClubJoinButton from "@/app/(pages)/(club)/club/regular-club-sub/[id]/_components/RegularClubJoinButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
@@ -27,14 +27,14 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
       try {
         const memberResult = await getRegularMember(clubId);
 
-        const newCrewMemebers = memberResult.map((member) => ({
+        const newCrewMembers = memberResult.map((member) => ({
           memberId: member.r_c_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img
         }));
 
-        setCrewList(newCrewMemebers);
+        setCrewList(newCrewMembers);
 
         if (userId) {
           const statusResult = await getParticipationStatus({ userId, clubId });
