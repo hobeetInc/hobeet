@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "./store/AuthContext";
 import Image from "next/image";
+import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -60,7 +61,7 @@ export default function Footer() {
   return (
     showHeaderFooter && (
       <footer
-        className={`flex w-full p-[8px 16px 0px 16px]  justify-between items-center border-t border-solid border-[1px] border-[#F2F2F2] bg-[#fff] fixed bottom-[15px] mt-3  flex-shrink-0`}
+        className={`flex w-full h-[60px] p-[8px 16px 0px 16px]  justify-between items-center border-t border-solid border-[1px] border-[#F2F2F2] bg-[#fff] fixed bottom-[15px]  flex-shrink-0`}
       >
         <div className="flex justify-around w-full">
           <Link href="/">
@@ -77,7 +78,9 @@ export default function Footer() {
           </Link>
           <Link href="/search">
             <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
-              <Image
+              {pathname === "/search" ?  <Icon name="searchIcon" /> : <Icon name="emptySearchIcon" />}
+
+              {/* <Image
                 src={
                   pathname === "/search"
                     ? "/asset/Bottom nav_Button_Search.png"
@@ -86,7 +89,7 @@ export default function Footer() {
                 alt="Bottom nav_Button_Search_Default"
                 width={48}
                 height={48}
-              />
+              /> */}
             </div>
           </Link>
           <button onClick={handleMyClubList}>
@@ -109,9 +112,7 @@ export default function Footer() {
             <div className="flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0">
               <Image
                 src={
-                  pathname === "/chat"
-                    ? "/asset/Bottom nav_Button_My chat.png"
-                    : "/asset/Bottom nav_Button_My chat_Default.png"
+                  pathname === "/chat" ? "/asset/Bottom nav_Button_My chat.png" : "/asset/Bottom nav_Button_My chat_Default.png"
                 }
                 alt="Bottom nav_Button_My chat_Default"
                 width={48}
