@@ -56,7 +56,7 @@ const Category = ({ formData, setFormData }: EggPopProps) => {
       <Text variant="header-18" className="flex items-center mb-6 h-11">
         어떤 주제로 시작해볼까요?
       </Text>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 h-[400px] overflow-y-auto scrollbar-hide">
         {mainCategories?.map((main) => (
           <div
             key={main.main_category_id}

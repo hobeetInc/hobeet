@@ -7,7 +7,6 @@ import { CategoryListProps } from "@/types/category.types";
 import { VerticalContentsListLargeEggClub } from "@/components/uiComponents/VerticalContentsListLarge";
 import Link from "next/link";
 
-
 const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["categoryList", categoryId, selectedCategory],
@@ -15,7 +14,7 @@ const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) =
     enabled: !!categoryId
   });
 
-  const {data: userId} = useQuery({
+  const { data: userId } = useQuery({
     queryKey: ["user"],
     queryFn: () => getUserId(),
     enabled: true
@@ -28,10 +27,10 @@ const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) =
     return <div>Error: {error.toString()}</div>;
   }
 
-    const isWishedByUser = (club: EggClubForm): boolean => {
-      if (!userId) return false;
-      return club.wish_list?.some((wish) => wish.user_id === userId) || false;
-    };
+  const isWishedByUser = (club: EggClubForm): boolean => {
+    if (!userId) return false;
+    return club.wish_list?.some((wish) => wish.user_id === userId) || false;
+  };
 
   return (
     <>
@@ -40,7 +39,7 @@ const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) =
           <p className="text-[14px] font-[500px] leading-[145%]">전체 {data?.length}</p>
         </div>
       </div>
-      <div className="flex justify-center gap-[10px] self-stretch flex-wrap  ">
+      <div className="flex justify-center gap-[10px] mb-10 self-stretch flex-wrap  ">
         {data?.map((club) => (
           <Link key={club.egg_club_id} href={`/club/regular-club-sub/${club.egg_club_id}`}>
             <div className="flex flex-col">

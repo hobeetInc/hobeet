@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import TabBar from "@/components/uiComponents/TapBar";
-import ClubListContent from "@/components/myclublistcontent/ClubListContent";
+import ClubListContent from "./_components/ClubListContent";
 
 export default function MyClubList() {
   const [activeTab, setActiveTab] = useState(true);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";

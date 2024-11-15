@@ -9,11 +9,6 @@ import { EggClubChatInfo, ExtendEggClubMessage } from "@/types/eggclubchat.types
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 
-
-
-
-
-
 const supabase = createClient();
 
 const ChatPage: React.FC = () => {
@@ -23,7 +18,7 @@ const ChatPage: React.FC = () => {
   const queryClient = useQueryClient();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [sendIconColor , setSentIconColor] = useState<boolean>(false);
+  const [sendIconColor, setSentIconColor] = useState<boolean>(false);
   // 현재 사용자 정보 조회
   const { data: currentUser, isSuccess: isUserFetched } = useQuery({
     queryKey: ["currentUser"],
@@ -174,28 +169,28 @@ const ChatPage: React.FC = () => {
     }
   }, [newMessage]);
 
-const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
-  return messages.reduce((acc: { [date: string]: ExtendEggClubMessage[] }, message) => {
-    const date = new Date(message.egg_day_chatting_message_create_at);
-    const dateString = date.toLocaleDateString("ko-KR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    });
+  const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
+    return messages.reduce((acc: { [date: string]: ExtendEggClubMessage[] }, message) => {
+      const date = new Date(message.egg_day_chatting_message_create_at);
+      const dateString = date.toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
 
-    // 요일을 별도로 가져와서 괄호와 함께 추가
-    const weekday = date.toLocaleDateString("ko-KR", { weekday: "long" }).replace("요일", ""); // "요일" 텍스트 제거
+      // 요일을 별도로 가져와서 괄호와 함께 추가
+      const weekday = date.toLocaleDateString("ko-KR", { weekday: "long" }).replace("요일", ""); // "요일" 텍스트 제거
 
-    const formattedDate = `${dateString} (${weekday})`;
+      const formattedDate = `${dateString} (${weekday})`;
 
-    if (!acc[formattedDate]) {
-      acc[formattedDate] = [];
-    }
+      if (!acc[formattedDate]) {
+        acc[formattedDate] = [];
+      }
 
-    acc[formattedDate].push(message);
-    return acc;
-  }, {});
-};
+      acc[formattedDate].push(message);
+      return acc;
+    }, {});
+  };
 
   const groupedMessages = groupMessagesByDate(messages);
 
@@ -209,7 +204,7 @@ const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full ">
       {/* 메시지 출력 */}
       <div className="flex-grow overflow-y-auto">
         <div className="p-4">
@@ -284,7 +279,7 @@ const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
               </div>
             ))
           ) : (
-            <div className="text-center">메시지가 없습니다.</div>
+            <div className="text-center mt-[120px]">메시지가 없습니다.</div>
           )}
           <div ref={messagesEndRef} />
         </div>

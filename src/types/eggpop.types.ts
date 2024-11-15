@@ -52,7 +52,7 @@ export type EggPopProps = {
 };
 
 // 멤버타입 props
-export type MemeberTypeProps = EggPopProps & {
+export type MemberTypeProps = EggPopProps & {
   selectedGender: string;
   setSelectedGender: (value: string) => void;
   selectedAge: string;

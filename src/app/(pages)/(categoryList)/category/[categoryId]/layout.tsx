@@ -1,15 +1,15 @@
 "use client";
 
-import Text from '@/components/uiComponents/TextComponents/Text';
-import { CategoryLayoutProps, MainCategoryList } from '@/types/search.types';
-import { createClient } from '@/utils/supabase/client';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { CategoryLayoutProps, MainCategoryList } from "@/types/search.types";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { HiOutlineChevronLeft } from 'react-icons/hi';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
-import { IoSearchOutline } from 'react-icons/io5';
-import { BsPlusLg } from 'react-icons/bs';
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoSearchOutline } from "react-icons/io5";
+import { BsPlusLg } from "react-icons/bs";
 
 export default function CategoryLayout({ children, params }: CategoryLayoutProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,11 +18,15 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
   const router = useRouter();
 
   const supabase = createClient();
+
+useEffect(() => {
   const fetchCategories = async () => {
-    const { data } = await supabase.from('main_category').select('*');
+    const { data } = await supabase.from("main_category").select("*");
     setCategories(data);
   };
   fetchCategories();
+}, [currentCategory]);  
+  
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -63,39 +67,39 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
                   </div>
                 </Link>
                 <Link href={`/category/${categories[1].main_category_id}`}>
-                <div className="w-[119px] h-12 p-2 bg-white border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
-                  <Text variant="body_medium-12" className="text-gray-900">
-                    {categories[1].main_category_name}
-                  </Text>
-                </div>
+                  <div className="w-[119px] h-12 p-2 bg-white border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
+                    <Text variant="body_medium-12" className="text-gray-900">
+                      {categories[1].main_category_name}
+                    </Text>
+                  </div>
                 </Link>
                 <Link href={`/category/${categories[2].main_category_id}`}>
-                <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
-                  <Text variant="body_medium-12" className="text-gray-900">
-                    {categories[2].main_category_name}
-                  </Text>
-                </div>
+                  <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
+                    <Text variant="body_medium-12" className="text-gray-900">
+                      {categories[2].main_category_name}
+                    </Text>
+                  </div>
                 </Link>
                 <Link href={`/category/${categories[3].main_category_id}`}>
-                <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
-                  <Text variant="body_medium-12" className="text-gray-900">
-                    {categories[3].main_category_name}
-                  </Text>
-                </div>
+                  <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
+                    <Text variant="body_medium-12" className="text-gray-900">
+                      {categories[3].main_category_name}
+                    </Text>
+                  </div>
                 </Link>
                 <Link href={`/category/${categories[4].main_category_id}`}>
-                <div className="w-[119px] h-12 p-2 bg-white border-b border-gray-100 justify-center border-solid items-center gap-2 flex">
-                  <Text variant="body_medium-12" className="text-gray-900">
-                    {categories[4].main_category_name}
-                  </Text>
-                </div>
+                  <div className="w-[119px] h-12 p-2 bg-white border-b border-gray-100 justify-center border-solid items-center gap-2 flex">
+                    <Text variant="body_medium-12" className="text-gray-900">
+                      {categories[4].main_category_name}
+                    </Text>
+                  </div>
                 </Link>
                 <Link href={`/category/${categories[5].main_category_id}`}>
-                <div className="w-[119px] h-12 p-2 bg-white border-r border-gray-100 justify-center border-solid items-center gap-2 flex">
-                  <Text variant="body_medium-12" className="text-gray-900">
-                    {categories[5].main_category_name}
-                  </Text>
-                </div>
+                  <div className="w-[119px] h-12 p-2 bg-white border-r border-gray-100 justify-center border-solid items-center gap-2 flex">
+                    <Text variant="body_medium-12" className="text-gray-900">
+                      {categories[5].main_category_name}
+                    </Text>
+                  </div>
                 </Link>
                 <div className="w-[119px] h-12 p-2 bg-white border-r border-gray-100 justify-center border-solid items-center gap-2 flex">
                   <Text variant="body_medium-12" className="text-gray-300">
@@ -115,7 +119,7 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
           </button>
         </div>
       </header>
-      <div className="flex-1 overflow-hidden overflow-y-auto">{children}</div>
+      <div className="flex-1 overflow-hidden overflow-y-auto scrollbar-hide">{children}</div>
     </div>
   );
 }

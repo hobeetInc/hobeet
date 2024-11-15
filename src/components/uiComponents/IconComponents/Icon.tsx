@@ -7,10 +7,23 @@ import {
   WhiteEgg,
   WishHeart,
   YellowEgg,
-  Location
+  Location,
+  SearchIcon,
+  EmptySearchIcon
 } from "./Icons";
 
-type IconType = "home" | "chat" | "bell" | "heart" | "rocket" | "whiteEgg" | "yellowEgg" | "locationIcon" | "location";
+type IconType =
+  | "home"
+  | "chat"
+  | "bell"
+  | "heart"
+  | "rocket"
+  | "whiteEgg"
+  | "yellowEgg"
+  | "locationIcon"
+  | "location"
+  | "searchIcon"
+  | "emptySearchIcon";
 
 interface IconProps {
   name: IconType;
@@ -25,7 +38,9 @@ const ICON_MAP = {
   location: Location,
   whiteEgg: WhiteEgg,
   yellowEgg: YellowEgg,
-  locationIcon: LocationIcon
+  locationIcon: LocationIcon,
+  searchIcon: SearchIcon,
+  emptySearchIcon:EmptySearchIcon
 } as const;
 
 export function Icon({ name }: IconProps) {

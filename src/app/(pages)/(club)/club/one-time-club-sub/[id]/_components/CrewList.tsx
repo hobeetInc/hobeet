@@ -4,11 +4,11 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getOneTimeMember } from "../../../_api/supabase";
 import FullScreenModal from "./FullScreenModal";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { CrewListProps } from "@/types/eggpop.types";
-import OneTimeClubJoinButton from "@/components/OneTimeClubJoinButtonCom";
+import OneTimeClubJoinButton from "./OneTimeClubJoinButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
@@ -25,14 +25,14 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
       try {
         const data = await getOneTimeMember(clubId);
 
-        const newCrewMemebers = data.map((member) => ({
+        const newCrewMembers = data.map((member) => ({
           memberId: member.egg_pop_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img
         }));
 
-        setCrewList(newCrewMemebers);
+        setCrewList(newCrewMembers);
       } catch (error) {
         console.error("크루인원 가져오는 중 오류:", error);
       }

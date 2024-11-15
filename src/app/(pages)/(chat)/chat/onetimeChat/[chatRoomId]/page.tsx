@@ -8,8 +8,7 @@ import { useState } from "react";
 import { EggPopChatInfo, ExtendEggPopMessage } from "@/types/eggpopchat.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
-
-
+import { cn } from "@/utils/cn/util";
 
 const supabase = createClient();
 
@@ -199,20 +198,24 @@ const ChatPage: React.FC = () => {
   };
 
   if (isLoadingMessages) {
-    return <div className="p-4 text-center">메시지를 불러오는 중...</div>;
+    return <div className="p-4 text-center mt-[120px]">메시지를 불러오는 중...</div>;
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className={cn("flex flex-col h-full")}>
       {/* 메시지 출력 */}
-      <div className="flex-grow overflow-y-auto">
-        <div className="p-4">
+      <div className={cn("flex-grow overflow-y-auto")}>
+        <div className={cn("p-4")}>
           {Object.keys(groupedMessages).length > 0 ? (
             Object.keys(groupedMessages).map((dateString) => (
-              <div key={dateString} className="mb-6">
-                <div className="justify-items-center">
-                  <div className="w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-2 text-center">
-                    <Text variant="body-12" className="text-gray-500">
+              <div key={dateString} className={cn("mb-6")}>
+                <div className={cn("justify-items-center")}>
+                  <div
+                    className={cn(
+                      "w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-2 text-center"
+                    )}
+                  >
+                    <Text variant="body-12" className={cn("text-gray-500")}>
                       {dateString}
                     </Text>
                   </div>
@@ -224,28 +227,32 @@ const ChatPage: React.FC = () => {
                   return (
                     <div
                       key={message.egg_pop_chatting_room_message_id}
-                      className={`flex items-start mb-4 ${isCurrentUser ? "justify-end" : "justify-start"}`}
+                      className={cn("flex items-start mb-4", isCurrentUser ? "justify-end" : "justify-start")}
                     >
-                      <div className={`flex flex-col ${isCurrentUser ? "items-end" : "items-start"}`}>
+                      <div className={cn("flex flex-col", isCurrentUser ? "items-end" : "items-start")}>
                         {!isCurrentUser && (
-                          <div className="flex">
-                            <div className="flex items-center mr-2 border-solid border-[1px] rounded-full w-[40px] h-[40px]">
+                          <div className={cn("flex")}>
+                            <div
+                              className={cn(
+                                "flex items-center mr-2 border-solid border-[1px] rounded-full w-[40px] h-[40px]"
+                              )}
+                            >
                               <Image
                                 src={message.user.user_profile_img}
                                 alt={`${message.user.user_name}의 프로필 이미지`}
                                 width={40}
                                 height={40}
-                                className="rounded-full"
+                                className={cn("rounded-full")}
                               />
                             </div>
-                            <span className="text-sm content-center text-gray-600 block]">
+                            <span className={cn("text-sm content-center text-gray-600 block")}>
                               {message.user.user_name}
                             </span>
                           </div>
                         )}
-                        <div className="flex items-center">
+                        <div className={cn("flex items-center")}>
                           {isCurrentUser && (
-                            <span className="text-xs text-gray-500 block self-end	mr-2">
+                            <span className={cn("text-xs text-gray-500 block self-end mr-2")}>
                               {date.toLocaleTimeString([], {
                                 hour: "2-digit",
                                 minute: "2-digit",
@@ -255,14 +262,15 @@ const ChatPage: React.FC = () => {
                           )}
 
                           <div
-                            className={`max-w-xs break-words p-3 rounded-[16px] ${
+                            className={cn(
+                              "max-w-xs break-words p-3 rounded-[16px] text-gray-900",
                               isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2]"
-                            } text-gray-900`}
+                            )}
                           >
-                            <p className="max-w-[150px]">{message.egg_pop_chatting_room_message_content}</p>
+                            <p className={cn("max-w-[150px]")}>{message.egg_pop_chatting_room_message_content}</p>
                           </div>
                           {!isCurrentUser && (
-                            <span className="text-xs text-gray-500 block self-end ml-1	">
+                            <span className={cn("text-xs text-gray-500 block self-end ml-1")}>
                               {date.toLocaleTimeString([], {
                                 hour: "2-digit",
                                 minute: "2-digit",
@@ -278,16 +286,16 @@ const ChatPage: React.FC = () => {
               </div>
             ))
           ) : (
-            <div className="text-center">메시지가 없습니다.</div>
+            <div className={cn("text-center mt-[120px]")}>메시지가 없습니다.</div>
           )}
           <div ref={messagesEndRef} />
         </div>
       </div>
 
       {/* 채팅 입력 */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t">
-        <div className="p-4">
-          <div className="flex items-center">
+      <div className={cn("fixed bottom-0 left-0 right-0 bg-white border-t")}>
+        <div className={cn("p-4")}>
+          <div className={cn("flex items-center")}>
             <textarea
               ref={textareaRef}
               value={newMessage}
@@ -310,7 +318,12 @@ const ChatPage: React.FC = () => {
               }}
               rows={1}
               maxLength={100}
-              className="flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px] focus:outline-none focus:ring-2 transition duration-200 min-h-[48px] max-h-[120px] content-center resize-none overflow-y-auto text-body-14"
+              className={cn(
+                "flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px]",
+                "focus:outline-none focus:ring-2 transition duration-200",
+                "min-h-[48px] max-h-[120px] content-center resize-none",
+                "overflow-y-auto text-body-14"
+              )}
               placeholder="메시지를 입력하세요..."
               style={{
                 lineHeight: "1.5"
@@ -319,9 +332,10 @@ const ChatPage: React.FC = () => {
             <button
               type="button"
               onClick={handleSendMessage}
-              className={`w-[40px] h-[40px] ml-4 ${
+              className={cn(
+                "w-[40px] h-[40px] ml-4 rounded-full flex items-center justify-center",
                 sendIconColor ? "bg-primary-400" : "bg-gray-50"
-              } text-white rounded-full flex items-center justify-center`}
+              )}
             >
               <Icon name="rocket" />
             </button>
