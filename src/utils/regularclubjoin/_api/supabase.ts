@@ -1,4 +1,4 @@
-import { RegularClubChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
+import { enterRegularChatRoom } from "@/app/(pages)/(chat)/_api/regular";
 import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { createClient } from "@/utils/supabase/client";
 
@@ -148,7 +148,7 @@ export class RegularClubAPI {
       egg_club_request_status: "active",
       egg_club_participation_request_id: data.egg_club_participation_request_id
     });
-    await RegularClubChatRoomRecruiterEntrance({ egg_club_id: clubId });
+    await enterRegularChatRoom({ egg_club_id: clubId });
     if (error) {
       throw new ClubJoinError("모임 가입 처리 중 오류가 발생했습니다.");
     }

@@ -4,7 +4,7 @@ import { oneTimeClubJoin } from "@/utils/onetimeclubjoin/join";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button } from "./uiComponents/Button/ButtonCom";
+import { Button } from "@/components/uiComponents/Button/ButtonCom";
 
 export default function OneTimeClubJoinButton({ clubId, onError }: JoinClubButtonProps) {
   const [isLoading, setIsLoading] = useState(false);

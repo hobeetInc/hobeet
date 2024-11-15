@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import RegularClubChattingRoomPage from "./_components/RegularClubChattingRoomPage";
-import OneTimeClubChattingRoomPage from "./_components/OneTimeClubChattingRoomPage";
+import RegularClubChattingRoomPage from "./_pages/RegularClubChattingRoomPage";
+import OneTimeClubChattingRoomPage from "./_pages/OneTimeClubChattingRoomPage";
 import TabBar from "@/components/uiComponents/TapBar";
 
 const ChatPage = () => {

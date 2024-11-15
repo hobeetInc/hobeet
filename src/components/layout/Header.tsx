@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useAuth } from "./store/AuthContext";
+import { useAuth } from "../../store/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
@@ -117,11 +117,15 @@ export default function Header({ children }) {
 
           <div className="flex items-center ml-auto gap-4 mr-3 my-3">
             {pathname === "/" || pathname === "/search" || pathname === "/myclublist" ? (
-              <button onClick={handleCreateMeet} className="w-6 h-6 flex items-center justify-center">
+              <button
+                onClick={handleCreateMeet}
+                className="w-6 h-6 flex items-center justify-center"
+                aria-label="CreateMeet"
+              >
                 <BsPlusLg className="w-6 h-6" />
               </button>
             ) : null}
-            <button onClick={handleAlarm} className="w-6 h-6 flex items-center justify-center">
+            <button onClick={handleAlarm} className="w-6 h-6 flex items-center justify-center" aria-label="AlarmBell">
               <Icon name="bell" />
             </button>
           </div>
