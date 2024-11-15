@@ -51,7 +51,9 @@ export default function Footer() {
     "/mypage/inquiry",
     "/kakaopay/paymentConfirm",
     "/kakaopay/success",
-    /^\/approvemembers\/.*$/
+    /^\/approvemembers\/.*$/,
+    "/club/list/onetime",
+    "/club/list/regular"
   ];
   const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>
     typeof route === "string" ? route === pathname : route.test(pathname)

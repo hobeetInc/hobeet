@@ -4,11 +4,16 @@ import { getAllRegularClubList } from "../../_api/supabase";
 import Link from "next/link";
 import Image from "next/image";
 import { StringEggClubForm } from "@/types/eggclub.types";
+import { IoIosArrowBack } from "react-icons/io";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { useRouter } from "next/navigation";
+import Tag from "@/components/uiComponents/TagComponents/Tag";
 
 const AllRegularClubListPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [allRegularClubList, setAllRegularClubList] = useState<StringEggClubForm[]>([]);
   const [error, setError] = useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchAllRegularClubList = async () => {
@@ -39,8 +44,17 @@ const AllRegularClubListPage = () => {
 
   return (
     <div>
-      <div className="flex w-[390px] py-2 px-4 items-center gap-[10px]">
-        <p className="text-[14px] font-[500px] leading-[145%]">총 {allRegularClubList?.length}개</p>
+      <div className="flex justify-center items-center w-full mb-4">
+        <div onClick={() => router.back()} className="h-12 w-12 p-3 inline-flex">
+          <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
+        </div>
+        <div className="flex-1 text-center pr-7">
+          <Text variant="header-16">프레쉬 에그클럽</Text>
+        </div>
+      </div>
+
+      <div className="flex w-[390px] py-2 px-4 items-center gap-[10px] mb-2">
+        <Text variant="body_medium-14">총 {allRegularClubList?.length}개</Text>
       </div>
       {allRegularClubList.map((club: StringEggClubForm) => (
         <div key={club.egg_club_id} className="flex items-start gap-2 self-stretch mb-4">
@@ -59,14 +73,10 @@ const AllRegularClubListPage = () => {
                 />
               </div>
               <div className="flex w-[161px] h-[90] flex-col items-start gap-[4px]">
-                <div className="flex py-[2px] px-[8px] justify-center items-center rounded-[128px] bg-[#262626]">
-                  <p className="font-pretendard text-[10px] leading-[14.5px] not-italic font-normal text-[#ffffff]">
-                    에그클럽
-                  </p>
-                </div>
-                <p className="text-[14px] leading-[18.9px] font-[600] overflow-hidden text-overflow-ellipsis">
-                  {club.egg_club_name}
-                </p>
+                <Tag tagName="eggclub" />
+
+                <Text variant="subtitle-14">{club.egg_club_name}</Text>
+
                 <div className="flex items-center gap-2">
                   <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
                     <Image
@@ -77,16 +87,17 @@ const AllRegularClubListPage = () => {
                       className="rounded-full object-cover"
                     />
                   </div>
-                  <div className="flex max-w-[160px] items-center gap-[2px]">
-                    <p className="overflow-hidden leading-[20.3px] text-[#8c8c8c] text-ellipsis text-[14px] font-[500px]">
+                  <div className="flex max-w-[160px] items-center">
+                    <Text variant="body_medium-14" className="text-gray-400  mr-2">
                       {club.user_id.user_name}
-                    </p>
-                    <p className="font-pretendard text-[14px] ml-[8px] leading-[20.3px] text-[#8c8c8c] font-[500px]">
+                    </Text>
+
+                    <Text variant="body_medium-14" className="text-gray-400">
                       멤버
-                    </p>
-                    <p className="font-pretendard text-[14px] ml-[2px] leading-[20.3px] text-[#8c8c8c] font-[500px]">
+                    </Text>
+                    <Text variant="body_medium-14" className="text-gray-400">
                       {club.egg_club_member[0].count} / {club.egg_club_people_limited}
-                    </p>
+                    </Text>
                   </div>
                 </div>
                 <div className="flex items-center">

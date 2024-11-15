@@ -43,7 +43,9 @@ export default function Header({ children }) {
     "/mypage/inquiry",
     "/kakaopay/paymentConfirm",
     "/kakaopay/success",
-    /^\/approvemembers\/.*$/
+    /^\/approvemembers\/.*$/,
+    "/club/list/onetime",
+    "/club/list/regular"
   ];
   const noHeaderRoutes = [/^\/category\/.*$/];
   const showHeaderFooter = !noHeaderFooterRoutes.some((route) =>
@@ -125,7 +127,11 @@ export default function Header({ children }) {
           </div>
         </header>
       )}
-      <main className={`flex-1 overflow-y-auto scrollbar-hide ${showHeaderFooter ? (showHeader ? "mt-[60px] mb-[60px]" : "mb-[60px]") : showHeader ? "" : ""}`}>
+      <main
+        className={`flex-1 overflow-y-auto scrollbar-hide ${
+          showHeaderFooter ? (showHeader ? "mt-[60px] mb-[60px]" : "mb-[60px]") : showHeader ? "" : ""
+        }`}
+      >
         {children}
       </main>
     </>
