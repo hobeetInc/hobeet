@@ -1,23 +1,13 @@
-import { useEffect, useState } from "react";
 import { EggClub } from "@/types/cardlist.types";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { User } from "@/types/user.types";
+import { useQuery } from "@tanstack/react-query";
 
 const supabase = createClient();
 
 export const RegularClubCard = ({ club }: { club: EggClub }) => {
-  const [creator, setCreator] = useState<User | null>(null);
-  const [memberCount, setMemberCount] = useState<number>(0);
-  const [wishlistCount, setWishlistCount] = useState<number>(0);
   const router = useRouter();
-
-  useEffect(() => {
-    fetchCreator();
-    fetchMemberCount();
-    fetchWishlistCount();
-  }, []);
 
   const fetchCreator = async () => {
     const { data } = await supabase
@@ -26,8 +16,14 @@ export const RegularClubCard = ({ club }: { club: EggClub }) => {
       .eq("user_id", club.user_id)
       .single();
 
-    setCreator(data);
+    return data;
   };
+
+  const { data: creator } = useQuery({
+    queryKey: ["creator", club.user_id],
+    queryFn: fetchCreator,
+    enabled: !!club.user_id // userId가 있을 때만 fetchClubs 실행 // 호출 최적화
+  });
 
   const fetchMemberCount = async () => {
     const { data } = await supabase
@@ -36,8 +32,14 @@ export const RegularClubCard = ({ club }: { club: EggClub }) => {
       .eq("egg_club_id", club.egg_club_id)
       .eq("egg_club_request_status", "active");
 
-    setMemberCount(data?.length || 0);
+    return data?.length || 0;
   };
+
+  const { data: memberCount = 0 } = useQuery({
+    queryKey: ["member_count", club.egg_club_id],
+    queryFn: fetchMemberCount,
+    enabled: !!club.egg_club_id
+  });
 
   const fetchWishlistCount = async () => {
     const { data } = await supabase
@@ -45,8 +47,14 @@ export const RegularClubCard = ({ club }: { club: EggClub }) => {
       .select("*", { count: "exact" })
       .eq("egg_club_id", club.egg_club_id);
 
-    setWishlistCount(data?.length || 0);
+    return data?.length || 0;
   };
+
+  const { data: wishlistCount = 0 } = useQuery({
+    queryKey: ["wish_list_count", club.egg_club_id],
+    queryFn: fetchWishlistCount,
+    enabled: !!club.egg_club_id
+  });
 
   const handleClick = () => {
     router.push(`/club/regular-club-sub/${club.egg_club_id}`);
