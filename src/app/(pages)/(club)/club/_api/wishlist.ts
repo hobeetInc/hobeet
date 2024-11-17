@@ -13,7 +13,13 @@ export const getClubWishListStatus = async (wish: WishListData) => {
     .select("*")
     .match({ egg_club_id: wish.egg_club_id, user_id: wish.user_id })
     .single();
-  if (error) throw error;
+  if (error) {
+    // 위시리스트를 찾을 수 없는 상황 (정상적인 상황)
+    if (error.code === "PGRST116") {
+      return null;
+    }
+    throw error;
+  }
   return data;
 };
 

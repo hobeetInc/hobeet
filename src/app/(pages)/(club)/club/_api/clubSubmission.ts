@@ -3,7 +3,19 @@ import { EggPopForm } from "@/types/안끝난거/eggpop.types";
 import { EggClubForm } from "@/types/안끝난거/eggclub.types";
 
 export const submitOneTimeClubData = async (finalFormData: EggPopForm) => {
-  const { data, error } = await browserClient.from("egg_pop").insert([finalFormData]).select("*").single();
+  const { data, error } = await browserClient
+    .from("egg_pop")
+    .insert([finalFormData])
+    .select(
+      `*, 
+    user_id(
+    user_name,
+    user_profile_img
+    ),
+    egg_pop_member(
+    count)`
+    )
+    .single();
   if (error) throw error;
   return data;
 };

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 // 컴포넌트 임포트
 import { useAuth } from "@/store/AuthContext";
 import { ONETIME_CLUB_CREATE } from "../../_utils/localStorage";
-import { putOneTimeMember, submitOneTimeClubData, uploadImage } from "../../_api/supabase";
+import { putOneTimeMember } from "../../_api/supabase";
 import Category from "../../_components/oneTimeClub/Category";
 import DateTime from "../../_components/oneTimeClub/DateTime";
 import AddressSearch from "../../_components/oneTimeClub/AddressSearch";
@@ -17,11 +17,14 @@ import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import Introduction from "../../_components/oneTimeClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 import { createOneTimeChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/onetime";
+import { useCreatePop } from "@/hooks/useCreate";
 
 const OneTimeContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { userId } = useAuth();
+
+  const { createPop, isPending } = useCreatePop();
 
   // 초기값 설정 시 localStorage 데이터를 먼저 확인
   const getInitialData = () => {
@@ -149,19 +152,8 @@ const OneTimeContent = () => {
   // 슈퍼베이스 제출 버튼
   const handleSubmit = async () => {
     try {
-      let finalFormData = { ...formData };
-
-      // File 객체인 경우에만 업로드 처리
-      if (formData.egg_pop_image instanceof File) {
-        const imageUrl = await uploadImage(formData.egg_pop_image);
-        finalFormData = {
-          ...finalFormData,
-          egg_pop_image: imageUrl
-        };
-      }
-
       // 슈퍼베이스에 데이터 저장
-      const data = await submitOneTimeClubData(finalFormData);
+      const data = await createPop(formData);
 
       const member = {
         egg_pop_id: data.egg_pop_id,
@@ -257,7 +249,7 @@ const OneTimeContent = () => {
           colorType={isNextButtonDisabled() ? undefined : "orange"}
           borderType="circle"
         >
-          {step === 6 ? "모임 생성" : "다음"}
+          {step === 6 ? (isPending ? "생성 중..." : "모임 생성") : "다음"}
         </Button>
       </div>
     </div>
