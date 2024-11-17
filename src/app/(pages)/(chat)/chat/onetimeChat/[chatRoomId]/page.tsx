@@ -5,10 +5,18 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { ExtendEggPopMessage } from "@/types/안끝난거/eggpopchat.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import { cn } from "@/utils/cn/util";
+import { useAuthStore } from "@/store/authStore";
+import { queryKeys } from "@/hooks/utils/queryKeys";
+import {
+  fetchEggPopId,
+  fetchMemberData,
+  fetchChatInfo,
+  fetchMessages,
+  mutations
+} from "@/app/(pages)/(chat)/_api/onetime";
 
 const supabase = createClient();
 
@@ -20,92 +28,29 @@ const ChatPage: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [sendIconColor, setSentIconColor] = useState<boolean>(false);
-
-  // 현재 사용자 정보 조회
-  const { data: currentUser, isSuccess: isUserFetched } = useQuery({
-    queryKey: ["currentUser"],
-    queryFn: async () => {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
-      return user;
-    }
-  });
+  const userId = useAuthStore((state) => state.userId);
 
   const { data: rec, isSuccess: isRecFetched } = useQuery({
-    queryKey: ["egg_pop_id", roomId],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("egg_pop_chatting_room_member")
-        .select("egg_pop_id")
-        .eq("egg_pop_chatting_room_id", roomId)
-        .limit(1);
-      if (error) throw error;
-      return data ? data[0] : null;
-    },
-    enabled: !!roomId && isUserFetched
+    queryKey: queryKeys.oneTimeChat.eggPopId(roomId as string),
+    queryFn: () => fetchEggPopId(roomId as string),
+    enabled: !!roomId && !!userId
   });
 
   const { data: memberData } = useQuery({
-    queryKey: ["oneTimeMemberData", currentUser?.id],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("egg_pop_member")
-        .select("egg_pop_member_id")
-        .eq("user_id", currentUser?.id)
-        .eq("egg_pop_id", rec?.egg_pop_id)
-        .single();
-
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!currentUser?.id && isRecFetched
+    queryKey: queryKeys.oneTimeChat.memberData(userId as string, rec?.egg_pop_id),
+    queryFn: () => fetchMemberData(userId as string, rec.egg_pop_id),
+    enabled: !!userId && isRecFetched
   });
 
   const { data: chatInfo } = useQuery({
-    queryKey: ["oneTimeChatInfo", roomId],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("egg_pop_chatting_room_member")
-        .select(`*, egg_pop_chatting_room(*)`)
-        .eq("egg_pop_chatting_room_id", roomId)
-        .eq("egg_pop_member_id", memberData?.egg_pop_member_id)
-        .single();
-
-      if (error) throw error;
-      return data;
-    },
+    queryKey: queryKeys.oneTimeChat.chatInfo(roomId as string),
+    queryFn: () => fetchChatInfo(roomId as string, memberData?.egg_pop_member_id),
     enabled: !!roomId && !!memberData
   });
-  // console.log(chatInfo?.chat_room_entry_time);
 
-  // 메시지 목록 조회
   const { data: oneTimeMessages = [], isLoading: isLoadingMessages } = useQuery({
-    queryKey: ["oneTimeMessages", roomId, chatInfo?.created_at],
-    queryFn: async () => {
-      if (!chatInfo?.created_at) {
-        throw new Error("채팅방 입장 시간이 없습니다.");
-      }
-
-      const { data, error } = await supabase
-        .from("egg_pop_chatting_room_message")
-        .select(
-          `
-          *,
-          user:user_id (
-            user_id,
-            user_name,
-            user_profile_img
-          )
-        `
-        )
-        .eq("egg_pop_chatting_room_id", roomId)
-        .gte("created_at", chatInfo.created_at)
-        .order("created_at", { ascending: true });
-
-      if (error) throw error;
-      return (data || []) as unknown as ExtendEggPopMessage[];
-    },
+    queryKey: queryKeys.oneTimeChat.messages(roomId as string, chatInfo?.created_at),
+    queryFn: () => fetchMessages(roomId as string, chatInfo.created_at),
     enabled: !!roomId && !!chatInfo?.created_at
   });
 
@@ -121,25 +66,18 @@ const ChatPage: React.FC = () => {
 
   // 메시지 전송 무테이션
   const sendMessageMutation = useMutation({
-    mutationFn: async (messageContent: string) => {
-      if (!chatInfo || !currentUser) throw new Error("전송실패실패실패");
-
-      const { error } = await supabase.from("egg_pop_chatting_room_message").insert([
-        {
-          egg_pop_chatting_room_id: Number(roomId),
-          user_id: currentUser.id,
-          egg_pop_chatting_room_member_id: chatInfo.egg_pop_chatting_room_member_id,
-          egg_pop_member_id: chatInfo.egg_pop_member_id,
-          egg_pop_id: chatInfo.egg_pop_id,
-          egg_pop_chatting_room_message_content: messageContent
-        }
-      ]);
-
-      if (error) throw error;
-    },
+    mutationFn: (messageContent: string) =>
+      mutations.sendMessage.mutationFn({
+        roomId: roomId as string,
+        userId,
+        chatInfo,
+        messageContent
+      }),
     onSuccess: () => {
       setNewMessage("");
-      queryClient.invalidateQueries({ queryKey: ["oneTimeMessages", roomId] });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.oneTimeChat.messages(roomId as string)
+      });
     }
   });
 
@@ -177,8 +115,8 @@ const ChatPage: React.FC = () => {
     }
   }, [newMessage]);
 
-  const groupMessagesByDate = (messages: ExtendEggPopMessage[]) => {
-    return messages.reduce((acc: { [date: string]: ExtendEggPopMessage[] }, message) => {
+  const groupMessagesByDate = (messages) => {
+    return messages.reduce((acc, message) => {
       const date = new Date(message.created_at);
       const dateString = date.toLocaleDateString("ko-KR", {
         year: "numeric",
@@ -229,9 +167,9 @@ const ChatPage: React.FC = () => {
                     </Text>
                   </div>
                 </div>
-                {groupedMessages[dateString].map((message: ExtendEggPopMessage) => {
+                {groupedMessages[dateString].map((message) => {
                   const date = new Date(message.created_at);
-                  const isCurrentUser = message.user.user_id === currentUser?.id;
+                  const isCurrentUser = message.user.user_id === userId;
 
                   return (
                     <div

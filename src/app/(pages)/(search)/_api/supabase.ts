@@ -6,6 +6,7 @@ export const getPopularClubs = async () => {
     .from("wish_list")
     .select(
       `
+      *,
       egg_club(
         egg_club_id,
         egg_club_name,

@@ -35,8 +35,8 @@ const OneTimeClubList = () => {
             >
               <VerticalContentsListMediumEggPop
                 eggPop={club}
-                hostName={club.user_id.user_name}
-                hostImag={club.user_id.user_profile_img}
+                hostName={club.user.user_name}
+                hostImag={club.user.user_profile_img}
                 memberCount={club.egg_pop_member[0].count}
               />
             </Link>
