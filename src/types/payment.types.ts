@@ -6,6 +6,9 @@ export type EggPopData = Partial<Tables<"egg_pop">>;
 // 에그클럽 데이터 타입
 export type EggClubData = Partial<Tables<"egg_club">>;
 
+// 에그데이 데이터 타입
+export type EggDayData = Partial<Tables<"egg_day">>;
+
 // 에그팝 지불 타입
 export type EggPopPay = {
   egg_pop_kakaopay_cid: string;
@@ -26,9 +29,6 @@ export type EggPopDataNoTax = {
   egg_pop_location: string;
   egg_pop_date_time: string;
   egg_pop_image: string | null;
-  main_category: {
-    main_category_name: string;
-  };
 };
 
 // 에그클럽 참가비 없는 버전
@@ -37,9 +37,4 @@ export type EggClubDataNoTax = {
   egg_day_location: string;
   egg_day_date_time: string;
   egg_day_image: string;
-  egg_club: {
-    main_category: {
-      main_category_name: string;
-    };
-  };
 };

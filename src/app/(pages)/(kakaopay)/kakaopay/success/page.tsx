@@ -1,18 +1,20 @@
 "use client";
 
-import { useAuth } from "@/store/AuthContext";
-import browserClient from "@/utils/supabase/client";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { useAuth } from "@/store/AuthContext";
 import { EggClubDataNoTax, EggClubPay, EggPopDataNoTax, EggPopPay } from "@/types/payment.types";
 import { CustomAddress } from "@/utils/CustomAddress";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { format, parseISO } from "date-fns";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import { fetchClubData, fetchRegularClubId } from "../_api/fetchClub";
+import { fetchPaymentData } from "../_api/fetchPayment";
+import { approvePayment, fetchOrderData } from "../_api/kakaoPayment";
+import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
 
 interface EggClubIdType {
   egg_club_id: number;
@@ -36,7 +38,7 @@ const PaymentSuccessPage = () => {
     pgToken: null
   });
   const [eggClubId, setEggClubId] = useState<EggClubIdType | null>(null);
-  const supabase = browserClient;
+
   const router = useRouter();
   const { userName } = useAuth();
   const searchParams = useSearchParams();
@@ -53,233 +55,133 @@ const PaymentSuccessPage = () => {
 
   // 모임 정보들 불러오기
   useEffect(() => {
-    const fetchClub = async () => {
+    const initClubData = async () => {
+      const { requestUserId, clubId, clubType } = queryParams;
+      if (!requestUserId || !clubId || clubType === null) {
+        console.log("잘못된 요청입니다.");
+        return;
+      }
+
       try {
-        const { requestUserId, clubId, clubType } = queryParams;
-
-        if (!requestUserId || !clubId || clubType === null) {
-          console.log("잘못된 요청입니다.");
-          return;
-        }
-
         const isOneTimeClub = clubType === "true";
+        const { oneTimeClubData, regularClubData } = await fetchClubData(clubId, isOneTimeClub);
 
-        if (isOneTimeClub) {
-          const { data: oneTimeClubFetchData, error: oneTimeClubFetchError } = await supabase
-            .from("egg_pop")
-            .select(
-              "egg_pop_name, egg_pop_location, egg_pop_date_time, egg_pop_image, main_category_id, main_category:(main_category_name)"
-            )
-            .eq("egg_pop_id", parseInt(clubId))
-            .single();
-
-          if (oneTimeClubFetchError || !oneTimeClubFetchData) {
-            console.error("모임 정보를 불러오는 중 오류가 발생했습니다.");
-            return;
-          }
-
-          setOneTimeClubData(Array.isArray(oneTimeClubFetchData) ? oneTimeClubFetchData[0] : oneTimeClubFetchData);
-        } else {
-          const { data: regularClubFetchData, error: regularClubFetchError } = await supabase
-            .from("egg_day")
-            .select(
-              `
-              egg_day_name,
-              egg_day_location,
-              egg_day_date_time,
-              egg_day_image,
-              egg_club (
-                main_category (
-                  main_category_name
-                )
-              )
-            `
-            )
-            .eq("egg_day_id", parseInt(clubId))
-            .single();
-
-          if (regularClubFetchError || !regularClubFetchData) {
-            console.error("모임 정보를 불러오는 중 오류가 발생했습니다.");
-            return;
-          }
-
-          const formattedData = {
-            egg_day_name: regularClubFetchData.egg_day_name,
-            egg_day_location: regularClubFetchData.egg_day_location,
-            egg_day_date_time: regularClubFetchData.egg_day_date_time,
-            egg_day_image: regularClubFetchData.egg_day_image,
-            egg_club: {
-              main_category: {
-                main_category_name: regularClubFetchData.egg_club.main_category.main_category_name || ""
-              }
-            }
-          };
-
-          setRegularClubData(formattedData);
-        }
-      } catch (err) {
-        console.log(err);
+        if (oneTimeClubData) setOneTimeClubData(oneTimeClubData);
+        if (regularClubData) setRegularClubData(regularClubData);
+      } catch (error) {
+        console.error("모임 정보를 불러오는 중 오류가 발생했습니다:", error);
+        alert("모임 정보를 불러오는데 실패했습니다.");
+        router.push("/signin");
       }
     };
 
     if (queryParams.requestUserId && queryParams.clubId && queryParams.clubType) {
-      fetchClub();
+      initClubData();
     }
-  }, [queryParams]);
+  }, [queryParams, router]);
 
-  // cid, tid 추출
+  // 결제 정보 불러오기
   useEffect(() => {
-    const fetchPayData = async () => {
+    const initPaymentData = async () => {
+      const { requestUserId, clubId, clubType } = queryParams;
+      if (!requestUserId || !clubId || clubType === null) {
+        console.log("잘못된 요청입니다.");
+        return;
+      }
+
       try {
-        const { requestUserId, clubId, clubType } = queryParams;
-
-        if (!requestUserId || !clubId || clubType === null) {
-          console.log("잘못된 요청입니다.");
-          return;
-        }
-
         const isOneTimeClub = clubType === "true";
+        const { oneTimeClubPayData, regularClubPayData } = await fetchPaymentData(requestUserId, clubId, isOneTimeClub);
 
-        if (isOneTimeClub) {
-          const { data, error } = await supabase
-            .from("egg_pop_kakaopay")
-            .select("egg_pop_kakaopay_cid, egg_pop_kakaopay_tid, egg_pop_kakaopay_create_at")
-            .eq("user_id", requestUserId)
-            .eq("egg_pop_id", parseInt(clubId))
-            .limit(1)
-            .single();
-
-          if (error || !data) {
-            console.error("결제 정보를 불러오는 중 오류가 발생했습니다.");
-            return;
-          }
-
-          setOneTimeClubPayData(data);
-        } else {
-          const { data, error } = await supabase
-            .from("egg_day_kakaopay")
-            .select("egg_day_kakaopay_cid, egg_day_kakaopay_tid, egg_day_kakaopay_create_at")
-            .eq("user_id", requestUserId)
-            .eq("egg_day_id", parseInt(clubId))
-            .limit(1)
-            .single();
-
-          if (error || !data) {
-            console.error("결제 정보를 불러오는 중 오류가 발생했습니다.");
-            return;
-          }
-
-          setRegularClubPayData(data);
-        }
-      } catch (err) {
-        console.error("결제 정보를 불러오는 중 오류가 발생했습니다.", err);
+        if (oneTimeClubPayData) setOneTimeClubPayData(oneTimeClubPayData);
+        if (regularClubPayData) setRegularClubPayData(regularClubPayData);
+      } catch (error) {
+        console.error("결제 정보를 불러오는 중 오류가 발생했습니다:", error);
+        alert("결제 정보를 불러오는데 실패했습니다.");
       }
     };
 
     if (queryParams.requestUserId && queryParams.clubId && queryParams.clubType) {
-      fetchPayData();
+      initPaymentData();
     }
   }, [queryParams]);
 
-  // 결제승인
+  // 결제 승인
   useEffect(() => {
-    const fetchApproveData = async () => {
+    const initApprovePayment = async () => {
+      const { requestUserId, clubId, clubType, pgToken } = queryParams;
+      if (!requestUserId || !clubId || clubType === null || !pgToken) return;
+      if (!oneTimeClubPayData && !regularClubPayData) return;
+
       try {
-        const { requestUserId, clubId, clubType, pgToken } = queryParams;
-
-        if (!requestUserId || !clubId || clubType === null || !pgToken) {
-          console.log("잘못된 요청입니다.");
-          return;
-        }
-
-        if (!oneTimeClubPayData && !regularClubPayData) {
-          return;
-        }
-
-        const response = await fetch("/api/kakaopayApprove", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            cid: oneTimeClubPayData?.egg_pop_kakaopay_cid || regularClubPayData?.egg_day_kakaopay_cid,
-            tid: oneTimeClubPayData?.egg_pop_kakaopay_tid || regularClubPayData?.egg_day_kakaopay_tid,
-            partner_order_id: clubId,
-            partner_user_id: requestUserId,
-            pg_token: pgToken
-          })
+        await approvePayment({
+          cid: oneTimeClubPayData?.egg_pop_kakaopay_cid || regularClubPayData?.egg_day_kakaopay_cid,
+          tid: oneTimeClubPayData?.egg_pop_kakaopay_tid || regularClubPayData?.egg_day_kakaopay_tid,
+          partner_order_id: clubId,
+          partner_user_id: requestUserId,
+          pg_token: pgToken
         });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error("API 요청 오류:", errorText);
-          return;
-        }
-
-        // const approveData = await response.json();
-        // console.log(approveData);
-      } catch (err) {
-        console.error("결제 정보를 불러오는 중 오류가 발생했습니다.", err);
+      } catch (error) {
+        console.error("결제 승인 중 오류가 발생했습니다:", error);
+        alert("결제 승인에 실패했습니다.");
       }
     };
 
-    if (queryParams.requestUserId && queryParams.clubId && queryParams.clubType) {
-      fetchApproveData();
+    if (
+      queryParams.requestUserId &&
+      queryParams.clubId &&
+      queryParams.clubType &&
+      (oneTimeClubPayData || regularClubPayData)
+    ) {
+      initApprovePayment();
     }
   }, [queryParams, oneTimeClubPayData, regularClubPayData]);
 
-  // 주문조회
+  // 주문 정보 조회
   useEffect(() => {
-    const fetchOrderData = async () => {
+    const initOrderData = async () => {
+      if (!oneTimeClubPayData && !regularClubPayData) return;
+
       try {
-        if (!oneTimeClubPayData && !regularClubPayData) {
-          return;
-        }
+        const orderData = await fetchOrderData(
+          oneTimeClubPayData?.egg_pop_kakaopay_cid || regularClubPayData?.egg_day_kakaopay_cid,
+          oneTimeClubPayData?.egg_pop_kakaopay_tid || regularClubPayData?.egg_day_kakaopay_tid
+        );
 
-        const response = await fetch("/api/kakaopayOrder", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            cid: oneTimeClubPayData?.egg_pop_kakaopay_cid || regularClubPayData?.egg_day_kakaopay_cid,
-            tid: oneTimeClubPayData?.egg_pop_kakaopay_tid || regularClubPayData?.egg_day_kakaopay_tid
-          })
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error("API 요청 오류:", errorText);
-          return;
-        }
-
-        const orderData = await response.json();
         setPaymentAmount(orderData.amount.total);
-        // console.log(orderData);
-      } catch (err) {
-        console.error("결제 정보를 불러오는 중 오류가 발생했습니다.", err);
+      } catch (error) {
+        console.error("주문 정보를 불러오는 중 오류가 발생했습니다:", error);
+        alert("주문 정보를 불러오는데 실패했습니다.");
       }
     };
 
-    fetchOrderData();
+    if (oneTimeClubPayData || regularClubPayData) {
+      initOrderData();
+    }
   }, [oneTimeClubPayData, regularClubPayData]);
 
+  // 정기 모임 ID 조회
   useEffect(() => {
-    const fetchClubId = async () => {
-      const clubId = searchParams.get("clubId");
-      const { data } = await supabase.from("egg_day").select("egg_club_id").eq("egg_day_id", parseInt(clubId)).single();
-      setEggClubId(data);
+    const initClubId = async () => {
+      try {
+        const clubId = searchParams.get("clubId");
+        if (!clubId) return;
+
+        const data = await fetchRegularClubId(clubId);
+        setEggClubId(data);
+      } catch (error) {
+        console.error("정기 모임 ID를 불러오는 중 오류가 발생했습니다:", error);
+      }
     };
 
-    fetchClubId();
-  }, [oneTimeClubPayData, regularClubPayData]);
+    initClubId();
+  }, [searchParams, oneTimeClubPayData, regularClubPayData]);
 
   const clubImageUrl =
     (queryParams.clubType === "true" ? oneTimeClubData?.egg_pop_image : regularClubData?.egg_day_image) || "";
 
   const handleGoToMyClub = () => {
     const { clubId, clubType } = queryParams;
-
     if (!clubId) return;
 
     localStorage.setItem("fromKakaoPay", "true");
@@ -290,49 +192,6 @@ const PaymentSuccessPage = () => {
       if (eggClubId) {
         router.push(`/club/regular-club-sub/${eggClubId.egg_club_id}/create/${clubId}`);
       }
-    }
-  };
-
-  const customDateFormat = (dateString: string | null | undefined) => {
-    if (!dateString) {
-      console.log("데이트", dateString);
-      return "날짜 정보 없음";
-    }
-
-    try {
-      const parsedDate = parseISO(dateString);
-      return format(parsedDate, "yyyy. MM. dd");
-    } catch (error) {
-      console.error("날짜 포멧팅 실패:", dateString, error);
-      return "유효하지 않은 날짜 형식";
-    }
-  };
-
-  type DateTimeFormat = {
-    date: string;
-    time: string;
-  };
-
-  const customDate = (dateString: string | null | undefined): DateTimeFormat => {
-    if (!dateString) {
-      return {
-        date: "유효하지 않은 날짜",
-        time: "유효하지 않은 시간"
-      };
-    }
-
-    try {
-      const parsedDate = parseISO(dateString);
-      return {
-        date: format(parsedDate, "MM월 dd일"),
-        time: format(parsedDate, "HH:mm")
-      };
-    } catch (error) {
-      console.error("날짜 포멧팅 실패:", dateString, error);
-      return {
-        date: "유효하지 않은 날짜",
-        time: "유효하지 않은 시간"
-      };
     }
   };
 
@@ -408,13 +267,13 @@ const PaymentSuccessPage = () => {
                   </Text>
                   <Text variant="body_medium-14">
                     {queryParams.clubType === "true"
-                      ? customDate(oneTimeClubData?.egg_pop_date_time || "날짜 정보 없음").date
-                      : customDate(regularClubData?.egg_day_date_time || "날짜 정보 없음").date}
+                      ? customDateNotWeek(oneTimeClubData?.egg_pop_date_time || "날짜 정보 없음").date
+                      : customDateNotWeek(regularClubData?.egg_day_date_time || "날짜 정보 없음").date}
                   </Text>
                   <Text variant="body_medium-14">
                     {queryParams.clubType === "true"
-                      ? customDate(oneTimeClubData?.egg_pop_date_time || "날짜 정보 없음").time
-                      : customDate(regularClubData?.egg_day_date_time || "날짜 정보 없음").time}
+                      ? customDateNotWeek(oneTimeClubData?.egg_pop_date_time || "날짜 정보 없음").time
+                      : customDateNotWeek(regularClubData?.egg_day_date_time || "날짜 정보 없음").time}
                   </Text>
                 </div>
               </div>

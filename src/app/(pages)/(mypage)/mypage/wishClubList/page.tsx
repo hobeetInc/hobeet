@@ -46,8 +46,6 @@ const WishClubListPage = () => {
         if (fetchError) throw fetchError;
         if (!rawData) throw new Error("데이터를 가져올 수 없습니다");
 
-        // console.log("Fetched data:", rawData); // 데이터 구조 확인
-
         setWishData(rawData);
         setError(null);
       } catch (err) {
@@ -83,17 +81,16 @@ const WishClubListPage = () => {
         <div className="w-6 m-3"></div>
       </div>
 
-      {/* <div className="h-12 w-full bg-pink-300">내가 찜한 클럽</div> */}
       {wishData.length === 0 ? (
         <Text variant="subtitle-14" className="text-gray-500">
           찜한 클럽이 없습니다
         </Text>
       ) : (
         <div className="flex flex-wrap justify-center items-center gap-2.5 p-4">
-          {wishData.map((item, index) => (
+          {wishData.map((item) => (
             <div
               onClick={() => handleClick(item.egg_club.egg_club_id)}
-              key={index}
+              key={item.egg_club.egg_club_id}
               className="w-[174px] flex-col justify-start items-start gap-2 inline-flex"
             >
               <div className="flex-col justify-start items-start gap-2 inline-flex min-h-[306px]">
@@ -151,38 +148,6 @@ const WishClubListPage = () => {
                   </div>
                 </div>
               </div>
-              {/* <div className="relative">
-                <Image
-                  src={item.egg_club.egg_club_image}
-                  alt={item.egg_club.egg_club_name}
-                  width={150}
-                  height={150}
-                  className="w-full h-32 object-cover rounded-md"
-                />
-                <div className="bg-gray-900 text-white text-xs px-2 py-1 rounded-full w-16 mt-2">에그클럽</div>
-              </div>
-
-              <div className="mt-3 text-sm font-semibold text-gray-800 leading-tight">
-                {item.egg_club.egg_club_name}
-              </div>
-
-              <div className="flex items-center mt-2">
-                <Image
-                  src={item.egg_club.user_id.user_profile_img}
-                  alt={item.egg_club.user_id.user_name}
-                  width={24}
-                  height={24}
-                  className="w-6 h-6 rounded-full mr-2"
-                />
-                <p className="text-xs text-gray-500">
-                  {item.egg_club.user_id.user_name} 멤버 {item.egg_club.egg_club_member[0]?.count || 0}/
-                  {item.egg_club.egg_club_people_limited}
-                </p>
-              </div>
-
-              <div className="flex items-center mt-2 text-xs text-gray-500">
-                찜수+ {item.egg_club.wish_list[0]?.count || 0}
-              </div> */}
             </div>
           ))}
         </div>

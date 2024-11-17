@@ -2,7 +2,7 @@ import React from "react";
 
 const InquiryPage = () => {
   return (
-    <div className="max-w-md mx-auto bg-white p-6 border border-gray-200 rounded-lg shadow">
+    <div className="max-w-md mx-auto bg-white p-6 border border-gray-200 rounded-lg">
       <h1 className="text-lg font-bold text-gray-900 mb-4">운영 관련 안내</h1>
 
       <div className="mb-6">
