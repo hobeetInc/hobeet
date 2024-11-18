@@ -3,19 +3,7 @@ import { EggPopForm } from "@/types/eggpop.types";
 import { EggClubForm } from "@/types/eggclub.types";
 
 export const submitOneTimeClubData = async (finalFormData: EggPopForm) => {
-  const { data, error } = await browserClient
-    .from("egg_pop")
-    .insert([finalFormData])
-    .select(
-      `*, 
-    user(
-    user_name,
-    user_profile_img
-    ),
-    egg_pop_member(
-    count)`
-    )
-    .single();
+  const { data, error } = await browserClient.from("egg_pop").insert([finalFormData]).select("*").single();
   if (error) throw error;
   return data;
 };

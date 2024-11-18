@@ -1,6 +1,6 @@
 import browserClient from "@/utils/supabase/client";
 import { InsertMember } from "@/types/eggclub.types";
-import { EggPopMember } from "@/types/eggpop.types";
+import { EggPopMemberInput } from "@/types/eggpop.types";
 
 interface EggClubRequest {
   egg_club_id: number;
@@ -25,7 +25,7 @@ export const putRegularMember = async (member: InsertMember) => {
   return data;
 };
 
-export const putOneTimeMember = async (member: EggPopMember) => {
+export const putOneTimeMember = async (member: EggPopMemberInput) => {
   const { data, error } = await browserClient.from("egg_pop_member").insert([member]).select("*").single();
   if (error) throw error;
   return data;

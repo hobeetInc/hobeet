@@ -5,7 +5,7 @@ import {
   getClubWishListStatus,
   removeClubFromWishList
 } from "@/app/(pages)/(club)/club/_api/wishlist";
-import { useAuth } from "@/store/AuthContext";
+import { useAuthStore } from "@/store/authStore";
 
 interface WishListHeartProps {
   egg_club_id: number;
@@ -13,7 +13,7 @@ interface WishListHeartProps {
 
 export const useClubWishlist = ({ egg_club_id }: WishListHeartProps) => {
   const queryClient = useQueryClient();
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
 
   const queryKey = [queryKeys.clubWishlist, egg_club_id, userId];
 
