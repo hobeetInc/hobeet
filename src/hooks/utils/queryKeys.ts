@@ -45,5 +45,12 @@ export const queryKeys = {
     all: ["categoryList"] as const,
     list: (categoryId: number, selectedCategory: number) =>
       [...queryKeys.categoryList.all, categoryId, selectedCategory] as const
+  },
+  payment: {
+    club: (clubId: string, isOneTimeClub: boolean) => ["payment", "club", clubId, isOneTimeClub] as const,
+    paymentInfo: (userId: string, clubId: string, isOneTimeClub: boolean) =>
+      ["payment", "info", userId, clubId, isOneTimeClub] as const,
+    paymentClub: (clubId: string, isOneTimeClub: boolean) => ["payment", "clubDetails", clubId, isOneTimeClub] as const,
+    regularClubId: (clubId: string) => ["payment", "regularClubId", clubId] as const
   }
 } as const;

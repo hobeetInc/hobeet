@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import PaymentButton from "../_components/KakaopayBtn";
 import { EggDayData, EggPopData } from "@/types/payment.types";
@@ -13,43 +13,39 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import { customDateNotWeek } from "@/utils/CustomDate";
-import { fetchPaymentClubData } from "../_api/fetchPaymentClub";
+import { useKakaopayRequest } from "@/hooks/useKakaopayRequest";
 
 const PaymentConfirmPage = () => {
-  const [oneTimeClubData, setOneTimeClubData] = useState<EggPopData | null>();
-  const [regularClubData, setRegularClubData] = useState<EggDayData | null>();
   const [agreeChecked, setAgreeChecked] = useState(false);
-
-  const searchParams = useSearchParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const clubType = searchParams.get("clubType");
-  const clubId = searchParams.get("clubId");
+  const clubId = searchParams.get("clubId") ?? "";
+  const isOneTimeClub = clubType === "true";
 
-  useEffect(() => {
-    const initializeClubData = async () => {
-      try {
-        if (!clubId || clubType === null) {
-          console.log("잘못된 요청입니다.");
-          return;
-        }
+  const { paymentClubQuery, isLoading, isError } = useKakaopayRequest(null, clubId, isOneTimeClub);
 
-        const isOneTimeClub = clubType === "true";
-        const { oneTimeClubData, regularClubData } = await fetchPaymentClubData(clubId, isOneTimeClub);
+  if (isLoading) return <div>로딩중...</div>;
+  if (isError) return <div>결제 모임 정보 처리 중 오류</div>;
 
-        if (oneTimeClubData) setOneTimeClubData(oneTimeClubData);
-        if (regularClubData) setRegularClubData(regularClubData);
-      } catch (error) {
-        console.error("모임 정보를 불러오는 중 오류가 발생했습니다:", error);
-        alert("모임 정보를 불러오는데 실패했습니다.");
-        router.push("/signin");
+  const clubData = isOneTimeClub ? paymentClubQuery.data?.oneTimeClubData : paymentClubQuery.data?.regularClubData;
+
+  const clubInfo = isOneTimeClub
+    ? {
+        image: (clubData as EggPopData)?.egg_pop_image,
+        name: (clubData as EggPopData)?.egg_pop_name,
+        location: (clubData as EggPopData)?.egg_pop_location,
+        dateTime: (clubData as EggPopData)?.egg_pop_date_time,
+        tax: (clubData as EggPopData)?.egg_pop_tax
       }
-    };
-
-    initializeClubData();
-  }, [clubId, clubType, router]);
-
-  const clubImageUrl = (clubType === "true" ? oneTimeClubData?.egg_pop_image : regularClubData?.egg_day_image) || "";
+    : {
+        image: (clubData as EggDayData)?.egg_day_image,
+        name: (clubData as EggDayData)?.egg_day_name,
+        location: (clubData as EggDayData)?.egg_day_location,
+        dateTime: (clubData as EggDayData)?.egg_day_date_time,
+        tax: (clubData as EggDayData)?.egg_day_tax
+      };
 
   return (
     <div>
@@ -75,9 +71,9 @@ const PaymentConfirmPage = () => {
         <div className="flex justify-center items-center">
           <div className="flex items-center gap-2 mb-6 w-[390px] px-4">
             <div className="overflow-hidden w-[88px] h-[88px] flex justify-center items-center rounded-xl">
-              {clubImageUrl ? (
+              {clubInfo.image ? (
                 <Image
-                  src={clubImageUrl}
+                  src={clubInfo.image}
                   alt="모임 이미지"
                   width={88}
                   height={88}
@@ -92,8 +88,7 @@ const PaymentConfirmPage = () => {
               <Tag tagName={`${clubType === "true" ? "eggpop" : "eggday"}`} className="mb-0.5" />
 
               <Text variant="subtitle-14" className="mb-[5px]">
-                {" "}
-                {clubType === "true" ? oneTimeClubData?.egg_pop_name : regularClubData?.egg_day_name}
+                {clubInfo.name}
               </Text>
               <div className="flex items-center">
                 <div className="mr-1 w-4 h-4">
@@ -101,22 +96,15 @@ const PaymentConfirmPage = () => {
                 </div>
 
                 <Text variant="body_medium-14" className="text-gray-600 mr-2">
-                  {" "}
-                  {clubType === "true"
-                    ? `${CustomAddress(oneTimeClubData?.egg_pop_location || "")}`
-                    : CustomAddress(regularClubData?.egg_day_location || "")}{" "}
+                  {CustomAddress(clubInfo.location || "")}
                 </Text>
 
                 <Text variant="body_medium-14" className="text-gray-600 mr-2">
-                  {clubType === "true"
-                    ? customDateNotWeek(oneTimeClubData?.egg_pop_date_time).date
-                    : customDateNotWeek(regularClubData?.egg_day_date_time).date}
+                  {customDateNotWeek(clubInfo.dateTime || "").date}
                 </Text>
 
                 <Text variant="body_medium-14" className="text-gray-600">
-                  {clubType === "true"
-                    ? customDateNotWeek(oneTimeClubData?.egg_pop_date_time).time
-                    : customDateNotWeek(regularClubData?.egg_day_date_time).time}
+                  {customDateNotWeek(clubInfo.dateTime || "").time}
                 </Text>
               </div>
             </div>
@@ -131,12 +119,7 @@ const PaymentConfirmPage = () => {
               <div className="flex justify-between items-center w-full h-full">
                 <Text variant="subtitle-18">결제 금액</Text>
 
-                <Text variant="subtitle-18">
-                  {clubType === "true"
-                    ? new Intl.NumberFormat("ko-KR").format(oneTimeClubData?.egg_pop_tax || 0)
-                    : new Intl.NumberFormat("ko-KR").format(regularClubData?.egg_day_tax || 0)}
-                  원
-                </Text>
+                <Text variant="subtitle-18">{new Intl.NumberFormat("ko-KR").format(clubInfo.tax || 0)}원</Text>
               </div>
             </div>
 
