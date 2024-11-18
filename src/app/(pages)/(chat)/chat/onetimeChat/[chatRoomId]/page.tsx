@@ -15,12 +15,12 @@ import {
   fetchMemberData,
   fetchChatInfo,
   fetchMessages,
-  mutations
+  createMutations
 } from "@/app/(pages)/(chat)/_api/onetime";
 
 const supabase = createClient();
 
-const ChatPage: React.FC = () => {
+const ChatPage = () => {
   const params = useParams();
   const roomId = params.chatRoomId;
   const [newMessage, setNewMessage] = useState<string>("");
@@ -54,6 +54,24 @@ const ChatPage: React.FC = () => {
     enabled: !!roomId && !!chatInfo?.created_at
   });
 
+  const mutations = createMutations({
+    queryClient,
+    roomId: roomId as string,
+    chatInfo,
+    setNewMessage
+  });
+
+  const sendMessageMutation = useMutation({
+    mutationFn: (messageContent: string) =>
+      mutations.sendMessage.mutationFn({
+        roomId: roomId as string,
+        userId,
+        chatInfo,
+        messageContent
+      }),
+    onSuccess: mutations.sendMessage.onSuccess
+  });
+
   // 스크롤을 맨 아래로 이동시키는 함수
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -63,23 +81,6 @@ const ChatPage: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [oneTimeMessages]);
-
-  // 메시지 전송 무테이션
-  const sendMessageMutation = useMutation({
-    mutationFn: (messageContent: string) =>
-      mutations.sendMessage.mutationFn({
-        roomId: roomId as string,
-        userId,
-        chatInfo,
-        messageContent
-      }),
-    onSuccess: () => {
-      setNewMessage("");
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.oneTimeChat.messages(roomId as string)
-      });
-    }
-  });
 
   // 실시간 구독 설정
   useEffect(() => {

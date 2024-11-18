@@ -76,8 +76,8 @@ const ChatPage = () => {
     },
     onSuccess: () => {
       setNewMessage("");
-      queryClient.invalidateQueries({ 
-        queryKey: queryKeys.regularChat.messages(roomId as string) 
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.regularChat.messages(roomId as string)
       });
     }
   });
@@ -97,8 +97,8 @@ const ChatPage = () => {
           filter: `egg_day_chatting_room_id=eq.${roomId}`
         },
         () => {
-          queryClient.invalidateQueries({ 
-            queryKey: queryKeys.regularChat.messages(roomId as string) 
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.regularChat.messages(roomId as string)
           });
         }
       )
@@ -141,7 +141,7 @@ const ChatPage = () => {
     }, {});
   };
 
-  const groupedMessages = groupMessagesByDate(regularMessages as ExtendEggClubMessage[]);
+  const groupedMessages = groupMessagesByDate(regularMessages);
 
   const handleSendMessage = () => {
     if (newMessage.trim() === "") return;

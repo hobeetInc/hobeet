@@ -14,7 +14,7 @@ const RegularClubChattingRoomPage = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const userId = useAuthStore((state) => state.userId);
-
+  console.log(userId);
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -30,7 +30,7 @@ const RegularClubChattingRoomPage = () => {
 
   useEffect(() => {
     const supabase = createClient();
-
+    if (!userId) return;
     const fetchChatRooms = async () => {
       try {
         //TODO 탠스택 쿼리로 변환 예정
@@ -156,7 +156,7 @@ const RegularClubChattingRoomPage = () => {
     return () => {
       supabase.removeChannel(subscription);
     };
-  }, []);
+  }, [userId]);
 
   if (loading) {
     return <div>로딩 중...</div>;

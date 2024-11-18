@@ -1,4 +1,6 @@
 import { createClient } from "@/utils/supabase/client";
+import { QueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/hooks/utils/queryKeys";
 
 export async function createOneTimeChatRoomAndEnterAsAdmin(
   egg_pop_name: string,
@@ -345,11 +347,24 @@ interface SendMessageMutationParams {
   messageContent: string;
 }
 
-export const mutations = {
+interface MutationContext {
+  queryClient: QueryClient;
+  roomId: string;
+  chatInfo: any; //TODO 나중에 타입 재정의
+  setNewMessage: (message: string) => void;
+}
+
+export const createMutations = (context: MutationContext) => ({
   sendMessage: {
     mutationFn: (params: SendMessageMutationParams) => {
       if (!params.chatInfo || !params.userId) throw new Error("전송실패실패실패");
       return sendMessage(params);
+    },
+    onSuccess: () => {
+      context.setNewMessage("");
+      context.queryClient.invalidateQueries({
+        queryKey: queryKeys.oneTimeChat.messages(context.roomId, context.chatInfo?.created_at)
+      });
     }
   }
-};
+});

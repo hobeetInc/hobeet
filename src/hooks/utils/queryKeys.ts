@@ -7,7 +7,7 @@ export const queryKeys = {
       [...queryKeys.oneTimeChat.all, "memberData", userId, eggPopId] as const,
     chatInfo: (roomId: string) => [...queryKeys.oneTimeChat.all, "chatInfo", roomId] as const,
     messages: (roomId: string, createdAt?: string) =>
-      [...queryKeys.oneTimeChat.all, "messages", roomId, createdAt] as const
+      [...queryKeys.oneTimeChat.all, "oneTimeMessages", roomId, createdAt] as const
   },
   regularChat: {
     all: ["regularChat"] as const,

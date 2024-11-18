@@ -30,11 +30,10 @@ const OneTimeClubChattingRoomPage = () => {
 
   useEffect(() => {
     const supabase = createClient();
-
+    if (!userId) return;
     const fetchChatRooms = async () => {
       try {
         const chatData = await getOneTimeChatRoom(userId);
-
         if (!chatData.data || chatData.data.length === 0) {
           setErrorMessage("채팅방이 없습니다.");
           setChatRooms([]);
