@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import { ClubCardProps } from "@/types/eggclub.types";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
@@ -18,10 +18,11 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
     const day = date.getDate();
     const hours = date.getHours();
     const minutes = date.getMinutes();
+    const addZero = (num: number) => String(num).padStart(2, "0");
 
     return {
       date: `${month}월 ${day}일`,
-      time: `${hours}:${minutes}`
+      time: `${hours}:${addZero(minutes)}`
     };
   };
 

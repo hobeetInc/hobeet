@@ -70,7 +70,7 @@ export const EggClubHorizontalList = ({ eggClub }) => {
         <div className="justify-start items-center gap-0.5 inline-flex">
           <div className="w-4 h-4 justify-center items-center flex">
             <span>
-              <Image src={"/asset/Icon/Heart-Filled.png"} alt="heart" width={16} height={16} />
+              <Image src={"/asset/Icon/Heart-Filled.svg"} alt="heart" width={16} height={16} />
             </span>
           </div>
           <div className="justify-start items-center flex">

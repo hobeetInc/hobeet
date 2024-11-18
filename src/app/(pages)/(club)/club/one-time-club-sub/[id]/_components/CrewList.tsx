@@ -4,11 +4,11 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getOneTimeMember } from "../../../_api/supabase";
 import FullScreenModal from "./FullScreenModal";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { CrewListProps } from "@/types/eggpop.types";
-import OneTimeClubJoinButton from "@/components/OneTimeClubJoinButtonCom";
+import OneTimeClubJoinButton from "./OneTimeClubJoinButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
@@ -25,14 +25,14 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
       try {
         const data = await getOneTimeMember(clubId);
 
-        const newCrewMemebers = data.map((member) => ({
+        const newCrewMembers = data.map((member) => ({
           memberId: member.egg_pop_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img
         }));
 
-        setCrewList(newCrewMemebers);
+        setCrewList(newCrewMembers);
       } catch (error) {
         console.error("크루인원 가져오는 중 오류:", error);
       }
@@ -53,21 +53,21 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
       const member = crewList[index];
       return member ? (
         // 멤버가 있는 경우
-        <div key={member.userId} className="w-[37px]">
-          <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">
+        <div key={member.userId} className="w-[40px]">
+          <div className="relative w-[40px] h-[40px] overflow-hidden rounded-full">
             <Image
               src={member.userImage}
               alt={member.userName}
-              width={37}
-              height={37}
+              width={40}
+              height={40}
               className="w-full h-full object-cover border-2 border-black"
             />
           </div>
         </div>
       ) : (
         // 빈 슬롯
-        <div key={`empty-${index}`} className="w-[37px]">
-          <div className="w-[37px] h-[37px] rounded-full border-2 border-gray-200 bg-gray-50"></div>
+        <div key={`empty-${index}`} className="w-[40px]">
+          <div className="w-[40px] h-[40px] rounded-full border-2 border-gray-200 bg-gray-50"></div>
         </div>
       );
     });
@@ -145,7 +145,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         </div>
         <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
 
-        <div className="w-full fixed bottom-[34px] right-0 left-0">{renderJoinButton()}</div>
+        <div className="w-full  fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
     </>

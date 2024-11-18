@@ -16,6 +16,7 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
 
   // 날짜 커스텀
   const date = clubInfo.egg_pop_date_time;
+
   const currentDate = new Date(date);
   const addZero = (num: number) => String(num).padStart(2, "0");
 

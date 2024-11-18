@@ -4,12 +4,12 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import { CategoryLayoutProps, MainCategoryList } from "@/types/search.types";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { IoSearchOutline } from "react-icons/io5";
 import { BsPlusLg } from "react-icons/bs";
+import { CiSearch } from "react-icons/ci";
 
 export default function CategoryLayout({ children, params }: CategoryLayoutProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,11 +18,14 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
   const router = useRouter();
 
   const supabase = createClient();
-  const fetchCategories = async () => {
-    const { data } = await supabase.from("main_category").select("*");
-    setCategories(data);
-  };
-  fetchCategories();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { data } = await supabase.from("main_category").select("*");
+      setCategories(data);
+    };
+    fetchCategories();
+  }, [currentCategory]);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -48,56 +51,56 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
             </span>
           </h1>
           {isModalOpen && (
-            <div className="absolute top-12 bg-white min-w-[358px] ml-[30px] rounded-[8px] border border-solid border-gray-50 shadow-lg z-50 justify-items-center">
+            <div className="absolute top-12 min-w-[358px] ml-[30px] rounded-[8px] border-2 border-solid bg-gray-50 border-gray-50 z-50 justify-items-center">
               <div className="w-[358px] h-36 px-[0.50px] bg-white rounded-lg border-2 border-gray-50 grid grid-cols-3 grid-rows-3 gap-0.5">
-                <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-solid border-gray-100 justify-center items-center gap-2 flex">
+                <div className="w-[117px] h-[47px] p-2 bg-white border-r border-b border-solid border-gray-100 justify-center items-center gap-2 flex rounded-tl-lg">
                   <Text variant="body_medium-12" className="text-gray-900">
                     에그팝
                   </Text>
                 </div>
                 <Link href={`/category/${categories[0].main_category_id}`}>
-                  <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-solid border-gray-100 justify-center items-center gap-2 flex">
+                  <div className="w-[118px] h-[47px] p-2 bg-white border-r border-b border-solid border-gray-100 justify-center items-center gap-2 flex">
                     <Text variant="body_medium-12" className="text-gray-900">
                       {categories[0].main_category_name}
                     </Text>
                   </div>
                 </Link>
                 <Link href={`/category/${categories[1].main_category_id}`}>
-                  <div className="w-[119px] h-12 p-2 bg-white border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
+                  <div className="w-[118px] h-[47px] p-2 bg-white border-b border-gray-100 border-solid justify-center items-center gap-2 flex rounded-tr-lg">
                     <Text variant="body_medium-12" className="text-gray-900">
                       {categories[1].main_category_name}
                     </Text>
                   </div>
                 </Link>
                 <Link href={`/category/${categories[2].main_category_id}`}>
-                  <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
+                  <div className="w-[118px] h-[47px] p-2 bg-white border-r border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
                     <Text variant="body_medium-12" className="text-gray-900">
                       {categories[2].main_category_name}
                     </Text>
                   </div>
                 </Link>
                 <Link href={`/category/${categories[3].main_category_id}`}>
-                  <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
+                  <div className="w-[118px] h-[47px] p-2 bg-white border-r border-b border-gray-100 border-solid justify-center items-center gap-2 flex">
                     <Text variant="body_medium-12" className="text-gray-900">
                       {categories[3].main_category_name}
                     </Text>
                   </div>
                 </Link>
                 <Link href={`/category/${categories[4].main_category_id}`}>
-                  <div className="w-[119px] h-12 p-2 bg-white border-b border-gray-100 justify-center border-solid items-center gap-2 flex">
+                  <div className="w-[118px] h-[47px] p-2 bg-white border-b border-gray-100 justify-center border-solid items-center gap-2 flex">
                     <Text variant="body_medium-12" className="text-gray-900">
                       {categories[4].main_category_name}
                     </Text>
                   </div>
                 </Link>
                 <Link href={`/category/${categories[5].main_category_id}`}>
-                  <div className="w-[119px] h-12 p-2 bg-white border-r border-gray-100 justify-center border-solid items-center gap-2 flex">
+                  <div className="w-[118px] h-[47px] p-2 bg-white border-r border-gray-100 justify-center border-solid items-center gap-2 flex rounded-bl-lg">
                     <Text variant="body_medium-12" className="text-gray-900">
                       {categories[5].main_category_name}
                     </Text>
                   </div>
                 </Link>
-                <div className="w-[119px] h-12 p-2 bg-white border-r border-gray-100 justify-center border-solid items-center gap-2 flex">
+                <div className="w-[118px] h-[47px] p-2 bg-white border-r border-gray-100 justify-center border-solid items-center gap-2 flex">
                   <Text variant="body_medium-12" className="text-gray-300">
                     곧 생겨요!
                   </Text>
@@ -111,11 +114,11 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
             <BsPlusLg className="w-6 h-6" />
           </button>
           <button onClick={() => router.push("/search")} className="w-6 h-6 flex items-center justify-center">
-            <IoSearchOutline className="w-6 h-6" />
+            <CiSearch className="w-6 h-6" />
           </button>
         </div>
       </header>
-      <div className="flex-1 overflow-hidden overflow-y-auto">{children}</div>
+      <div className="flex-1 overflow-hidden overflow-y-auto scrollbar-hide">{children}</div>
     </div>
   );
 }

@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
-import { useParams } from "next/navigation";
-import { RegularClubApproveChatRoomRecruiterEntrance } from "@/app/(pages)/(chat)/_components/regularClub/RegularClubChatRoomRecruiterEntrance";
+import { useParams, useRouter } from "next/navigation";
 import ApproveMemberTabBar from "@/components/uiComponents/ApproveMemberTapBar";
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { enterRegularChatRoomAfterApproval } from "@/app/(pages)/(chat)/_api/regular";
 
 export interface ParticipationRequest {
   egg_club_participation_request_id: number;
@@ -148,7 +150,7 @@ export default function ApproveMembersPage() {
   const supabase = createClient();
   const params = useParams();
   const clubId = Number(params.id);
-
+  const router = useRouter();
   useEffect(() => {
     const fetchPendingAndActiveRequests = async () => {
       const { data: pendingData, error: pendingError } = await supabase
@@ -191,7 +193,7 @@ export default function ApproveMembersPage() {
       });
       const user_id = data.user_id as string;
 
-      await RegularClubApproveChatRoomRecruiterEntrance({ egg_club_id: clubId, user_id: user_id }); // 모임원 채팅방 입장(가입 승인 시)
+      await enterRegularChatRoomAfterApproval({ egg_club_id: clubId, user_id: user_id }); // 모임원 채팅방 입장(가입 승인 시)
 
       if (!error) {
         alert("가입이 승인되었습니다.");
@@ -205,21 +207,38 @@ export default function ApproveMembersPage() {
       location.reload();
     }
   };
+  const handleBack = () => {
+    router.back();
+  };
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      <h2 className="text-center h-12 text-gray-900 content-center font-bold font-pretendard mb-2">에그즈 관리</h2>
-      <ApproveMemberTabBar activeTab={activeTab} onTabChange={setActiveTab} value="egges" />
-      <div className="flex flex-col w-full mt-4 px-4">
-        <div className="text-left mb-2">
-          <span>총 {activeTab ? activeMembers.length : requests.length}명</span>
+      <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
+        <div className="left-0 m-3">
+          <div onClick={handleBack}>
+            <HiOutlineChevronLeft className="w-6 h-6" />
+          </div>
         </div>
-        <div>
-          {activeTab ? (
-            <ActiveMembersTab activeMembers={activeMembers} />
-          ) : (
-            <PendingRequestsTab requests={requests} onApprove={approveMember} />
-          )}
+        <div className="flex flex-grow justify-center">
+          <Text variant="header-16" className="text-gray-900">
+            에그즈 관리
+          </Text>
+        </div>
+        <div className="w-6 m-3"></div>
+      </div>
+      <div className="w-full mt-12">
+        <ApproveMemberTabBar activeTab={activeTab} onTabChange={setActiveTab} value="egges" />
+        <div className="flex flex-col w-full mt-4 px-4">
+          <div className="text-left mb-2">
+            <span>총 {activeTab ? activeMembers.length : requests.length}명</span>
+          </div>
+          <div>
+            {activeTab ? (
+              <ActiveMembersTab activeMembers={activeMembers} />
+            ) : (
+              <PendingRequestsTab requests={requests} onApprove={approveMember} />
+            )}
+          </div>
         </div>
       </div>
     </div>

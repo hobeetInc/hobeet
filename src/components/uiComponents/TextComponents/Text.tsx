@@ -42,7 +42,7 @@ interface TextProps extends VariantProps<typeof textVariants> {
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div";
 }
 
-const Text: React.FC<TextProps> = ({ children, className, as: Component = "p", variant, ...props }) => {
+const Text: React.FC<TextProps> = ({ children, className, as: Component = "div", variant, ...props }) => {
   return (
     <Component className={cn(textVariants({ variant }), className)} {...props}>
       {children}

@@ -2,7 +2,7 @@
 import { createContext, useContext } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import { EggClubChatContextType } from "@/types/eggclubchat.types";
 
 const ChatContext = createContext<EggClubChatContextType>({

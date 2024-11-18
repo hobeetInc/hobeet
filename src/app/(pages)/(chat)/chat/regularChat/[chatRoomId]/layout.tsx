@@ -12,11 +12,9 @@ import { IoCloseOutline } from "react-icons/io5";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
 
-
-
 function ChatHeader() {
   const { roomName, isLoading, egg_day_chatting_id, egg_club_id } = useChatContext();
-  const [userId , setUserId] = useState("");
+  const [userId, setUserId] = useState("");
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ChattingMember, setChattingMember] = useState<EggClubChattingMemberInfo[]>();
@@ -25,8 +23,8 @@ function ChatHeader() {
     const supabase = createClient();
     if (egg_club_id) {
       const fetchRegularClubId = async () => {
-      const userId = (await supabase.auth.getUser()).data.user?.id;
-      
+        const userId = (await supabase.auth.getUser()).data.user?.id;
+
         const { data, error } = await supabase
           .from("egg_day_chatting")
           .select(`* , egg_club_member_id(* , user_id(*))`)
@@ -62,12 +60,15 @@ function ChatHeader() {
   };
   return (
     <>
-      <div className="flex items-center justify-between px-4 h-[60px] border-b border-gray-200 bg-white fixed top-0 left-0 right-0 z-10">
+      {/* change 패딩 제거 */}
+      <div className="flex items-center justify-between h-[60px] border-b border-gray-200 bg-white fixed top-0 left-0 right-0 z-10">
         <button onClick={handleBack} className="p-2">
           <ChevronLeft className="w-6 h-6" />
         </button>
 
-        <Text variant="header-16" className="text-gray-900">{isLoading ? "로딩중..." : roomName}</Text>
+        <Text variant="header-16" className="text-gray-900">
+          {isLoading ? "로딩중..." : roomName}
+        </Text>
 
         <button onClick={() => setIsModalOpen(true)} className="p-2">
           <Menu className="w-6 h-6" />
@@ -138,7 +139,8 @@ function ChatHeader() {
                 )}
               </ul>
             </div>
-            <div className="absolute bottom-0 w-full p-4 border-t border-gray-200">
+            {/* change 패딩 변경 */}
+            <div className="absolute bottom-0 w-full pb-[34px] border-t border-gray-200">
               <button
                 onClick={handleChatRoomExit}
                 className="w-full text-right py-2 px-4 hover:bg-gray-100 rounded-md text-red-500 flex items-center justify-end"
@@ -161,7 +163,7 @@ export default function ChatRoomLayout({ children, params }: LayoutProps) {
     <ChatProvider roomId={params.chatRoomId}>
       <div className="flex flex-col h-screen">
         <ChatHeader />
-        <div className="flex-1 overflow-hidden mt-10">{children}</div>
+        <div className="flex-1 overflow-hidden mt-[40px]">{children}</div>
       </div>
     </ChatProvider>
   );

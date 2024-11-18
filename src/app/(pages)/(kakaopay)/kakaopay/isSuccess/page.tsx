@@ -21,25 +21,22 @@ const Page = () => {
 
     const insertMember = async () => {
       if (clubType === "true") {
+        // localStorage.setItem("fromKakaoPay", "true");
+
         await clubApi.insertMember(clubId, requestUserId);
         setIsMemberInserted(true);
 
-        // router.push(
-        //   `http://localhost:3000/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}&pg_token=${pgToken}`
-        // );
-         router.push(
-          `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}&pg_token=${pgToken}`
+        router.push(
+          `${process.env.NEXT_PUBLIC_PROD_URL}/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}&pg_token=${pgToken}`
         );
       } else {
+        localStorage.setItem("fromKakaoPay", "true");
+
         await clubApi.eggDayInsertMember(clubId, requestUserId);
         setIsMemberInserted(true);
 
-        // router.push(
-        //   `http://localhost:3000/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}&pg_token=${pgToken}`
-        // );
-
         router.push(
-          `https://www.eggfriends.site/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}&pg_token=${pgToken}`
+          `${process.env.NEXT_PUBLIC_PROD_URL}/kakaopay/success?requestUserId=${requestUserId}&clubId=${clubId}&clubType=${clubType}&pg_token=${pgToken}`
         );
       }
     };

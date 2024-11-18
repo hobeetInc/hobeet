@@ -3,13 +3,13 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getParticipationStatus, getRegularMember } from "../../../_api/supabase";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import FullScreenModal from "./FullScreenModal";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import browserClient from "@/utils/supabase/client";
 import { CrewListProps, UserStatus } from "@/types/eggclub.types";
-import RegularClubJoinButton from "@/components/RegularClubJoinButtonCom";
+import RegularClubJoinButton from "@/app/(pages)/(club)/club/regular-club-sub/[id]/_components/RegularClubJoinButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
@@ -27,14 +27,14 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
       try {
         const memberResult = await getRegularMember(clubId);
 
-        const newCrewMemebers = memberResult.map((member) => ({
+        const newCrewMembers = memberResult.map((member) => ({
           memberId: member.r_c_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img
         }));
 
-        setCrewList(newCrewMemebers);
+        setCrewList(newCrewMembers);
 
         if (userId) {
           const statusResult = await getParticipationStatus({ userId, clubId });
@@ -56,21 +56,21 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
       const member = crewList[index];
       return member ? (
         // 멤버가 있는 경우
-        <div key={member.userId} className="w-[37px]">
-          <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">
+        <div key={member.userId} className="w-[40px]">
+          <div className="relative w-[40px] h-[40px] overflow-hidden rounded-full">
             <Image
               src={member.userImage}
               alt={member.userName}
-              width={37}
-              height={37}
+              width={40}
+              height={40}
               className="w-full h-full object-cover border-2 border-black"
             />
           </div>
         </div>
       ) : (
         // 빈 슬롯
-        <div key={`empty-${index}`} className="w-[37px]">
-          <div className="w-[37px] h-[37px] rounded-full border-2 border-gray-200 bg-gray-50"></div>
+        <div key={`empty-${index}`} className="w-[40px]">
+          <div className="w-[40px] h-[40px] rounded-full border-2 border-gray-200 bg-gray-50"></div>
         </div>
       );
     });
@@ -144,16 +144,14 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
           <Button
             borderType="circle"
             sizeType="small"
-            className="w-[50%] bg-gray-100"
+            className="w-[50%] bg-gray-100 text-primary-900"
             onClick={() => router.push(`/approvemembers/${clubId}`)}
           >
-            <Text variant="subtitle-16" className="text-primary-900">
-              에그즈 관리
-            </Text>
+            에그즈 관리
           </Button>
 
           <Button colorType="black" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
-            <Text variant="subtitle-16">에그클럽 채팅방</Text>
+            에그클럽 채팅방
           </Button>
         </div>
         // <div className="flex justify-center items-center gap-2">
@@ -245,9 +243,11 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         </div>
         <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
 
+        <div className="self-stretch h-[0px] mt-[15px] mb-4 border border-solid border-gray-50"></div>
+
         <div className="w-full ">
           <NotificationList notificationData={notificationData} crewMembers={crewList}>
-            <div className="w-full fixed bottom-[34px] right-0 left-0">{renderJoinButton()}</div>
+            <div className="w-full fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
           </NotificationList>
         </div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

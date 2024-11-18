@@ -61,34 +61,72 @@ const NotificationList = ({ notificationData, crewMembers, children }: Notificat
           전체
         </button> */}
 
-        <button
-          onClick={() => setSelectedDate("all")}
-          className={`w-[41px] h-[68px] rounded-[25px] border justify-center items-center gap-2.5 flex ${
-            selectedDate === "all" ? " border-neutral-800 border-2" : "  border-gray-100"
-          }`}
-        >
-          <Text
-            variant="body_medium-14"
-            className={`${selectedDate === "all" ? "text-neutral-800" : " text-gray-400"}`}
-          >
-            전체
-          </Text>
-        </button>
-
-        {dates.map((date) => (
+        {/* <div className="flex gap-2 overflow-hidden overflow-x-auto scrollbar-hide w-full">
           <button
-            key={date}
-            onClick={() => setSelectedDate(date)}
-            className={`w-[41px] h-[68px] px-2 py-3 bg-white rounded-[25px] border flex-col justify-center items-center gap-1 inline-flex ${
-              selectedDate === date ? " border-neutral-800 border-2" : "border-gray-100"
+            onClick={() => setSelectedDate("all")}
+            className={`w-[41px] h-[68px]  rounded-[25px] border justify-center items-center gap-2.5 flex ${
+              selectedDate === "all" ? " border-neutral-800 border-2" : "  border-gray-100"
             }`}
           >
-            <Text variant="body-10" className={`${selectedDate === date ? "text-neutral-800" : " text-gray-400"}`}>
-              {date}
-              {format(parseISO(groupedNotifications[date][0].egg_day_date_time), "eee", { locale: ko })}
+            <Text
+              variant="body_medium-14"
+              className={`${selectedDate === "all" ? "text-neutral-800" : " text-gray-400"}`}
+            >
+              전체
             </Text>
           </button>
-        ))}
+
+          {dates.map((date) => (
+            <button
+              key={date}
+              onClick={() => setSelectedDate(date)}
+              className={`w-[41px] h-[68px] px-2 py-3 bg-white rounded-[25px] border flex-col justify-center items-center gap-1 inline-flex ${
+                selectedDate === date ? " border-neutral-800 border-2" : "border-gray-100"
+              }`}
+            >
+              <Text variant="body-10" className={`${selectedDate === date ? "text-neutral-800" : " text-gray-400"}`}>
+                {date}
+                {format(parseISO(groupedNotifications[date][0].egg_day_date_time), "eee", { locale: ko })}
+              </Text>
+            </button>
+          ))}
+        </div> */}
+
+        <div className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth pb-2">
+          <button
+            onClick={() => setSelectedDate("all")}
+            className={`min-w-[41px] max-w-[41px] h-[68px] rounded-[25px] border justify-center items-center gap-2.5 flex ${
+              selectedDate === "all" ? "border-neutral-800 border-2" : "border-gray-100"
+            }`}
+          >
+            <Text
+              variant="body_medium-14"
+              className={`${selectedDate === "all" ? "text-neutral-800" : "text-gray-400"}`}
+            >
+              전체
+            </Text>
+          </button>
+
+          {dates.map((date) => (
+            <button
+              key={date}
+              onClick={() => setSelectedDate(date)}
+              className={`min-w-[41px] max-w-[41px] h-[68px] px-2 py-3 bg-white rounded-[25px] border flex-col justify-center items-center gap-1 inline-flex ${
+                selectedDate === date ? "border-neutral-800 border-2" : "border-gray-100"
+              }`}
+            >
+              <Text variant="body-10" className={`${selectedDate === date ? "text-neutral-800" : "text-gray-400"}`}>
+                {date}
+              </Text>
+              <Text
+                variant="body_medium-14"
+                className={`${selectedDate === date ? "text-neutral-800" : "text-gray-400"}`}
+              >
+                {format(parseISO(groupedNotifications[date][0].egg_day_date_time), "eee", { locale: ko })}
+              </Text>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* 모임 카드 목록 */}

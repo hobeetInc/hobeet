@@ -9,11 +9,6 @@ import { EggClubChatInfo, ExtendEggClubMessage } from "@/types/eggclubchat.types
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 
-
-
-
-
-
 const supabase = createClient();
 
 const ChatPage: React.FC = () => {
@@ -23,7 +18,7 @@ const ChatPage: React.FC = () => {
   const queryClient = useQueryClient();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [sendIconColor , setSentIconColor] = useState<boolean>(false);
+  const [sendIconColor, setSentIconColor] = useState<boolean>(false);
   // 현재 사용자 정보 조회
   const { data: currentUser, isSuccess: isUserFetched } = useQuery({
     queryKey: ["currentUser"],
@@ -174,28 +169,28 @@ const ChatPage: React.FC = () => {
     }
   }, [newMessage]);
 
-const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
-  return messages.reduce((acc: { [date: string]: ExtendEggClubMessage[] }, message) => {
-    const date = new Date(message.egg_day_chatting_message_create_at);
-    const dateString = date.toLocaleDateString("ko-KR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    });
+  const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
+    return messages.reduce((acc: { [date: string]: ExtendEggClubMessage[] }, message) => {
+      const date = new Date(message.egg_day_chatting_message_create_at);
+      const dateString = date.toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
 
-    // 요일을 별도로 가져와서 괄호와 함께 추가
-    const weekday = date.toLocaleDateString("ko-KR", { weekday: "long" }).replace("요일", ""); // "요일" 텍스트 제거
+      // 요일을 별도로 가져와서 괄호와 함께 추가
+      const weekday = date.toLocaleDateString("ko-KR", { weekday: "long" }).replace("요일", ""); // "요일" 텍스트 제거
 
-    const formattedDate = `${dateString} (${weekday})`;
+      const formattedDate = `${dateString} (${weekday})`;
 
-    if (!acc[formattedDate]) {
-      acc[formattedDate] = [];
-    }
+      if (!acc[formattedDate]) {
+        acc[formattedDate] = [];
+      }
 
-    acc[formattedDate].push(message);
-    return acc;
-  }, {});
-};
+      acc[formattedDate].push(message);
+      return acc;
+    }, {});
+  };
 
   const groupedMessages = groupMessagesByDate(messages);
 
@@ -209,7 +204,7 @@ const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full ">
       {/* 메시지 출력 */}
       <div className="flex-grow overflow-y-auto">
         <div className="p-4">
@@ -217,7 +212,8 @@ const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
             Object.keys(groupedMessages).map((dateString) => (
               <div key={dateString} className="mb-6">
                 <div className="justify-items-center">
-                  <div className="w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-2 text-center">
+                  {/* change 탑 바텀 마진 변경 */}
+                  <div className="w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-4 text-center mt-5">
                     <Text variant="body-12" className="text-gray-500">
                       {dateString}
                     </Text>
@@ -284,7 +280,7 @@ const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
               </div>
             ))
           ) : (
-            <div className="text-center">메시지가 없습니다.</div>
+            <div className="text-center mt-[120px]">메시지가 없습니다.</div>
           )}
           <div ref={messagesEndRef} />
         </div>
@@ -317,7 +313,8 @@ const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
               }}
               rows={1}
               maxLength={100}
-              className="flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px] focus:outline-none focus:ring-2 transition duration-200 min-h-[48px] max-h-[120px] content-center resize-none overflow-y-auto text-body-14"
+              // change 패딩 제거 포커스링 제거 최소높이 최소 크기 변경 아련함 제거
+              className="flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px] focus:outline-none transition duration-200 min-h-[36px] max-h-[120px] content-center resize-none overflow-y-auto text-body-14 min-w-[316px]"
               placeholder="메시지를 입력하세요..."
             />
             <button

@@ -13,10 +13,7 @@ const ErrorPage = () => {
     <div className="w-full">
       <div className="mt-[292px] flex flex-col justify-center items-center text-center">
         <div className="flex  mb-[20px]">
-
-
-          
-          <div className="w-[90px] h-[90px] -scale-y-100 " >
+          <div className="w-[90px] h-[90px] -scale-y-100 ">
             <Icon name="whiteEgg" />
           </div>
           <div className="w-[90px] h-[90px]  ">

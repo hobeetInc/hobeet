@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/app/store/AuthContext";
+import { useAuth } from "@/store/AuthContext";
 import { getNotificationMember, submitRegularMember } from "@/app/(pages)/(club)/club/_api/supabase";
 import FullScreenModal from "./FullScreenModal";
 import { useRouter } from "next/navigation";
@@ -47,21 +47,21 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
       const member = crewList[index];
       return member ? (
         // 멤버가 있는 경우
-        <div key={member.userId} className="w-[37px]">
-          <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">
+        <div key={member.userId} className="w-[40px]">
+          <div className="relative w-[40px] h-[40px] overflow-hidden rounded-full">
             <Image
               src={member.userImage}
               alt={member.userName}
-              width={37}
-              height={37}
+              width={40}
+              height={40}
               className="w-full h-full object-cover border-2 border-black"
             />
           </div>
         </div>
       ) : (
         // 빈 슬롯
-        <div key={`empty-${index}`} className="w-[37px]">
-          <div className="w-[37px] h-[37px] rounded-full border-2 border-gray-200 bg-gray-50"></div>
+        <div key={`empty-${index}`} className="w-[40px]">
+          <div className="w-[40px] h-[40px] rounded-full border-2 border-gray-200 bg-gray-50"></div>
         </div>
       );
     });
@@ -171,7 +171,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
           </button>
         </div>
         <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
-        <div className="w-full fixed bottom-[34px] right-0 left-0">{renderJoinButton()}</div>
+        <div className="w-full fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
     </>
