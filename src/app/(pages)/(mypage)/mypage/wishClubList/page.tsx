@@ -119,8 +119,8 @@ const WishClubListPage = () => {
                     <div className="justify-start items-center gap-0.5 flex">
                       <div className="w-[22px] h-[22px] relative">
                         <Image
-                          src={item.egg_club.user_id.user_profile_img}
-                          alt={item.egg_club.user_id.user_name}
+                          src={item.egg_club.user.user_profile_img}
+                          alt={item.egg_club.user.user_name}
                           width={24}
                           height={24}
                           className="w-[22px] h-[22px] left-0 top-0 absolute bg-gray-100 rounded-full"
@@ -128,7 +128,7 @@ const WishClubListPage = () => {
                       </div>
 
                       <Text variant="body_medium-14" className="text-gray-400">
-                        {item.egg_club.user_id.user_name}
+                        {item.egg_club.user.user_name}
                       </Text>
                     </div>
                     <div className="justify-start items-center gap-0.5 flex">
@@ -168,14 +168,14 @@ const WishClubListPage = () => {
 
               <div className="flex items-center mt-2">
                 <Image
-                  src={item.egg_club.user_id.user_profile_img}
-                  alt={item.egg_club.user_id.user_name}
+                  src={item.egg_club.user.user_profile_img}
+                  alt={item.egg_club.user.user_name}
                   width={24}
                   height={24}
                   className="w-6 h-6 rounded-full mr-2"
                 />
                 <p className="text-xs text-gray-500">
-                  {item.egg_club.user_id.user_name} 멤버 {item.egg_club.egg_club_member[0]?.count || 0}/
+                  {item.egg_club.user.user_name} 멤버 {item.egg_club.egg_club_member[0]?.count || 0}/
                   {item.egg_club.egg_club_people_limited}
                 </p>
               </div>

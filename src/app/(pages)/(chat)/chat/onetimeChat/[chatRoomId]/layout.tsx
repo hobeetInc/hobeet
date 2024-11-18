@@ -88,58 +88,54 @@ function ChatHeader() {
             <div>
               <ul className="space-y-4">
                 {/* 현재 사용자 먼저 렌더링 */}
-                {ChattingMember?.filter((member) => member.egg_pop_member_id.user_id.user_id === userId).map(
-                  (member) => (
-                    <li key={member.egg_pop_member_id.egg_pop_member_id}>
-                      <div
-                        className={cn(
-                          "flex items-center justify-between py-2 px-4 rounded-md border-solid border-gray-50 border-b-2"
-                        )}
-                      >
-                        <div className={cn("flex items-center")}>
-                          <div className={cn("w-10 h-10 overflow-hidden rounded-full mr-2")}>
-                            <Image
-                              src={member.egg_pop_member_id.user_id.user_profile_img}
-                              alt="프로필 이미지"
-                              width={40}
-                              height={40}
-                              className={cn("rounded-full")}
-                            />
-                          </div>
-                          <Text variant="subtitle-16" className={cn("text-gray-900")}>
-                            {member.egg_pop_member_id.user_id.user_name}
-                          </Text>
-                          {member.admin && <Tag tagName="eggmaster" variant="black" className={cn("ml-2")} />}
+                {ChattingMember?.filter((member) => member.egg_pop_member_id.user.user_id === userId).map((member) => (
+                  <li key={member.egg_pop_member_id.egg_pop_member_id}>
+                    <div
+                      className={cn(
+                        "flex items-center justify-between py-2 px-4 rounded-md border-solid border-gray-50 border-b-2"
+                      )}
+                    >
+                      <div className={cn("flex items-center")}>
+                        <div className={cn("w-10 h-10 overflow-hidden rounded-full mr-2")}>
+                          <Image
+                            src={member.egg_pop_member_id.user.user_profile_img}
+                            alt="프로필 이미지"
+                            width={40}
+                            height={40}
+                            className={cn("rounded-full")}
+                          />
                         </div>
+                        <Text variant="subtitle-16" className={cn("text-gray-900")}>
+                          {member.egg_pop_member_id.user.user_name}
+                        </Text>
+                        {member.admin && <Tag tagName="eggmaster" variant="black" className={cn("ml-2")} />}
                       </div>
-                    </li>
-                  )
-                )}
+                    </div>
+                  </li>
+                ))}
 
                 {/* 나머지 사용자들 렌더링 */}
-                {ChattingMember?.filter((member) => member.egg_pop_member_id.user_id.user_id !== userId).map(
-                  (member) => (
-                    <li key={member.egg_pop_member_id.egg_pop_member_id}>
-                      <div className={cn("flex items-center justify-between py-2 px-4 rounded-md")}>
-                        <div className={cn("flex items-center")}>
-                          <div className={cn("w-10 h-10 overflow-hidden rounded-full mr-2")}>
-                            <Image
-                              src={member.egg_pop_member_id.user_id.user_profile_img}
-                              alt="프로필 이미지"
-                              width={40}
-                              height={40}
-                              className={cn("rounded-full")}
-                            />
-                          </div>
-                          <Text variant="subtitle-16" className={cn("text-gray-900")}>
-                            {member.egg_pop_member_id.user_id.user_name}
-                          </Text>
-                          {member.admin && <Tag tagName="eggmaster" variant="black" className={cn("ml-2")} />}
+                {ChattingMember?.filter((member) => member.egg_pop_member_id.user.user_id !== userId).map((member) => (
+                  <li key={member.egg_pop_member_id.egg_pop_member_id}>
+                    <div className={cn("flex items-center justify-between py-2 px-4 rounded-md")}>
+                      <div className={cn("flex items-center")}>
+                        <div className={cn("w-10 h-10 overflow-hidden rounded-full mr-2")}>
+                          <Image
+                            src={member.egg_pop_member_id.user.user_profile_img}
+                            alt="프로필 이미지"
+                            width={40}
+                            height={40}
+                            className={cn("rounded-full")}
+                          />
                         </div>
+                        <Text variant="subtitle-16" className={cn("text-gray-900")}>
+                          {member.egg_pop_member_id.user.user_name}
+                        </Text>
+                        {member.admin && <Tag tagName="eggmaster" variant="black" className={cn("ml-2")} />}
                       </div>
-                    </li>
-                  )
-                )}
+                    </div>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className={cn("absolute bottom-0 w-full p-4 border-t border-gray-200")}>

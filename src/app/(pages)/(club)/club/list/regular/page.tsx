@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { getAllRegularClubList } from "../../_api/supabase";
 import Link from "next/link";
 import Image from "next/image";
-import { StringEggClubForm } from "@/types/안끝난거/eggclub.types";
+import { EggClubForm } from "@/types/안끝난거/eggclub.types";
 
 const AllRegularClubListPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [allRegularClubList, setAllRegularClubList] = useState<StringEggClubForm[]>([]);
+  const [allRegularClubList, setAllRegularClubList] = useState<EggClubForm[]>([]);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const AllRegularClubListPage = () => {
         setLoading(true);
         const res = await getAllRegularClubList();
         if (res) {
-          setAllRegularClubList(res as StringEggClubForm[]);
+          setAllRegularClubList(res);
         } else {
           setError("정기적 모임리스트를 불러오지 못했습니다.");
         }
@@ -42,7 +42,7 @@ const AllRegularClubListPage = () => {
       <div className="flex w-[390px] py-2 px-4 items-center gap-[10px]">
         <p className="text-[14px] font-[500px] leading-[145%]">총 {allRegularClubList?.length}개</p>
       </div>
-      {allRegularClubList.map((club: StringEggClubForm) => (
+      {allRegularClubList.map((club) => (
         <div key={club.egg_club_id} className="flex items-start gap-2 self-stretch mb-4">
           <Link
             href={`/club/regular-club-sub/${club.egg_club_id}`}
@@ -70,7 +70,7 @@ const AllRegularClubListPage = () => {
                 <div className="flex items-center gap-2">
                   <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
                     <Image
-                      src={club.user_id.user_profile_img}
+                      src={club.user.user_profile_img}
                       alt="profile"
                       width={22}
                       height={22}
@@ -79,7 +79,7 @@ const AllRegularClubListPage = () => {
                   </div>
                   <div className="flex max-w-[160px] items-center gap-[2px]">
                     <p className="overflow-hidden leading-[20.3px] text-[#8c8c8c] text-ellipsis text-[14px] font-[500px]">
-                      {club.user_id.user_name}
+                      {club.user.user_name}
                     </p>
                     <p className="font-pretendard text-[14px] ml-[8px] leading-[20.3px] text-[#8c8c8c] font-[500px]">
                       멤버

@@ -92,7 +92,7 @@ const ChatPage: React.FC = () => {
         .select(
           `
           *,
-          user:user_id (
+          user(
             user_id,
             user_name,
             user_profile_img
