@@ -10,11 +10,13 @@ import { getOneTimeChatRoom } from "../../_api/onetime";
 import { useAuthStore } from "@/store/authStore";
 
 const OneTimeClubChattingRoomPage = () => {
+  // 채팅방 목록, 로딩 상태, 에러 메시지 상태 관리
   const [chatRooms, setChatRooms] = useState<EggPopChattingRoom[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const userId = useAuthStore((state) => state.userId);
 
+  // 날짜와 시간을 포맷팅하는 유틸리티 함수
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -31,9 +33,12 @@ const OneTimeClubChattingRoomPage = () => {
   useEffect(() => {
     const supabase = createClient();
     if (!userId) return;
+
+    // 채팅방 데이터를 가져오는 비동기 함수
     const fetchChatRooms = async () => {
       try {
         const chatData = await getOneTimeChatRoom(userId);
+        // 채팅방이 없는 경우 처리
         if (!chatData.data || chatData.data.length === 0) {
           setErrorMessage("채팅방이 없습니다.");
           setChatRooms([]);
@@ -41,10 +46,12 @@ const OneTimeClubChattingRoomPage = () => {
           return;
         }
 
+        // 채팅방 데이터 가공 및 매핑
         const rooms = chatData.data.flatMap((member) =>
           member.egg_pop_chatting_room_member
             .filter((chatting) => chatting.active)
             .map((chatting) => {
+              // 마지막 메시지 시간 정보 포맷팅
               const lastMessageInfo =
                 chatting.egg_pop_chatting_room_message.length > 0
                   ? formatDateTime(
@@ -53,6 +60,7 @@ const OneTimeClubChattingRoomPage = () => {
                     )
                   : { date: "", time: "" };
 
+              // 채팅방 정보 객체 구성
               return {
                 user_id: member.user_id,
                 egg_pop_id: member.egg_pop_id,
@@ -75,6 +83,7 @@ const OneTimeClubChattingRoomPage = () => {
 
         setChatRooms(rooms);
       } catch (error) {
+        // 에러 처리
         console.error("서버 오류:", error);
         setErrorMessage("채팅방 정보를 가져오는 데 실패했습니다.");
       } finally {
@@ -84,6 +93,7 @@ const OneTimeClubChattingRoomPage = () => {
 
     fetchChatRooms();
 
+    // 실시간 메시지 업데이트를 위한 Supabase 구독 설정
     const subscription = supabase
       .channel("oneTimeChatting")
       .on(
@@ -94,6 +104,7 @@ const OneTimeClubChattingRoomPage = () => {
           table: "egg_pop_chatting_room_message"
         },
         (payload) => {
+          // 새 메시지가 도착했을 때 채팅방 목록 업데이트
           const newMessage = payload.new;
           const messageTime = formatDateTime(newMessage.created_at);
 
@@ -114,15 +125,18 @@ const OneTimeClubChattingRoomPage = () => {
       )
       .subscribe();
 
+    // 컴포넌트 언마운트 시 구독 해제
     return () => {
       supabase.removeChannel(subscription);
     };
   }, []);
 
+  // 로딩 상태 UI
   if (loading) {
     return <div>로딩 중...</div>;
   }
 
+  // 에러 상태 UI
   if (errorMessage) {
     return (
       <>
@@ -134,11 +148,13 @@ const OneTimeClubChattingRoomPage = () => {
     );
   }
 
+  // 채팅방 목록 렌더링
   return (
     <>
       <div className={cn("flex flex-col w-full h-[calc(100%-91px)]")}>
         <div className={cn("flex flex-col w-full overflow-y-auto")}>
           {chatRooms.length > 0 ? (
+            // 채팅방이 있는 경우 목록 표시
             chatRooms.map((room: EggPopChattingRoom) => (
               <div key={room.egg_pop_chatting_room_id} className={cn("border-b")}>
                 <a
@@ -182,6 +198,7 @@ const OneTimeClubChattingRoomPage = () => {
               </div>
             ))
           ) : (
+            // 채팅방이 없는 경우 메시지 표시
             <div className={cn("text-center py-8")}>
               <Text variant="body_medium-16">채팅방이 없습니다.</Text>
             </div>

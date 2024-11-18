@@ -44,3 +44,16 @@ export interface EggPopChattingMemberInfo extends Tables<"egg_pop_chatting_room_
     user: User;
   };
 }
+
+export interface EggPopChatInfo {
+  egg_pop_chatting_room_name: string;
+  user_id: string;
+  active: boolean;
+  admin: boolean;
+  created_at: string;
+  egg_pop_chatting_room_id: number;
+  egg_pop_chatting_room_member_id: number;
+  egg_pop_id: number;
+  egg_pop_member_id: number;
+  egg_pop_chatting_room: Tables<"egg_pop_chatting_room">;
+}

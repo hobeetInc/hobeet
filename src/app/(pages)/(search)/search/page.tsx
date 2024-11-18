@@ -112,27 +112,6 @@ const SearchPage = () => {
           />
 
           <p className="text-[18px] font-semibold py-4 leading-[135%] mt-4">전체 인기 모임</p>
-          {/* <button className="w-full" onClick={handleCreateClub}>
-            <div className="w-full h-[80px] mt-6 rounded-xl flex items-center bg-primary-200 p-4 justify-center">
-              <div className="flex flex-col">
-                <div className="w-[213px]">
-                  <Text variant="subtitle-16" className="text-gray-900">
-                    나만의 모임, 지금 만들어봐요!
-                  </Text>
-                </div>
-                <div className="w-[320px] flex items-center ml-3">
-                  <Text variant="body-14" className="text-gray-500">
-                    함께할 에그즈들을 만나볼까요?
-                  </Text>
-                  <Image src="/asset/eggsBanner.png" alt="eggsBanner" width={84} height={34} className="ml-[60px]" />
-                </div>
-              </div>
-            </div>
-          </button> */}
-
-          {/* <div className="flex w-full mt-8 flex-col items-start h-[56px]">
-            <p className="text-[18px] font-semibold pb-4 leading-[135%]">전체 인기 모임</p>
-          </div> */}
           <OverallPopularMeetings />
         </>
       )}
