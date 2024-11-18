@@ -1,27 +1,15 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-
-import { getRegularClubList } from "@/app/(pages)/(club)/club/_api/supabase";
-
-import { useAuth } from "@/store/AuthContext";
 import { EggClubForm } from "@/types/cardlist.types";
 import { VerticalContentsListMediumEggClub } from "@/components/uiComponents/VerticalContentsListMedium";
+import { useAuthStore } from "@/store/authStore";
+import { useEggClubTenList } from "@/hooks/utils/list/tenList";
 
 const RegularClubList = () => {
-  const {
-    data: list,
-    isLoading,
-    error
-  } = useQuery({
-    queryKey: ["regularClubs"],
-    queryFn: getRegularClubList
-  });
+  const { data: list, isLoading, error } = useEggClubTenList();
 
-  const { userId } = useAuth();
-  // console.log(userId);
-  // console.log(list);
+  const userId = useAuthStore((state) => state.userId);
 
   const isWishedByUser = (club: EggClubForm): boolean => {
     if (!userId) return false;

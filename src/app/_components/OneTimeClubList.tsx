@@ -6,7 +6,7 @@ import Link from "next/link";
 
 // import { EggPopForm } from "@/types/안끝난거/eggpop.types";
 import { VerticalContentsListMediumEggPop } from "@/components/uiComponents/VerticalContentsListMedium";
-import { useEggPopTenList } from "@/hooks/eggPopQueries";
+import { useEggPopTenList } from "@/hooks/utils/list/tenList";
 
 const OneTimeClubList = () => {
   const { data: list, isLoading } = useEggPopTenList();

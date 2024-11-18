@@ -11,15 +11,7 @@ export const useCreatePop = () => {
   const { mutateAsync: createPop, isPending } = useMutation({
     mutationFn: async (formData: EggPopForm) => {
       // 모임 데이터 저장
-      const data = await submitOneTimeClubData(formData);
-
-      // 호스트 정보도 캐시에 저장
-      queryClient.setQueryData(queryKeys.user.hostInfo(data.user_id), {
-        user_name: data.user.user_name,
-        user_profile_img: data.user.user_profile_img
-      });
-
-      return data;
+      await submitOneTimeClubData(formData);
     },
     onSuccess: (data) => {
       // 모임 리스트 관련 쿼리 무효화
