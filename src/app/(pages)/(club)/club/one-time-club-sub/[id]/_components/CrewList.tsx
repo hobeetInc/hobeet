@@ -7,12 +7,18 @@ import FullScreenModal from "./FullScreenModal";
 import { useAuth } from "@/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
-import { CrewListProps } from "@/types/안끝난거/eggpop.types";
 import OneTimeClubJoinButton from "./OneTimeClubJoinButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import { MemberInfo } from "@/types/user.types";
 
+// CrewList 컴포넌트 props 타입
+interface CrewListProps {
+  crewMembers: MemberInfo[];
+  clubId: number;
+  clubHostId: string;
+}
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

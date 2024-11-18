@@ -6,14 +6,14 @@ import Tag from "@/components/uiComponents/TagComponents/Tag";
 import WishListHeart from "./WishListHeart";
 import { EggClub } from "@/types/cardlist.types";
 import { MemberInfo } from "@/types/user.types";
-import { EggDay } from "@/types/eggday.types";
+import { EggDayWithEggDayMember } from "@/types/eggday.types";
 
 interface HomeContentProps {
   clubInfo: EggClub;
   hostInfo: MemberInfo | undefined;
   crewMembers: MemberInfo[];
   egg_club_id: number;
-  notificationData: EggDay[];
+  notificationData: EggDayWithEggDayMember[];
   stringCategory: string | undefined;
 }
 
