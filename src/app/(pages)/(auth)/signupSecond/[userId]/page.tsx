@@ -1,10 +1,8 @@
 "use client";
 
-import browserClient from "@/utils/supabase/client";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { sanitizeFileName } from "@/utils/sanitizeFileName";
 import { useAuth } from "@/store/AuthContext";
 import { FaCamera } from "react-icons/fa6";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
@@ -12,8 +10,19 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import DateScrollPicker from "../_components/DateScrollPicker";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Link from "next/link";
-
-const NAME_REGEX = /^[가-힣]{2,5}$/;
+import { fetchUser } from "../../_api/fetchUser";
+import { uploadProfileImage } from "../../_api/uploadProfile";
+import { updateUser } from "../../_api/updateUser";
+import { signOut } from "../../_api/logOut";
+import { validateBirthDate, validateGender, validateName } from "@/utils/signup/validation";
+import {
+  calcAge,
+  formatBirthDate,
+  getDaysInMonth,
+  getDaysList,
+  getMonthsList,
+  getYearsList
+} from "@/utils/signup/birthDate";
 
 const SignupSecondPage = () => {
   const [birthYear, setBirthYear] = useState("");
@@ -23,9 +32,7 @@ const SignupSecondPage = () => {
   const [profileFile, setProfileFile] = useState<File | null>(null);
   const [nameError, setNameError] = useState("");
   const [genderError, setGenderError] = useState("");
-
   const [birthDateError, setBirthDateError] = useState("");
-
   const [showYearPicker, setShowYearPicker] = useState(false);
   const [showMonthPicker, setShowMonthPicker] = useState(false);
   const [showDayPicker, setShowDayPicker] = useState(false);
@@ -34,7 +41,6 @@ const SignupSecondPage = () => {
   const router = useRouter();
   const params = useParams();
   const userIdParam = params.userId;
-  const supabase = browserClient;
 
   const {
     setUserId,
@@ -50,43 +56,49 @@ const SignupSecondPage = () => {
   } = useAuth();
 
   useEffect(() => {
-    const logOut = async () => {
-      await supabase.auth.signOut();
-      localStorage.removeItem("loginInfoStore");
+    const initializeSignup = async () => {
+      try {
+        await signOut();
+        const userData = await fetchUser(userIdParam as string);
+        if (userData) {
+          setUserId(userData.user_id);
+          setUserEmail(userData.user_email || "");
+          setUserName(userData.user_name || "");
+          setUserGender(userData.user_gender || "");
+          setUserProfileImg(userData.user_profile_img || "");
+        }
+      } catch (error) {
+        console.error("유저 정보 초기화 중 오류 발생:", error);
+        alert("초기화 중 오류가 발생했습니다. 다시 시도해주세요.");
+        router.push("/signin");
+      }
     };
 
-    logOut();
-  }, []);
+    initializeSignup();
+  }, [userIdParam, setUserId, setUserEmail, setUserName, setUserGender, setUserProfileImg, router]);
 
-  const validateName = (name: string) => {
-    const trimmedName = name.trim();
-    if (!trimmedName) return "이름을 입력해주세요.";
-    if (!NAME_REGEX.test(trimmedName)) return "이름은 한글 2~5자로 입력해야 합니다.";
-    return "";
-  };
+  useEffect(() => {
+    const daysInSelectedMonth = birthYear && birthMonth ? getDaysInMonth(Number(birthYear), Number(birthMonth)) : 31;
+    if (Number(birthDay) > daysInSelectedMonth) {
+      setBirthDay(String(daysInSelectedMonth));
+    }
+  }, [birthYear, birthMonth, birthDay]);
+
+  useEffect(() => {
+    if (birthYear && birthMonth && birthDay) {
+      setBirthDateError("");
+      setUserBirth(formatBirthDate(birthYear, birthMonth, birthDay));
+    }
+  }, [birthYear, birthMonth, birthDay]);
+
+  useEffect(() => {
+    setIsFormComplete(Boolean(birthYear && birthMonth && birthDay && userName && userGender));
+  }, [birthYear, birthMonth, birthDay, userName, userGender]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value;
     setUserName(newName);
     setNameError(validateName(newName));
-  };
-
-  const validateGender = () => {
-    if (!userGender) return "성별을 선택해주세요.";
-    return "";
-  };
-
-  const validateBirthDate = () => {
-    if (!birthYear || !birthMonth || !birthDay) return "생년월일을 모두 선택해주세요.";
-    const today = new Date();
-    const selectedDate = new Date(Number(birthYear), Number(birthMonth) - 1, Number(birthDay));
-    if (selectedDate > today) return "오늘 이후의 날짜는 선택할 수 없습니다.";
-    return "";
-  };
-
-  const calcAge = (birthYear: number) => {
-    const currentYear = new Date().getFullYear();
-    return currentYear - birthYear + 1;
   };
 
   const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,58 +113,12 @@ const SignupSecondPage = () => {
     }
   };
 
-  useEffect(() => {
-    const daysInSelectedMonth = birthYear && birthMonth ? getDaysInMonth(Number(birthYear), Number(birthMonth)) : 31;
-    if (Number(birthDay) > daysInSelectedMonth) {
-      setBirthDay(String(daysInSelectedMonth));
-    }
-  }, [birthYear, birthMonth, birthDay]);
-
-  useEffect(() => {
-    if (birthYear && birthMonth && birthDay) {
-      setBirthDateError("");
-
-      const formattedMonth = birthMonth.padStart(2, "0");
-      const formattedDay = birthDay.padStart(2, "0");
-
-      setUserBirth(`${birthYear}-${formattedMonth}-${formattedDay}`);
-    }
-  }, [birthYear, birthMonth, birthDay]);
-
-  const getDaysInMonth = (year: number, month: number): number => {
-    const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    if (month === 2 && isLeapYear(year)) {
-      return 29;
-    }
-    return daysInMonth[month - 1];
-  };
-
-  const isLeapYear = (year: number): boolean => {
-    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-  };
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data: userData } = await supabase.from("user").select("*").eq("user_id", userIdParam).single();
-
-      if (userData) {
-        setUserId(userData.user_id);
-        setUserEmail(userData.user_email || "");
-        setUserName(userData.user_name || "");
-        setUserGender(userData.user_gender || "");
-        setUserProfileImg(userData.user_profile_img || "");
-      }
-    };
-
-    fetchUser();
-  }, [supabase, userIdParam, setUserId, setUserEmail, setUserName, setUserGender, setUserProfileImg]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const nameValidation = validateName(userName || "");
-    const genderValidation = validateGender();
-    const birthDateValidation = validateBirthDate();
+    const genderValidation = validateGender(userGender || "");
+    const birthDateValidation = validateBirthDate(birthYear, birthMonth, birthDay);
 
     setNameError(nameValidation);
     setGenderError(genderValidation);
@@ -165,63 +131,37 @@ const SignupSecondPage = () => {
       return;
     }
 
-    let uploadedImageUrl = userProfileImg;
+    try {
+      let uploadedImageUrl = userProfileImg;
 
-    if (profileFile) {
-      const sanitizedFileName = sanitizeFileName(profileFile.name);
-      const { error } = await supabase.storage
-        .from("avatars")
-        .upload(`public/${userId}/${sanitizedFileName}`, profileFile);
-
-      if (error) {
-        console.error("이미지 업로드 실패:", error.message);
-        return;
-      } else {
-        uploadedImageUrl = supabase.storage.from("avatars").getPublicUrl(`public/${userId}/${sanitizedFileName}`)
-          .data.publicUrl;
-
+      if (profileFile) {
+        uploadedImageUrl = await uploadProfileImage(userId, profileFile);
         setUserProfileImg(uploadedImageUrl);
       }
-    }
 
-    const userAge = calcAge(Number(birthYear));
-    setUserAge(userAge);
+      const userAge = calcAge(Number(birthYear));
+      setUserAge(userAge);
 
-    const { error } = await supabase
-      .from("user")
-      .update({
-        user_name: userName,
-        user_gender: userGender,
+      await updateUser(userId, {
+        user_name: userName || "",
+        user_gender: userGender || "",
         user_age: userAge,
         user_profile_img: uploadedImageUrl,
         user_birth: userBirth
-      })
-      .eq("user_id", userId);
+      });
 
-    if (error) {
-      console.log("정보 업데이트 실패", error);
-    } else {
-      console.log("정보 업데이트 성공");
       alert("회원가입이 완료되었습니다. 로그인 해주세요.");
       router.push("/signin");
+    } catch (error) {
+      console.error("회원가입 처리 중 오류 발생:", error);
+      alert("회원가입 처리 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
 
-  const checkFormCompletion = () => {
-    if (birthYear && birthMonth && birthDay && userName && userGender) {
-      setIsFormComplete(true);
-    } else {
-      setIsFormComplete(false);
-    }
-  };
+  const years = getYearsList();
+  const months = getMonthsList();
+  const days = getDaysList(Number(birthYear), Number(birthMonth));
 
-  useEffect(() => {
-    checkFormCompletion();
-  }, [birthYear, birthMonth, birthDay, userName, userGender]);
-
-  const years = [...Array(100)].map((_, i) => 2024 - i);
-  const months = [...Array(12)].map((_, i) => i + 1);
-  const days = [...Array(getDaysInMonth(Number(birthYear), Number(birthMonth)))].map((_, i) => i + 1);
   return (
     <div className="flex flex-col items-center">
       <div className="flex w-full h-12 bg-white items-center">

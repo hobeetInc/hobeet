@@ -1,60 +1,33 @@
 "use client";
-import browserClient from "@/utils/supabase/client";
+
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { sanitizeFileName } from "@/utils/sanitizeFileName";
-// import { useAuth } from "@/app/store/AuthContext";
 import { FaCamera } from "react-icons/fa6";
 import Link from "next/link";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Text from "@/components/uiComponents/TextComponents/Text";
+import { useAuthStore } from "@/store/authStore";
+import { fetchUserProvider, uploadProfileImage } from "../../_api/profileEdit";
 
 const ProfileEditPage = () => {
-  const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userGender, setUserGender] = useState("");
-  const [userProfileImg, setUserProfileImg] = useState("");
-  const [userBirth, setUserBirth] = useState("");
   const [provider, setProvider] = useState("");
-  const [userId, setUserId] = useState("");
-  // const { userId, userEmail, userName, userGender, userProfileImg, userBirth, setUserProfileImg } = useAuth();
-  // const [tempProfileImg, setTempProfileImg] = useState("");
-
-  const supabase = browserClient;
-
-  // useEffect(() => {
-  //   setTempProfileImg(userProfileImg);
-  // }, [userProfileImg]);
+  const { userId, userEmail, userName, userGender, userBirth, userProfileImg, setUserProfileImg } = useAuthStore();
 
   useEffect(() => {
-    const getUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      const userId = data?.user.id;
-      setUserId(userId);
-      const { data: userData } = await supabase.from("user").select("*").eq("user_id", userId).single();
-      const userEmail = userData?.user_email;
-      setEmail(userEmail);
-      const userName = userData?.user_name;
-      setUserName(userName);
-      const userGender = userData?.user_gender;
-      setUserGender(userGender);
-      const userProfileImg = userData?.user_profile_img;
-      setUserProfileImg(userProfileImg);
-      const userBirth = userData?.user_birth;
-      setUserBirth(userBirth);
-      if (error) {
-        console.log("회원 정보를 불러오는 중 오류가 발생했습니다.");
+    const initializeProfile = async () => {
+      try {
+        const providerData = await fetchUserProvider();
+        if (providerData) {
+          setProvider(providerData);
+        }
+      } catch (error) {
+        console.error("회원 정보를 불러오는 중 오류가 발생했습니다:", error);
+        alert("회원 정보를 불러오는데 실패했습니다.");
       }
-      const provider = data.user?.app_metadata.provider;
-      setProvider(provider);
     };
 
-    getUser();
+    initializeProfile();
   }, []);
-
-  // useEffect(() => {
-  //   if (userEmail) setEmail(userEmail);
-  // }, [userEmail]);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -67,32 +40,12 @@ const ProfileEditPage = () => {
     reader.readAsDataURL(file);
 
     try {
-      const sanitizedFileName = sanitizeFileName(file.name);
-      const { error: uploadError } = await supabase.storage
-        .from("avatars")
-        .upload(`public/${userId}/${sanitizedFileName}`, file);
+      const newImageUrl = await uploadProfileImage({
+        userId,
+        file
+      });
 
-      if (uploadError) {
-        console.error("이미지 업로드 실패:", uploadError.message);
-        return;
-      }
-
-      const uploadedImageUrl = supabase.storage.from("avatars").getPublicUrl(`public/${userId}/${sanitizedFileName}`)
-        .data.publicUrl;
-
-      const { error: updateError } = await supabase
-        .from("user")
-        .update({
-          user_profile_img: uploadedImageUrl
-        })
-        .eq("user_id", userId);
-
-      if (updateError) {
-        console.error("프로필 업데이트 실패:", updateError.message);
-        return;
-      }
-
-      setUserProfileImg(uploadedImageUrl);
+      setUserProfileImg(newImageUrl);
       alert("프로필 이미지가 성공적으로 변경되었습니다.");
     } catch (error) {
       console.error("이미지 처리 중 오류 발생:", error);
@@ -119,13 +72,18 @@ const ProfileEditPage = () => {
       <div className="relative flex justify-center mb-5">
         <div className="relative w-[78px] h-[78px]">
           <div className="rounded-full overflow-hidden w-[78px] h-[78px] mt-9">
-            <Image
-              src={userProfileImg}
-              alt="프로필 이미지"
-              width={78}
-              height={78}
-              className="object-cover w-[78px] h-[78px]"
-            />
+            {userProfileImg ? (
+              <Image
+                src={userProfileImg}
+                alt="프로필 이미지"
+                width={78}
+                height={78}
+                priority
+                className="object-cover w-[78px] h-[78px]"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-200" />
+            )}
           </div>
           <label
             htmlFor="profileImg"
@@ -145,7 +103,7 @@ const ProfileEditPage = () => {
             <input
               id="userName"
               type="text"
-              value={userName || ""}
+              value={userName || "이름 정보가 없습니다"}
               readOnly
               className="flex-1 w-[358px] h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-body-14 bg-gray-50"
             />
@@ -160,7 +118,7 @@ const ProfileEditPage = () => {
             <input
               id="email"
               type="email"
-              value={email}
+              value={userEmail || "이메일 정보가 없습니다"}
               readOnly
               className="flex-1 w-[358px] h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-body-14 bg-gray-50"
             />
