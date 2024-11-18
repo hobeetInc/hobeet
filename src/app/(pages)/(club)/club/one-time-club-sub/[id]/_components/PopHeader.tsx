@@ -61,7 +61,7 @@ import { useRouter } from "next/navigation";
 import { PopHeaderProps } from "@/types/eggpop.types";
 import { useEffect } from "react";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { IoIosArrowBack } from "react-icons/io";
+import { ChevronLeft } from "lucide-react";
 
 const PopHeader = ({ clubInfo }: PopHeaderProps) => {
   const router = useRouter();
@@ -122,7 +122,7 @@ const PopHeader = ({ clubInfo }: PopHeaderProps) => {
   return (
     <div className="flex justify-center items-center w-full">
       <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
-        <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
+        <ChevronLeft className="w-6 h-6 cursor-pointer" />
       </div>
       <div className="flex-1 text-center pr-7">
         <Text variant="header-16">
