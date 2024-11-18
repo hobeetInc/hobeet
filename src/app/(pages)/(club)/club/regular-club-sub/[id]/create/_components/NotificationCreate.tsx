@@ -8,7 +8,7 @@ import { useAuth } from "@/store/AuthContext";
 import { submitRegularClubNotification, submitRegularMember, uploadImage } from "../../../../_api/supabase";
 import { useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
-import { EggDay, EggDayRequired } from "@/types/안끝난거/eggday.types";
+import { EggDay, EggDayRequired } from "@/types/eggday.types";
 import { AddressData, DaumPostcodeData } from "@/types/address.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import ImageUpload from "@/components/uiComponents/Image/ImageUpload";

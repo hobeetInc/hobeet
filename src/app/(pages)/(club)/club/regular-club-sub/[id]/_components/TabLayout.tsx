@@ -1,8 +1,11 @@
 "use client";
 
 import ApproveMemberTabBar from "@/components/uiComponents/ApproveMemberTapBar";
-import { TabLayoutProps } from "@/types/안끝난거/eggclub.types";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+
+interface TabLayoutProps {
+  children: [ReactNode, ReactNode];
+}
 
 const TabLayout = ({ children }: TabLayoutProps) => {
   const [activeTab, setActiveTab] = useState<boolean>(true);
@@ -10,7 +13,6 @@ const TabLayout = ({ children }: TabLayoutProps) => {
   return (
     <>
       <ApproveMemberTabBar activeTab={activeTab} onTabChange={setActiveTab} value="eggday" />
-
       {activeTab ? children[0] : children[1]}
     </>
   );

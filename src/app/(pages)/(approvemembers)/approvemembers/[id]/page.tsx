@@ -8,15 +8,12 @@ import ApproveMemberTabBar from "@/components/uiComponents/ApproveMemberTapBar";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { enterRegularChatRoomAfterApproval } from "@/app/(pages)/(chat)/_api/regular";
+import { User } from "@/types/user.types";
 
-export interface ParticipationRequest {
+interface ParticipationRequest {
   egg_club_participation_request_id: number;
   egg_club_id: number;
-  user_id: {
-    user_id: string;
-    user_name: string;
-    user_profile_img: string;
-  };
+  user: User;
   egg_club_participation_request_status: "pending" | "active" | "rejected";
 }
 
@@ -69,13 +66,13 @@ const ActiveMembersTab = ({ activeMembers }: { activeMembers: ParticipationReque
       {activeMembers.map((member, index) => (
         <div key={member.egg_club_participation_request_id} className="flex items-center gap-3">
           <Image
-            src={member.user_id.user_profile_img}
-            alt={member.user_id.user_name}
+            src={member.user.user_profile_img}
+            alt={member.user.user_name}
             width={158}
             height={158}
             className="w-10 h-10 rounded-full"
           />
-          <span className="text-gray-900 font-semibold font-pretendard">{member.user_id.user_name}</span>
+          <span className="text-gray-900 font-semibold font-pretendard">{member.user.user_name}</span>
           {index === 0 ? (
             // 에그장 뱃지 (첫 번째 멤버)
             <div className="w-[42px] h-[19px] px-2 py-0.5 bg-gray-800 rounded-[124px] justify-center items-center inline-flex">
@@ -122,13 +119,13 @@ const PendingRequestsTab = ({
         <div key={req.egg_club_participation_request_id} className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Image
-              src={req.user_id.user_profile_img}
-              alt={req.user_id.user_name}
+              src={req.user.user_profile_img}
+              alt={req.user.user_name}
               width={158}
               height={158}
               className="w-10 h-10 rounded-full"
             />
-            <span>{req.user_id.user_name}</span>
+            <span>{req.user.user_name}</span>
           </div>
           <button
             onClick={() => handleApproveClick(req.egg_club_participation_request_id)}

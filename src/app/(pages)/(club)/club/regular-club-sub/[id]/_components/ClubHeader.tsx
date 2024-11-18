@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/store/AuthContext";
-import { ClubHeaderProps } from "@/types/안끝난거/eggclub.types";
+import { ClubHeaderProps } from "@/types/eggclub.types";
 import { IoIosArrowBack } from "react-icons/io";
 import { useEffect } from "react";
 

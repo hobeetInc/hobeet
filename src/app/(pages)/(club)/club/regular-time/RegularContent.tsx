@@ -2,23 +2,29 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useAuth } from "@/store/AuthContext";
 import { REGULAR_CLUB_CREATE } from "../_utils/localStorage";
 import Category from "../_components/regularClub/Category";
 import MemberType from "../_components/regularClub/MemberType";
-import { putRegularMember, putRepresentative, submitRegularClubData, uploadImage } from "../_api/supabase";
-import { EggClubForm } from "@/types/안끝난거/eggclub.types";
+import { putRegularMember, putRepresentative } from "../_api/supabase";
+import { EggClubFormWithImageFile } from "@/types/eggclub.types";
 import ProgressBar from "../_components/ProgressBar";
 import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import Introduction from "../_components/regularClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 import { createRegularChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/regular";
+import { useCreateClub } from "@/hooks/useCreate";
+import { useAuthStore } from "@/store/authStore";
+import { useUploadImage } from "@/hooks/useUploadImage";
 
 const RegularContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
+
+  const uploadClubImage = useUploadImage();
+
+  const { createClub, isPending } = useCreateClub();
 
   // 초기값 설정 시 localStorage 데이터를 먼저 확인
   const getInitialData = () => {
@@ -68,7 +74,7 @@ const RegularContent = () => {
   const [step, setStep] = useState<1 | 2 | 3>(currentStep);
   const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedAge);
-  const [formData, setFormData] = useState<EggClubForm>(initialData.formData);
+  const [formData, setFormData] = useState<EggClubFormWithImageFile>(initialData.formData);
 
   // 폼데이터 확인용
   useEffect(() => {}, [formData]);
@@ -145,18 +151,9 @@ const RegularContent = () => {
   // 슈퍼베이스 제출 버튼
   const handleSubmit = async () => {
     try {
-      let finalFormData = { ...formData };
-      // File 객체인 경우에만 업로드 처리
-      if (formData.egg_club_image instanceof File) {
-        const imageUrl = await uploadImage(formData.egg_club_image);
-        finalFormData = {
-          ...finalFormData,
-          egg_club_image: imageUrl
-        };
-      }
       // 슈퍼베이스에 데이터 저장
-      const data = await submitRegularClubData(finalFormData);
-      // console.log(data);
+      const imageUrl = await uploadClubImage(formData.egg_club_image);
+      const data = await createClub({ ...formData, egg_club_image: imageUrl });
 
       const representive = {
         egg_club_id: data.egg_club_id,
@@ -261,7 +258,7 @@ const RegularContent = () => {
           colorType={isNextButtonDisabled() ? undefined : "black"}
           borderType="circle"
         >
-          {step === 3 ? "모임 생성" : "다음"}
+          {step === 3 ? (isPending ? "생성 중..." : "모임 생성") : "다음"}
         </Button>
       </div>
     </div>

@@ -6,11 +6,20 @@ import { useAuth } from "@/store/AuthContext";
 import { getNotificationMember, submitRegularMember } from "@/app/(pages)/(club)/club/_api/supabase";
 import FullScreenModal from "./FullScreenModal";
 import { useRouter } from "next/navigation";
-import { CrewListProps } from "@/types/안끝난거/eggday.types";
+import { EggDay } from "@/types/eggday.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import { IoIosArrowForward } from "react-icons/io";
 import browserClient from "@/utils/supabase/client";
+import { MemberInfo } from "@/types/user.types";
+
+interface CrewListProps {
+  crewMembers: MemberInfo[];
+  clubId: number;
+  clubHostId: string;
+  clubInfo: EggDay | undefined;
+  secondId: number;
+}
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInfo, secondId }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
@@ -25,7 +34,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
         const memberResult = await getNotificationMember(secondId);
 
         const newCrewMembers = memberResult.map((member) => ({
-          egg_day_id: member.r_c_member_id,
+          memberId: member.egg_club_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img
