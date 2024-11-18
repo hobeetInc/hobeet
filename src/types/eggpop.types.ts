@@ -5,6 +5,8 @@ export type EggPop = Tables<"egg_pop">;
 
 export type EggPopMember = Tables<"egg_pop_member">;
 
+export type EggPopMemberInput = Omit<Tables<"egg_pop_member">, "egg_pop_member_id">;
+
 export interface EggPopForm extends EggPop {
   user: Pick<Tables<"user">, "user_name" | "user_profile_img">;
   egg_pop_member: { count: number }[];

@@ -1,5 +1,5 @@
-import { Tables } from "../database.types";
-import { User } from "../user.types";
+import { Tables } from "./database.types";
+import { User } from "./user.types";
 
 export type EggPop = Tables<"egg_pop">;
 
