@@ -1,7 +1,7 @@
 "use client";
 
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { EggPopChattingRoom } from "@/types/안끝난거/eggpopchat.types";
+import { EggPopChattingRoom } from "@/types/eggpopchat.types";
 import { cn } from "@/utils/cn/util";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";

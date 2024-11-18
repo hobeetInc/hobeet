@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, Menu } from "lucide-react";
 import { ChatProvider, useChatContext } from "./_components/ChatContext";
 import { cn } from "@/utils/cn/util";
-import { EggPopChattingMemberInfo, LayoutProps } from "@/types/안끝난거/eggpopchat.types";
+import { EggPopChattingMemberInfo, LayoutProps } from "@/types/eggpopchat.types";
 import { IoCloseOutline } from "react-icons/io5";
 import Image from "next/image";
 import Text from "@/components/uiComponents/TextComponents/Text";
