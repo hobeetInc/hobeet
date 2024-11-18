@@ -2,7 +2,6 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 // 컴포넌트 임포트
-import { useAuth } from "@/store/AuthContext";
 import { ONETIME_CLUB_CREATE } from "../../_utils/localStorage";
 import { putOneTimeMember } from "../../_api/supabase";
 import Category from "../../_components/oneTimeClub/Category";
@@ -18,11 +17,12 @@ import Introduction from "../../_components/oneTimeClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 import { createOneTimeChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/onetime";
 import { useCreatePop } from "@/hooks/useCreate";
+import { useAuthStore } from "@/store/authStore";
 
 const OneTimeContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
 
   const { createPop, isPending } = useCreatePop();
 

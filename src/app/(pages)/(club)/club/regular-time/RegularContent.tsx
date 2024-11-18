@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useAuth } from "@/store/AuthContext";
 import { REGULAR_CLUB_CREATE } from "../_utils/localStorage";
 import Category from "../_components/regularClub/Category";
 import MemberType from "../_components/regularClub/MemberType";
@@ -15,11 +14,12 @@ import Introduction from "../_components/regularClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 import { createRegularChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/regular";
 import { useCreateClub } from "@/hooks/useCreate";
+import { useAuthStore } from "@/store/authStore";
 
 const RegularContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
 
   const { createClub, isPending } = useCreateClub();
 
