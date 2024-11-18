@@ -79,6 +79,12 @@ const AddressSearch = ({ formData, setFormData }: EggPopProps) => {
     }).open();
   };
 
+  const handleClear = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setAddressData({ zonecode: "", address: "", detailAddress: "" });
+    setFormData({ ...formData, egg_pop_location: "" });
+  };
+
   // 상세 주소 입력 시 실행되는 함수
   const handleDetailAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDetailAddress = e.target.value;
@@ -105,12 +111,14 @@ const AddressSearch = ({ formData, setFormData }: EggPopProps) => {
       <div className="flex flex-col gap-2">
         <Text variant="header-18">어디서 만날까요?</Text>
         <label htmlFor="address" onClick={execDaumPostcode} className="cursor-pointer">
-          <SearchInput>
+          <SearchInput hasValue={!!addressData.address} onClear={handleClear}>
             <input
               id="address"
               value={addressData.address}
               placeholder="주소를 검색해주세요"
-              className="w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 text-gray-300"
+              className={`w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 ${
+                addressData ? "text-gray-900" : "text-gray-300"
+              }`}
               readOnly
             />
           </SearchInput>
