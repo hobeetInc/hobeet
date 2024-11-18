@@ -6,7 +6,6 @@ import Link from "next/link";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { HorizontalContentsListLargeEggClubImage88Size } from "@/components/uiComponents/HorizontalContentsListLarge";
 
-
 const OverallPopularMeetings = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["popularClubs"],
@@ -19,7 +18,7 @@ const OverallPopularMeetings = () => {
     <div className="flex flex-col items-start">
       {data?.map((club, index) => (
         <div key={index} className="h-[90px] mb-4 flex items-center">
-          <Text variant="header-32" className="w-9 ">
+          <Text variant="header-32" className="w-[37px] mr-2">
             {index + 1}
           </Text>
           <Link

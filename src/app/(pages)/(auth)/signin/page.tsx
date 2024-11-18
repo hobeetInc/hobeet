@@ -42,17 +42,17 @@ const SigninPage = () => {
       console.log("Kakao 로그인 에러", err);
     }
   };
-
+  //TODO - 계란 이미지와 위 텍스트 위치 수정
   return (
     <div className="min-h-screen flex flex-col items-center ">
-      <div className="fixed top-[130px] flex flex-col items-center">
-        <h1 className="text-[#0c0c0c] text-2xl font-black font-['Como'] leading-loose mb-2">EGG FRIENDS</h1>
+      <div className="fixed top-[209px] flex flex-col items-center">
+        <h1 className="text-[#0c0c0c] text-2xl font-black">EGG FRIENDS</h1>
         <Text variant="body_medium-16" className="text-gray-900">
           함께라서 더 즐거운 우리
         </Text>
       </div>
 
-      <div className="fixed top-[246px]">
+      <div className="fixed top-[295px]">
         <div className="flex items-center">
           <div className="w-[90px] h-[90px] z-10">
             <Icon name="whiteEgg" />
@@ -96,8 +96,9 @@ const SigninPage = () => {
       </div>
 
       <div className="fixed bottom-[72px] text-center">
-        <button className="text-gray-900" onClick={() => alert("서비스 준비 중입니다.")}>
-          <Text variant="body_medium-12">이메일로 간편하게 회원가입 👉</Text>
+        <button className="text-gray-900 flex" onClick={() => alert("서비스 준비 중입니다.")}>
+          <Text variant="body_medium-14">이메일로 간편하게 회원가입</Text>
+          <span className="h-[20px] ml-[2px] mb-[1px]">👉</span>
         </button>
       </div>
     </div>

@@ -72,7 +72,7 @@ export default function Header({ children }) {
               <div className="flex w-[96px] h-[24px] flex-shrink-0 ml-[16px] mt-[12px] mb-[12px]">
                 <div className="flex w-[35px] h-[27px] py-[10px] items-center gap-[10px]">
                   <Text variant="header-20" className="text-[#000] text-center">
-                    탐색
+                    검색
                   </Text>
                 </div>
               </div>

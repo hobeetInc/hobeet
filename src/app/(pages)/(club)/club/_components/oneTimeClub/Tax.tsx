@@ -59,9 +59,9 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
       <div className="flex justify-center gap-2">
         <button
           onClick={() => handleTaxToggle(true)}
-          className={`w-[173px] h-12 px-4 rounded-lg border  justify-center items-center gap-2.5 inline-flex  ${
+          className={`w-[173px] h-12 px-4 rounded-lg border justify-center items-center gap-2.5 inline-flex ${
             showTaxInput ? "border-primary-500 border-2" : "border-gray-100"
-          } `}
+          }`}
         >
           <Text variant="subtitle-14" className={`${showTaxInput ? "text-primary-500" : "text-gray-800"}`}>
             있음
@@ -69,9 +69,9 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
         </button>
         <button
           onClick={() => handleTaxToggle(false)}
-          className={`w-[173px] h-12 px-4 rounded-lg border justify-center items-center gap-2.5 inline-flex  ${
+          className={`w-[173px] h-12 px-4 rounded-lg border justify-center items-center gap-2.5 inline-flex ${
             !showTaxInput ? "border-primary-500 border-2" : "border-gray-100"
-          } `}
+          }`}
         >
           <Text variant="subtitle-14" className={`${!showTaxInput ? "text-primary-500" : "text-gray-800"}`}>
             없음
@@ -80,7 +80,7 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
       </div>
 
       <div className="fixed top-[181px]">
-        {showTaxInput && (
+        {showTaxInput ? (
           <div className="">
             <ClubCreateInput
               type="text"
@@ -97,6 +97,8 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
               )}
             </div>
           </div>
+        ) : (
+          <div className="h-[88px]" />
         )}
       </div>
     </div>
