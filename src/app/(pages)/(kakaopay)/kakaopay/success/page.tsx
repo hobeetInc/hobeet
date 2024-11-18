@@ -334,7 +334,7 @@ const PaymentSuccesspage = () => {
       };
     }
   };
-
+  // TODO 계란 이미지 변경 및 텍스트 크기 색상 수정
   return (
     <div className="p-4  flex flex-col">
       <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
@@ -355,11 +355,11 @@ const PaymentSuccesspage = () => {
         <div className="w-[390px]">
           <div className="flex flex-col gap-2 mt-8">
             <Image
-              src={"/asset/Egg.png"}
+              src={"/asset/AppIcon.svg"}
               alt="egg"
               width={62}
               height={32}
-              className="self-center mb-[8px] w-[62px] h-8 object-cover"
+              className="self-center mb-[8px] w-[62px] h-8 object-cover block"
             />
 
             <Text variant="header-18" className="text-center text-gray-900 mb-1">
@@ -395,7 +395,7 @@ const PaymentSuccesspage = () => {
                   {queryParams.clubType === "true" ? oneTimeClubData?.egg_pop_name : regularClubData?.egg_day_name}
                 </Text>
 
-                <div className="flex items-center text-xs text-gray-600 gap-1">
+                <div className="flex items-center text-xs text-gray-400 gap-1">
                   <div className="mr-1 w-4 h-4">
                     <Icon name="location" />
                   </div>
@@ -433,8 +433,8 @@ const PaymentSuccesspage = () => {
                 <Text variant="subtitle-14" className="w-[49px]">
                   이름
                 </Text>
-                <div className="w-[230px] text-gray-900 text-sm font-normal font-['Pretendard'] leading-tight">
-                  {userName}
+                <div className="w-[230px] text-gray-900">
+                  <Text className="font-normal">{userName}</Text>
                 </div>
               </div>
               <div className="self-stretch justify-start items-center gap-4 inline-flex">
@@ -442,16 +442,16 @@ const PaymentSuccesspage = () => {
                   결제방법
                 </Text>
 
-                <div className="w-[230px] text-gray-900 text-sm font-normal font-['Pretendard'] leading-tight">
-                  카카오페이
+                <div className="w-[230px] text-gray-900">
+                  <Text className="font-normal">카카오페이</Text>
                 </div>
               </div>
               <div className="self-stretch justify-start items-center gap-4 inline-flex">
                 <Text variant="subtitle-14" className="w-[49px]">
                   결제금액
                 </Text>
-                <div className="w-[230px] text-gray-900 text-sm font-normal font-['Pretendard'] leading-tight">
-                  {new Intl.NumberFormat("ko-KR").format(paymentAmount)}원
+                <div className="w-[230px] text-gray-900">
+                  <Text className="font-normal">{new Intl.NumberFormat("ko-KR").format(paymentAmount)}원</Text>
                 </div>
               </div>
             </div>

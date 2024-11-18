@@ -59,9 +59,9 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
       <div className="flex justify-center gap-2">
         <button
           onClick={() => handleTaxToggle(true)}
-          className={`w-[173px] h-12 px-4 rounded-lg border  justify-center items-center gap-2.5 inline-flex  ${
+          className={`w-[173px] h-12 px-4 rounded-lg border justify-center items-center gap-2.5 inline-flex ${
             showTaxInput ? "border-primary-500 border-2" : "border-gray-100"
-          } `}
+          }`}
         >
           <Text variant="subtitle-14" className={`${showTaxInput ? "text-primary-500" : "text-gray-800"}`}>
             있음
@@ -69,9 +69,9 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
         </button>
         <button
           onClick={() => handleTaxToggle(false)}
-          className={`w-[173px] h-12 px-4 rounded-lg border justify-center items-center gap-2.5 inline-flex  ${
+          className={`w-[173px] h-12 px-4 rounded-lg border justify-center items-center gap-2.5 inline-flex ${
             !showTaxInput ? "border-primary-500 border-2" : "border-gray-100"
-          } `}
+          }`}
         >
           <Text variant="subtitle-14" className={`${!showTaxInput ? "text-primary-500" : "text-gray-800"}`}>
             없음
@@ -79,8 +79,11 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
         </button>
       </div>
 
-      <div>
-        {showTaxInput && (
+      {/* 최소 높이를 지정하여 레이아웃 시프트 방지 */}
+      <div className="min-h-[88px]">
+        {" "}
+        {/* 입력창 + 메시지의 최대 높이만큼 설정 */}
+        {showTaxInput ? (
           <div className="relative">
             <ClubCreateInput
               type="text"
@@ -97,6 +100,9 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
               )}
             </div>
           </div>
+        ) : (
+          // placeholder div to maintain height when input is not shown
+          <div className="h-[88px]" />
         )}
       </div>
     </div>
