@@ -4,7 +4,7 @@ import { ReactNode, useState } from "react";
 import { format, parseISO } from "date-fns";
 import ClubCard from "./ClubCard";
 import { ko } from "date-fns/locale";
-import { EggDay } from "@/types/안끝난거/eggday.types";
+import { EggDay } from "@/types/eggday.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { User } from "@/types/user.types";
 

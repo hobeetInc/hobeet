@@ -2,10 +2,11 @@ import Image from "next/image";
 import { getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import PopHeader from "./_components/PopHeader";
-import { EggMember, GetEggPop, MemberInfo } from "@/types/안끝난거/eggpop.types";
+import { EggMember, GetEggPop } from "@/types/안끝난거/eggpop.types";
 import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
+import { MemberInfo } from "@/types/user.types";
 
 const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const oneTimeClubId = Number(params.id);

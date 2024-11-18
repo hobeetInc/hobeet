@@ -8,7 +8,7 @@ export const submitOneTimeClubData = async (finalFormData: EggPopForm) => {
     .insert([finalFormData])
     .select(
       `*, 
-    user_id(
+    user(
     user_name,
     user_profile_img
     ),

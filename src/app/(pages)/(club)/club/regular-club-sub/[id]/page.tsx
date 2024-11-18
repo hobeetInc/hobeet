@@ -4,8 +4,9 @@ import ClubHeader from "./_components/ClubHeader";
 import HomeContent from "./_components/HomeContent";
 import RegularNotification from "./_components/RegularNotification";
 import { SubCategory } from "@/types/category.types";
-import { getEggClub, Member, MemberInfo } from "@/types/안끝난거/eggclub.types";
-import { EggDay } from "@/types/안끝난거/eggday.types";
+import { getEggClub, Member } from "@/types/안끝난거/eggclub.types";
+import { EggDay } from "@/types/eggday.types";
+import { MemberInfo } from "@/types/user.types";
 
 const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   const regularClubId = Number(params.id);

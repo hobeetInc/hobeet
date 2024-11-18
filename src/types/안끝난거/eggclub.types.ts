@@ -1,25 +1,21 @@
 import { ReactNode, SetStateAction } from "react";
-import { User } from "../user.types";
-import { EggDay } from "./eggday.types";
+import { MemberInfo, User } from "../user.types";
+import { EggDay } from "../eggday.types";
 import { Tables } from "../database.types";
 
+export type EggClub = Tables<"egg_club">;
+// 위시리스트 타입(Get)
+export type WishList = Tables<"wish_list">;
+
 // 정기적 모임 타입
-export interface EggClubForm {
-  main_category_id: number;
-  egg_club_id: number;
-  egg_club_age: number | null;
-  egg_club_approval: boolean;
-  egg_club_gender: string | null;
-  egg_club_image: string | File | null;
-  egg_club_introduction: string;
-  egg_club_name: string;
-  egg_club_people_limited: number | null;
-  sub_category_id: number;
-  user_id: {
-    user_name: string;
-    user_profile_img: string;
-  };
-  egg_club_member: Array<{ count: number }>;
+export interface EggClubForm extends EggClub {
+  user: Pick<Tables<"user">, "user_name" | "user_profile_img">;
+  egg_club_member: { count: number }[];
+  wish_list: WishList[];
+}
+
+export interface EggClubFormWithImageFile extends Omit<EggClubForm, "egg_club_image"> {
+  egg_club_image: File;
 }
 
 // 에그클럽 폼 이미지 파일 타입 빼고
@@ -36,8 +32,8 @@ export interface StringEggClubForm {
 }
 
 export type EggClubProps = {
-  formData: EggClubForm;
-  setFormData: React.Dispatch<SetStateAction<EggClubForm>>;
+  formData: EggClubFormWithImageFile;
+  setFormData: React.Dispatch<SetStateAction<EggClubFormWithImageFile>>;
 };
 
 export type MemberTypeProps = EggClubProps & {
@@ -63,19 +59,8 @@ export interface EggClubMember {
   egg_club_participation_request_status: string;
 }
 
-// 위시리스트 타입(Get)
-export type WishList = Tables<"wish_list">;
-
 // 위시리스트 타입(Insert)
 export type WishListData = Omit<WishList, "wish_list_id">;
-
-// 에그클럽 맴버 정보 (공통)
-export type MemberInfo = {
-  memberId: number;
-  userId: string;
-  userName: string;
-  userImage: string;
-};
 
 export interface getEggClub {
   main_category_id: number;
@@ -123,31 +108,19 @@ export type CrewListProps = {
   notificationData: EggDay[];
 };
 
-// 모달 props
-export type FullScreenModalProps = {
-  crewList: {
-    memberId: number;
-    userId: string;
-    userName: string;
-    userImage: string;
-  }[];
-  isOpen: boolean;
-  onClose: () => void;
-};
-
 // 홈 콘텐츠 props
 export type HomeContentProps = {
   clubInfo: getEggClub;
   hostInfo: MemberInfo | undefined;
   crewMembers: MemberInfo[];
   egg_club_id: number;
-  notificationData: InSertEggDay[];
+  notificationData: EggDay[];
   stringCategory: string | undefined;
 };
 
 // 에그클럽 공지 props
 export type EggClubNotificationProps = {
-  notificationData: InSertEggDay[];
+  notificationData: EggDay[];
   crewMembers: MemberInfo[];
   egg_club_id: number;
 };

@@ -1,6 +1,5 @@
 import browserClient from "@/utils/supabase/client";
-import { EggDay, EggDayMember, EggDayMemberRequired, EggDayRequired } from "@/types/안끝난거/eggday.types";
-import { Tables } from "@/types/database.types";
+import { EggDayMemberRequired, EggDayRequired } from "@/types/eggday.types";
 
 export const getRegularNotification = async (clubId: number) => {
   const { data, error } = await browserClient
