@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
-import { EggClubForm } from "@/types/안끝난거/eggclub.types";
+import { EggClubForm } from "@/types/eggclub.types";
 
 const RegularClubList = () => {
   const [list, setList] = useState<EggClubForm[]>([]);

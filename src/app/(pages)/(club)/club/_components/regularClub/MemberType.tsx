@@ -2,7 +2,7 @@
 
 import NumberSpinner from "@/components/uiComponents/Input/NumberSpinner";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { MemberTypeProps } from "@/types/안끝난거/eggclub.types";
+import { MemberTypeProps } from "@/types/eggclub.types";
 import { useState } from "react";
 
 const MemberType = ({

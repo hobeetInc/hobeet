@@ -17,3 +17,7 @@ export type EggDayRequired = Pick<
 
 export type EggDayMemberRequired = Pick<Tables<"egg_day_member">, "egg_day_id" | "user_id"> &
   Partial<Omit<Tables<"egg_day_member">, "egg_day_id" | "user_id">>;
+
+export type EggDayWithEggDayMember = EggDay & {
+  egg_day_member: { count: number }[];
+};

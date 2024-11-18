@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getAllRegularClubList } from "../../_api/supabase";
 import Link from "next/link";
 import Image from "next/image";
-import { EggClubForm } from "@/types/안끝난거/eggclub.types";
+import { EggClubForm } from "@/types/eggclub.types";
 
 const AllRegularClubListPage = () => {
   const [loading, setLoading] = useState<boolean>(true);

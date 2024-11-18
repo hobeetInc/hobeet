@@ -2,7 +2,7 @@ import { submitOneTimeClubData, submitRegularClubData } from "@/app/(pages)/(clu
 import { EggPopForm } from "@/types/안끝난거/eggpop.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "./utils/queryKeys";
-import { EggClubForm } from "@/types/안끝난거/eggclub.types";
+import { EggClubForm } from "@/types/eggclub.types";
 
 export const useCreatePop = () => {
   const queryClient = useQueryClient();

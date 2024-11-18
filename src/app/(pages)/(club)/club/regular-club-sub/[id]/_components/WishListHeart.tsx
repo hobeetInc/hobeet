@@ -3,8 +3,11 @@
 import Image from "next/image";
 import { useAuth } from "@/store/AuthContext";
 import { useRouter } from "next/navigation";
-import { WishListHeartProps } from "@/types/안끝난거/eggclub.types";
 import { useClubWishlist } from "@/hooks";
+
+interface WishListHeartProps {
+  egg_club_id: number;
+}
 
 const WishListHeart = ({ egg_club_id }: WishListHeartProps) => {
   const { userId } = useAuth();

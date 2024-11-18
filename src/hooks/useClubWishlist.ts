@@ -1,12 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "./utils/queryKeys";
-import { WishListHeartProps } from "@/types/안끝난거/eggclub.types";
 import {
   addClubToWishList,
   getClubWishListStatus,
   removeClubFromWishList
 } from "@/app/(pages)/(club)/club/_api/wishlist";
 import { useAuth } from "@/store/AuthContext";
+
+interface WishListHeartProps {
+  egg_club_id: number;
+}
 
 export const useClubWishlist = ({ egg_club_id }: WishListHeartProps) => {
   const queryClient = useQueryClient();

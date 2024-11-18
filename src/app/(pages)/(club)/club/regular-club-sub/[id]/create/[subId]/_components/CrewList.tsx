@@ -11,7 +11,7 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import { IoIosArrowForward } from "react-icons/io";
 import browserClient from "@/utils/supabase/client";
-// import { MemberInfo } from "@/types/user.types";
+import { MemberInfo } from "@/types/user.types";
 
 interface CrewListProps {
   crewMembers: MemberInfo[];
@@ -34,7 +34,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
         const memberResult = await getNotificationMember(secondId);
 
         const newCrewMembers = memberResult.map((member) => ({
-          egg_day_id: member.egg_club_member_id,
+          memberId: member.egg_club_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img

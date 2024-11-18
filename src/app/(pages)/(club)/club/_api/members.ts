@@ -1,6 +1,13 @@
 import browserClient from "@/utils/supabase/client";
-import { EggClubRequest, InsertMember } from "@/types/안끝난거/eggclub.types";
+import { InsertMember } from "@/types/eggclub.types";
 import { EggPopMember } from "@/types/안끝난거/eggpop.types";
+
+interface EggClubRequest {
+  egg_club_id: number;
+  user_id: string;
+  egg_club_participation_request_status: string;
+  egg_club_participation_request_approved_date: string;
+}
 
 export const putRepresentative = async (representative: EggClubRequest) => {
   const { data, error } = await browserClient
