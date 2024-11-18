@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ducanh2912/next-pwa": "^10.2.9",
     "@sentry/nextjs": "^8",
     "@supabase/ssr": "^0.5.1",
     "@supabase/supabase-js": "^2.45.6",
@@ -22,13 +23,13 @@
     "date-fns": "^4.1.0",
     "lucide-react": "^0.453.0",
     "next": "14.2.15",
-    "next-pwa": "^5.6.0",
     "react": "^18",
     "react-datepicker": "^7.5.0",
     "react-dom": "^18",
     "react-icons": "^5.3.0",
     "react-slick": "^0.30.2",
     "shadcn-ui": "^0.9.3",
+    "sharp": "^0.33.5",
     "slick-carousel": "^1.8.1",
     "supabase": "^1.207.9",
     "tailwind-merge": "^2.5.4",
@@ -44,6 +45,7 @@
     "eslint-config-next": "14.2.15",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "webpack": "^5.96.1"
   }
 }

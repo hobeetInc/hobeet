@@ -1,5 +1,6 @@
 import { withSentryConfig } from "@sentry/nextjs";
-import withPWA from "next-pwa";
+import withPWAInit from "@ducanh2912/next-pwa";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
@@ -39,12 +40,13 @@ const nextConfig = {
   }
 };
 // PWA 설정
-const buildConfig = withPWA({
+const withPWA = withPWAInit({
   dest: "public",
   mode: "production",
   disable: process.env.NODE_ENV === "development"
 })(nextConfig);
-export default withSentryConfig(buildConfig, {
+
+export default withSentryConfig(withPWA, {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
