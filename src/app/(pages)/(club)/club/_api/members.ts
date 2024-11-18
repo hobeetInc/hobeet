@@ -1,6 +1,6 @@
 import browserClient from "@/utils/supabase/client";
 import { InsertMember } from "@/types/eggclub.types";
-import { EggPopMember } from "@/types/안끝난거/eggpop.types";
+import { EggPopMember } from "@/types/eggpop.types";
 
 interface EggClubRequest {
   egg_club_id: number;

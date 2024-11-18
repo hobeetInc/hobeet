@@ -1,5 +1,5 @@
 import { submitOneTimeClubData, submitRegularClubData } from "@/app/(pages)/(club)/club/_api/clubSubmission";
-import { EggPopForm } from "@/types/안끝난거/eggpop.types";
+import { EggPopForm } from "@/types/eggpop.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "./utils/queryKeys";
 import { EggClubForm } from "@/types/eggclub.types";

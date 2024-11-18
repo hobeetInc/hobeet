@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { EggPopProps } from "@/types/안끝난거/eggpop.types";
+import { EggPopProps } from "@/types/eggpop.types";
 import ImageUpload from "@/components/uiComponents/Image/ImageUpload";
 import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
 import ClubCreateTextArea from "@/components/uiComponents/Input/Textarea";

@@ -9,7 +9,7 @@ import DateTime from "../../_components/oneTimeClub/DateTime";
 import AddressSearch from "../../_components/oneTimeClub/AddressSearch";
 import MemberType from "../../_components/oneTimeClub/MemberType";
 import Tax from "../../_components/oneTimeClub/Tax";
-import { EggPopFormWithImageFile } from "@/types/안끝난거/eggpop.types";
+import { EggPopFormWithImageFile } from "@/types/eggpop.types";
 import ProgressBar from "../../_components/ProgressBar";
 import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
