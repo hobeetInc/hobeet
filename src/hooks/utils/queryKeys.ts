@@ -4,7 +4,8 @@ export const queryKeys = {
     all: ["pop"] as const,
     tenList: (limit: number) => ["pop", "list", limit] as const,
     byCategory: (categoryId: number) => ["pop", categoryId] as const,
-    detail: (popId: number) => ["pop", "detail", popId] as const
+    detail: (popId: number) => ["pop", "detail", popId] as const,
+    payments: (userId: string) => ["pop", "payments", userId] as const
   },
   club: {
     all: ["club"] as const,
@@ -14,11 +15,15 @@ export const queryKeys = {
   },
   day: {
     all: ["day"] as const,
-    byClub: (clubId: number) => ["day", clubId] as const
+    byClub: (clubId: number) => ["day", clubId] as const,
+    payments: (userId: string) => ["day", "payments", userId] as const
   },
   user: {
     detail: (userId: string) => ["user", userId] as const,
-    hostInfo: (hostId: string) => ["user", "host", hostId] as const
+    hostInfo: (hostId: string) => ["user", "host", hostId] as const,
+    profile: (userId: string) => ["user", "profile", userId] as const,
+    provider: () => ["user", "provider"] as const,
+    wishlist: (userId: string) => ["user", "wishlist", userId] as const
   },
   oneTimeChat: {
     all: ["oneTimeChat"] as const,
