@@ -79,12 +79,9 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
         </button>
       </div>
 
-      {/* 최소 높이를 지정하여 레이아웃 시프트 방지 */}
-      <div className="min-h-[88px]">
-        {" "}
-        {/* 입력창 + 메시지의 최대 높이만큼 설정 */}
+      <div className="fixed top-[181px]">
         {showTaxInput ? (
-          <div className="relative">
+          <div className="">
             <ClubCreateInput
               type="text"
               value={formData.egg_pop_tax || ""}
@@ -101,7 +98,6 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
             </div>
           </div>
         ) : (
-          // placeholder div to maintain height when input is not shown
           <div className="h-[88px]" />
         )}
       </div>

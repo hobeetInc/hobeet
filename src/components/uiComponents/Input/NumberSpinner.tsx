@@ -15,7 +15,7 @@ interface SpinnerProps {
   className?: string;
 }
 
-const NumberSpinner = ({ max, min = 0, value, onChange, className }: SpinnerProps) => {
+const NumberSpinner = ({ max, min = 2, value, onChange, className }: SpinnerProps) => {
   const handleIncrease = () => {
     if (value < max) {
       onChange(value + 1);

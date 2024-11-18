@@ -57,10 +57,11 @@
 
 "use client";
 
+import Text from "@/components/uiComponents/TextComponents/Text";
 import { DayHeaderProps } from "@/types/eggday.types";
+import { ChevronLeft } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect } from "react";
-import { IoIosArrowBack } from "react-icons/io";
 
 const DayHeader = ({ clubInfo }: DayHeaderProps) => {
   const router = useRouter();
@@ -119,14 +120,25 @@ const DayHeader = ({ clubInfo }: DayHeaderProps) => {
   };
 
   return (
-    <div className="w-full flex items-center justify-between h-[48px] p-4 relative">
-      <button onClick={handleBack} className="left-4">
-        <IoIosArrowBack />
-      </button>
-      <h1 className="flex-1 text-center text-lg font-semibold">
-        {clubInfo?.egg_day_name.length > 8 ? `${clubInfo?.egg_day_name.slice(0, 8)}...` : clubInfo?.egg_day_name}
-      </h1>
+    <div className="flex justify-center items-center w-full">
+      <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
+        <ChevronLeft className="w-6 h-6 cursor-pointer" />
+      </div>
+      <div className="flex-1 text-center pr-7">
+        <Text variant="header-16">
+          {clubInfo?.egg_day_name.length > 8 ? `${clubInfo?.egg_day_name.slice(0, 8)}...` : clubInfo?.egg_day_name}
+        </Text>
+      </div>
     </div>
+
+    // <div className="w-full flex items-center justify-between h-[48px] p-4 relative">
+    //   <button onClick={handleBack} className="w-6 h-6">
+    //     <ChevronLeft className="w-full h-full" />
+    //   </button>
+    //   <h1 className="flex-1 text-center text-lg font-semibold">
+    //     {clubInfo?.egg_day_name.length > 8 ? `${clubInfo?.egg_day_name.slice(0, 8)}...` : clubInfo?.egg_day_name}
+    //   </h1>
+    // </div>
   );
 };
 

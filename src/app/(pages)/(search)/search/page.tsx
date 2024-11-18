@@ -11,8 +11,6 @@ import {
   HorizontalContentsListLargeEggClub,
   HorizontalContentsListLargeEggPop
 } from "@/components/uiComponents/HorizontalContentsListLarge";
-// import Text from "@/components/uiComponents/TextComponents/Text";
-
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
 
@@ -57,7 +55,7 @@ const SearchPage = () => {
     <div className="flex flex-col items-start w-full  mx-auto px-4 ">
       <form onSubmit={handleSearch} className="relative flex items-center w-full bg-[#f2f2f2] rounded-[22px] py-2 px-5">
         <input
-          className="            w-full h-[11 px] bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
+          className="w-full h-[11px] bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
           type="text"
           placeholder="검색어를 입력하세요"
           value={searchTerm}
