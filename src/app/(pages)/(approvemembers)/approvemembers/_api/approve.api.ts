@@ -4,8 +4,9 @@ import { enterRegularChatRoomAfterApproval } from "@/app/(pages)/(chat)/_api/reg
 
 const supabase = createClient();
 
-// 대기 중인 요청과 활성 멤버 조회
 export const fetchPendingAndActiveRequests = async (clubId: number) => {
+  // 대기 중인 요청과 활성 멤버 조회
+  // pending인 요청 조회
   const { data: pendingData, error: pendingError } = await supabase
     .from("egg_club_participation_request")
     .select(
@@ -23,6 +24,8 @@ export const fetchPendingAndActiveRequests = async (clubId: number) => {
     .eq("egg_club_participation_request_status", "pending")
     .eq("egg_club_id", clubId);
 
+  // 활성 상태인 멤버 조회
+  // active인 요청 조회
   const { data: activeData, error: activeError } = await supabase
     .from("egg_club_participation_request")
     .select(
@@ -52,7 +55,7 @@ export const fetchPendingAndActiveRequests = async (clubId: number) => {
 
 // 멤버 승인 처리
 export const approveMember = async (requestId: number, clubId: number) => {
-  // 참여 요청 상태 업데이트
+  // 요청 상태를 active로 업데이트
   const { data, error } = await supabase
     .from("egg_club_participation_request")
     .update({ egg_club_participation_request_status: "active" })
@@ -62,7 +65,7 @@ export const approveMember = async (requestId: number, clubId: number) => {
 
   if (error) throw new Error("승인 처리 중 오류가 발생했습니다");
 
-  // egg_club_member 테이블에 추가
+  // 승인된 멤버를 egg_club_member 테이블에 추가
   const { error: memberError } = await supabase.from("egg_club_member").insert({
     user_id: data.user_id,
     egg_club_id: data.egg_club_id,

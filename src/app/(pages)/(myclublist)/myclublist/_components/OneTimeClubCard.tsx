@@ -10,6 +10,7 @@ const supabase = createClient();
 export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
   const router = useRouter();
 
+  // 모임의 현재 멤버 수 조회
   const fetchMemberCount = async () => {
     const { data } = await supabase
       .from("egg_pop_member")

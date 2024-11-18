@@ -9,6 +9,8 @@ const supabase = createClient();
 export const RegularClubCard = ({ club }: { club: EggClub }) => {
   const router = useRouter();
 
+  // 모임 생성자 정보 조회
+  // 생성자의 ID, 이름, 프로필 이미지 조회
   const fetchCreator = async () => {
     const { data } = await supabase
       .from("user")
@@ -25,6 +27,8 @@ export const RegularClubCard = ({ club }: { club: EggClub }) => {
     enabled: !!club.user_id // userId가 있을 때만 fetchClubs 실행 // 호출 최적화
   });
 
+  // 모임의 현재 멤버 수 조회
+  // 활성 상태인 것만 조회
   const fetchMemberCount = async () => {
     const { data } = await supabase
       .from("egg_club_member")
@@ -41,6 +45,8 @@ export const RegularClubCard = ({ club }: { club: EggClub }) => {
     enabled: !!club.egg_club_id
   });
 
+  // 모임의 찜 수 조회
+  // 해당 모임을 찜한 사용자 수 조회
   const fetchWishlistCount = async () => {
     const { data } = await supabase
       .from("wish_list")
@@ -56,6 +62,7 @@ export const RegularClubCard = ({ club }: { club: EggClub }) => {
     enabled: !!club.egg_club_id
   });
 
+  // 모임 상세 페이지로 이동
   const handleClick = () => {
     router.push(`/club/regular-club-sub/${club.egg_club_id}`);
   };

@@ -7,11 +7,13 @@ export default function PendingRequestsTab({ requests, onApprove }: PendingReque
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState<number | null>(null);
 
+  // 승인 버튼 클릭 시 모달 열기
   const handleApproveClick = (requestId: number) => {
     setSelectedRequestId(requestId);
     setIsModalOpen(true);
   };
 
+  // 승인 버튼 클릭 시 승인 처리
   const handleConfirmApproval = () => {
     if (selectedRequestId) {
       onApprove(selectedRequestId);

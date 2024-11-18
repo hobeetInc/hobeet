@@ -11,9 +11,12 @@ interface ClubListContentProps {
 }
 
 export default function ClubListContent({ activeTab }: ClubListContentProps) {
+  // 현재 로그인한 사용자 ID 조회
   const userId = useAuthStore((state) => state.userId);
 
   // 모든 모임 데이터 조회
+  // activeTab에 따라 내가 만든 모임 또는 내가 참여한 모임 조회
+  // userId가 있을 때만 쿼리 실행
   const {
     data: clubs,
     isLoading,
@@ -32,7 +35,8 @@ export default function ClubListContent({ activeTab }: ClubListContentProps) {
     return <div className="flex items-center justify-center p-12 text-gray-500">모임 로딩 중 오류 발생</div>;
   }
 
-  // 데이터 필터링
+  // activeTab에 따라 내가 만든 모임 또는 내가 참여한 모임 필터링
+  // 에그장: 내가 만든 모임, 에그즈: 내가 참여한 모임
   const filteredClubs = {
     oneTime: clubs?.oneTime?.filter((club) => (activeTab ? club.user_id === userId : club.user_id !== userId)) || [],
     regular: clubs?.regular?.filter((club) => (activeTab ? club.user_id === userId : club.user_id !== userId)) || []

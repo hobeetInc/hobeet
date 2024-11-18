@@ -11,16 +11,20 @@ import PendingRequestsTab from "../_components/PendingRequestsTab";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export default function ApproveMembersPage() {
+  // 활성 탭 상태 관리 (true: 활성, false: 대기)
   const [activeTab, setActiveTab] = useState(true);
   const params = useParams();
   const clubId = Number(params.id);
   const router = useRouter();
 
+  // 멤버 데이터 조회 쿼리
+  // 대기 중인 요청과 활성 멤버 조회
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["clubMembers", clubId],
     queryFn: () => fetchPendingAndActiveRequests(clubId)
   });
 
+  // 멤버 승인 처리
   const { mutate: approveRequest } = useMutation({
     mutationFn: ({ requestId, clubId }: { requestId: number; clubId: number }) => approveMember(requestId, clubId),
     onSuccess: () => {
@@ -32,10 +36,13 @@ export default function ApproveMembersPage() {
     }
   });
 
+  // 멤버 승인 핸들러
+  // 승인 요청을 처리하는 뮤테이션 호출
   const handleApproveMember = async (requestId: number) => {
     approveRequest({ requestId, clubId });
   };
 
+  // 뒤로가기 핸들러
   const handleBack = () => {
     router.back();
   };
