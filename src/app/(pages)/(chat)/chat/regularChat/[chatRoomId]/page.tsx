@@ -212,7 +212,8 @@ const ChatPage: React.FC = () => {
             Object.keys(groupedMessages).map((dateString) => (
               <div key={dateString} className="mb-6">
                 <div className="justify-items-center">
-                  <div className="w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-2 text-center">
+                  {/* change 탑 바텀 마진 변경 */}
+                  <div className="w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-4 text-center mt-5">
                     <Text variant="body-12" className="text-gray-500">
                       {dateString}
                     </Text>
@@ -312,7 +313,8 @@ const ChatPage: React.FC = () => {
               }}
               rows={1}
               maxLength={100}
-              className="flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px] focus:outline-none focus:ring-2 transition duration-200 min-h-[48px] max-h-[120px] content-center resize-none overflow-y-auto text-body-14"
+              // change 패딩 제거 포커스링 제거 최소높이 최소 크기 변경 아련함 제거
+              className="flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px] focus:outline-none transition duration-200 min-h-[36px] max-h-[120px] content-center resize-none overflow-y-auto text-body-14 min-w-[316px]"
               placeholder="메시지를 입력하세요..."
             />
             <button
