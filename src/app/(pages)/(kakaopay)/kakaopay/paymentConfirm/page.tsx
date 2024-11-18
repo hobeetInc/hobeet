@@ -14,17 +14,18 @@ import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import { customDateNotWeek } from "@/utils/CustomDate";
 import { useKakaopayRequest } from "@/hooks/useKakaopayRequest";
+import { useAuthStore } from "@/store/authStore";
 
 const PaymentConfirmPage = () => {
   const [agreeChecked, setAgreeChecked] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  const userId = useAuthStore((state) => state.userId);
   const clubType = searchParams.get("clubType");
   const clubId = searchParams.get("clubId") ?? "";
   const isOneTimeClub = clubType === "true";
 
-  const { paymentClubQuery, isLoading, isError } = useKakaopayRequest(null, clubId, isOneTimeClub);
+  const { paymentClubQuery, isLoading, isError } = useKakaopayRequest(userId, clubId, isOneTimeClub);
 
   if (isLoading) return <div>로딩중...</div>;
   if (isError) return <div>결제 모임 정보 처리 중 오류</div>;
