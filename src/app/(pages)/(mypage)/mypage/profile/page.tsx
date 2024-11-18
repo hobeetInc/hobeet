@@ -11,7 +11,6 @@ import browserClient from "@/utils/supabase/client";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { FaCamera } from "react-icons/fa6";
 
-
 const ProfilePage = () => {
   const router = useRouter();
   // const { userName, userProfileImg, setUserProfileImg } = useAuth();
@@ -44,35 +43,26 @@ const ProfilePage = () => {
         className="flex items-center bg-primary-200 p-4 rounded-lg mb-6 justify-between cursor-pointer"
         onClick={() => router.push("/mypage/profileUpdate")}
       >
-        <div className="relative w-[78px] h-[78px] rounded-full overflow-hidden ">
-          <Image
-            src={userProfileImg}
-            alt="프로필 이미지"
-            width={78}
-            height={78}
-            className="object-cover w-[78px] h-[78px]"
-          />
+        <div className="relative w-[78px] h-[78px]">
+          <div className="w-full h-full rounded-full overflow-hidden">
+            {userProfileImg ? (
+              <Image
+                src={userProfileImg}
+                alt="프로필 이미지"
+                width={78}
+                height={78}
+                className="object-cover w-[78px] h-[78px]"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-200" />
+            )}
+          </div>
 
-          <input
-            type="file"
-            id="profileImg"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                  setUserProfileImg(reader.result as string);
-                };
-                reader.readAsDataURL(file);
-              }
-            }}
-          />
+          <input type="file" id="profileImg" className="hidden" />
 
-            <span className="absolute w-[30px] h-[30px] mt-9 left-[43px] top-[13px] bg-white rounded-full border border-solid border-gray-50 flex items-center justify-center z-10">
-              <FaCamera />
-            </span>
-
+          <span className="absolute w-[30px] h-[30px] mt-9 left-[48px] top-[12px] bg-white rounded-full border border-solid border-gray-50 flex items-center justify-center z-10">
+            <FaCamera />
+          </span>
         </div>
         <div className="ml-4 flex-1">
           <Text variant="subtitle-18" className="text-gray-800 text-left">

@@ -1,13 +1,28 @@
+import Text from "@/components/uiComponents/TextComponents/Text";
+import Link from "next/link";
 import React from "react";
-
+import { HiOutlineChevronLeft } from "react-icons/hi";
+// TODO 여기 전부 refactor로
 const InquiryPage = () => {
   return (
-    <div className="max-w-md mx-auto bg-white p-6 border border-gray-200 rounded-lg shadow">
-      <h1 className="text-lg font-bold text-gray-900 mb-4">운영 관련 안내</h1>
+    <div className="max-w-md mx-auto bg-white px-4 border border-gray-200 rounded-lg">
+      <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
+        <div className="left-0 m-3">
+          <Link href="/mypage/profile">
+            <HiOutlineChevronLeft className="w-6 h-6" />
+          </Link>
+        </div>
+        <div className="flex flex-grow justify-center">
+          <Text variant="header-16" className="text-gray-900">
+            문의하기
+          </Text>
+        </div>
+      </div>
 
-      <div className="mb-6">
+      <div className="mb-6 mt-[79px]">
+        <h1 className="text-base font-bold text-gray-900 mb-4">[운영 관련 안내]</h1>
         <h2 className="text-sm font-bold text-gray-800 mb-2">1. 탈퇴 및 강퇴</h2>
-        <p className="text-sm text-gray-700 leading-relaxed">
+        <p className="text-sm text-gray-700 leading-relaxed px-[14px]">
           커뮤니티 회원의 자발적인 탈퇴나 커뮤니티 정책 위반에 따른 강퇴에 관한 사항은 운영진이 직접 관리합니다.
           <br />
           필요 시 운영진에게 문의해 주시기 바랍니다.
@@ -16,7 +31,7 @@ const InquiryPage = () => {
 
       <div className="mb-6">
         <h2 className="text-sm font-bold text-gray-800 mb-2">2. 비밀번호 수정</h2>
-        <p className="text-sm text-gray-700 leading-relaxed">
+        <p className="text-sm text-gray-700 leading-relaxed px-[14px]">
           회원님의 안전한 이용을 위해 비밀번호 변경을 권장드리며, 비밀번호 수정과 관련된 문의는 언제든 운영진에게
           연락주시면 도와드리겠습니다.
         </p>
@@ -24,7 +39,7 @@ const InquiryPage = () => {
 
       <div className="mb-6">
         <h2 className="text-sm font-bold text-gray-800 mb-2">3. 기타 문의사항</h2>
-        <p className="text-sm text-gray-700 leading-relaxed">
+        <p className="text-sm text-gray-700 leading-relaxed px-[14px]">
           위의 사항을 제외한 다른 궁금한 점이나 문제가 있는 경우, 운영진에게 문의해 주세요.
           <br />
           최대한 신속히 답변드리도록 하겠습니다.
@@ -36,9 +51,10 @@ const InquiryPage = () => {
         다하겠습니다. 감사합니다.
       </p>
 
-      <div className="mt-4">
-        <p className="text-sm font-bold text-gray-800">문의 이메일:</p>
-        <p className="text-sm text-blue-600">jang@gmail.com</p>
+      <div className="mt-4 text-center">
+        <p className="text-sm font-medium text-gray-800">
+          문의 이메일 : <span className="text-[#007aff] underline">jang@gmail.com</span>
+        </p>
       </div>
     </div>
   );

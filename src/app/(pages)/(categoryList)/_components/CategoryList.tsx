@@ -39,7 +39,7 @@ const CategoryList: FC<CategoryListProps> = ({ categoryId, selectedCategory }) =
           <p className="text-[14px] font-[500px] leading-[145%]">전체 {data?.length}</p>
         </div>
       </div>
-      <div className="flex justify-center gap-[10px] mb-10 self-stretch flex-wrap  ">
+      <div className="w-[390px] grid-cols-2 grid place-items-center px-4 pt-4 gap-2 mb-5">
         {data?.map((club) => (
           <Link key={club.egg_club_id} href={`/club/regular-club-sub/${club.egg_club_id}`}>
             <div className="flex flex-col">
