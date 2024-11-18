@@ -8,16 +8,18 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import { FaCamera } from "react-icons/fa6";
 import { signOut } from "../../_api/logout";
 import { fetchUserProfile } from "../../_api/fetchProfile";
+import { useAuthStore } from "@/store/authStore";
 
 const ProfilePage = () => {
   const router = useRouter();
   const [userName, setUserName] = useState("");
   const [userProfileImg, setUserProfileImg] = useState("");
+  const userId = useAuthStore((state) => state.userId);
 
   useEffect(() => {
     const initializeProfile = async () => {
       try {
-        const profile = await fetchUserProfile();
+        const profile = await fetchUserProfile(userId);
         setUserName(profile.user_name);
         setUserProfileImg(profile.user_profile_img);
       } catch (error) {
@@ -27,7 +29,7 @@ const ProfilePage = () => {
     };
 
     initializeProfile();
-  }, []);
+  }, [userId]);
 
   return (
     <div className="max-w-md mx-auto p-4">

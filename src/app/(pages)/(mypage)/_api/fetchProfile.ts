@@ -5,15 +5,11 @@ interface UserProfile {
   user_profile_img: string;
 }
 
-export const fetchUserProfile = async (): Promise<UserProfile> => {
-  const { data: authData, error: authError } = await supabase.auth.getUser();
-
-  if (authError) throw authError;
-
+export const fetchUserProfile = async (userId: string): Promise<UserProfile> => {
   const { data: userData, error: userError } = await supabase
     .from("user")
     .select("user_name, user_profile_img")
-    .eq("user_id", authData.user.id)
+    .eq("user_id", userId)
     .single();
 
   if (userError) throw userError;

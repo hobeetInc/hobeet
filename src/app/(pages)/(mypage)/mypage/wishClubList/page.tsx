@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { WishHeart } from "@/components/uiComponents/IconComponents/Icons";
@@ -10,60 +9,30 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Link from "next/link";
+import { fetchWishlist } from "../../_api/fetchWishList";
+import { useAuthStore } from "@/store/authStore";
 
 const WishClubListPage = () => {
-  const supabase = browserClient;
   const [wishData, setWishData] = useState([]);
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const userId = useAuthStore((state) => state.userId);
 
   useEffect(() => {
     const getWishList = async () => {
       try {
-        const { data: userData, error: authError } = await supabase.auth.getUser();
-
-        if (authError) throw new Error("인증 에러가 발생했습니다");
-        if (!userData.user?.id) throw new Error("사용자를 찾을 수 없습니다");
-
-        const { data: rawData, error: fetchError } = await supabase
-          .from("wish_list")
-          .select(
-            `egg_club(
-              egg_club_id,
-              egg_club_name,
-              egg_club_image, 
-              egg_club_people_limited,
-              egg_club_member(count),
-              wish_list(count),
-              user(
-                user_name, 
-                user_profile_img
-              )
-            )`
-          )
-          .eq("user_id", userData.user.id);
-
-        if (fetchError) throw fetchError;
-        if (!rawData) throw new Error("데이터를 가져올 수 없습니다");
-
-        setWishData(rawData);
-        setError(null);
+        const data = await fetchWishlist(userId);
+        setWishData(data);
       } catch (err) {
         console.error("찜 목록 가져오기 에러:", err);
-        setError(err instanceof Error ? err.message : "알 수 없는 에러가 발생했습니다");
       }
     };
 
     getWishList();
-  }, []);
+  }, [userId]);
 
   const handleClick = (egg_club_id: number) => {
     router.push(`/club/regular-club-sub/${egg_club_id}`);
   };
-
-  if (error) {
-    return <div className="p-4 text-red-500 text-center">에러: {error}</div>;
-  }
 
   return (
     <div className="relative">
@@ -116,16 +85,16 @@ const WishClubListPage = () => {
                     <div className="justify-start items-center gap-0.5 flex">
                       <div className="w-[22px] h-[22px] relative">
                         <Image
-                          src={item.egg_club.user_id.user_profile_img}
-                          alt={item.egg_club.user_id.user_name}
-                          width={24}
-                          height={24}
+                          src={item.egg_club.user.user_profile_img}
+                          alt={item.egg_club.user.user_name}
+                          width={22}
+                          height={22}
                           className="w-[22px] h-[22px] left-0 top-0 absolute bg-gray-100 rounded-full"
                         />
                       </div>
 
                       <Text variant="body_medium-14" className="text-gray-400">
-                        {item.egg_club.user_id.user_name}
+                        {item.egg_club.user.user_name}
                       </Text>
                     </div>
                     <div className="justify-start items-center gap-0.5 flex">

@@ -1,11 +1,26 @@
+import Text from "@/components/uiComponents/TextComponents/Text";
+import Link from "next/link";
 import React from "react";
+import { HiOutlineChevronLeft } from "react-icons/hi";
 
 const InquiryPage = () => {
   return (
     <div className="max-w-md mx-auto bg-white p-6 border border-gray-200 rounded-lg">
-      <h1 className="text-lg font-bold text-gray-900 mb-4">운영 관련 안내</h1>
-
-      <div className="mb-6">
+      <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
+        <div className="left-0 m-3">
+          <Link href="/mypage/profile">
+            <HiOutlineChevronLeft className="w-6 h-6" />
+          </Link>
+        </div>
+        <div className="flex flex-grow justify-center">
+          <Text variant="header-16" className="text-gray-900">
+            문의하기
+          </Text>
+        </div>
+        <div className="w-6 m-3"></div>
+      </div>
+      <div className="mb-6 mt-10">
+        <h1 className="font-bold text-gray-800 mb-4">운영 관련 안내</h1>
         <h2 className="text-sm font-bold text-gray-800 mb-2">1. 탈퇴 및 강퇴</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           커뮤니티 회원의 자발적인 탈퇴나 커뮤니티 정책 위반에 따른 강퇴에 관한 사항은 운영진이 직접 관리합니다.

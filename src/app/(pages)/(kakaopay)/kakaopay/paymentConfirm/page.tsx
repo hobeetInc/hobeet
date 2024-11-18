@@ -75,13 +75,18 @@ const PaymentConfirmPage = () => {
         <div className="flex justify-center items-center">
           <div className="flex items-center gap-2 mb-6 w-[390px] px-4">
             <div className="overflow-hidden w-[88px] h-[88px] flex justify-center items-center rounded-xl">
-              <Image
-                src={clubImageUrl}
-                alt="모임 이미지"
-                width={88}
-                height={88}
-                className="rounded-xl object-cover w-[88px] h-[88px]"
-              />
+              {clubImageUrl ? (
+                <Image
+                  src={clubImageUrl}
+                  alt="모임 이미지"
+                  width={88}
+                  height={88}
+                  priority
+                  className="rounded-xl object-cover w-[88px] h-[88px]"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-200" />
+              )}
             </div>
             <div>
               <Tag tagName={`${clubType === "true" ? "eggpop" : "eggday"}`} className="mb-0.5" />
