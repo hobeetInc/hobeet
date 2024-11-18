@@ -210,7 +210,8 @@ const ChatPage: React.FC = () => {
         <div className="p-4">
           {Object.keys(groupedMessages).length > 0 ? (
             Object.keys(groupedMessages).map((dateString) => (
-              <div key={dateString} className="mb-6">
+              // change 바텀 마진 변경
+              <div key={dateString} className="mb-10">
                 <div className="justify-items-center">
                   {/* change 탑 바텀 마진 변경 */}
                   <div className="w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-4 text-center mt-5">
