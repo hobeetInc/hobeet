@@ -36,7 +36,6 @@ const CategoryPage = () => {
       fetchSubCategory();
     }
   }, [categoryId]);
-  // console.log(subCategories);
 
   if (loading) {
     return <div className="flex items-center justify-center w-full h-36">로딩 중...</div>;
@@ -48,7 +47,7 @@ const CategoryPage = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex fixed w-full overflow-x-auto scrollbar-hide bg-white z-10 mb-10 ml-4 pt-3">
+      <div className="flex fixed w-full overflow-x-auto scrollbar-hide text-sm bg-white z-10 mb-10 ml-4 pt-3">
         <button
           onClick={() => setSelectedCategory(0)}
           className={`flex-shrink-0 py-2 px-3 mr-3 rounded-lg transition-colors ${
