@@ -311,7 +311,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
       let finalFormData = { ...formData };
 
       // 이미지 업로드 처리
-      // @ts-ignore
       if (formData.egg_day_image instanceof File) {
         try {
           const imageUrl = await uploadImage(formData.egg_day_image);

@@ -13,10 +13,16 @@ export const useCreatePop = () => {
       const data = await submitOneTimeClubData(formData);
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.pop.all });
 
       queryClient.invalidateQueries({ queryKey: queryKeys.pop.tenList(10) });
+
+      queryClient.invalidateQueries({ queryKey: queryKeys.categoryList.all });
+
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.categoryList.list(data.main_category_id, data.sub_category_id)
+      });
     }
   });
 
