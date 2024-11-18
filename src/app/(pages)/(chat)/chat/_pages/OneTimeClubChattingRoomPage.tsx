@@ -1,13 +1,13 @@
 "use client";
 
 import Text from "@/components/uiComponents/TextComponents/Text";
+import { EggPopChattingRoom } from "@/types/eggpopchat.types";
 import { cn } from "@/utils/cn/util";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getOneTimeChatRoom } from "../../_api/onetime";
 import { useAuthStore } from "@/store/authStore";
-import { EggPopChattingRoom } from "@/types/eggpopchat.types";
 
 const OneTimeClubChattingRoomPage = () => {
   // 채팅방 목록, 로딩 상태, 에러 메시지 상태 관리
