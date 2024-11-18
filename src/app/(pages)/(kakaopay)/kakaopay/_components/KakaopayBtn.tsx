@@ -1,5 +1,6 @@
 "use client";
 
+import Text from "@/components/uiComponents/TextComponents/Text";
 import { useAuth } from "@/store/AuthContext";
 import { PaymentButtonProps } from "@/types/payment.types";
 
@@ -46,8 +47,8 @@ const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) =
   };
 
   return (
-    <button onClick={onClickKakaopayBtn} className="text-white text-base font-semibold leading-snug w-[358px]">
-      결제하기
+    <button onClick={onClickKakaopayBtn} className="text-gray-900 text-base font-semibold leading-snug w-[358px]">
+      <Text variant="subtitle-16">결제하기</Text>
     </button>
   );
 };
