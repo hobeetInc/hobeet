@@ -1,27 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getOneTimeClub } from "@/app/(pages)/(club)/club/_api/supabase";
+// import { getOneTimeClub } from "@/app/(pages)/(club)/club/_api/supabase";
 
-import { EggPopForm } from "@/types/안끝난거/eggpop.types";
+// import { EggPopForm } from "@/types/안끝난거/eggpop.types";
 import { VerticalContentsListMediumEggPop } from "@/components/uiComponents/VerticalContentsListMedium";
+import { useEggPopTenList } from "@/hooks/eggPopQueries";
 
 const OneTimeClubList = () => {
-  const [list, setList] = useState<EggPopForm[]>([]);
+  const { data: list, isLoading } = useEggPopTenList();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getOneTimeClub();
-        setList(data as unknown as EggPopForm[]);
-      } catch (error) {
-        console.error("일회성모임 리스트 가져오는 중 오류가 발생했습니다", error);
-      }
-    };
+  if (isLoading) return <div>로딩 중...</div>;
 
-    fetchData();
-  }, []);
+  // const [list, setList] = useState<EggPopForm[]>([]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  // const data = await getOneTimeClub();
+  //       setList(data as unknown as EggPopForm[]);
+  //     } catch (error) {
+  //       console.error("일회성모임 리스트 가져오는 중 오류가 발생했습니다", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   return (
     <div className="relative] mx-auto">
@@ -35,8 +40,8 @@ const OneTimeClubList = () => {
             >
               <VerticalContentsListMediumEggPop
                 eggPop={club}
-                hostName={club.user_id.user_name}
-                hostImag={club.user_id.user_profile_img}
+                hostName={club.user.user_name}
+                hostImag={club.user.user_profile_img}
                 memberCount={club.egg_pop_member[0].count}
               />
             </Link>

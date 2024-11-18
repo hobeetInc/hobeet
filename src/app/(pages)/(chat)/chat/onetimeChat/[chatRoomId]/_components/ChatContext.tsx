@@ -1,9 +1,7 @@
 "use client";
 import { createContext, useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "@/store/AuthContext";
+import { useOneTimeChat } from "@/hooks/useOneTimeChat";
 import { EggPopChatContextType } from "@/types/안끝난거/eggpopchat.types";
-import { fetchEggPopChatRoomWithMembers } from "@/app/(pages)/(chat)/_api/onetime";
 
 const ChatContext = createContext<EggPopChatContextType>({
   roomName: "",
@@ -13,26 +11,8 @@ const ChatContext = createContext<EggPopChatContextType>({
 export const useChatContext = () => useContext(ChatContext);
 
 export function ChatProvider({ children, roomId }: { children: React.ReactNode; roomId: string }) {
-  const { userId } = useAuth();
-
-  const { data: chatData, isLoading } = useQuery({
-    queryKey: ["oneTimeChatRoom", roomId, userId],
-    queryFn: async () => {
-      try {
-        const { roomData, chatMember, chattingData } = await fetchEggPopChatRoomWithMembers(roomId, userId!);
-
-        return {
-          ...roomData,
-          egg_pop_chatting_room_member_id: chattingData.egg_pop_chatting_room_member_id,
-          egg_pop_member_id: chatMember.egg_pop_member_id
-        };
-      } catch (error) {
-        console.error("Error fetching chat data: ", error);
-        throw error;
-      }
-    },
-    enabled: !!roomId && !!userId
-  });
+  // TODO 탠스택 쿼리로 변환 예정
+  const { data: chatData, isLoading } = useOneTimeChat(roomId);
 
   return (
     <ChatContext.Provider

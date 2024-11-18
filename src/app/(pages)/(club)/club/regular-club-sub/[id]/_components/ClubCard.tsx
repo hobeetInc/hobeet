@@ -5,13 +5,12 @@ import { useAuth } from "@/store/AuthContext";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
-import { EggDay } from "@/types/안끝난거/eggday.types";
-import { User } from "@/types/user.types";
+import { EggDayWithEggDayMember } from "@/types/eggday.types";
+import { MemberInfo } from "@/types/user.types";
 
-// 클럽 카드 props
 interface ClubCardProps {
-  notification: EggDay;
-  crewMembers: User[];
+  notification: EggDayWithEggDayMember;
+  crewMembers: MemberInfo[];
 }
 
 const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
@@ -102,19 +101,6 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
           </Text>
         </div>
       </div>
-
-      {/* <Image src={notification.egg_day_image} alt={notification.egg_day_name} width={80} height={80} />
-
-      <div>
-        <p>에그데이</p>
-        <p>{notification.egg_day_name}</p>
-
-        <div>
-          <p>{addressCustom(notification.egg_day_location)}</p>
-          <p>{DateTimeCustom(notification.egg_day_date_time)}</p>
-        </div>
-        <p>맴버 {notification.egg_day_member[0].count}명</p>
-      </div> */}
     </button>
   );
 };

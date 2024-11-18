@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchMainCategories, fetchSubCategories } from "../../_api/supabase";
 import { MainCategory, SubCategory } from "@/types/category.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { EggClubProps } from "@/types/안끝난거/eggclub.types";
+import { EggClubProps } from "@/types/eggclub.types";
 
 const Category = ({ formData, setFormData }: EggClubProps) => {
   const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);

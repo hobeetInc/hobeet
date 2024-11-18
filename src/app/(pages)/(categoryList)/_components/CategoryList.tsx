@@ -4,16 +4,17 @@ import { EggClubForm } from "@/types/cardlist.types";
 
 import { VerticalContentsListLargeEggClub } from "@/components/uiComponents/VerticalContentsListLarge";
 import Link from "next/link";
+import { queryKeys } from "@/hooks/utils/queryKeys";
 
 // 카테고리 리스트 props
 interface CategoryListProps {
   categoryId: number;
   selectedCategory: number;
-};
+}
 
 const CategoryList = ({ categoryId, selectedCategory }: CategoryListProps) => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["categoryList", categoryId, selectedCategory],
+    queryKey: queryKeys.categoryList.list(categoryId, selectedCategory),
     queryFn: () => getCategoryList(categoryId, selectedCategory),
     enabled: !!categoryId
   });

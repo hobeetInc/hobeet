@@ -8,11 +8,21 @@ import FullScreenModal from "./FullScreenModal";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import browserClient from "@/utils/supabase/client";
-import { CrewListProps, UserStatus } from "@/types/안끝난거/eggclub.types";
+import { UserStatus } from "@/types/eggclub.types";
 import RegularClubJoinButton from "@/app/(pages)/(club)/club/regular-club-sub/[id]/_components/RegularClubJoinButtonCom";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import { EggDayWithEggDayMember } from "@/types/eggday.types";
+import { MemberInfo } from "@/types/user.types";
+
+// CrewList 컴포넌트 props 타입
+interface CrewListProps {
+  crewMembers: MemberInfo[];
+  clubId: number;
+  clubHostId: string;
+  notificationData: EggDayWithEggDayMember[];
+}
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notificationData }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
@@ -39,7 +49,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         if (userId) {
           const statusResult = await getParticipationStatus({ userId, clubId });
 
-          setParticipationStatus(statusResult[0].egg_club_participation_request_status);
+          setParticipationStatus(statusResult[0].egg_club_participation_request_status as UserStatus);
         }
       } catch (error) {
         console.error("크루인원 가져오는 중 오류:", error);
@@ -96,8 +106,6 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         .eq("egg_club_id", clubId)
         .single();
 
-      // console.log("정기적모임 아이디", chatRoom);
-
       if (chatRoom) {
         router.push(`/chat/regularChat/${chatRoom.egg_day_chatting_room_id}`);
       }
@@ -124,17 +132,6 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
             참여하기
           </Button>
         </div>
-        // <button
-        //   type="button"
-        //   onClick={(e) => {
-        //     e.preventDefault();
-
-        //     handleLoginRedirect();
-        //   }}
-        //   className="w-full h-[50px] rounded-full bg-black text-white cursor-pointer" // cursor-pointer 추가
-        // >
-        //   참여하기
-        // </button>
       );
     }
 
@@ -154,15 +151,6 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
             에그클럽 채팅방
           </Button>
         </div>
-        // <div className="flex justify-center items-center gap-2">
-        //   <button
-        //     onClick={() => router.push(`/approvemembers/${clubId}`)}
-        //     className="flex-1 bg-yellow-100 h-[50px] rounded-full"
-        //   >
-        //     에그즈 관리
-        //   </button>
-        //   <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
-        // </div>
       );
     }
 
@@ -183,13 +171,6 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
               에그클럽 채팅방
             </Button>
           </div>
-
-          // <div className="flex justify-center items-center gap-2">
-          //   <p className="flex-1 h-[50px] pt-4 font-semibold">참여 중인 에그클럽이에요</p>
-          //   <button onClick={handleChatClick} className="flex-1 bg-yellow-300  h-[50px] rounded-full">
-          //     에그데이 채팅방
-          //   </button>
-          // </div>
         );
 
       case "pending":
@@ -207,11 +188,6 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
               </Text>
             </button>
           </div>
-
-          // <div className="flex justify-center items-center gap-2">
-          //   <p className="flex-1 h-[50px] pt-4 font-semibold">에그장이 승인중이예요</p>
-          //   <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">승인 대기중</button>
-          // </div>
         );
 
       case "not_applied":
@@ -257,18 +233,3 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
 };
 
 export default CrewList;
-
-// <>
-//   <div className="flex flex-col gap-4">
-//     <div className="flex justify-between">
-//       <h1 className="font-extrabold text-[20px]">{`참여중인 에그즈 ${crewList.length}명`}</h1>
-//       <button onClick={() => setIsModalOpen(true)} className="text-gray-600 hover:text-black">
-//         <ChevronRight />
-//       </button>
-//     </div>
-//     <div className="grid grid-cols-8 grid-flow-col gap-2 w-full">{displaySlots}</div>
-//   </div>
-//   <NotificationList notificationData={notificationData} crewMembers={crewList} />
-//   {renderJoinButton()}
-//   <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-// </>

@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { ko } from "date-fns/locale";
-import { EggPopProps } from "@/types/안끝난거/eggpop.types";
+import { EggPopProps } from "@/types/eggpop.types";
 import SearchInput from "@/components/uiComponents/Input/SearchInput";
 import Text from "@/components/uiComponents/TextComponents/Text";
 

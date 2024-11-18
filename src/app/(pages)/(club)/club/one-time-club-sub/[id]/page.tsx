@@ -2,17 +2,17 @@ import Image from "next/image";
 import { getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import PopHeader from "./_components/PopHeader";
-import { EggMember, GetEggPop, MemberInfo } from "@/types/안끝난거/eggpop.types";
 import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
+import { MemberInfo } from "@/types/user.types";
 
-const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
+const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   const oneTimeClubId = Number(params.id);
-  const data: EggMember[] = await getOneTimeMember(oneTimeClubId);
+  const data = await getOneTimeMember(oneTimeClubId);
 
   // 클럽 정보만 추출
-  const clubInfo: GetEggPop = data[0]?.egg_pop;
+  const clubInfo = data[0]?.egg_pop;
 
   // 날짜 커스텀
   const date = clubInfo.egg_pop_date_time;
@@ -21,12 +21,12 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
 
   // 오전/오후 판단
   const hours = currentDate.getHours();
-  const ampm = hours >= 12 ? "오후" : "오전";
+  const isPm = hours >= 12 ? "오후" : "오전";
   const displayHours = hours % 12 || 12;
 
   const formDate = `${currentDate.getFullYear()}년 ${
     currentDate.getMonth() + 1
-  }월 ${currentDate.getDate()}일 ${ampm} ${displayHours}:${addZero(currentDate.getMinutes())}`;
+  }월 ${currentDate.getDate()}일 ${isPm} ${displayHours}:${addZero(currentDate.getMinutes())}`;
 
   // 장소 커스텀
   const location = clubInfo.egg_pop_location;
@@ -195,4 +195,4 @@ const OneTimeClubSubpage = async ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default OneTimeClubSubpage;
+export default OneTimeClubSubPage;

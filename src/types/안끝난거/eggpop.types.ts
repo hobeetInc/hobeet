@@ -16,7 +16,7 @@ export interface EggPopForm {
   egg_pop_people_limited: number | null;
   egg_pop_tax: number | null;
   sub_category_id: number;
-  user_id: {
+  user: {
     user_name: string;
     user_profile_img: string;
   };

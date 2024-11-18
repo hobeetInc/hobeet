@@ -45,14 +45,14 @@ export const EggPopVerticalList = ({ eggPop }) => {
             <Image
               width={22}
               height={22}
-              src={eggPop.user_id.user_profile_img}
+              src={eggPop.user.user_profile_img}
               alt="profile"
               className="rounded-full object-cover"
             />
           </div>
           {/* 모임장 이름 */}
           <div className="flex-1 overflow-hidden text-ellipsis text-gray-400 text-body_medium-14">
-            {eggPop.user_id.user_name}
+            {eggPop.user.user_name}
           </div>
         </div>
         <div className="flex items-center gap-[2px]">
@@ -89,14 +89,14 @@ export const EggClubVerticalList = ({ eggClub }) => {
             <Image
               width={22}
               height={22}
-              src={eggClub.user_id.user_profile_img}
+              src={eggClub.user.user_profile_img}
               alt="profile"
               className="rounded-full object-cover"
             />
           </div>
           {/* 모임장 이름 */}
           <div className="flex-1 overflow-hidden text-ellipsis text-gray-400 text-body_medium-14">
-            {eggClub.user_id.user_name}
+            {eggClub.user.user_name}
           </div>
         </div>
         <div className="flex pt-1 items-center gap-[2px]">

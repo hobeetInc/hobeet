@@ -2,7 +2,7 @@
 
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { FullScreenModalProps } from "@/types/안끝난거/eggclub.types";
+import { FullScreenModalProps } from "@/types/common.types";
 import Image from "next/image";
 import { IoIosArrowBack } from "react-icons/io";
 
@@ -47,58 +47,7 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
               </div>
             </div>
           ))}
-
-          {/* 
-          <div key={member.userId} className="flex items-center gap-2 mb-4">
-                <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">
-                  <Image
-                    src={member.userImage}
-                    alt={member.userName}
-                    width={37}
-                    height={37}
-                    className="w-full h-full object-cover border-2 border-black"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1 justify-center">
-                  <div className="flex gap-2">
-                    <p>{member.userName}</p>
-                    <p className="text-[13px]">{index === 0 ? "에그장" : "에그즈"}</p>
-                  </div>
-                  <p className="text-[13px]">참여도</p>
-                </div>
-              </div> */}
         </div>
-
-        {/* <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-10">
-          <div>
-            <div className="w-[390px] h-9 px-4 py-2 justify-start items-center gap-2.5 inline-flex">
-              <Text variant="body_medium-14">{`총 ${crewList.length}명`}</Text>
-            </div>
-
-            {crewList?.map((member, index) => (
-              <div key={member.userId} className="flex items-center gap-2 mb-4">
-                <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">
-                  <Image
-                    src={member.userImage}
-                    alt={member.userName}
-                    width={37}
-                    height={37}
-                    className="w-full h-full object-cover border-2 border-black"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1 justify-center">
-                  <div className="flex gap-2">
-                    <p>{member.userName}</p>
-                    <p className="text-[13px]">{index === 0 ? "에그장" : "에그즈"}</p>
-                  </div>
-                  <p className="text-[13px]">참여도</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div> */}
       </div>
     </div>
   );
