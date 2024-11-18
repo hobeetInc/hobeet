@@ -1,1 +1,1 @@
-export * from "./useClubWishlist";
+export * from "@/hooks/utils/list/useClubWishlist";

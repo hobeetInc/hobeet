@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { queryKeys } from "./utils/queryKeys";
 import {
   addClubToWishList,
   getClubWishListStatus,
   removeClubFromWishList
 } from "@/app/(pages)/(club)/club/_api/wishlist";
 import { useAuthStore } from "@/store/authStore";
+import { queryKeys } from "../queryKeys";
 
 interface WishListHeartProps {
   egg_club_id: number;
@@ -28,6 +28,7 @@ export const useClubWishlist = ({ egg_club_id }: WishListHeartProps) => {
     mutationFn: addClubToWishList,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey: queryKeys.club.tenList(10) });
     }
   });
 
@@ -35,6 +36,7 @@ export const useClubWishlist = ({ egg_club_id }: WishListHeartProps) => {
     mutationFn: removeClubFromWishList,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey: queryKeys.club.tenList(10) });
     }
   });
 

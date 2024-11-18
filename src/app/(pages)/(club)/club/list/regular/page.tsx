@@ -1,39 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
-import { getAllRegularClubList } from "../../_api/supabase";
 import Link from "next/link";
 import Image from "next/image";
-import { EggClubForm } from "@/types/eggclub.types";
+import { useEggClubAllList } from "@/hooks/utils/list/allList";
 
 const AllRegularClubListPage = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [allRegularClubList, setAllRegularClubList] = useState<EggClubForm[]>([]);
-  const [error, setError] = useState<string>("");
+  const { data: allRegularClubList, isLoading, isError } = useEggClubAllList();
 
-  useEffect(() => {
-    const fetchAllRegularClubList = async () => {
-      try {
-        setLoading(true);
-        const res = await getAllRegularClubList();
-        if (res) {
-          setAllRegularClubList(res);
-        } else {
-          setError("정기적 모임리스트를 불러오지 못했습니다.");
-        }
-      } catch (error) {
-        setError(`API 호출 중 오류가 발생했습니다. ${error instanceof Error ? error.message : String(error)}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAllRegularClubList();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return <div className="flex items-center justify-center w-full h-36">로딩 중...</div>;
   }
 
-  if (error) {
+  if (isError) {
     return <div className="flex items-center justify-center w-full h-36 text-red-500">{error}</div>;
   }
 

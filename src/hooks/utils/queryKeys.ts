@@ -3,17 +3,13 @@ export const queryKeys = {
   pop: {
     all: ["pop"] as const,
     tenList: (limit: number) => ["pop", "list", limit] as const,
-    byCategory: (categoryId: number) => ["pop", categoryId] as const,
-    detail: (popId: number) => ["pop", "detail", popId] as const
+    byCategory: (mainId: number, subId: number) => ["pop", mainId, subId] as const
   },
   club: {
     all: ["club"] as const,
-    tenList: (limit: number) => ["club", "list", limit] as const,
-    byCategory: (categoryId: number) => ["club", categoryId] as const,
-    detail: (clubId: number) => ["club", "detail", clubId] as const
+    tenList: (limit: number) => ["club", "list", limit] as const
   },
   day: {
-    all: ["day"] as const,
     byClub: (clubId: number) => ["day", clubId] as const
   },
   user: {
