@@ -1,4 +1,3 @@
-"use client";
 import { createClient } from "@/utils/supabase/client";
 
 export async function ChatRoomExit(egg_day_chatting_id: number, clubCheck: boolean) {
@@ -13,7 +12,6 @@ export async function ChatRoomExit(egg_day_chatting_id: number, clubCheck: boole
         .eq("egg_day_chatting_id", egg_day_chatting_id)
 
         .single();
-      // console.log(data);
 
       if (data?.admin) {
         return false;
@@ -25,7 +23,6 @@ export async function ChatRoomExit(egg_day_chatting_id: number, clubCheck: boole
           .single();
 
         if (error) throw error;
-        // console.log(data);
 
         return data;
       }
@@ -52,7 +49,6 @@ export async function ChatRoomExit(egg_day_chatting_id: number, clubCheck: boole
           .single();
 
         if (error) throw error;
-        // console.log(data);
 
         return data;
       }

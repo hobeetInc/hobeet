@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Menu } from "lucide-react";
 import { ChatProvider, useChatContext } from "./_components/ChatContext";
-import { ChatRoomExit } from "@/app/api/_ChatRoomExit/ChatRoomExit";
-import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { EggClubChattingMemberInfo } from "@/types/eggclubchat.types";
 import { IoCloseOutline } from "react-icons/io5";
-
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
+import { ChatRoomExit } from "../../../_api/supabase";
+import { useAuthStore } from "@/store/authStore";
+import { fetchChattingMembers } from "../../../_api/regular";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -21,37 +21,21 @@ interface LayoutProps {
 
 function ChatHeader() {
   const { roomName, isLoading, egg_day_chatting_id, egg_club_id } = useChatContext();
-  const [userId, setUserId] = useState("");
+  const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ChattingMember, setChattingMember] = useState<EggClubChattingMemberInfo[]>();
 
   useEffect(() => {
-    const supabase = createClient();
     if (egg_club_id) {
-      const fetchRegularClubId = async () => {
-        const userId = (await supabase.auth.getUser()).data.user?.id;
-
-        const { data, error } = await supabase
-          .from("egg_day_chatting")
-          .select(
-            `* , 
-            egg_club_member(* , 
-              user(*)
-            )
-          `
-          )
-          .eq("egg_club_id", egg_club_id)
-          .eq("active", true);
-        if (error) {
-          console.error(error);
-          return;
+      const fetchMembers = async () => {
+        //TODO 탠스택 쿼리로 변환 예정
+        const data = await fetchChattingMembers(egg_club_id);
+        if (data) {
+          setChattingMember(data);
         }
-
-        setUserId(userId);
-        setChattingMember(data as unknown as EggClubChattingMemberInfo[]);
       };
-      fetchRegularClubId();
+      fetchMembers();
     }
   }, [egg_club_id]);
 

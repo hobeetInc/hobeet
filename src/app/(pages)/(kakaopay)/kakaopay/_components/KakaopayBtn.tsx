@@ -5,7 +5,7 @@ interface PaymentButtonProps {
   clubType: boolean;
   clubId: number;
   agreeChecked: boolean;
-};
+}
 
 const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) => {
   const { userId } = useAuth();
@@ -34,17 +34,19 @@ const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) =
       });
 
       if (!response.ok) {
-        throw new Error("Payment initiation failed");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "결제 요청에 실패했습니다");
       }
 
       const data = await response.json();
 
       if (!data.next_redirect_pc_url) {
-        throw new Error("No redirect URL found in response");
+        throw new Error("결제 페이지 URL을 받아오지 못했습니다");
       }
+
       window.location.href = data.next_redirect_pc_url;
     } catch (error) {
-      console.error("Payment error:", error);
+      console.error("결제 중 오류가 발생했습니다.:", error);
       alert("결제 중 오류가 발생했습니다.");
     }
   };

@@ -1,32 +1,7 @@
+import { Tables } from "../database.types";
 import { User } from "../user.types";
 
-// 에그팝 채팅방 생성을 위한 에그팝 아이디 타입
-export interface EggPopId {
-  egg_pop_id: number;
-}
-
-// 에그팝 채팅 타입
-interface BaseEggPopChatting {
-  admin: boolean;
-  egg_pop_id: number;
-  egg_pop_member_id: number;
-  egg_pop_chatting_room_member_id: number;
-  egg_pop_chatting_room_id: number;
-}
-
-// 애그팝 채팅 멤버 타입
-export interface EggPopChattingMember {
-  egg_pop_id: number;
-  egg_pop_member_id: number;
-  user_id: string;
-  egg_pop_chatting_room_member: EggPopChatting[];
-}
-
-// 채팅 메세지 타입
-interface EggPopChatMessage {
-  egg_pop_chatting_room_message_content: string;
-  created_at: string;
-}
+export type EggPop = Tables<"egg_pop">;
 
 // 채팅방 타입
 export interface EggPopChattingRoom {
@@ -40,47 +15,7 @@ export interface EggPopChattingRoom {
   last_message_time: string;
   last_message_time_value: string;
   active: boolean;
-  egg_pop_chatting_room_member: EggPopChattingMemberCount[];
-}
-
-interface EggPopChattingMemberCount {
-  count: number;
-}
-
-// 확장된 EggPopChatting 타입
-export interface EggPopChatting extends BaseEggPopChatting {
-  active: boolean;
-  egg_pop_chatting_room: EggPopChattingRoom;
-  egg_pop_chatting_room_message: EggPopChatMessage[];
-}
-
-// 에그팝 타입
-interface EggPop {
-  main_category_id: number;
-  sub_category_id: number;
-  user_id: string;
-  egg_pop_id: number;
-  egg_pop_age?: number | null;
-  egg_pop_name: string;
-  egg_pop_image: string;
-  egg_pop_gender?: string | null;
-  egg_pop_create_at: string;
-  egg_pop_introduction: string;
-  egg_pop_people_limited?: number | null;
-}
-
-// 에그팝 멤버 타입
-interface EggPopMember {
-  egg_pop_member_id: number;
-  user_id: string;
-  egg_pop_id: number;
-  egg_pop_chatting_room_member: EggPopChatting[];
-  egg_pop: EggPop;
-}
-
-// 데이터 응답값 타입
-export interface ApiResponse {
-  data: EggPopMember[];
+  egg_pop_chatting_room_member: Array<{ count: number }>;
 }
 
 // 에그팝 채팅 콘텍스트 타입
@@ -99,76 +34,13 @@ export interface LayoutProps {
   };
 }
 
+// TODO : 따로 타입 변경했음... 변경 필요
 // 에그팝 채팅 멤버 상세정보 타입
-export type EggPopChattingMemberInfo = {
-  active: boolean;
-  admin: boolean;
-  egg_pop_id: number;
-  egg_pop_member_id: {
+export interface EggPopChattingMemberInfo extends Tables<"egg_pop_chatting_room_member"> {
+  egg_pop_member: {
     egg_pop_id: number;
     egg_pop_member_id: number;
-    user_id: {
-      user_age: number;
-      user_create_at: string;
-      user_email: string;
-      user_gender: string;
-      user_id: string;
-      user_name: string;
-      user_profile_img: string;
-      user_roletype: boolean;
-    };
-    egg_pop_chatting_room_member_id: number;
-    egg_pop_chatting_room_id: number;
+    user_id: string;
+    user: User;
   };
-};
-
-// 에그팝 클럽 정보
-export type EggPopChatInfo = {
-  egg_pop_chatting_room_member_id: number;
-  egg_pop_member_id: number;
-  egg_pop_id: number;
-  created_at: string;
-};
-
-export interface ExtendEggPopMessage {
-  created_at: string;
-  egg_pop_chatting_room_id: number;
-  egg_pop_chatting_room_member_id: number;
-  egg_pop_chatting_room_message_content: string;
-  egg_pop_chatting_room_message_id: number;
-  egg_pop_id: number;
-  egg_pop_member_id: number;
-  user_id: string;
-  user: User;
-}
-
-export type EggPopChatRoom = {
-  egg_pop_chatting_room_id: number;
-  egg_pop_chatting_room_name: string;
-};
-
-// 에그팝 타입들...(아직 이름 못바꿈)
-export interface OneTimeClub {
-  egg_pop_id: number;
-  egg_pop_name: string;
-  egg_pop_image: string;
-}
-
-export interface OneTimeMember {
-  egg_pop_member_id: number;
-  user_id: string;
-  egg_pop_id: number;
-  egg_pop_chatting_room_member: OneTimeChatting[];
-  egg_pop: OneTimeClub;
-}
-
-export interface OneTimeChatting {
-  egg_pop_chatting_room_member_id: number;
-  egg_pop_chatting_room_id: number;
-  egg_pop_chatting_room: EggPopChatRoom;
-  egg_pop_chatting_room_message: OneTimeChatMessage[];
-}
-export interface OneTimeChatMessage {
-  egg_pop_chatting_room_message_content: string;
-  created_at: string;
 }
