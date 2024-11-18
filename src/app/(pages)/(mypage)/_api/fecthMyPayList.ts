@@ -1,10 +1,9 @@
-import browserClient from "@/utils/supabase/client";
+import supabase from "@/utils/supabase/client";
 
-// API 함수들
 export const getEggDayPayList = async () => {
-  const { data: userData } = await browserClient.auth.getUser();
+  const { data: userData } = await supabase.auth.getUser();
 
-  const { data, error } = await browserClient
+  const { data, error } = await supabase
     .from("egg_day_kakaopay")
     .select(
       `
@@ -28,9 +27,9 @@ export const getEggDayPayList = async () => {
 };
 
 export const getEggPopPayList = async () => {
-  const { data: userData } = await browserClient.auth.getUser();
+  const { data: userData } = await supabase.auth.getUser();
 
-  const { data, error } = await browserClient
+  const { data, error } = await supabase
     .from("egg_pop_kakaopay")
     .select(
       `
