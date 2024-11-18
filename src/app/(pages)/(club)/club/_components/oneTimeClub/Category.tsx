@@ -2,7 +2,7 @@
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { fetchMainCategories, fetchSubCategories } from "../../_api/supabase";
-import { EggPopProps } from "@/types/안끝난거/eggpop.types";
+import { EggPopProps } from "@/types/eggpop.types";
 import { MainCategory, SubCategory } from "@/types/category.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 

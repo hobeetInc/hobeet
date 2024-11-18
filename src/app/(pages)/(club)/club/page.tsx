@@ -58,9 +58,6 @@ const TypeSelectionPage = () => {
               에그팝
             </Text>
 
-            {/* <span className={`text-primary-900 text-subtitle-16 ${selectedType === "one-time" ? "text-white" : ""}`}>
-              에그팝
-            </span> */}
             <span className={`text-primary-900 text-body-14 ${selectedType === "one-time" ? "text-white" : ""}`}>
               일회성 모임으로 가볍게 만나요
               <br />
@@ -76,12 +73,6 @@ const TypeSelectionPage = () => {
                 : "bg-white border border-solid border-[#d9d9d9]"
             }`}
           >
-            {/* <Text
-      variant="subtitle-16"
-      className={`text-primary-900 ${selectedType === "regular-time" ? "text-white" : ""}`}
-    >
-      에그클럽
-    </Text> */}
             <span
               className={`text-primary-900 text-subtitle-16 ${selectedType === "regular-time" ? "text-white" : ""}`}
             >

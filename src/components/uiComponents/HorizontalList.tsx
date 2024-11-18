@@ -1,4 +1,3 @@
-
 import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDate } from "@/utils/CustomDate";
 import Image from "next/image";
@@ -47,7 +46,7 @@ export const EggClubHorizontalList = ({ eggClub }) => {
               <div className="flex items-center gap-2 self-stretch">
                 <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
                   <Image
-                    src={eggClub.user_id.user_profile_img}
+                    src={eggClub.user.user_profile_img}
                     alt="profile"
                     width={22}
                     height={22}
@@ -56,7 +55,7 @@ export const EggClubHorizontalList = ({ eggClub }) => {
                 </div>
               </div>
               <div className="grow shrink basis-0 text-gray-400 text-body_medium-14 leading-tight">
-                {eggClub.user_id.user_name}
+                {eggClub.user.user_name}
               </div>
             </div>
             <div className="justify-start items-center gap-0.5 flex">

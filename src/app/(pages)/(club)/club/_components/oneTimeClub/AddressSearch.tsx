@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { AddressData, DaumPostcodeData } from "@/types/address.types";
-import { EggPopProps } from "@/types/안끝난거/eggpop.types";
+import { EggPopProps } from "@/types/eggpop.types";
 import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
 import SearchInput from "@/components/uiComponents/Input/SearchInput";
 import Text from "@/components/uiComponents/TextComponents/Text";
