@@ -6,12 +6,15 @@ import { cn } from "@/utils/cn/util";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { fetchChatRoomMembers } from "../../_api/regular";
+import { useAuthStore } from "@/store/authStore";
 
 const RegularClubChattingRoomPage = () => {
   const [chatRooms, setChatRooms] = useState<EggClubChattingRoom[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
+  const userId = useAuthStore((state) => state.userId);
+  console.log(userId);
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -27,42 +30,57 @@ const RegularClubChattingRoomPage = () => {
 
   useEffect(() => {
     const supabase = createClient();
-
+    if (!userId) return;
     const fetchChatRooms = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      const userId = data.user?.id;
-
-      if (error || !userId) {
-        console.error("사용자 정보를 가져오지 못했습니다: ", error);
-        setErrorMessage("사용자 정보를 가져오는 데 실패했습니다.");
-        setLoading(false);
-        return;
-      }
-
       try {
-        const response = await fetch("/api/getChatRoom", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ userId })
-        });
+        //TODO 탠스택 쿼리로 변환 예정
+        const memberData = await fetchChatRoomMembers(userId);
 
-        const chatData = await response.json();
-        // console.log(chatData);
-
-        if (!response.ok) {
-          throw new Error("서버에서 오류가 발생했습니다.");
-        }
-
-        if (!chatData.data || chatData.data.length === 0) {
+        if (!memberData) {
           setErrorMessage("채팅방이 없습니다.");
           setChatRooms([]);
           setLoading(false);
           return;
         }
 
-        const rooms: EggClubChattingRoom[] = chatData.data.flatMap((member) =>
+        const enrichedData = await Promise.all(
+          memberData.map(async (member) => {
+            const chattingWithMessages = await Promise.all(
+              member.egg_day_chatting.map(async (chatting) => {
+                const { data: messages, error: messageError } = await supabase
+                  .from("egg_day_chatting_message")
+                  .select(
+                    `
+                    egg_day_chatting_message_content,
+                    egg_day_chatting_message_create_at
+                  `
+                  )
+                  .eq("egg_day_chatting_room_id", chatting.egg_day_chatting_id)
+                  .order("egg_day_chatting_message_create_at", { ascending: true });
+
+                if (messageError) {
+                  console.error("메시지 조회 오류:", messageError);
+                  return {
+                    ...chatting,
+                    egg_day_chatting_message: []
+                  };
+                }
+
+                return {
+                  ...chatting,
+                  egg_day_chatting_message: messages || []
+                };
+              })
+            );
+
+            return {
+              ...member,
+              egg_day_chatting: chattingWithMessages
+            };
+          })
+        );
+
+        const rooms = enrichedData.flatMap((member) =>
           member.egg_day_chatting
             .filter((chatting) => chatting.active)
             .map((chatting) => {
@@ -138,7 +156,7 @@ const RegularClubChattingRoomPage = () => {
     return () => {
       supabase.removeChannel(subscription);
     };
-  }, []);
+  }, [userId]);
 
   if (loading) {
     return <div>로딩 중...</div>;

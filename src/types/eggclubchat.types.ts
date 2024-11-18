@@ -1,4 +1,3 @@
-import { DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES } from "react";
 import { Tables } from "./database.types";
 import { User } from "./user.types";
 
@@ -23,7 +22,7 @@ export interface EggClubChattingRoom extends Tables<"egg_day_chatting_room"> {
   last_message_time: string;
   last_message_time_value: string;
   active: boolean;
-  egg_day_chatting: { count: DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES }[];
+  egg_day_chatting: { count: number }[];
 }
 
 // Chatting이 EggClubChatting을 확장
@@ -51,28 +50,23 @@ export interface EggClubChatContextType {
 }
 
 // 에그클럽 채팅방 멤버 상세 정보 타입
-export type EggClubChattingMemberInfo = {
+export interface EggClubChattingMemberInfo {
   active: boolean;
   admin: boolean;
+  chat_room_entry_time: string;
   egg_club_id: number;
+  egg_club_member_id: number;
+  egg_day_chatting_id: number;
+  egg_day_chatting_room_id: number;
   egg_club_member: {
-    egg_club_id: number;
-    egg_club_member_id: number;
-    egg_club_participation_request_status: string;
     user: {
-      user_age: number;
-      user_create_at: string;
-      user_email: string;
-      user_gender: string;
       user_id: string;
       user_name: string;
       user_profile_img: string;
-      user_roletype: boolean;
     };
-    egg_day_chatting_id: number;
-    egg_day_chatting_room_id: number;
+    egg_club_member_id: number;
   };
-};
+}
 
 // 에그클럽 상세 정보 타입
 export interface EggClubChatInfo {
@@ -121,8 +115,3 @@ export interface Member {
   egg_day_chatting: Chatting[];
   egg_club: RegularClub;
 }
-
-// export type chattingRoom = {
-//   r_c_n_chatting_room_id: number;
-//   r_c_n_chatting_room_name: string;
-// };

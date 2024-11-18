@@ -8,6 +8,10 @@ import { useState } from "react";
 import { ExtendEggClubMessage } from "@/types/eggclubchat.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+import { useAuthStore } from "@/store/authStore";
+import { fetchChatInfo, fetchEggClubId, fetchMemberData, fetchMessages } from "../../../_api/regular";
+import { queryKeys } from "@/hooks/utils/queryKeys";
+import { sendMessage } from "../../../_api/regular";
 
 const supabase = createClient();
 
@@ -19,86 +23,34 @@ const ChatPage = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [sendIconColor, setSentIconColor] = useState<boolean>(false);
-  // 현재 사용자 정보 조회
-  const { data: currentUser, isSuccess: isUserFetched } = useQuery({
-    queryKey: ["currentUser"],
-    queryFn: async () => {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
-      return user;
-    }
-  });
+  const userId = useAuthStore((state) => state.userId);
 
-  // r_c_id 조회
+  //TODO 탠스택 쿼리로 변환 예정
   const { data: rec, isSuccess: isRecFetched } = useQuery({
-    queryKey: ["egg_club_id", roomId],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("egg_day_chatting")
-        .select("egg_club_id")
-        .eq("egg_day_chatting_room_id", roomId)
-        .limit(1);
-      if (error) throw error;
-      return data ? data[0] : null;
-    },
-    enabled: !!roomId && isUserFetched
+    queryKey: queryKeys.regularChat.eggClubId(roomId as string),
+    queryFn: () => fetchEggClubId(roomId as string),
+    enabled: Boolean(roomId) && Boolean(userId)
   });
 
-  // r_c_member_id 조회
+  //TODO 탠스택 쿼리로 변환 예정
   const { data: memberData } = useQuery({
-    queryKey: ["memberData", currentUser?.id],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("egg_club_member")
-        .select("egg_club_member_id")
-        .eq("user_id", currentUser?.id)
-        .eq("egg_club_id", rec?.egg_club_id)
-        .single();
-
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!currentUser?.id && isRecFetched
+    queryKey: queryKeys.regularChat.memberData(userId as string),
+    queryFn: () => fetchMemberData(userId as string, rec.egg_club_id),
+    enabled: Boolean(userId) && isRecFetched
   });
 
-  // 채팅방 정보 조회
+  //TODO 탠스택 쿼리로 변환 예정
   const { data: chatInfo } = useQuery({
-    queryKey: ["chatInfo", roomId],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("egg_day_chatting")
-        .select(`*, egg_day_chatting_room(*)`)
-        .eq("egg_day_chatting_room_id", roomId)
-        .eq("egg_club_member_id", memberData?.egg_club_member_id)
-        .single();
-
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!roomId && !!memberData
+    queryKey: queryKeys.regularChat.chatInfo(roomId as string),
+    queryFn: () => fetchChatInfo(roomId as string, memberData.egg_club_member_id),
+    enabled: Boolean(roomId) && Boolean(memberData)
   });
-  // console.log(chatInfo?.chat_room_entry_time);
 
-  // 메시지 목록 조회
-  const { data: messages = [], isLoading: isLoadingMessages } = useQuery({
-    queryKey: ["messages", roomId, chatInfo?.chat_room_entry_time],
-    queryFn: async () => {
-      if (!chatInfo?.chat_room_entry_time) {
-        throw new Error("채팅방 입장 시간이 없습니다.");
-      }
-
-      const { data, error } = await supabase
-        .from("egg_day_chatting_message")
-        .select(`*, user(*)`)
-        .eq("egg_day_chatting_room_id", roomId)
-        .gte("egg_day_chatting_message_create_at", chatInfo.chat_room_entry_time)
-        .order("egg_day_chatting_message_create_at", { ascending: true });
-
-      if (error) throw error;
-      return data || [];
-    },
-    enabled: !!roomId && !!chatInfo?.chat_room_entry_time
+  //TODO 탠스택 쿼리로 변환 예정
+  const { data: regularMessages = [], isLoading: isLoadingMessages } = useQuery({
+    queryKey: queryKeys.regularChat.messages(roomId as string, chatInfo?.chat_room_entry_time),
+    queryFn: () => fetchMessages(roomId as string, chatInfo.chat_room_entry_time),
+    enabled: Boolean(roomId) && Boolean(chatInfo?.chat_room_entry_time)
   });
 
   // 스크롤을 맨 아래로 이동시키는 함수
@@ -109,29 +61,24 @@ const ChatPage = () => {
   // 새 메시지가 추가될 때마다 스크롤 맨 아래로 이동
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [regularMessages]);
 
   // 메시지 전송 무테이션
   const sendMessageMutation = useMutation({
-    mutationFn: async (messageContent: string) => {
-      if (!chatInfo || !currentUser) throw new Error("전송실패실패실패");
-
-      const { error } = await supabase.from("egg_day_chatting_message").insert([
-        {
-          egg_day_chatting_room_id: Number(roomId),
-          user_id: currentUser.id,
-          egg_day_chatting_id: chatInfo.egg_day_chatting_id,
-          egg_club_member_id: chatInfo.egg_club_member_id,
-          egg_club_id: chatInfo.egg_club_id,
-          egg_day_chatting_message_content: messageContent
-        }
-      ]);
-
-      if (error) throw error;
+    mutationFn: (messageContent: string) => {
+      if (!chatInfo || !userId) throw new Error("전송실패실패실패");
+      return sendMessage({
+        roomId: roomId as string,
+        userId,
+        chatInfo,
+        messageContent
+      });
     },
     onSuccess: () => {
       setNewMessage("");
-      queryClient.invalidateQueries({ queryKey: ["messages", roomId] });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.regularChat.messages(roomId as string)
+      });
     }
   });
 
@@ -150,7 +97,9 @@ const ChatPage = () => {
           filter: `egg_day_chatting_room_id=eq.${roomId}`
         },
         () => {
-          queryClient.invalidateQueries({ queryKey: ["messages", roomId] });
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.regularChat.messages(roomId as string)
+          });
         }
       )
       .subscribe();
@@ -192,7 +141,7 @@ const ChatPage = () => {
     }, {});
   };
 
-  const groupedMessages = groupMessagesByDate(messages as unknown as ExtendEggClubMessage[]);
+  const groupedMessages = groupMessagesByDate(regularMessages);
 
   const handleSendMessage = () => {
     if (newMessage.trim() === "") return;
@@ -220,7 +169,7 @@ const ChatPage = () => {
                 </div>
                 {groupedMessages[dateString].map((message: ExtendEggClubMessage) => {
                   const date = new Date(message.egg_day_chatting_message_create_at);
-                  const isCurrentUser = message.user.user_id === currentUser?.id;
+                  const isCurrentUser = message.user.user_id === userId;
 
                   return (
                     <div

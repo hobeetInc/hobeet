@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Menu } from "lucide-react";
 import { ChatProvider, useChatContext } from "./_components/ChatContext";
-import { ChatRoomExit } from "@/app/api/_ChatRoomExit/ChatRoomExit";
-import { createClient } from "@/utils/supabase/client";
 import { cn } from "@/utils/cn/util";
 import { EggPopChattingMemberInfo, LayoutProps } from "@/types/안끝난거/eggpopchat.types";
 import { IoCloseOutline } from "react-icons/io5";
@@ -12,22 +10,21 @@ import Image from "next/image";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { fetchChatRoomMembers } from "@/app/(pages)/(chat)/_api/onetime";
+import { ChatRoomExit } from "../../../_api/supabase";
+import { useAuthStore } from "@/store/authStore";
 
 function ChatHeader() {
   const { roomName, isLoading, egg_pop_chatting_room_member_id, egg_pop_id } = useChatContext();
-  const [userId, setUserId] = useState("");
+  const userId = useAuthStore((state) => state.userId);
 
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ChattingMember, setChattingMember] = useState<EggPopChattingMemberInfo[]>();
   useEffect(() => {
-    const supabase = createClient();
     if (egg_pop_id) {
       const fetchData = async () => {
-        const userId = (await supabase.auth.getUser()).data.user?.id;
-        setUserId(userId);
-
         try {
+          //TODO 탠스택 쿼리로 변환 예정
           const members = await fetchChatRoomMembers(egg_pop_id);
           setChattingMember(members);
         } catch (error) {
@@ -88,58 +85,54 @@ function ChatHeader() {
             <div>
               <ul className="space-y-4">
                 {/* 현재 사용자 먼저 렌더링 */}
-                {ChattingMember?.filter((member) => member.egg_pop_member_id.user_id.user_id === userId).map(
-                  (member) => (
-                    <li key={member.egg_pop_member_id.egg_pop_member_id}>
-                      <div
-                        className={cn(
-                          "flex items-center justify-between py-2 px-4 rounded-md border-solid border-gray-50 border-b-2"
-                        )}
-                      >
-                        <div className={cn("flex items-center")}>
-                          <div className={cn("w-10 h-10 overflow-hidden rounded-full mr-2")}>
-                            <Image
-                              src={member.egg_pop_member_id.user_id.user_profile_img}
-                              alt="프로필 이미지"
-                              width={40}
-                              height={40}
-                              className={cn("rounded-full")}
-                            />
-                          </div>
-                          <Text variant="subtitle-16" className={cn("text-gray-900")}>
-                            {member.egg_pop_member_id.user_id.user_name}
-                          </Text>
-                          {member.admin && <Tag tagName="eggmaster" variant="black" className={cn("ml-2")} />}
+                {ChattingMember?.filter((member) => member.egg_pop_member.user.user_id === userId).map((member) => (
+                  <li key={member.egg_pop_member.egg_pop_member_id}>
+                    <div
+                      className={cn(
+                        "flex items-center justify-between py-2 px-4 rounded-md border-solid border-gray-50 border-b-2"
+                      )}
+                    >
+                      <div className={cn("flex items-center")}>
+                        <div className={cn("w-10 h-10 overflow-hidden rounded-full mr-2")}>
+                          <Image
+                            src={member.egg_pop_member.user.user_profile_img}
+                            alt="프로필 이미지"
+                            width={40}
+                            height={40}
+                            className={cn("rounded-full")}
+                          />
                         </div>
+                        <Text variant="subtitle-16" className={cn("text-gray-900")}>
+                          {member.egg_pop_member.user.user_name}
+                        </Text>
+                        {member.admin && <Tag tagName="eggmaster" variant="black" className={cn("ml-2")} />}
                       </div>
-                    </li>
-                  )
-                )}
+                    </div>
+                  </li>
+                ))}
 
                 {/* 나머지 사용자들 렌더링 */}
-                {ChattingMember?.filter((member) => member.egg_pop_member_id.user_id.user_id !== userId).map(
-                  (member) => (
-                    <li key={member.egg_pop_member_id.egg_pop_member_id}>
-                      <div className={cn("flex items-center justify-between py-2 px-4 rounded-md")}>
-                        <div className={cn("flex items-center")}>
-                          <div className={cn("w-10 h-10 overflow-hidden rounded-full mr-2")}>
-                            <Image
-                              src={member.egg_pop_member_id.user_id.user_profile_img}
-                              alt="프로필 이미지"
-                              width={40}
-                              height={40}
-                              className={cn("rounded-full")}
-                            />
-                          </div>
-                          <Text variant="subtitle-16" className={cn("text-gray-900")}>
-                            {member.egg_pop_member_id.user_id.user_name}
-                          </Text>
-                          {member.admin && <Tag tagName="eggmaster" variant="black" className={cn("ml-2")} />}
+                {ChattingMember?.filter((member) => member.egg_pop_member.user.user_id !== userId).map((member) => (
+                  <li key={member.egg_pop_member.egg_pop_member_id}>
+                    <div className={cn("flex items-center justify-between py-2 px-4 rounded-md")}>
+                      <div className={cn("flex items-center")}>
+                        <div className={cn("w-10 h-10 overflow-hidden rounded-full mr-2")}>
+                          <Image
+                            src={member.egg_pop_member.user.user_profile_img}
+                            alt="프로필 이미지"
+                            width={40}
+                            height={40}
+                            className={cn("rounded-full")}
+                          />
                         </div>
+                        <Text variant="subtitle-16" className={cn("text-gray-900")}>
+                          {member.egg_pop_member.user.user_name}
+                        </Text>
+                        {member.admin && <Tag tagName="eggmaster" variant="black" className={cn("ml-2")} />}
                       </div>
-                    </li>
-                  )
-                )}
+                    </div>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className={cn("absolute bottom-0 w-full p-4 border-t border-gray-200")}>

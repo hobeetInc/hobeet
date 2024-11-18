@@ -1,16 +1,19 @@
 "use client";
 
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { ApiResponse, EggPopChattingRoom } from "@/types/안끝난거/eggpopchat.types";
+import { EggPopChattingRoom } from "@/types/안끝난거/eggpopchat.types";
 import { cn } from "@/utils/cn/util";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { getOneTimeChatRoom } from "../../_api/onetime";
+import { useAuthStore } from "@/store/authStore";
 
 const OneTimeClubChattingRoomPage = () => {
   const [chatRooms, setChatRooms] = useState<EggPopChattingRoom[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const userId = useAuthStore((state) => state.userId);
 
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
@@ -27,33 +30,10 @@ const OneTimeClubChattingRoomPage = () => {
 
   useEffect(() => {
     const supabase = createClient();
-
+    if (!userId) return;
     const fetchChatRooms = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      const userId = data.user?.id;
-
-      if (error || !userId) {
-        console.error("사용자 정보를 가져오지 못했습니다: ", error);
-        setErrorMessage("사용자 정보를 가져오는 데 실패했습니다.");
-        setLoading(false);
-        return;
-      }
-
       try {
-        const response = await fetch("/api/getOneTimeChatRoom", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ userId })
-        });
-
-        const chatData: ApiResponse = await response.json();
-
-        if (!response.ok) {
-          throw new Error("서버에서 오류가 발생했습니다.");
-        }
-
+        const chatData = await getOneTimeChatRoom(userId);
         if (!chatData.data || chatData.data.length === 0) {
           setErrorMessage("채팅방이 없습니다.");
           setChatRooms([]);
@@ -61,7 +41,7 @@ const OneTimeClubChattingRoomPage = () => {
           return;
         }
 
-        const rooms: EggPopChattingRoom[] = chatData.data.flatMap((member) =>
+        const rooms = chatData.data.flatMap((member) =>
           member.egg_pop_chatting_room_member
             .filter((chatting) => chatting.active)
             .map((chatting) => {
