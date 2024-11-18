@@ -10,26 +10,17 @@ export const useCreatePop = () => {
   // 모임 생성 mutation
   const { mutateAsync: createPop, isPending } = useMutation({
     mutationFn: async (formData: EggPopForm) => {
-      // 모임 데이터 저장
-      await submitOneTimeClubData(formData);
+      const data = await submitOneTimeClubData(formData);
+      return data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       // 모임 리스트 관련 쿼리 무효화
       queryClient.invalidateQueries({ queryKey: queryKeys.pop.all });
 
       // 탑텐 리스트 무효화
       queryClient.invalidateQueries({ queryKey: queryKeys.pop.tenList(10) });
-
-      // 특정 카테고리의 모임 리스트 무효화
-      queryClient.invalidateQueries({ queryKey: queryKeys.pop.byCategory(data.main_category_id) });
-
-      // 에그팝 상세정보 페이지 무효화
-      queryClient.invalidateQueries({ queryKey: queryKeys.pop.detail(data.egg_pop_id) });
-
-      // 호스트 정보 쿼리 무효화
-      queryClient.invalidateQueries({ queryKey: queryKeys.user.hostInfo(data.user_id) });
-    }
-  });
+    } // onSuccess 끝에 중괄호 추가
+  }); // useMutation 끝에 중괄호 추가
 
   return { createPop, isPending };
 };

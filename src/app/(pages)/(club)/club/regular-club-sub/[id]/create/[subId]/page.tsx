@@ -52,7 +52,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
     const currentTax = tax === 0 ? "X" : tax.toLocaleString() + "원";
 
     const crewMembers = member.map((member) => ({
-      egg_day_id: member.egg_day_id,
+      memberId: member.egg_day_id,
       userId: member.user_id,
       userName: member.user.user_name,
       userImage: member.user.user_profile_img
