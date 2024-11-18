@@ -9,7 +9,7 @@ import DateTime from "../../_components/oneTimeClub/DateTime";
 import AddressSearch from "../../_components/oneTimeClub/AddressSearch";
 import MemberType from "../../_components/oneTimeClub/MemberType";
 import Tax from "../../_components/oneTimeClub/Tax";
-import { EggPopForm } from "@/types/안끝난거/eggpop.types";
+import { EggPopFormWithImageFile } from "@/types/안끝난거/eggpop.types";
 import ProgressBar from "../../_components/ProgressBar";
 import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
@@ -18,6 +18,7 @@ import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 import { createOneTimeChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/onetime";
 import { useCreatePop } from "@/hooks/useCreate";
 import { useAuthStore } from "@/store/authStore";
+import { useUploadImage } from "@/hooks/useUploadImage";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const OneTimeContent = () => {
   const userId = useAuthStore((state) => state.userId);
 
   const { createPop, isPending } = useCreatePop();
+  const uploadClubImage = useUploadImage();
 
   // 초기값 설정 시 localStorage 데이터를 먼저 확인
   const getInitialData = () => {
@@ -76,7 +78,7 @@ const OneTimeContent = () => {
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6>(currentStep);
   const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedGender);
-  const [formData, setFormData] = useState<EggPopForm>(initialData.formData);
+  const [formData, setFormData] = useState<EggPopFormWithImageFile>(initialData.formData);
 
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
@@ -153,7 +155,9 @@ const OneTimeContent = () => {
   const handleSubmit = async () => {
     try {
       // 슈퍼베이스에 데이터 저장
-      const data = await createPop(formData);
+      const imageUrl = await uploadClubImage(formData.egg_pop_image);
+
+      const data = await createPop({ ...formData, egg_pop_image: imageUrl });
 
       const member = {
         egg_pop_id: data.egg_pop_id,

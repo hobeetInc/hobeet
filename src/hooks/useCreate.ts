@@ -1,8 +1,4 @@
-import {
-  submitOneTimeClubData,
-  submitRegularClubData,
-  uploadImage
-} from "@/app/(pages)/(club)/club/_api/clubSubmission";
+import { submitOneTimeClubData, submitRegularClubData } from "@/app/(pages)/(club)/club/_api/clubSubmission";
 import { EggPopForm } from "@/types/안끝난거/eggpop.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "./utils/queryKeys";
@@ -11,32 +7,16 @@ import { EggClubForm } from "@/types/안끝난거/eggclub.types";
 export const useCreatePop = () => {
   const queryClient = useQueryClient();
 
-  // 이미지 업로드 mutation
-  const { mutateAsync: uploadClubImage } = useMutation({
-    mutationFn: uploadImage
-  });
-
   // 모임 생성 mutation
   const { mutateAsync: createPop, isPending } = useMutation({
     mutationFn: async (formData: EggPopForm) => {
-      let finalFormData = { ...formData };
-
-      if (formData.egg_pop_image instanceof File) {
-        const ImageUrl = await uploadClubImage(formData.egg_pop_image);
-
-        finalFormData = {
-          ...finalFormData,
-          egg_pop_image: ImageUrl
-        };
-      }
-
       // 모임 데이터 저장
-      const data = await submitOneTimeClubData(finalFormData);
+      const data = await submitOneTimeClubData(formData);
 
       // 호스트 정보도 캐시에 저장
       queryClient.setQueryData(queryKeys.user.hostInfo(data.user_id), {
-        user_name: data.user_id.user_name,
-        user_profile_img: data.user_id.user_profile_img
+        user_name: data.user.user_name,
+        user_profile_img: data.user.user_profile_img
       });
 
       return data;
@@ -65,27 +45,11 @@ export const useCreatePop = () => {
 export const useCreateClub = () => {
   const queryClient = useQueryClient();
 
-  // 이미지 업로드 mutation
-  const { mutateAsync: uploadClubImage } = useMutation({
-    mutationFn: uploadImage
-  });
-
   // 모임 생성 mutation
   const { mutateAsync: createClub, isPending } = useMutation({
     mutationFn: async (formData: EggClubForm) => {
-      let finalFormData = { ...formData };
-
-      if (formData.egg_club_image instanceof File) {
-        const ImageUrl = await uploadClubImage(formData.egg_club_image);
-
-        finalFormData = {
-          ...finalFormData,
-          egg_club_image: ImageUrl
-        };
-      }
-
       // 모임 데이터 저장
-      return await submitRegularClubData(finalFormData);
+      return await submitRegularClubData(formData);
     },
     onSuccess: (data) => {
       // 모임 리스트 관련 쿼리 무효화
