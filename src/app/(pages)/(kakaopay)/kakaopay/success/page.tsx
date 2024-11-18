@@ -4,199 +4,108 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/store/AuthContext";
-import { EggClubDataNoTax, EggClubPay, EggPopDataNoTax, EggPopPay } from "@/types/payment.types";
+import { useKakaopayRequest } from "@/hooks/useKakaopayRequest";
+import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
 import { CustomAddress } from "@/utils/CustomAddress";
+import { EggPopPay, EggClubPay, EggPopDataNoTax, EggClubDataNoTax } from "@/types/payment.types";
+import { approvePayment, fetchOrderData } from "../_api/kakaoPayment";
+import Text from "@/components/uiComponents/TextComponents/Text";
+import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { HiOutlineChevronLeft } from "react-icons/hi";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { Icon } from "@/components/uiComponents/IconComponents/Icon";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
-import { fetchClubData, fetchRegularClubId } from "../_api/fetchClub";
-import { fetchPaymentData } from "../_api/fetchPayment";
-import { approvePayment, fetchOrderData } from "../_api/kakaoPayment";
-import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
-
-interface EggClubIdType {
-  egg_club_id: number;
-}
 
 const PaymentSuccessPage = () => {
-  const [oneTimeClubPayData, setOneTimeClubPayData] = useState<EggPopPay | null>(null);
-  const [regularClubPayData, setRegularClubPayData] = useState<EggClubPay | null>(null);
-  const [oneTimeClubData, setOneTimeClubData] = useState<EggPopDataNoTax | null>();
-  const [regularClubData, setRegularClubData] = useState<EggClubDataNoTax | null>();
-  const [paymentAmount, setPaymentAmount] = useState(null);
-  const [queryParams, setQueryParams] = useState<{
-    requestUserId: string | null;
-    clubId: string | null;
-    clubType: string | null;
-    pgToken: string | null;
-  }>({
-    requestUserId: null,
-    clubId: null,
-    clubType: null,
-    pgToken: null
-  });
-  const [eggClubId, setEggClubId] = useState<EggClubIdType | null>(null);
-
+  const [paymentAmount, setPaymentAmount] = useState<number | null>(null);
   const router = useRouter();
   const { userName } = useAuth();
   const searchParams = useSearchParams();
 
-  // 쿼리파라미터 추출
-  useEffect(() => {
-    const requestUserId = searchParams.get("requestUserId");
-    const clubId = searchParams.get("clubId");
-    const clubType = searchParams.get("clubType");
-    const pgToken = searchParams.get("pg_token");
+  const requestUserId = searchParams.get("requestUserId") ?? "";
+  const clubId = searchParams.get("clubId") ?? "";
+  const clubType = searchParams.get("clubType");
+  const pgToken = searchParams.get("pg_token");
+  const isOneTimeClub = clubType === "true";
 
-    setQueryParams({ requestUserId, clubId, clubType, pgToken });
-  }, [searchParams]);
+  const { clubQuery, paymentQuery, regularClubIdQuery, isLoading, isError } = useKakaopayRequest(
+    requestUserId,
+    clubId,
+    isOneTimeClub
+  );
 
-  // 모임 정보들 불러오기
   useEffect(() => {
-    const initClubData = async () => {
-      const { requestUserId, clubId, clubType } = queryParams;
-      if (!requestUserId || !clubId || clubType === null) {
-        console.log("잘못된 요청입니다.");
-        return;
-      }
+    const processPayment = async () => {
+      if (!paymentQuery.data || !pgToken) return;
+
+      const payData = isOneTimeClub
+        ? (paymentQuery.data.oneTimeClubPayData as EggPopPay)
+        : (paymentQuery.data.regularClubPayData as EggClubPay);
+
+      if (!payData) return;
 
       try {
-        const isOneTimeClub = clubType === "true";
-        const { oneTimeClubData, regularClubData } = await fetchClubData(clubId, isOneTimeClub);
+        const cid = isOneTimeClub
+          ? (payData as EggPopPay).egg_pop_kakaopay_cid
+          : (payData as EggClubPay).egg_day_kakaopay_cid;
 
-        if (oneTimeClubData) setOneTimeClubData(oneTimeClubData);
-        if (regularClubData) setRegularClubData(regularClubData);
-      } catch (error) {
-        console.error("모임 정보를 불러오는 중 오류가 발생했습니다:", error);
-        alert("모임 정보를 불러오는데 실패했습니다.");
-        router.push("/signin");
-      }
-    };
+        const tid = isOneTimeClub
+          ? (payData as EggPopPay).egg_pop_kakaopay_tid
+          : (payData as EggClubPay).egg_day_kakaopay_tid;
 
-    if (queryParams.requestUserId && queryParams.clubId && queryParams.clubType) {
-      initClubData();
-    }
-  }, [queryParams, router]);
-
-  // 결제 정보 불러오기
-  useEffect(() => {
-    const initPaymentData = async () => {
-      const { requestUserId, clubId, clubType } = queryParams;
-      if (!requestUserId || !clubId || clubType === null) {
-        console.log("잘못된 요청입니다.");
-        return;
-      }
-
-      try {
-        const isOneTimeClub = clubType === "true";
-        const { oneTimeClubPayData, regularClubPayData } = await fetchPaymentData(requestUserId, clubId, isOneTimeClub);
-
-        if (oneTimeClubPayData) setOneTimeClubPayData(oneTimeClubPayData);
-        if (regularClubPayData) setRegularClubPayData(regularClubPayData);
-      } catch (error) {
-        console.error("결제 정보를 불러오는 중 오류가 발생했습니다:", error);
-        alert("결제 정보를 불러오는데 실패했습니다.");
-      }
-    };
-
-    if (queryParams.requestUserId && queryParams.clubId && queryParams.clubType) {
-      initPaymentData();
-    }
-  }, [queryParams]);
-
-  // 결제 승인
-  useEffect(() => {
-    const initApprovePayment = async () => {
-      const { requestUserId, clubId, clubType, pgToken } = queryParams;
-      if (!requestUserId || !clubId || clubType === null || !pgToken) return;
-      if (!oneTimeClubPayData && !regularClubPayData) return;
-
-      try {
         await approvePayment({
-          cid: oneTimeClubPayData?.egg_pop_kakaopay_cid || regularClubPayData?.egg_day_kakaopay_cid,
-          tid: oneTimeClubPayData?.egg_pop_kakaopay_tid || regularClubPayData?.egg_day_kakaopay_tid,
+          cid,
+          tid,
           partner_order_id: clubId,
           partner_user_id: requestUserId,
           pg_token: pgToken
         });
-      } catch (error) {
-        console.error("결제 승인 중 오류가 발생했습니다:", error);
-        alert("결제 승인에 실패했습니다.");
-      }
-    };
 
-    if (
-      queryParams.requestUserId &&
-      queryParams.clubId &&
-      queryParams.clubType &&
-      (oneTimeClubPayData || regularClubPayData)
-    ) {
-      initApprovePayment();
-    }
-  }, [queryParams, oneTimeClubPayData, regularClubPayData]);
-
-  // 주문 정보 조회
-  useEffect(() => {
-    const initOrderData = async () => {
-      if (!oneTimeClubPayData && !regularClubPayData) return;
-
-      try {
-        const orderData = await fetchOrderData(
-          oneTimeClubPayData?.egg_pop_kakaopay_cid || regularClubPayData?.egg_day_kakaopay_cid,
-          oneTimeClubPayData?.egg_pop_kakaopay_tid || regularClubPayData?.egg_day_kakaopay_tid
-        );
-
+        const orderData = await fetchOrderData(cid, tid);
         setPaymentAmount(orderData.amount.total);
       } catch (error) {
-        console.error("주문 정보를 불러오는 중 오류가 발생했습니다:", error);
-        alert("주문 정보를 불러오는데 실패했습니다.");
+        console.error("결제 처리 중 오류가 발생했습니다:", error);
+        alert("결제 처리에 실패했습니다.");
       }
     };
 
-    if (oneTimeClubPayData || regularClubPayData) {
-      initOrderData();
-    }
-  }, [oneTimeClubPayData, regularClubPayData]);
+    processPayment();
+  }, [paymentQuery.data, pgToken, clubId, requestUserId, isOneTimeClub]);
 
-  // 정기 모임 ID 조회
-  useEffect(() => {
-    const initClubId = async () => {
-      try {
-        const clubId = searchParams.get("clubId");
-        if (!clubId) return;
+  if (isLoading) return <div>로딩중...</div>;
+  if (isError) return <div>에러가 발생했습니다</div>;
 
-        const data = await fetchRegularClubId(clubId);
-        setEggClubId(data);
-      } catch (error) {
-        console.error("정기 모임 ID를 불러오는 중 오류가 발생했습니다:", error);
+  const clubData = isOneTimeClub ? clubQuery.data?.oneTimeClubData : clubQuery.data?.regularClubData;
+
+  const clubInfo = isOneTimeClub
+    ? {
+        image: (clubData as EggPopDataNoTax)?.egg_pop_image,
+        name: (clubData as EggPopDataNoTax)?.egg_pop_name,
+        location: (clubData as EggPopDataNoTax)?.egg_pop_location,
+        dateTime: (clubData as EggPopDataNoTax)?.egg_pop_date_time
       }
-    };
+    : {
+        image: (clubData as EggClubDataNoTax)?.egg_day_image,
+        name: (clubData as EggClubDataNoTax)?.egg_day_name,
+        location: (clubData as EggClubDataNoTax)?.egg_day_location,
+        dateTime: (clubData as EggClubDataNoTax)?.egg_day_date_time
+      };
 
-    initClubId();
-  }, [searchParams, oneTimeClubPayData, regularClubPayData]);
-
-  const clubImageUrl =
-    (queryParams.clubType === "true" ? oneTimeClubData?.egg_pop_image : regularClubData?.egg_day_image) || "";
+  const payData = isOneTimeClub ? paymentQuery.data?.oneTimeClubPayData : paymentQuery.data?.regularClubPayData;
 
   const handleGoToMyClub = () => {
-    const { clubId, clubType } = queryParams;
     if (!clubId) return;
 
     localStorage.setItem("fromKakaoPay", "true");
 
-    if (clubType === "true") {
+    if (isOneTimeClub) {
       router.push(`/club/one-time-club-sub/${clubId}`);
-    } else {
-      if (eggClubId) {
-        router.push(`/club/regular-club-sub/${eggClubId.egg_club_id}/create/${clubId}`);
-      }
+    } else if (regularClubIdQuery.data?.egg_club_id) {
+      router.push(`/club/regular-club-sub/${regularClubIdQuery.data.egg_club_id}/create/${clubId}`);
     }
   };
 
   return (
-    <div className="p-4  flex flex-col">
+    <div className="p-4 flex flex-col">
       <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
         <div className="left-0 m-3">
           <button onClick={handleGoToMyClub}>
@@ -215,13 +124,12 @@ const PaymentSuccessPage = () => {
         <div className="w-[390px]">
           <div className="flex flex-col gap-2 mt-8">
             <Image
-              src={"/asset/Egg.png"}
+              src="/asset/Egg.png"
               alt="egg"
               width={62}
               height={32}
               className="self-center mb-[8px] w-[62px] h-8 object-cover"
             />
-
             <Text variant="header-18" className="text-center text-gray-900 mb-1">
               모임 참여 신청이 완료됐어요!
             </Text>
@@ -230,17 +138,19 @@ const PaymentSuccessPage = () => {
 
             <div className="w-full h-[35px] flex items-center">
               <Text variant="subtitle-14">
-                {" "}
-                {queryParams.clubType === "true"
-                  ? customDateFormat(oneTimeClubPayData?.egg_pop_kakaopay_create_at)
-                  : customDateFormat(regularClubPayData?.egg_day_kakaopay_create_at)}
+                {payData &&
+                  customDateFormat(
+                    isOneTimeClub
+                      ? (payData as EggPopPay).egg_pop_kakaopay_create_at
+                      : (payData as EggClubPay).egg_day_kakaopay_create_at
+                  )}
               </Text>
             </div>
 
             <div className="flex items-center h-[131px] border-b-2 border-solid border-gray-50 pb-[35px]">
               <div className="w-[88px] h-[88px] mr-2">
                 <Image
-                  src={clubImageUrl}
+                  src={clubInfo.image || ""}
                   alt="모임 이미지"
                   width={88}
                   height={88}
@@ -249,32 +159,17 @@ const PaymentSuccessPage = () => {
               </div>
 
               <div>
-                <Tag tagName={`${queryParams.clubType === "true" ? "eggpop" : "eggday"}`} className="mb-[4px]" />
-
-                <Text variant="subtitle-14">
-                  {queryParams.clubType === "true" ? oneTimeClubData?.egg_pop_name : regularClubData?.egg_day_name}
-                </Text>
+                <Tag tagName={isOneTimeClub ? "eggpop" : "eggday"} className="mb-[4px]" />
+                <Text variant="subtitle-14">{clubInfo.name}</Text>
 
                 <div className="flex items-center text-xs text-gray-600 gap-1">
                   <div className="mr-1 w-4 h-4">
                     <Icon name="location" />
                   </div>
 
-                  <Text variant="body_medium-14">
-                    {queryParams.clubType === "true"
-                      ? CustomAddress(oneTimeClubData?.egg_pop_location || "주소 정보 없음")
-                      : CustomAddress(regularClubData?.egg_day_location || "주소 정보 없음")}
-                  </Text>
-                  <Text variant="body_medium-14">
-                    {queryParams.clubType === "true"
-                      ? customDateNotWeek(oneTimeClubData?.egg_pop_date_time || "날짜 정보 없음").date
-                      : customDateNotWeek(regularClubData?.egg_day_date_time || "날짜 정보 없음").date}
-                  </Text>
-                  <Text variant="body_medium-14">
-                    {queryParams.clubType === "true"
-                      ? customDateNotWeek(oneTimeClubData?.egg_pop_date_time || "날짜 정보 없음").time
-                      : customDateNotWeek(regularClubData?.egg_day_date_time || "날짜 정보 없음").time}
-                  </Text>
+                  <Text variant="body_medium-14">{CustomAddress(clubInfo.location || "주소 정보 없음")}</Text>
+                  <Text variant="body_medium-14">{customDateNotWeek(clubInfo.dateTime || "날짜 정보 없음").date}</Text>
+                  <Text variant="body_medium-14">{customDateNotWeek(clubInfo.dateTime || "날짜 정보 없음").time}</Text>
                 </div>
               </div>
             </div>
@@ -301,7 +196,6 @@ const PaymentSuccessPage = () => {
                 <Text variant="subtitle-14" className="w-[49px]">
                   결제방법
                 </Text>
-
                 <div className="w-[230px] text-gray-900 text-sm font-normal font-['Pretendard'] leading-tight">
                   카카오페이
                 </div>
@@ -311,7 +205,7 @@ const PaymentSuccessPage = () => {
                   결제금액
                 </Text>
                 <div className="w-[230px] text-gray-900 text-sm font-normal font-['Pretendard'] leading-tight">
-                  {new Intl.NumberFormat("ko-KR").format(paymentAmount)}원
+                  {paymentAmount && new Intl.NumberFormat("ko-KR").format(paymentAmount)}원
                 </div>
               </div>
             </div>
@@ -327,4 +221,5 @@ const PaymentSuccessPage = () => {
     </div>
   );
 };
+
 export default PaymentSuccessPage;

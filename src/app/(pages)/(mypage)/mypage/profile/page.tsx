@@ -3,33 +3,21 @@
 import Image from "next/image";
 import { SlArrowRight } from "react-icons/sl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { FaCamera } from "react-icons/fa6";
 import { signOut } from "../../_api/logout";
-import { fetchUserProfile } from "../../_api/fetchProfile";
 import { useAuthStore } from "@/store/authStore";
+import { useProfile } from "@/hooks/useProfile";
 
 const ProfilePage = () => {
   const router = useRouter();
-  const [userName, setUserName] = useState("");
-  const [userProfileImg, setUserProfileImg] = useState("");
   const userId = useAuthStore((state) => state.userId);
+  const { profileQuery } = useProfile(userId);
 
-  useEffect(() => {
-    const initializeProfile = async () => {
-      try {
-        const profile = await fetchUserProfile(userId);
-        setUserName(profile.user_name);
-        setUserProfileImg(profile.user_profile_img);
-      } catch (error) {
-        console.error("프로필 정보를 불러오는 중 오류가 발생했습니다:", error);
-        alert("프로필 정보를 불러오는데 실패했습니다.");
-      }
-    };
+  if (profileQuery.isLoading) return <div>로딩중...</div>;
+  if (profileQuery.error) return <div>프로필 정보 처리 중 오류</div>;
 
-    initializeProfile();
-  }, [userId]);
+  const { user_name: userName, user_profile_img: userProfileImg } = profileQuery.data;
 
   return (
     <div className="max-w-md mx-auto p-4">
