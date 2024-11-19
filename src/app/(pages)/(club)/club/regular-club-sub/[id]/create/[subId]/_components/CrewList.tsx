@@ -84,6 +84,11 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
     }
   };
 
+  const handleAlertLogin = () => {
+    alert("로그인 후 이용 가능한 서비스입니다");
+    return;
+  };
+
   const renderJoinButton = () => {
     if (userId === clubHostId) {
       return (
@@ -108,6 +113,16 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
           </Text>
           <Button colorType="yellow" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
             에그클럽 채팅방
+          </Button>
+        </div>
+      );
+    }
+
+    if (!userId) {
+      return (
+        <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50">
+          <Button onClick={handleAlertLogin} colorType="black" borderType="circle">
+            참여하기
           </Button>
         </div>
       );

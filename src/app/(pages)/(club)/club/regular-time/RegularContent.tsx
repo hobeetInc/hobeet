@@ -76,9 +76,6 @@ const RegularContent = () => {
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedAge);
   const [formData, setFormData] = useState<EggClubFormWithImageFile>(initialData.formData);
 
-  // 폼데이터 확인용
-  useEffect(() => {}, [formData]);
-
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
     const newStep = Number(searchParams.get("step") || 1) as 1 | 2 | 3;
