@@ -168,11 +168,11 @@ const ChatPage = () => {
         <div className={cn("p-4")}>
           {Object.keys(groupedMessages).length > 0 ? (
             Object.keys(groupedMessages).map((dateString) => (
-              <div key={dateString} className={cn("mb-6")}>
+              <div key={dateString} className={cn("mb-10")}>
                 <div className={cn("justify-items-center")}>
                   <div
                     className={cn(
-                      "w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-2 text-center"
+                      "w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-4 text-center mt-5"
                     )}
                   >
                     <Text variant="body-12" className={cn("text-gray-500")}>

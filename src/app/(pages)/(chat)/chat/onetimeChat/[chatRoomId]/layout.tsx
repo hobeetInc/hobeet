@@ -56,7 +56,7 @@ function ChatHeader() {
     <>
       <div
         className={cn(
-          "flex items-center justify-between px-4 h-[60px] border-b border-gray-200 bg-white fixed top-0 left-0 right-0 z-10"
+          "flex items-center justify-between h-[60px] border-b border-gray-200 bg-white fixed top-0 left-0 right-0 z-10"
         )}
       >
         <button onClick={handleBack} className="p-2">
@@ -135,7 +135,7 @@ function ChatHeader() {
                 ))}
               </ul>
             </div>
-            <div className={cn("absolute bottom-0 w-full p-4 border-t border-gray-200")}>
+            <div className={cn("absolute bottom-0 w-full pb-[34px] border-t border-gray-200")}>
               <button
                 onClick={handleChatRoomExit}
                 className={cn(

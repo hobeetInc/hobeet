@@ -12,6 +12,7 @@ import { fetchChatInfo, fetchEggClubId, fetchMemberData, fetchMessages } from ".
 import { queryKeys } from "@/hooks/utils/queryKeys";
 import { sendMessage } from "../../../_api/regular";
 import ChatInput from "./_components/ChatInput";
+import { cn } from "@/utils/cn/util";
 
 const supabase = createClient();
 
@@ -199,16 +200,19 @@ const ChatPage = () => {
   }
 
   return (
-    <div className="flex flex-col h-full ">
-      {/* 메시지 출력 */}
-      <div className="flex-grow overflow-y-auto">
-        <div className="p-4">
+    <div className={cn("flex flex-col h-full")}>
+      <div className={cn("flex-grow overflow-y-auto")}>
+        <div className={cn("p-4")}>
           {Object.keys(groupedMessages).length > 0 ? (
             Object.keys(groupedMessages).map((dateString) => (
-              <div key={dateString} className="mb-6">
-                <div className="justify-items-center">
-                  <div className="w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-2 text-center">
-                    <Text variant="body-12" className="text-gray-500">
+              <div key={dateString} className={cn("mb-10")}>
+                <div className={cn("justify-items-center")}>
+                  <div
+                    className={cn(
+                      "w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-4 text-center mt-5"
+                    )}
+                  >
+                    <Text variant="body-12" className={cn("text-gray-500")}>
                       {dateString}
                     </Text>
                   </div>
@@ -220,28 +224,32 @@ const ChatPage = () => {
                   return (
                     <div
                       key={message.egg_day_chatting_message_id}
-                      className={`flex items-start mb-4 ${isCurrentUser ? "justify-end" : "justify-start"}`}
+                      className={cn("flex items-start mb-4", isCurrentUser ? "justify-end" : "justify-start")}
                     >
-                      <div className={`flex flex-col ${isCurrentUser ? "items-end" : "items-start"}`}>
+                      <div className={cn("flex flex-col", isCurrentUser ? "items-end" : "items-start")}>
                         {!isCurrentUser && (
-                          <div className="flex">
-                            <div className="flex items-center mr-2 border-solid border-[1px] rounded-full w-[40px] h-[40px]">
+                          <div className={cn("flex")}>
+                            <div
+                              className={cn(
+                                "flex items-center mr-2 border-solid border-[1px] rounded-full w-[40px] h-[40px]"
+                              )}
+                            >
                               <Image
                                 src={message.user.user_profile_img}
                                 alt={`${message.user.user_name}의 프로필 이미지`}
                                 width={40}
                                 height={40}
-                                className="rounded-full"
+                                className={cn("rounded-full")}
                               />
                             </div>
-                            <span className="text-sm content-center text-gray-600 block]">
+                            <span className={cn("text-sm content-center text-gray-600 block")}>
                               {message.user.user_name}
                             </span>
                           </div>
                         )}
-                        <div className="flex items-center">
+                        <div className={cn("flex items-center")}>
                           {isCurrentUser && (
-                            <span className="text-xs text-gray-500 block self-end	mr-2">
+                            <span className={cn("text-xs text-gray-500 block self-end mr-2")}>
                               {date.toLocaleTimeString([], {
                                 hour: "2-digit",
                                 minute: "2-digit",
@@ -251,14 +259,16 @@ const ChatPage = () => {
                           )}
 
                           <div
-                            className={`max-w-xs break-words p-3 rounded-[16px] ${
-                              isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2] ml-10 "
-                            } text-gray-900`}
+                            className={cn(
+                              "max-w-xs break-words p-3 rounded-[16px]",
+                              isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2] ml-10",
+                              "text-gray-900"
+                            )}
                           >
-                            <p className="max-w-[150px]">{message.egg_day_chatting_message_content}</p>
+                            <p className={cn("max-w-[150px]")}>{message.egg_day_chatting_message_content}</p>
                           </div>
                           {!isCurrentUser && (
-                            <span className="text-xs text-gray-500 block self-end ml-1	">
+                            <span className={cn("text-xs text-gray-500 block self-end ml-1")}>
                               {date.toLocaleTimeString([], {
                                 hour: "2-digit",
                                 minute: "2-digit",
@@ -274,7 +284,7 @@ const ChatPage = () => {
               </div>
             ))
           ) : (
-            <div className="text-center mt-[120px]">메시지가 없습니다.</div>
+            <div className={cn("text-center mt-[120px]")}>메시지가 없습니다.</div>
           )}
           <div ref={messagesEndRef} />
         </div>

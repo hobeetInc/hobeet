@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+import { cn } from "@/utils/cn/util";
 
 interface ChatInputProps {
   newMessage: string;
@@ -43,15 +44,24 @@ const ChatInput = ({ newMessage, setNewMessage, handleSendMessage }: ChatInputPr
             }}
             rows={1}
             maxLength={100}
-            className="flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px] focus:outline-none focus:ring-2 transition duration-200 min-h-[48px] max-h-[120px] content-center resize-none overflow-y-auto text-body-14"
-            placeholder="메시지를 입력하세요..."
+            className={cn(
+              "flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px]",
+              "focus:outline-none transition duration-200",
+              "min-h-[36px] max-h-[120px]",
+              "content-center resize-none overflow-y-auto",
+              "text-body-14 min-w-[316px]"
+            )}
+            placeholder="메시지를 입력하세요."
           />
           <button
             type="button"
             onClick={handleSendMessage}
-            className={`w-[40px] h-[40px] ml-4 ${
-              sendIconColor ? "bg-primary-400" : "bg-gray-50"
-            } text-white rounded-full flex items-center justify-center`}
+            className={cn(
+              "w-[40px] h-[40px] ml-4 rounded-full",
+              "flex items-center justify-center",
+              sendIconColor ? "bg-primary-400" : "bg-gray-50",
+              "text-white"
+            )}
           >
             <Icon name="rocket" />
           </button>
