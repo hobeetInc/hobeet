@@ -3,8 +3,9 @@
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/store/AuthContext";
 import { ClubHeaderProps } from "@/types/eggclub.types";
-import { IoIosArrowBack } from "react-icons/io";
 import { useEffect } from "react";
+import { ChevronLeft } from "lucide-react";
+import { GoPlus } from "react-icons/go";
 
 const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   const router = useRouter();
@@ -60,14 +61,18 @@ const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   };
 
   return (
-    <div className="flex justify-between items-center h-[48px] p-4">
-      <button onClick={handleBack} className="left-4">
-        <IoIosArrowBack />
+    <div className="flex justify-between items-center h-[48px] p-3">
+      <button onClick={handleBack} className="w-6 h-6">
+        <ChevronLeft className="w-full h-full" />
       </button>
       <h1 className="flex-1 text-center text-lg font-semibold">
         {clubInfo.egg_club_name.length > 8 ? `${clubInfo.egg_club_name.slice(0, 8)}...` : clubInfo.egg_club_name}
       </h1>
-      {clubInfo.user_id === userId ? <button onClick={handleCreate}>+</button> : null}
+      {clubInfo.user_id === userId ? (
+        <button onClick={handleCreate} className="w-6 h-6">
+          <GoPlus className="w-full h-full" />
+        </button>
+      ) : null}
     </div>
   );
 };

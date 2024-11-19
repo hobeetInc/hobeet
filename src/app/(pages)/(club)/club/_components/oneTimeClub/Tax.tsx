@@ -79,9 +79,9 @@ const Tax = ({ formData, setFormData }: EggPopProps) => {
         </button>
       </div>
 
-      <div>
+      <div className="fixed top-[181px]">
         {showTaxInput && (
-          <div className="relative">
+          <div>
             <ClubCreateInput
               type="text"
               value={formData.egg_pop_tax || ""}

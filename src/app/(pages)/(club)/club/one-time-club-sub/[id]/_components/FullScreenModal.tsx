@@ -3,8 +3,8 @@
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { FullScreenModalProps } from "@/types/common.types";
+import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
-import { IoIosArrowBack } from "react-icons/io";
 
 const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) => {
   if (!isOpen) return null;
@@ -13,7 +13,7 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
     <div className="fixed inset-0 bg-white z-50">
       <div className="fixed flex items-center justify-between h-[60px] w-full px-4">
         <button onClick={onClose} className="w-12 h-full flex items-center justify-center">
-          <IoIosArrowBack className="w-6 h-6" />
+          <ChevronLeft className="w-6 h-6" />
         </button>
         <div className="flex-1 text-center">
           <Text variant="header-16">전체 에그즈</Text>

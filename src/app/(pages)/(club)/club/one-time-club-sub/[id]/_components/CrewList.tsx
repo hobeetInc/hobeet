@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { getOneTimeMember } from "../../../_api/supabase";
+import { useState } from "react";
 import FullScreenModal from "./FullScreenModal";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
@@ -145,7 +144,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         </div>
         <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
 
-        <div className="w-full fixed bottom-[34px] right-0 left-0">{renderJoinButton()}</div>
+        <div className="w-full  fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
     </>
