@@ -25,13 +25,16 @@ const PaymentConfirmPage = () => {
   const clubId = searchParams.get("clubId") ?? "";
   const isOneTimeClub = clubType === "true";
 
+  // 결제할 클럽 상세 정보 조회
   const { paymentClubQuery, isLoading, isError } = useKakaopayRequest(userId, clubId, isOneTimeClub);
 
   if (isLoading) return <div>로딩중...</div>;
   if (isError) return <div>결제 모임 정보 처리 중 오류</div>;
 
+  // 모임 유형에 따른 분기 처리
   const clubData = isOneTimeClub ? paymentClubQuery.data?.oneTimeClubData : paymentClubQuery.data?.regularClubData;
 
+  // 클럽 정보 구조화
   const clubInfo = isOneTimeClub
     ? {
         image: (clubData as EggPopData)?.egg_pop_image,
@@ -160,7 +163,7 @@ const PaymentConfirmPage = () => {
                 <span className="ml-2 text-sm">주문 내용을 확인했으며, 결제에 동의합니다</span>
               </label>
 
-              <div className="h-[50px] bg-neutral-800 rounded-[25px] justify-center items-center gap-2.5 inline-flex">
+              <div className="h-[50px] bg-primary-500 rounded-[25px] justify-center items-center gap-2.5 inline-flex">
                 {agreeChecked ? (
                   <PaymentButton
                     clubId={parseInt(clubId || "0")}

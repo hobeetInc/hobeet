@@ -64,7 +64,7 @@ export async function updateSession(request: NextRequest) {
 
   // 보호된 경로 정의
   const PROTECTED_PATHS = [
-    "/mypage",
+    "/mypage/profile",
     "/chat",
     "/myclublist",
     "/club",

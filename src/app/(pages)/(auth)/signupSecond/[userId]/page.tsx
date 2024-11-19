@@ -58,8 +58,10 @@ const SignupSecondPage = () => {
   useEffect(() => {
     const initializeSignup = async () => {
       try {
-        await signOut();
+        await signOut(); // 기존 정보 클리어
         const userData = await fetchUser(userIdParam as string);
+
+        // 사용자 정보를 토대로 전역상태 초기화
         if (userData) {
           setUserId(userData.user_id);
           setUserEmail(userData.user_email || "");
@@ -77,6 +79,7 @@ const SignupSecondPage = () => {
     initializeSignup();
   }, [userIdParam, setUserId, setUserEmail, setUserName, setUserGender, setUserProfileImg, router]);
 
+  // 선택된 년도와 월에 따라 해당 월의 총 일수 계산
   useEffect(() => {
     const daysInSelectedMonth = birthYear && birthMonth ? getDaysInMonth(Number(birthYear), Number(birthMonth)) : 31;
     if (Number(birthDay) > daysInSelectedMonth) {
@@ -85,22 +88,27 @@ const SignupSecondPage = () => {
   }, [birthYear, birthMonth, birthDay]);
 
   useEffect(() => {
+    // 년, 월, 일이 모두 선택되었을 때
     if (birthYear && birthMonth && birthDay) {
       setBirthDateError("");
+      // YYYY-MM-DD 형식으로 날짜 포맷팅
       setUserBirth(formatBirthDate(birthYear, birthMonth, birthDay));
     }
   }, [birthYear, birthMonth, birthDay]);
 
+  // 필수 입력값들이 모두 있는지 확인
   useEffect(() => {
     setIsFormComplete(Boolean(birthYear && birthMonth && birthDay && userName && userGender));
   }, [birthYear, birthMonth, birthDay, userName, userGender]);
 
+  // 이름 입력 처리
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value;
     setUserName(newName);
     setNameError(validateName(newName));
   };
 
+  // 이미지 업로드 처리
   const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -116,6 +124,7 @@ const SignupSecondPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // 유효성 검사
     const nameValidation = validateName(userName || "");
     const genderValidation = validateGender(userGender || "");
     const birthDateValidation = validateBirthDate(birthYear, birthMonth, birthDay);
@@ -139,9 +148,11 @@ const SignupSecondPage = () => {
         setUserProfileImg(uploadedImageUrl);
       }
 
+      // 생년월일 토대로 나이 계산
       const userAge = calcAge(Number(birthYear));
       setUserAge(userAge);
 
+      // 사용자 정보 업데이트
       await updateUser(userId, {
         user_name: userName || "",
         user_gender: userGender || "",

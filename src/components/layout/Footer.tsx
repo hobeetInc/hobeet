@@ -73,8 +73,8 @@ const noHeaderFooterRoutes = [
   /^\/club\/one-time-club-sub\/.*$/,
   /^\/club\/regular-club-sub\/.*$/,
   /^\/signupSecond\/.*$/,
-  "/mypage/profileUpdate",
-  "/mypage/inquiry",
+  "/mypage/profile/profileUpdate",
+  "/mypage/profile/inquiry",
   "/kakaopay/paymentConfirm",
   "/kakaopay/success",
   /^\/approvemembers\/.*$/

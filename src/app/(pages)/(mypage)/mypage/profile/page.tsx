@@ -23,7 +23,7 @@ const ProfilePage = () => {
     <div className="max-w-md mx-auto p-4">
       <div
         className="flex items-center bg-primary-200 p-4 rounded-lg mb-6 justify-between cursor-pointer"
-        onClick={() => router.push("/mypage/profileUpdate")}
+        onClick={() => router.push("/mypage/profile/profileUpdate")}
       >
         <div className="relative w-[78px] h-[78px]">
           <div className="w-full h-full rounded-full overflow-hidden">
@@ -58,7 +58,7 @@ const ProfilePage = () => {
 
       <div className="space-y-4">
         <div
-          onClick={() => router.push("/mypage/wishClubList")}
+          onClick={() => router.push("/mypage/profile/wishClubList")}
           className="flex items-center justify-between px-4 py-4 cursor-pointer border-solid border-b-[1px] border-gray-50"
         >
           <Text variant="body_medium-16">내가 찜한 모임</Text>
@@ -67,7 +67,7 @@ const ProfilePage = () => {
           </span>
         </div>
         <div
-          onClick={() => router.push("/mypage/paymentDetails")}
+          onClick={() => router.push("/mypage/profile/paymentDetails")}
           className="flex items-center justify-between px-4 py-4 cursor-pointer border-solid border-b-[1px] border-gray-50"
         >
           <Text variant="body_medium-16">내 결제 내역</Text>
@@ -76,7 +76,7 @@ const ProfilePage = () => {
           </span>
         </div>
         <div
-          onClick={() => router.push("/mypage/inquiry")}
+          onClick={() => router.push("/mypage/profile/inquiry")}
           className="flex items-center justify-between px-4 py-4 cursor-pointer border-solid border-b-[1px] border-gray-50"
         >
           <Text variant="body_medium-16">문의하기</Text>
