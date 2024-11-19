@@ -1,8 +1,6 @@
 import supabase from "@/utils/supabase/client";
 
-export const getEggDayPayList = async () => {
-  const { data: userData } = await supabase.auth.getUser();
-
+export const getEggDayPayList = async (userId: string) => {
   const { data, error } = await supabase
     .from("egg_day_kakaopay")
     .select(
@@ -19,16 +17,14 @@ export const getEggDayPayList = async () => {
       `
     )
     .order("egg_day_kakaopay_create_at", { ascending: false })
-    .eq("user_id", userData.user?.id);
+    .eq("user_id", userId);
 
   if (error) throw error;
 
   return data;
 };
 
-export const getEggPopPayList = async () => {
-  const { data: userData } = await supabase.auth.getUser();
-
+export const getEggPopPayList = async (userId: string) => {
   const { data, error } = await supabase
     .from("egg_pop_kakaopay")
     .select(
@@ -44,7 +40,7 @@ export const getEggPopPayList = async () => {
       `
     )
     .order("egg_pop_kakaopay_create_at", { ascending: false })
-    .eq("user_id", userData.user?.id);
+    .eq("user_id", userId);
 
   if (error) throw error;
 
