@@ -26,10 +26,6 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
   const router = useRouter();
 
   useEffect(() => {
-    console.log("유저아이디", userId);
-  }, []);
-
-  useEffect(() => {
     // 데이터 새로고침 함수
     const refreshData = async () => {
       try {
