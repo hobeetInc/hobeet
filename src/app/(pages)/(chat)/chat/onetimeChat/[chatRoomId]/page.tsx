@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import { cn } from "@/utils/cn/util";
 import { useAuthStore } from "@/store/authStore";
 import { queryKeys } from "@/hooks/utils/queryKeys";
@@ -17,6 +16,7 @@ import {
   fetchMessages,
   createMutations
 } from "@/app/(pages)/(chat)/_api/onetime";
+import ChatInput from "./_components/ChatInput";
 
 const supabase = createClient();
 
@@ -26,8 +26,6 @@ const ChatPage = () => {
   const [newMessage, setNewMessage] = useState<string>("");
   const queryClient = useQueryClient();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [sendIconColor, setSentIconColor] = useState<boolean>(false);
   const userId = useAuthStore((state) => state.userId);
 
   const { data: rec, isSuccess: isRecFetched } = useQuery({
@@ -39,19 +37,28 @@ const ChatPage = () => {
   const { data: memberData } = useQuery({
     queryKey: queryKeys.oneTimeChat.memberData(userId as string, rec?.egg_pop_id),
     queryFn: () => fetchMemberData(userId as string, rec.egg_pop_id),
-    enabled: !!userId && isRecFetched
+    enabled: !!userId && isRecFetched,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    staleTime: 0
   });
 
   const { data: chatInfo } = useQuery({
     queryKey: queryKeys.oneTimeChat.chatInfo(roomId as string),
     queryFn: () => fetchChatInfo(roomId as string, memberData?.egg_pop_member_id),
-    enabled: !!roomId && !!memberData
+    enabled: !!roomId && !!memberData,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    staleTime: 0
   });
 
   const { data: oneTimeMessages = [], isLoading: isLoadingMessages } = useQuery({
     queryKey: queryKeys.oneTimeChat.messages(roomId as string, chatInfo?.created_at),
     queryFn: () => fetchMessages(roomId as string, chatInfo.created_at),
-    enabled: !!roomId && !!chatInfo?.created_at
+    enabled: !!roomId && !!chatInfo?.created_at,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    staleTime: 0
   });
 
   const mutations = createMutations({
@@ -69,7 +76,15 @@ const ChatPage = () => {
         chatInfo,
         messageContent
       }),
-    onSuccess: mutations.sendMessage.onSuccess
+    onSuccess: async () => {
+      setNewMessage("");
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.oneTimeChat.messages(roomId as string, chatInfo?.created_at)
+      });
+      await queryClient.refetchQueries({
+        queryKey: queryKeys.oneTimeChat.messages(roomId as string, chatInfo?.created_at)
+      });
+    }
   });
 
   // 스크롤을 맨 아래로 이동시키는 함수
@@ -84,10 +99,10 @@ const ChatPage = () => {
 
   // 실시간 구독 설정
   useEffect(() => {
-    if (!roomId) return;
+    if (!roomId || !chatInfo?.created_at) return;
 
-    const subscription = supabase
-      .channel("chatting")
+    const channel = supabase
+      .channel(`room-${roomId}`)
       .on(
         "postgres_changes",
         {
@@ -96,25 +111,22 @@ const ChatPage = () => {
           table: "egg_pop_chatting_room_message",
           filter: `egg_pop_chatting_room_id=eq.${roomId}`
         },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ["oneTimeMessages", roomId] });
+        async (payload) => {
+          console.log("New message received:", payload);
+          await queryClient.invalidateQueries({
+            queryKey: queryKeys.oneTimeChat.messages(roomId as string, chatInfo?.created_at)
+          });
+          await queryClient.refetchQueries({
+            queryKey: queryKeys.oneTimeChat.messages(roomId as string, chatInfo?.created_at)
+          });
         }
       )
       .subscribe();
 
     return () => {
-      supabase.removeChannel(subscription);
+      supabase.removeChannel(channel);
     };
-  }, [roomId, queryClient]);
-
-  useEffect(() => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = "auto";
-      const scrollHeight = textarea.scrollHeight;
-      textarea.style.height = Math.min(scrollHeight, 120) + "px";
-    }
-  }, [newMessage]);
+  }, [roomId, queryClient, chatInfo?.created_at]);
 
   const groupMessagesByDate = (messages) => {
     return messages.reduce((acc, message) => {
@@ -156,11 +168,11 @@ const ChatPage = () => {
         <div className={cn("p-4")}>
           {Object.keys(groupedMessages).length > 0 ? (
             Object.keys(groupedMessages).map((dateString) => (
-              <div key={dateString} className={cn("mb-6")}>
+              <div key={dateString} className={cn("mb-10")}>
                 <div className={cn("justify-items-center")}>
                   <div
                     className={cn(
-                      "w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-2 text-center"
+                      "w-[135px] h-[25px] px-2 py-1 rounded-[10px] border border-solid border-gray-50 mb-4 text-center mt-5"
                     )}
                   >
                     <Text variant="body-12" className={cn("text-gray-500")}>
@@ -240,56 +252,7 @@ const ChatPage = () => {
         </div>
       </div>
 
-      {/* 채팅 입력 */}
-      <div className={cn("fixed bottom-0 left-0 right-0 bg-white border-t")}>
-        <div className={cn("p-4")}>
-          <div className={cn("flex items-center")}>
-            <textarea
-              ref={textareaRef}
-              value={newMessage}
-              onChange={(e) => {
-                if (e.target.value.length === 0) {
-                  setSentIconColor(false);
-                } else {
-                  setSentIconColor(true);
-                }
-                const lines = e.target.value.split("\n");
-                if (lines.length <= 5) {
-                  setNewMessage(e.target.value);
-                }
-              }}
-              onKeyPress={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSendMessage();
-                }
-              }}
-              rows={1}
-              maxLength={100}
-              className={cn(
-                "flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px]",
-                "focus:outline-none focus:ring-2 transition duration-200",
-                "min-h-[48px] max-h-[120px] content-center resize-none",
-                "overflow-y-auto text-body-14"
-              )}
-              placeholder="메시지를 입력하세요..."
-              style={{
-                lineHeight: "1.5"
-              }}
-            />
-            <button
-              type="button"
-              onClick={handleSendMessage}
-              className={cn(
-                "w-[40px] h-[40px] ml-4 rounded-full flex items-center justify-center",
-                sendIconColor ? "bg-primary-400" : "bg-gray-50"
-              )}
-            >
-              <Icon name="rocket" />
-            </button>
-          </div>
-        </div>
-      </div>
+      <ChatInput newMessage={newMessage} setNewMessage={setNewMessage} handleSendMessage={handleSendMessage} />
     </div>
   );
 };

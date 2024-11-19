@@ -17,15 +17,11 @@ const OverallPopularMeetings = () => {
   return (
     <div className="flex flex-col items-start">
       {data?.map((club, index) => (
-        <div key={index} className="h-[90px] mb-4 flex items-center">
+        <div key={club.egg_club_id} className="h-[90px] mb-4 flex items-center">
           <Text variant="header-32" className="w-[37px] mr-2">
             {index + 1}
           </Text>
-          <Link
-            key={club.egg_club_id}
-            href={`/club/regular-club-sub/${club.egg_club_id}`}
-            className="h-[90px] flex items-center gap-[8px]"
-          >
+          <Link href={`/club/regular-club-sub/${club.egg_club_id}`} className="h-[90px] flex items-center gap-[8px]">
             <HorizontalContentsListLargeEggClubImage88Size eggClub={club} />
           </Link>
         </div>
