@@ -1,14 +1,15 @@
 "use client";
 import Link from "next/link";
-import { useAuth } from "../../store/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { BsPlusLg } from "react-icons/bs";
+import { useAuthStore } from "@/store/authStore";
 
 export default function Header({ children }) {
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
+
   const pathname = usePathname();
 
   const router = useRouter();

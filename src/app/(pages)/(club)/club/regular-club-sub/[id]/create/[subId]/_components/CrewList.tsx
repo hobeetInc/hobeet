@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useAuth } from "@/store/AuthContext";
 import FullScreenModal from "./FullScreenModal";
 import { useRouter } from "next/navigation";
 import { EggDay } from "@/types/eggday.types";
@@ -13,6 +12,7 @@ import { MemberInfo } from "@/types/user.types";
 import { useState } from "react";
 import { submitRegularMember } from "@/app/(pages)/(club)/club/_api/notifications";
 import { useEggDayCrewList } from "@/hooks/utils/list/crewList";
+import { useAuthStore } from "@/store/authStore";
 
 interface CrewListProps {
   crewMembers: MemberInfo[];
@@ -24,7 +24,7 @@ interface CrewListProps {
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInfo, secondId }: CrewListProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
 
   const { data: crewList = initialCrewMembers, isLoading, isError } = useEggDayCrewList(secondId);

@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
-import { useAuth } from "@/store/AuthContext";
 import { submitRegularClubNotification, submitRegularMember, uploadImage } from "../../../../_api/supabase";
 import { useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
@@ -17,6 +16,7 @@ import ClubCreateTextArea from "@/components/uiComponents/Input/Textarea";
 import SearchInput from "@/components/uiComponents/Input/SearchInput";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 import { ChevronLeft } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
 
 // 커스텀 스타일
 const customStyles = `
@@ -44,7 +44,7 @@ const loadDaumPostcodeScript = () => {
 };
 
 const NotificationCreate = ({ params }: { params: { id: string } }) => {
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<Date | null>(null);

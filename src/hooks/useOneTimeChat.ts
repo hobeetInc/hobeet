@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "@/store/AuthContext";
 import { fetchEggPopChatRoomWithMembers } from "@/app/(pages)/(chat)/_api/onetime";
 import { queryKeys } from "./utils/queryKeys";
+import { useAuthStore } from "@/store/authStore";
 
 export const useOneTimeChat = (roomId: string) => {
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
 
   return useQuery({
     queryKey: [queryKeys.oneTimeChat, roomId, userId],

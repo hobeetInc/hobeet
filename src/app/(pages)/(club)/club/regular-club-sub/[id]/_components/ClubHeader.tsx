@@ -1,15 +1,16 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useAuth } from "@/store/AuthContext";
 import { ClubHeaderProps } from "@/types/eggclub.types";
 import { useEffect } from "react";
 import { ChevronLeft } from "lucide-react";
 import { GoPlus } from "react-icons/go";
+import { useAuthStore } from "@/store/authStore";
 
 const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   const router = useRouter();
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
+
   const currentPath = useParams();
 
   useEffect(() => {

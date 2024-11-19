@@ -5,7 +5,7 @@ import HomeContent from "./_components/HomeContent";
 import RegularNotification from "./_components/RegularNotification";
 import { MemberInfo } from "@/types/user.types";
 
-const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
+const RegularTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   const regularClubId = Number(params.id);
 
   const [memberData, notificationData, subCategories] = await Promise.all([
@@ -57,4 +57,4 @@ const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default OneTimeClubSubPage;
+export default RegularTimeClubSubPage;
