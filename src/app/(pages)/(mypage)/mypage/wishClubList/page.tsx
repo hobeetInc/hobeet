@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { WishHeart } from "@/components/uiComponents/IconComponents/Icons";
@@ -9,30 +9,21 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Link from "next/link";
-import { fetchWishlist } from "../../_api/fetchWishList";
 import { useAuthStore } from "@/store/authStore";
+import { useWishlist } from "@/hooks/useMyWishlist";
 
 const WishClubListPage = () => {
-  const [wishData, setWishData] = useState([]);
   const router = useRouter();
   const userId = useAuthStore((state) => state.userId);
 
-  useEffect(() => {
-    const getWishList = async () => {
-      try {
-        const data = await fetchWishlist(userId);
-        setWishData(data);
-      } catch (err) {
-        console.error("찜 목록 가져오기 에러:", err);
-      }
-    };
-
-    getWishList();
-  }, [userId]);
+  const { data: wishData, isLoading, error } = useWishlist(userId);
 
   const handleClick = (egg_club_id: number) => {
     router.push(`/club/regular-club-sub/${egg_club_id}`);
   };
+
+  if (isLoading) return <div>로딩중...</div>;
+  if (error) return <div>찜 목록을 가져오는 중 오류가 발생했습니다.</div>;
 
   return (
     <div className="relative">

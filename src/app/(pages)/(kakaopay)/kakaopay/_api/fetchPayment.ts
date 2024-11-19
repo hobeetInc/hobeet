@@ -8,7 +8,7 @@ export const fetchPaymentData = async (requestUserId: string, clubId: string, is
       .eq("user_id", requestUserId)
       .eq("egg_pop_id", parseInt(clubId))
       .limit(1)
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return { oneTimeClubPayData: data };
@@ -20,7 +20,7 @@ export const fetchPaymentData = async (requestUserId: string, clubId: string, is
     .eq("user_id", requestUserId)
     .eq("egg_day_id", parseInt(clubId))
     .limit(1)
-    .single();
+    .maybeSingle();
 
   if (error) throw error;
   return { regularClubPayData: data };

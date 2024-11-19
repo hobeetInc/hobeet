@@ -133,7 +133,7 @@ const OneTimeClubChattingRoomPage = () => {
 
   // 로딩 상태 UI
   if (loading) {
-    return <div>로딩 중...</div>;
+    return <Text variant="subtitle-16">로딩 중...</Text>;
   }
 
   // 에러 상태 UI

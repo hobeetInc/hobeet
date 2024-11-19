@@ -28,6 +28,7 @@ export const useClubWishlist = ({ egg_club_id }: WishListHeartProps) => {
     mutationFn: addClubToWishList,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey: queryKeys.club.tenList(10) });
     }
   });
 
@@ -35,6 +36,7 @@ export const useClubWishlist = ({ egg_club_id }: WishListHeartProps) => {
     mutationFn: removeClubFromWishList,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey: queryKeys.club.tenList(10) });
     }
   });
 

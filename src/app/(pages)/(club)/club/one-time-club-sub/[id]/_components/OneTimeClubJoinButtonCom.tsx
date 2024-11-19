@@ -35,6 +35,7 @@ export default function OneTimeClubJoinButton({ clubId, onError }: JoinClubButto
         userId: user.id
       });
 
+      // 가입 성공 시 결제 페이지로 이동
       if (result.success) {
         router.push(`/kakaopay/paymentConfirm?clubType=true&clubId=${clubId}`);
       } else {
@@ -49,8 +50,6 @@ export default function OneTimeClubJoinButton({ clubId, onError }: JoinClubButto
       } else {
         alert("예기치 않은 오류가 발생했습니다.");
       }
-      // console.error("Error during join process:", error);
-      // onError?.("예기치 않은 오류가 발생했습니다.");
     } finally {
       setIsLoading(false);
     }

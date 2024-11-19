@@ -1,30 +1,27 @@
 "use client";
 
-import { getEggDayPayList } from "../_api/fecthMyPayList";
 import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { useRouter } from "next/navigation";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
+import { useAuthStore } from "@/store/authStore";
+import { usePayments } from "@/hooks/usePayment";
 
 const EggDayPayDetail = () => {
   const router = useRouter();
+  const userId = useAuthStore((state) => state.userId);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["eggDayPayData"],
-    queryFn: getEggDayPayList
-  });
+  const { dayPayments, isLoading, isError } = usePayments(userId);
 
-  if (isLoading) {
-    return <div>로딩중...</div>;
-  }
+  if (isLoading) return <div>로딩중...</div>;
+  if (isError) return <div>에그팝 결제 정보 처리 중 오류</div>;
 
   return (
     <div className="mx-4 mb-4">
-      {data?.map((notification) => (
+      {dayPayments.data?.map((notification) => (
         <div
           key={notification.egg_day.egg_day_id}
           onClick={() => {

@@ -3,12 +3,18 @@
 import Link from "next/link";
 import { VerticalContentsListMediumEggPop } from "@/components/uiComponents/VerticalContentsListMedium";
 import { useEggPopTenList } from "@/hooks/utils/list/tenList";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const OneTimeClubList = () => {
   const { data: list, isLoading, isError } = useEggPopTenList();
 
-  if (isLoading) return <div>로딩 중...</div>;
-  if (isError) return <div>오류...</div>;
+  if (isLoading) {
+    return <Text variant="subtitle-16">로딩 중...</Text>;
+  }
+
+  if (isError) {
+    return <Text variant="subtitle-16">에러가 발생했습니다.</Text>;
+  }
 
   return (
     <div className="relative] mx-auto">

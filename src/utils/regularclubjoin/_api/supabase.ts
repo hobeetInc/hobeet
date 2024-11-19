@@ -5,6 +5,8 @@ import { createClient } from "@/utils/supabase/client";
 export class RegularClubAPI {
   private supabase = createClient();
 
+  // 모임 가입 조건 검증
+  // 사용자의 나이, 성별, 모임 인원 제한 등을 검증
   async validateJoinConditions(userId: string, clubId: number) {
     const [user, club, memberCount] = await Promise.all([
       this.getUserData(userId),
@@ -13,11 +15,13 @@ export class RegularClubAPI {
     ]);
 
     // 인원 제한 검증
+    // 모임의 최대 인원 제한을 확인하고 초과 여부를 검사
     if (club.egg_club_people_limited !== 100 && memberCount >= club.egg_club_people_limited) {
       throw new ClubJoinError("모임 인원이 초과되었습니다.");
     }
 
     // 나이 제한 검증
+    // 모임의 나이 제한을 확인하고 사용자의 나이가 제한에 맞는지 검사
     if (club.egg_club_age !== 100 && user.user_age !== 100) {
       if (club.egg_club_age === 50 && user.user_age < 50) {
         throw new ClubJoinError("50대 이상만 가입할 수 있는 모임입니다.");
@@ -30,6 +34,7 @@ export class RegularClubAPI {
     }
 
     // 성별 제한 검증
+    // 모임의 성별 제한을 확인하고 사용자의 성별이 제한에 맞는지 검사
     if (club.egg_club_gender !== null && user.user_gender !== null) {
       if (club.egg_club_gender === "남성" && user.user_gender !== "남성") {
         throw new ClubJoinError("남성만 참여 가능한 모임입니다.");
@@ -40,6 +45,8 @@ export class RegularClubAPI {
     }
   }
 
+  // 모임 가입 신청
+  // 모임의 승인 여부에 따라 직접 가입 또는 승인 대기 상태로 가입 처리
   async applyForMembership(clubId: number, userId: string) {
     const isExistingMember = await this.checkExistingMember(userId, clubId);
     if (isExistingMember) {
@@ -62,15 +69,20 @@ export class RegularClubAPI {
         egg_club_participation_request_status: "pending"
       });
     } else {
+      // 승인이 필요없는 모임인 경우 바로 가입 처리
       await this.insertMember(clubId, userId);
     }
   }
 
+  // 모임 멤버 추가
+  // 사용자를 모임의 정식 멤버로 추가하고 채팅방에 입장
   async insertMember(clubId: number, userId: string) {
     const now = new Date();
     const utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
     const koreaTimeDiff = 9 * 60 * 60 * 1000;
     const koreaTime = new Date(utc + koreaTimeDiff).toISOString();
+
+    // 참여 요청 테이블에 활성상태로 추가
     const { data } = await this.supabase
       .from("egg_club_participation_request")
       .insert({
@@ -81,24 +93,32 @@ export class RegularClubAPI {
       })
       .select("*")
       .single();
+
+    // 모임 멤버 테이블에 추가
     const { error } = await this.supabase.from("egg_club_member").insert({
       egg_club_id: clubId,
       user_id: userId,
       egg_club_request_status: "active",
       egg_club_participation_request_id: data.egg_club_participation_request_id
     });
+
+    // 채팅방 입장
     await enterRegularChatRoom({ egg_club_id: clubId });
     if (error) {
       throw new ClubJoinError("모임 가입 처리 중 오류가 발생했습니다.");
     }
   }
 
+  // 사용자 정보 조회
+  // userId를 기반으로 사용자의 상세 정보를 데이터베이스에서 가져옴
   async getUserData(userId: string) {
     const { data, error } = await this.supabase.from("user").select("*").eq("user_id", userId).single();
     if (error) throw new ClubJoinError("사용자 정보를 찾을 수 없습니다.");
     return data;
   }
 
+  // 모임 정보 조회
+  // clubId를 기반으로 특정 모임의 상세 정보를 가져옴
   async getClubData(clubId: number) {
     const { data, error } = await this.supabase
       .from("egg_club")
@@ -109,6 +129,8 @@ export class RegularClubAPI {
     return data;
   }
 
+  // 현재 멤버 수 조회
+  // 특정 모임의 현재 멤버 수를 가져옴
   async getCurrentMemberCount(clubId: number) {
     const { count, error } = await this.supabase
       .from("egg_club_member")
@@ -124,6 +146,8 @@ export class RegularClubAPI {
     return count ?? 0;
   }
 
+  // 기존 멤버 확인
+  // 특정 사용자가 이미 해당 모임에 가입했는지 확인
   async checkExistingMember(userId: string, clubId: number) {
     const { data, error } = await this.supabase
       .from("egg_club_member")

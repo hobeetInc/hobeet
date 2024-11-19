@@ -1,7 +1,5 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { getEggPopPayList } from "../_api/fecthMyPayList";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Text from "@/components/uiComponents/TextComponents/Text";
@@ -9,22 +7,21 @@ import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
 import { CustomAddress } from "@/utils/CustomAddress";
+import { useAuthStore } from "@/store/authStore";
+import { usePayments } from "@/hooks/usePayment";
 
 const EggPopPayDetail = () => {
   const router = useRouter();
+  const userId = useAuthStore((state) => state.userId);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["eggPopPayData"],
-    queryFn: getEggPopPayList
-  });
+  const { popPayments, isLoading, isError } = usePayments(userId);
 
-  if (isLoading) {
-    return <div>로딩중...</div>;
-  }
+  if (isLoading) return <div>로딩중...</div>;
+  if (isError) return <div>에그팝 결제 정보 처리 중 오류</div>;
 
   return (
     <div className="mx-4 mb-4">
-      {data?.map((oneTimeClub) => (
+      {popPayments.data?.map((oneTimeClub) => (
         <div
           key={oneTimeClub.egg_pop.egg_pop_id}
           onClick={() => {

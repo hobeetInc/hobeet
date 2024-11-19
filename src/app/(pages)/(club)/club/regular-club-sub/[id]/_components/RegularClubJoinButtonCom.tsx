@@ -23,6 +23,7 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError }: Eg
     try {
       setIsLoading(true);
 
+      // 현재 로그인한 사용자 정보 조회
       const {
         data: { user },
         error: authError
@@ -33,11 +34,13 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError }: Eg
         return;
       }
 
+      // 정기 모임 가입 요청
       const result = await regularClubJoin({
         clubId: clubId,
         userId: user.id
       });
 
+      // 가입 성공 시 처리
       if (result.success) {
         onSuccess?.();
         enterRegularChatRoom({ egg_club_id: clubId }); // 모임원 채팅방 입장(자동 승인)
