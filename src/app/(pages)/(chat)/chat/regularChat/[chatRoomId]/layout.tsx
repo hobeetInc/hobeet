@@ -19,6 +19,10 @@ interface LayoutProps {
   };
 }
 
+// - 뒤로가기, 채팅방 이름, 메뉴 버튼 포함
+// - 메뉴 클릭 시 참여자 목록과 나가기 옵션 표시
+// - 채팅방 멤버 정보 관리 및 표시
+// - 채팅방 나가기 기능 구현
 function ChatHeader() {
   const { roomName, isLoading, egg_day_chatting_id, egg_club_id } = useChatContext();
   const userId = useAuthStore((state) => state.userId);
@@ -150,6 +154,10 @@ function ChatHeader() {
   );
 }
 
+// - ChatProvider로 전체 레이아웃 래핑
+// - 헤더와 채팅 컨텐츠 영역 구조화
+// - 반응형 레이아웃 구현 (flex-col, h-screen)
+// - 채팅 영역 스크롤 처리 (overflow-hidden)
 export default function ChatRoomLayout({ children, params }: LayoutProps) {
   return (
     <ChatProvider roomId={params.chatRoomId}>

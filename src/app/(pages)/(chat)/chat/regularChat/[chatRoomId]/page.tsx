@@ -15,6 +15,30 @@ import { sendMessage } from "../../../_api/regular";
 
 const supabase = createClient();
 
+// 주요 기능:
+// 1. 실시간 메시지 처리
+//    - Supabase 실시간 구독 설정
+//    - 새 메시지 수신 시 자동 업데이트
+
+// 2. 메시지 그룹화 및 표시
+//    - 날짜별 메시지 그룹화
+//    - 사용자별 메시지 스타일 차별화 (본인/타인)
+//    - 시간 표시 및 프로필 이미지 처리
+
+// 3. 메시지 입력 처리
+//    - 텍스트 입력 자동 높이 조절
+//    - Enter 키 전송 지원
+//    - 최대 길이 제한 (100자)
+//    - 전송 버튼 상태 관리
+
+// 4. 스크롤 관리
+//    - 새 메시지 수신 시 자동 스크롤
+//    - 메시지 영역 오버플로우 처리
+
+// 5. 데이터 관리
+//    - React Query를 사용한 메시지 데이터 관리
+//    - 실시간 업데이트를 위한 쿼리 무효화
+//    - 로딩 상태 처리
 const ChatPage = () => {
   const params = useParams();
   const roomId = params.chatRoomId;
@@ -25,28 +49,28 @@ const ChatPage = () => {
   const [sendIconColor, setSentIconColor] = useState<boolean>(false);
   const userId = useAuthStore((state) => state.userId);
 
-  //TODO 탠스택 쿼리로 변환 예정
+  // 1. 모임 ID 조회
   const { data: rec, isSuccess: isRecFetched } = useQuery({
     queryKey: queryKeys.regularChat.eggClubId(roomId as string),
     queryFn: () => fetchEggClubId(roomId as string),
     enabled: Boolean(roomId) && Boolean(userId)
   });
 
-  //TODO 탠스택 쿼리로 변환 예정
+  // 2. 멤버 데이터 조회
   const { data: memberData } = useQuery({
     queryKey: queryKeys.regularChat.memberData(userId as string),
     queryFn: () => fetchMemberData(userId as string, rec.egg_club_id),
     enabled: Boolean(userId) && isRecFetched
   });
 
-  //TODO 탠스택 쿼리로 변환 예정
+  // 3. 채팅방 정보 조회
   const { data: chatInfo } = useQuery({
     queryKey: queryKeys.regularChat.chatInfo(roomId as string),
     queryFn: () => fetchChatInfo(roomId as string, memberData.egg_club_member_id),
     enabled: Boolean(roomId) && Boolean(memberData)
   });
 
-  //TODO 탠스택 쿼리로 변환 예정
+  // 4. 메시지 목록 조회
   const { data: regularMessages = [], isLoading: isLoadingMessages } = useQuery({
     queryKey: queryKeys.regularChat.messages(roomId as string, chatInfo?.chat_room_entry_time),
     queryFn: () => fetchMessages(roomId as string, chatInfo.chat_room_entry_time),
@@ -86,6 +110,7 @@ const ChatPage = () => {
   useEffect(() => {
     if (!roomId) return;
 
+    // 실시간 채널 구독 설정
     const subscription = supabase
       .channel("chatting")
       .on(
@@ -109,6 +134,7 @@ const ChatPage = () => {
     };
   }, [roomId, queryClient]);
 
+  // 텍스트영역 높이 자동조절
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
@@ -118,6 +144,7 @@ const ChatPage = () => {
     }
   }, [newMessage]);
 
+  // 메시지 날짜별 그룹화
   const groupMessagesByDate = (messages: ExtendEggClubMessage[]) => {
     return messages.reduce((acc: { [date: string]: ExtendEggClubMessage[] }, message) => {
       const date = new Date(message.egg_day_chatting_message_create_at);
@@ -143,6 +170,7 @@ const ChatPage = () => {
 
   const groupedMessages = groupMessagesByDate(regularMessages);
 
+  // 메시지 전송
   const handleSendMessage = () => {
     if (newMessage.trim() === "") return;
     sendMessageMutation.mutate(newMessage);
@@ -233,7 +261,7 @@ const ChatPage = () => {
           <div ref={messagesEndRef} />
         </div>
       </div>
-
+      {/* TODO 컴포넌트 분리 */}
       {/* 채팅 입력 */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t">
         <div className="p-4">
