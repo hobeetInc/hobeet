@@ -5,6 +5,7 @@ import { RegularClubCard } from "./RegularClubCard";
 import { useAuthStore } from "@/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCreatedClubs, fetchJoinedClubs } from "../_apis/ClubListContentApi";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 interface ClubListContentProps {
   activeTab: boolean; // true: 에그장(내가 만든 모임), false: 에그즈(내가 참여한 모임)
@@ -28,11 +29,11 @@ export default function ClubListContent({ activeTab }: ClubListContentProps) {
   });
 
   if (isLoading) {
-    return <div className="flex items-center justify-center p-12 text-gray-500">모임 로딩중...</div>;
+    return <Text variant="subtitle-16">로딩 중...</Text>;
   }
 
   if (isError) {
-    return <div className="flex items-center justify-center p-12 text-gray-500">모임 로딩 중 오류 발생</div>;
+    return <Text variant="subtitle-16">에러가 발생했습니다.</Text>;
   }
 
   // activeTab에 따라 내가 만든 모임 또는 내가 참여한 모임 필터링

@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 import RegularContent from "./RegularContent";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const OnePage = () => {
   return (
-    <Suspense fallback={<div>로딩 중...</div>}>
+    <Suspense fallback={<Text variant="subtitle-16">로딩 중...</Text>}>
       <RegularContent />
     </Suspense>
   );

@@ -2,16 +2,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEggClubAllList } from "@/hooks/utils/list/allList";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const AllRegularClubListPage = () => {
   const { data: allRegularClubList, isLoading, isError } = useEggClubAllList();
 
   if (isLoading) {
-    return <div className="flex items-center justify-center w-full h-36">로딩 중...</div>;
+    return <Text variant="subtitle-16">로딩 중...</Text>;
   }
 
   if (isError) {
-    return <div className="flex items-center justify-center w-full h-36 text-red-500">{isError}</div>;
+    return <Text variant="subtitle-16">에러가 발생했습니다.</Text>;
   }
 
   return (
