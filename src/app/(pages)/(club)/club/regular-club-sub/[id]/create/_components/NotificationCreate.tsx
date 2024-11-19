@@ -73,10 +73,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // useEffect(() => {
-  //   console.log("폼데이터 =>", formData);
-  // }, [formData]);
-
   // 컴포넌트 마운트 시 또는 formData의 이미지가 변경될 때 미리보기 생성
   useEffect(() => {
     if (formData.egg_day_image instanceof File) {
@@ -311,7 +307,6 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
       let finalFormData = { ...formData };
 
       // 이미지 업로드 처리
-      // @ts-ignore
       if (formData.egg_day_image instanceof File) {
         try {
           const imageUrl = await uploadImage(formData.egg_day_image);

@@ -1,32 +1,20 @@
 "use client";
 
-// import { useEffect, useState } from "react";
 import Link from "next/link";
-// import { getOneTimeClub } from "@/app/(pages)/(club)/club/_api/supabase";
-
-// import { EggPopForm } from "@/types/안끝난거/eggpop.types";
 import { VerticalContentsListMediumEggPop } from "@/components/uiComponents/VerticalContentsListMedium";
-import { useEggPopTenList } from "@/hooks/eggPopQueries";
+import { useEggPopTenList } from "@/hooks/utils/list/tenList";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const OneTimeClubList = () => {
-  const { data: list, isLoading } = useEggPopTenList();
+  const { data: list, isLoading, isError } = useEggPopTenList();
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) {
+    return <Text variant="subtitle-16">로딩 중...</Text>;
+  }
 
-  // const [list, setList] = useState<EggPopForm[]>([]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  // const data = await getOneTimeClub();
-  //       setList(data as unknown as EggPopForm[]);
-  //     } catch (error) {
-  //       console.error("일회성모임 리스트 가져오는 중 오류가 발생했습니다", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
+  if (isError) {
+    return <Text variant="subtitle-16">에러가 발생했습니다.</Text>;
+  }
 
   return (
     <div className="relative] mx-auto">

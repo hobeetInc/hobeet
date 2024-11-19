@@ -48,15 +48,11 @@ export default function ApproveMembersPage() {
   };
 
   if (isLoading) {
-    return <div className="flex items-center justify-center p-12 text-gray-500">로딩 중...</div>;
+    return <Text variant="subtitle-16">로딩 중...</Text>;
   }
 
   if (error) {
-    return (
-      <div className="flex items-center justify-center p-12 text-gray-500">
-        데이터를 불러오는 중 오류가 발생했습니다.
-      </div>
-    );
+    return <Text variant="subtitle-16">에러가 발생했습니다.</Text>;
   }
 
   const { pendingRequests, activeMembers } = data || { pendingRequests: [], activeMembers: [] };

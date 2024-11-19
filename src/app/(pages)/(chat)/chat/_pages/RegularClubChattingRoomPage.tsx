@@ -8,13 +8,15 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { fetchChatRoomMembers } from "../../_api/regular";
 import { useAuthStore } from "@/store/authStore";
+import Link from "next/link";
 
 const RegularClubChattingRoomPage = () => {
   const [chatRooms, setChatRooms] = useState<EggClubChattingRoom[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const userId = useAuthStore((state) => state.userId);
-  console.log(userId);
+
+  // 날짜와 시간을 포맷팅하는 유틸리티 함수
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -31,11 +33,13 @@ const RegularClubChattingRoomPage = () => {
   useEffect(() => {
     const supabase = createClient();
     if (!userId) return;
+    // 채팅방 데이터를 가져오는 비동기 함수
     const fetchChatRooms = async () => {
       try {
         //TODO 탠스택 쿼리로 변환 예정
         const memberData = await fetchChatRoomMembers(userId);
 
+        // 채팅방이 없는 경우 처리
         if (!memberData) {
           setErrorMessage("채팅방이 없습니다.");
           setChatRooms([]);
@@ -43,10 +47,13 @@ const RegularClubChattingRoomPage = () => {
           return;
         }
 
+        // 각 멤버의 채팅 데이터를 가공하고 메시지 정보를 추가
         const enrichedData = await Promise.all(
           memberData.map(async (member) => {
+            // 각 채팅방의 메시지 데이터 조회
             const chattingWithMessages = await Promise.all(
               member.egg_day_chatting.map(async (chatting) => {
+                // Supabase에서 메시지 데이터 조회
                 const { data: messages, error: messageError } = await supabase
                   .from("egg_day_chatting_message")
                   .select(
@@ -58,6 +65,7 @@ const RegularClubChattingRoomPage = () => {
                   .eq("egg_day_chatting_room_id", chatting.egg_day_chatting_id)
                   .order("egg_day_chatting_message_create_at", { ascending: true });
 
+                // 메시지 조회 실패 시 빈 배열 반환
                 if (messageError) {
                   console.error("메시지 조회 오류:", messageError);
                   return {
@@ -73,6 +81,7 @@ const RegularClubChattingRoomPage = () => {
               })
             );
 
+            // 채팅방 정보 객체 구성
             return {
               ...member,
               egg_day_chatting: chattingWithMessages
@@ -80,10 +89,12 @@ const RegularClubChattingRoomPage = () => {
           })
         );
 
+        // 채팅방 데이터 가공 및 필요한 정보 추출
         const rooms = enrichedData.flatMap((member) =>
           member.egg_day_chatting
             .filter((chatting) => chatting.active)
             .map((chatting) => {
+              // 마지막 메시지 시간 정보 포맷팅
               const lastMessageInfo =
                 chatting.egg_day_chatting_message.length > 0
                   ? formatDateTime(
@@ -123,6 +134,7 @@ const RegularClubChattingRoomPage = () => {
 
     fetchChatRooms();
 
+    // 실시간 메시지 업데이트를 위한 Supabase 구독 설정
     const subscription = supabase
       .channel("chatting")
       .on(
@@ -133,6 +145,7 @@ const RegularClubChattingRoomPage = () => {
           table: "egg_day_chatting_message"
         },
         (payload) => {
+          // 새 메시지가 도착했을 때 채팅방 목록 업데이트
           const newMessage = payload.new;
           const messageTime = formatDateTime(newMessage.egg_day_chatting_message_create_at);
 
@@ -153,13 +166,15 @@ const RegularClubChattingRoomPage = () => {
       )
       .subscribe();
 
+    // 컴포넌트 언마운트 시 구독 해제
     return () => {
       supabase.removeChannel(subscription);
     };
   }, [userId]);
 
+  // 로딩 상태 UI
   if (loading) {
-    return <div>로딩 중...</div>;
+    return <Text variant="subtitle-16">로딩 중...</Text>;
   }
 
   if (errorMessage) {
@@ -173,14 +188,17 @@ const RegularClubChattingRoomPage = () => {
     );
   }
 
+  // 채팅방 목록 UI 렌더링
   return (
     <>
       <div className={cn("flex flex-col h-[calc(100%-91px)]")}>
         <div className={cn("flex flex-col overflow-y-auto")}>
           {chatRooms.length > 0 ? (
+            // 채팅방이 있는 경우 목록 표시
             chatRooms.map((room: EggClubChattingRoom) => (
               <div key={room.egg_day_chatting_room_id} className={cn("border-b")}>
-                <a
+                {/* TODO a링크 Link로 변경 예정 */}
+                <Link
                   href={`/chat/regularChat/${room.egg_day_chatting_room_id}`}
                   className={cn("flex items-center p-4 w-full hover:bg-gray-50")}
                 >
@@ -218,10 +236,11 @@ const RegularClubChattingRoomPage = () => {
                       {room.last_message}
                     </Text>
                   </div>
-                </a>
+                </Link>
               </div>
             ))
           ) : (
+            // 채팅방이 없는 경우 메시지 표시
             <div className={cn("text-center py-8")}>
               <Text variant="body_medium-16">채팅방이 없습니다.</Text>
             </div>

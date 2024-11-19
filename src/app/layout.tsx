@@ -18,12 +18,13 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   icons: {
     icon: "/asset/icon.svg"
-  },
-   viewport: {
-     width: 'device-width',
-     initialScale: 1,
-     maximumScale: 1
-   }
+  }
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1
 };
 
 export default function RootLayout({

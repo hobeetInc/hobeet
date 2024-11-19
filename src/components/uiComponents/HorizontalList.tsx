@@ -46,7 +46,7 @@ export const EggClubHorizontalList = ({ eggClub }) => {
               <div className="flex items-center gap-2 self-stretch">
                 <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
                   <Image
-                    src={eggClub.user.user_profile_img}
+                    src={eggClub.user_id.user_profile_img}
                     alt="profile"
                     width={22}
                     height={22}
@@ -55,7 +55,7 @@ export const EggClubHorizontalList = ({ eggClub }) => {
                 </div>
               </div>
               <div className="grow shrink basis-0 text-gray-400 text-body_medium-14 leading-tight">
-                {eggClub.user.user_name}
+                {eggClub.user_id.user_name}
               </div>
             </div>
             <div className="justify-start items-center gap-0.5 flex">
@@ -82,40 +82,3 @@ export const EggClubHorizontalList = ({ eggClub }) => {
     </div>
   );
 };
-
-// export const EggDayHorizontalList = ({ eggDay }) => {
-//   // 날짜와 시간 포맷팅
-//   const dateObj = new Date(eggDay.egg_day_date_time);
-
-//   const date = dateObj.toLocaleDateString("ko-KR", {
-//     month: "long",
-//     day: "numeric"
-//   });
-
-//   const time = `${String(dateObj.getHours()).padStart(2, "0")}:${String(dateObj.getMinutes()).padStart(2, "0")}`;
-
-//   return (
-//     <div className="w-[248px] h-[91px] py-0.5 flex-col justify-start items-start gap-0.5 inline-flex">
-//       <Tag tagName="에그데이" />
-//       <div className="self-stretch text-gray-900 text-subtitle-14">{eggDay.egg_day_name}</div>
-//       <div className="pt-[3px] justify-start items-center gap-2 inline-flex">
-//         <div className="justify-start items-center gap-1 flex">
-//           <div className="w-4 h-4 justify-center items-center flex">
-//             <div className="w-4 h-4 relative flex-col justify-start items-start flex" />
-//           </div>
-//           <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">
-//             {eggDay.egg_day_location}
-//           </div>
-//         </div>
-//         <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">{date}</div>
-//         <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">{time}</div>
-//       </div>
-//       <div className="justify-start items-center gap-1 inline-flex">
-//         <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">참여 인원</div>
-//         <div className="text-gray-400 text-sm font-medium font-['Pretendard'] leading-tight">
-//           {eggDay.egg_day_people_limited}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
