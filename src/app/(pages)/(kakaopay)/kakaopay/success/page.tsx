@@ -129,7 +129,7 @@ const PaymentSuccessPage = () => {
         <div className="w-[390px]">
           <div className="flex flex-col gap-2 mt-8">
             <Image
-              src="/asset/Egg.png"
+              src="/asset/AppIcon.svg"
               alt="egg"
               width={62}
               height={32}
@@ -167,7 +167,7 @@ const PaymentSuccessPage = () => {
                 <Tag tagName={isOneTimeClub ? "eggpop" : "eggday"} className="mb-[4px]" />
                 <Text variant="subtitle-14">{clubInfo.name}</Text>
 
-                <div className="flex items-center text-xs text-gray-600 gap-1">
+                <div className="flex items-center text-xs text-gray-400 gap-1">
                   <div className="mr-1 w-4 h-4">
                     <Icon name="location" />
                   </div>
@@ -193,31 +193,25 @@ const PaymentSuccessPage = () => {
                 <Text variant="subtitle-14" className="w-[49px]">
                   이름
                 </Text>
-                <div className="w-[230px] text-gray-900 text-sm font-normal font-['Pretendard'] leading-tight">
-                  {userName}
-                </div>
+                <Text className="font-normal">{userName}</Text>
               </div>
               <div className="self-stretch justify-start items-center gap-4 inline-flex">
                 <Text variant="subtitle-14" className="w-[49px]">
                   결제방법
                 </Text>
-                <div className="w-[230px] text-gray-900 text-sm font-normal font-['Pretendard'] leading-tight">
-                  카카오페이
-                </div>
+                <Text className="font-normal">카카오페이</Text>
               </div>
               <div className="self-stretch justify-start items-center gap-4 inline-flex">
                 <Text variant="subtitle-14" className="w-[49px]">
                   결제금액
                 </Text>
-                <div className="w-[230px] text-gray-900 text-sm font-normal font-['Pretendard'] leading-tight">
-                  {paymentAmount && new Intl.NumberFormat("ko-KR").format(paymentAmount)}원
-                </div>
+                <Text className="font-normal">{new Intl.NumberFormat("ko-KR").format(paymentAmount)}원</Text>
               </div>
             </div>
           </div>
 
           <div className="w-full h-[82px] flex items-center justify-center fixed bottom-[34px] right-0 left-0">
-            <Button colorType="black" borderType="circle" onClick={handleGoToMyClub}>
+            <Button colorType="orange" borderType="circle" onClick={handleGoToMyClub}>
               내 모임으로 가기
             </Button>
           </div>

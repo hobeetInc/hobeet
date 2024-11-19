@@ -42,18 +42,18 @@ const WishClubListPage = () => {
       </div>
 
       {wishData.length === 0 ? (
-        <Text variant="subtitle-14" className="text-gray-500">
-          찜한 클럽이 없습니다
+        <Text variant="subtitle-14" className="text-gray-500 ml-[16px] mt-[10px]">
+          찜한 클럽이 없습니다.
         </Text>
       ) : (
-        <div className="flex flex-wrap justify-center items-center gap-2.5 p-4">
+        <div className="w-[390px] grid-cols-2 grid place-items-center px-4 pt-4 gap-2">
           {wishData.map((item) => (
             <div
               onClick={() => handleClick(item.egg_club.egg_club_id)}
               key={item.egg_club.egg_club_id}
               className="w-[174px] flex-col justify-start items-start gap-2 inline-flex"
             >
-              <div className="flex-col justify-start items-start gap-2 inline-flex min-h-[306px]">
+              <div className="flex-col justify-start items-start gap-2 inline-flex min-h-[306px] mb-10">
                 <div className="w-[174px] h-[174px] overflow-hidden relative">
                   <Image
                     src={item.egg_club.egg_club_image}

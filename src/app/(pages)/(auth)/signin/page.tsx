@@ -47,21 +47,21 @@ const SigninPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center ">
-      <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
-        <div className="left-0 m-3">
+      <div className="fixed top-[12px] right-0 left-0 flex w-full h-12 bg-white items-center">
+        <div className="left-0 m-6">
           <Link href="/">
             <HiOutlineChevronLeft className="w-6 h-6" />
           </Link>
         </div>
       </div>
-      <div className="fixed top-[130px] flex flex-col items-center">
-        <h1 className="text-[#0c0c0c] text-2xl font-black font-['Como'] leading-loose mb-2">EGG FRIENDS</h1>
+      <div className="fixed top-[209px] flex flex-col items-center">
+        <h1 className="text-[#0c0c0c] text-2xl font-black leading-normal">EGG FRIENDS</h1>
         <Text variant="body_medium-16" className="text-gray-900">
           함께라서 더 즐거운 우리
         </Text>
       </div>
 
-      <div className="fixed top-[246px]">
+      <div className="fixed top-[295px]">
         <div className="flex items-center">
           <div className="w-[90px] h-[90px] z-10">
             <Icon name="whiteEgg" />
@@ -105,8 +105,9 @@ const SigninPage = () => {
       </div>
 
       <div className="fixed bottom-[72px] text-center">
-        <button className="text-gray-900" onClick={() => alert("서비스 준비 중입니다.")}>
-          <Text variant="body_medium-12">이메일로 간편하게 회원가입 👉</Text>
+        <button className="text-gray-900 flex" onClick={() => alert("서비스 준비 중입니다.")}>
+          <Text variant="body_medium-14">이메일로 간편하게 회원가입</Text>
+          <span className="h-[20px] ml-[2px] mb-[1px]">👉</span>
         </button>
       </div>
     </div>

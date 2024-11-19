@@ -5,12 +5,12 @@ import { getEggDayPayList, getEggPopPayList } from "@/app/(pages)/(mypage)/_api/
 export const usePayments = (userId: string) => {
   const popPayments = useQuery({
     queryKey: queryKeys.pop.payments(userId),
-    queryFn: () => getEggPopPayList(userId)
+    queryFn: getEggPopPayList
   });
 
   const dayPayments = useQuery({
     queryKey: queryKeys.day.payments(userId),
-    queryFn: () => getEggDayPayList(userId)
+    queryFn: getEggDayPayList
   });
 
   return {
