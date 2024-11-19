@@ -42,7 +42,6 @@ export const HorizontalContentsListLargeEggClub = ({ eggClub }) => {
 export const HorizontalContentsListLargeEggClubImage88Size = ({ eggClub }) => {
   return (
     <div className="h-[88px] justify-start items-start gap-2 inline-flex">
-      {/* <EggPopMainImage imageURL={eggClub.egg_club_image} size={102} /> */}
       <div className="w-[88px] h-[88px] relative overflow-hidden rounded-[12px]">
         <Image
           width={88}
