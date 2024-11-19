@@ -4,7 +4,9 @@ import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
+import { HiOutlineChevronLeft } from "react-icons/hi";
 
 const SigninPage = () => {
   const supabase = browserClient;
@@ -16,8 +18,8 @@ const SigninPage = () => {
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
           queryParams: {
-            access_type: "offline",
-            prompt: "consent"
+            access_type: "offline", // 사용자가 앱에 로그인하지 않은 상태에서도 앱이 사용자의 데이터에 접근할 수 있게 해주는 권한
+            prompt: "consent" // 사용자 동의 화면 표시(매번)
           }
         }
       });
@@ -45,6 +47,13 @@ const SigninPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center ">
+      <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
+        <div className="left-0 m-3">
+          <Link href="/">
+            <HiOutlineChevronLeft className="w-6 h-6" />
+          </Link>
+        </div>
+      </div>
       <div className="fixed top-[130px] flex flex-col items-center">
         <h1 className="text-[#0c0c0c] text-2xl font-black font-['Como'] leading-loose mb-2">EGG FRIENDS</h1>
         <Text variant="body_medium-16" className="text-gray-900">

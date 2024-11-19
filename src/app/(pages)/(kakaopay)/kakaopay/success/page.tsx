@@ -19,8 +19,8 @@ const PaymentSuccessPage = () => {
   const [paymentAmount, setPaymentAmount] = useState<number | null>(null);
   const router = useRouter();
   const { userName } = useAuth();
+  // URL 파라미터 추출
   const searchParams = useSearchParams();
-
   const requestUserId = searchParams.get("requestUserId") ?? "";
   const clubId = searchParams.get("clubId") ?? "";
   const clubType = searchParams.get("clubType");
@@ -35,14 +35,17 @@ const PaymentSuccessPage = () => {
 
   useEffect(() => {
     const processPayment = async () => {
+      // 필요한 데이터 검증
       if (!paymentQuery.data || !pgToken) return;
 
+      // 클럽 타입에 따른 결제 데이터 분기
       const payData = isOneTimeClub
         ? (paymentQuery.data.oneTimeClubPayData as EggPopPay)
         : (paymentQuery.data.regularClubPayData as EggClubPay);
 
       if (!payData) return;
 
+      // 카카오페이 결제 정보 추출
       try {
         const cid = isOneTimeClub
           ? (payData as EggPopPay).egg_pop_kakaopay_cid
@@ -52,6 +55,7 @@ const PaymentSuccessPage = () => {
           ? (payData as EggPopPay).egg_pop_kakaopay_tid
           : (payData as EggClubPay).egg_day_kakaopay_tid;
 
+        // 결제 승인 요청
         await approvePayment({
           cid,
           tid,
@@ -60,6 +64,7 @@ const PaymentSuccessPage = () => {
           pg_token: pgToken
         });
 
+        // 주문 정보 조회 및 금액 설정
         const orderData = await fetchOrderData(cid, tid);
         setPaymentAmount(orderData.amount.total);
       } catch (error) {

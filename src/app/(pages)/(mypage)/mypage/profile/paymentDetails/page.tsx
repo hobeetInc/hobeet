@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import EggPopPayDetail from "../../_components/eggPopPayDetail";
-import EggDayPayDetail from "../../_components/eggDayPayDetail";
+
 import TabBar from "@/components/uiComponents/TapBar";
 import Link from "next/link";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Text from "@/components/uiComponents/TextComponents/Text";
+import EggPopPayDetail from "../../../_components/eggPopPayDetail";
+import EggDayPayDetail from "../../../_components/eggDayPayDetail";
 
 const PaymentHistory = () => {
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
