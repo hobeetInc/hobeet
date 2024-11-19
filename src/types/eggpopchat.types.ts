@@ -1,5 +1,5 @@
-import { Tables } from "../database.types";
-import { User } from "../user.types";
+import { Tables } from "./database.types";
+import { User } from "./user.types";
 
 export type EggPop = Tables<"egg_pop">;
 
@@ -43,4 +43,17 @@ export interface EggPopChattingMemberInfo extends Tables<"egg_pop_chatting_room_
     user_id: string;
     user: User;
   };
+}
+
+export interface EggPopChatInfo {
+  egg_pop_chatting_room_name: string;
+  user_id: string;
+  active: boolean;
+  admin: boolean;
+  created_at: string;
+  egg_pop_chatting_room_id: number;
+  egg_pop_chatting_room_member_id: number;
+  egg_pop_id: number;
+  egg_pop_member_id: number;
+  egg_pop_chatting_room: Tables<"egg_pop_chatting_room">;
 }

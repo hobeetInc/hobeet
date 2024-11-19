@@ -1,35 +1,29 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-
-import { getRegularClubList } from "@/app/(pages)/(club)/club/_api/supabase";
-
-import { useAuth } from "@/store/AuthContext";
 import { EggClubForm } from "@/types/cardlist.types";
 import { VerticalContentsListMediumEggClub } from "@/components/uiComponents/VerticalContentsListMedium";
+import { useAuthStore } from "@/store/authStore";
+import { useEggClubTenList } from "@/hooks/utils/list/tenList";
+import Text from "@/components/uiComponents/TextComponents/Text";
 
 const RegularClubList = () => {
-  const {
-    data: list,
-    isLoading,
-    error
-  } = useQuery({
-    queryKey: ["regularClubs"],
-    queryFn: getRegularClubList
-  });
+  const { data: list, isLoading, error } = useEggClubTenList();
 
-  const { userId } = useAuth();
-  // console.log(userId);
-  // console.log(list);
+  const userId = useAuthStore((state) => state.userId);
 
   const isWishedByUser = (club: EggClubForm): boolean => {
     if (!userId) return false;
     return club.wish_list?.some((wish) => wish.user_id === userId) || false;
   };
 
-  if (isLoading) return <div>로딩 중...</div>;
-  if (error) return <div>에러가 발생했습니다.</div>;
+  if (isLoading) {
+    return <Text variant="subtitle-16">로딩 중...</Text>;
+  }
+
+  if (error) {
+    return <Text variant="subtitle-16">에러가 발생했습니다.</Text>;
+  }
 
   return (
     <div className="relative mx-auto">

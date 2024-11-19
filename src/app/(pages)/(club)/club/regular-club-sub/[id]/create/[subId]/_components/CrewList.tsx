@@ -28,34 +28,28 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
   const router = useRouter();
 
   useEffect(() => {
-    // 데이터 새로고침 함수
     const refreshData = async () => {
       try {
         const memberResult = await getNotificationMember(secondId);
-
         const newCrewMembers = memberResult.map((member) => ({
           memberId: member.egg_club_member_id,
           userId: member.user_id,
           userName: member.user.user_name,
           userImage: member.user.user_profile_img
         }));
-
         setCrewList(newCrewMembers);
       } catch (error) {
         console.error("크루인원 가져오는 중 오류:", error);
       }
     };
-
     refreshData();
   }, [clubId, userId, secondId]);
 
-  // 8개의 고정 슬롯 생성
   const displaySlots = Array(8)
     .fill(null)
     .map((_, index) => {
       const member = crewList[index];
       return member ? (
-        // 멤버가 있는 경우
         <div key={member.userId} className="w-[40px]">
           <div className="relative w-[40px] h-[40px] overflow-hidden rounded-full">
             <Image
@@ -68,24 +62,19 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
           </div>
         </div>
       ) : (
-        // 빈 슬롯
         <div key={`empty-${index}`} className="w-[40px]">
           <div className="w-[40px] h-[40px] rounded-full border-2 border-gray-200 bg-gray-50"></div>
         </div>
       );
     });
 
-  // 채팅방으로 이동하는 함수
   const handleChatClick = async () => {
     try {
-      // 채팅방 아이디 가져오기
       const { data: chatRoom } = await browserClient
         .from("egg_day_chatting_room")
         .select("egg_day_chatting_room_id")
         .eq("egg_club_id", clubId)
         .single();
-
-      // console.log("정기적모임 아이디", chatRoom);
 
       if (chatRoom) {
         router.push(`/chat/regularChat/${chatRoom.egg_day_chatting_room_id}`);
@@ -95,7 +84,11 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
     }
   };
 
-  // 버튼 렌더링 함수
+  const handleAlertLogin = () => {
+    alert("로그인 후 이용 가능한 서비스입니다");
+    return;
+  };
+
   const renderJoinButton = () => {
     if (userId === clubHostId) {
       return (
@@ -107,15 +100,9 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
             에그클럽 채팅방
           </Button>
         </div>
-
-        // <div className="flex justify-center items-center gap-2">
-        //   <button className="flex-1 bg-yellow-100 h-[50px] rounded-full">에그즈 관리</button>
-        //   <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
-        // </div>
       );
     }
 
-    // 가입한 크루일 때
     const isAlreadyJoined = crewList.some((member) => member.userId === userId);
 
     if (isAlreadyJoined) {
@@ -128,11 +115,16 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
             에그클럽 채팅방
           </Button>
         </div>
+      );
+    }
 
-        // <div className="flex justify-center items-center gap-2">
-        //   <p className="flex-1 h-[50px] pt-4 font-semibold">참여 중인 에그팝이에요</p>
-        //   <button className="flex-1 bg-yellow-300  h-[50px] rounded-full">에그팝 채팅방</button>
-        // </div>
+    if (!userId) {
+      return (
+        <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50">
+          <Button onClick={handleAlertLogin} colorType="black" borderType="circle">
+            참여하기
+          </Button>
+        </div>
       );
     }
 
@@ -188,19 +180,3 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
 };
 
 export default CrewList;
-
-{
-  /* <>
-<div className="w-full flex flex-col gap-4">
-  <div className="flex justify-between">
-    <h1 className="font-extrabold text-[20px]">{`참여중인 에그즈 ${crewList.length}명`}</h1>
-    <button onClick={() => setIsModalOpen(true)} className="text-gray-600 hover:text-black">
-      <ChevronRight />
-    </button>
-  </div>
-  <div className="grid grid-cols-8 grid-flow-col gap-2 w-full">{displaySlots}</div>
-</div>
-{renderJoinButton()}
-<FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-</> */
-}

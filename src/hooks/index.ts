@@ -1,1 +1,1 @@
-export * from "./useClubWishlist";
+export * from "./utils/list/useClubWishlist";

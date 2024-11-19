@@ -3,22 +3,23 @@ export const queryKeys = {
   pop: {
     all: ["pop"] as const,
     tenList: (limit: number) => ["pop", "list", limit] as const,
-    byCategory: (categoryId: number) => ["pop", categoryId] as const,
-    detail: (popId: number) => ["pop", "detail", popId] as const
+    byCategory: (mainId: number, subId: number) => ["pop", mainId, subId] as const,
+    payments: (userId: string) => ["pop", "payments", userId] as const
   },
   club: {
     all: ["club"] as const,
-    tenList: (limit: number) => ["club", "list", limit] as const,
-    byCategory: (categoryId: number) => ["club", categoryId] as const,
-    detail: (clubId: number) => ["club", "detail", clubId] as const
+    tenList: (limit: number) => ["club", "list", limit] as const
   },
   day: {
-    all: ["day"] as const,
-    byClub: (clubId: number) => ["day", clubId] as const
+    byClub: (clubId: number) => ["day", clubId] as const,
+    payments: (userId: string) => ["day", "payments", userId] as const
   },
   user: {
     detail: (userId: string) => ["user", userId] as const,
-    hostInfo: (hostId: string) => ["user", "host", hostId] as const
+    hostInfo: (hostId: string) => ["user", "host", hostId] as const,
+    profile: (userId: string) => ["user", "profile", userId] as const,
+    provider: () => ["user", "provider"] as const,
+    wishlist: (userId: string) => ["user", "wishlist", userId] as const
   },
   oneTimeChat: {
     all: ["oneTimeChat"] as const,
@@ -40,5 +41,12 @@ export const queryKeys = {
     all: ["categoryList"] as const,
     list: (categoryId: number, selectedCategory: number) =>
       [...queryKeys.categoryList.all, categoryId, selectedCategory] as const
+  },
+  payment: {
+    club: (clubId: string, isOneTimeClub: boolean) => ["payment", "club", clubId, isOneTimeClub] as const,
+    paymentInfo: (userId: string, clubId: string, isOneTimeClub: boolean) =>
+      ["payment", "info", userId, clubId, isOneTimeClub] as const,
+    paymentClub: (clubId: string, isOneTimeClub: boolean) => ["payment", "clubDetails", clubId, isOneTimeClub] as const,
+    regularClubId: (clubId: string) => ["payment", "regularClubId", clubId] as const
   }
 } as const;

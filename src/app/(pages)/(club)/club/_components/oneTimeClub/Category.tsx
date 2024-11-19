@@ -49,7 +49,9 @@ const Category = ({ formData, setFormData }: EggPopProps) => {
     return subCategories?.filter((sub) => sub.main_category_id === mainId);
   };
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) {
+    return <Text variant="subtitle-16">로딩 중...</Text>;
+  }
 
   return (
     <div>

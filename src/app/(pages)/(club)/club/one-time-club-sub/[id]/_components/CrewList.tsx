@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getOneTimeMember } from "../../../_api/supabase";
 import FullScreenModal from "./FullScreenModal";
-import { useAuth } from "@/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import OneTimeClubJoinButton from "./OneTimeClubJoinButtonCom";
@@ -12,6 +11,7 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import { MemberInfo } from "@/types/user.types";
+import { useAuthStore } from "@/store/authStore";
 
 // CrewList 컴포넌트 props 타입
 interface CrewListProps {
@@ -22,7 +22,7 @@ interface CrewListProps {
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
   const [crewList, setCrewList] = useState(initialCrewMembers);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
 
   useEffect(() => {
@@ -45,11 +45,11 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
     };
 
     // 15분마다 데이터 새로고침
-    const intervalid = setInterval(refreshData, 900000);
+    const interval = setInterval(refreshData, 900000);
     refreshData();
 
     //클린업 함수
-    return () => clearInterval(intervalid);
+    return () => clearInterval(interval);
   }, [clubId]);
 
   // 8개의 고정 슬롯 생성
@@ -100,10 +100,26 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
   const isHost = userId === clubHostId;
 
   // 가입한 크루일 때
-  const isAlreadJoined = crewList.some((member) => member.userId === userId);
+  const isAlreadyJoined = crewList.some((member) => member.userId === userId);
+
+  // 로그인 안된 유저 로그인 알랏창 띄우기
+  const handleAlertLogin = () => {
+    alert("로그인 후 이용 가능한 서비스입니다");
+    return;
+  };
 
   // 버튼 렌더링 함수
   const renderJoinButton = () => {
+    if (!userId) {
+      return (
+        <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50">
+          <Button onClick={handleAlertLogin} colorType="orange" borderType="circle">
+            참여하기
+          </Button>
+        </div>
+      );
+    }
+
     if (isHost) {
       return (
         <div className="px-4 w-full h-20 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
@@ -117,7 +133,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
       );
     }
 
-    if (isAlreadJoined) {
+    if (isAlreadyJoined) {
       return (
         <div className="px-4 w-full h-20 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
           <Text variant="subtitle-16" className="w-[50%]">

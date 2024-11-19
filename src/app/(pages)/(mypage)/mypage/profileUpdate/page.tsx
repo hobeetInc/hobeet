@@ -1,33 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaCamera } from "react-icons/fa6";
 import Link from "next/link";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { useAuthStore } from "@/store/authStore";
-import { fetchUserProvider, uploadProfileImage } from "../../_api/profileEdit";
+import { useProfile } from "@/hooks/useProfile";
 
 const ProfileEditPage = () => {
-  const [provider, setProvider] = useState("");
   const { userId, userEmail, userName, userGender, userBirth, userProfileImg, setUserProfileImg } = useAuthStore();
 
-  useEffect(() => {
-    const initializeProfile = async () => {
-      try {
-        const providerData = await fetchUserProvider();
-        if (providerData) {
-          setProvider(providerData);
-        }
-      } catch (error) {
-        console.error("회원 정보를 불러오는 중 오류가 발생했습니다:", error);
-        alert("회원 정보를 불러오는데 실패했습니다.");
-      }
-    };
-
-    initializeProfile();
-  }, []);
+  const { providerQuery, uploadImageMutation } = useProfile(userId);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -40,18 +25,16 @@ const ProfileEditPage = () => {
     reader.readAsDataURL(file);
 
     try {
-      const newImageUrl = await uploadProfileImage({
-        userId,
-        file
-      });
-
-      setUserProfileImg(newImageUrl);
+      await uploadImageMutation.mutateAsync({ userId, file });
       alert("프로필 이미지가 성공적으로 변경되었습니다.");
     } catch (error) {
       console.error("이미지 처리 중 오류 발생:", error);
       alert("이미지 업로드 중 오류가 발생했습니다.");
     }
   };
+
+  if (providerQuery.isLoading) return <div>로딩중...</div>;
+  if (providerQuery.error) return <div>프로필 정보 처리 중 오류</div>;
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -124,7 +107,7 @@ const ProfileEditPage = () => {
             />
           </div>
           <Text className="text-gray-900 text-xs font-normal leading-[17.4px]  ml-4 ">
-            {`${provider}로 가입한 계정이에요`}
+            {`${providerQuery.data}로 가입한 계정이에요`}
           </Text>
         </div>
 
