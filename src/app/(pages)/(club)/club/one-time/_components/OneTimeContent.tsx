@@ -101,18 +101,6 @@ const OneTimeContent = () => {
     }
   }, []);
 
-  // 데이터가 변경될때마다 로컬스토리지에 저장
-  useEffect(() => {
-    localStorage.setItem(
-      ONETIME_CLUB_CREATE,
-      JSON.stringify({
-        formData,
-        selectedGender,
-        selectedAge
-      })
-    );
-  }, [formData, selectedGender, selectedAge]);
-
   // 쓰로틀링된 다음 단계 핸들러
   const throttledHandleNext = useThrottle(() => {
     if (step === 5) {
@@ -124,6 +112,15 @@ const OneTimeContent = () => {
         return alert("정말로 인원제한을 주지 않겠습니까?");
       }
     }
+
+    localStorage.setItem(
+      ONETIME_CLUB_CREATE,
+      JSON.stringify({
+        formData,
+        selectedGender,
+        selectedAge
+      })
+    );
 
     if (step === 6) {
       throttledHandleSubmit();

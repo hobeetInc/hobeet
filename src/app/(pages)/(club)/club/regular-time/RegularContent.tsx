@@ -100,18 +100,6 @@ const RegularContent = () => {
     }
   }, []);
 
-  // 데이터가 변경될때마다 로컬스토리지에 저장
-  useEffect(() => {
-    localStorage.setItem(
-      REGULAR_CLUB_CREATE,
-      JSON.stringify({
-        formData,
-        selectedGender,
-        selectedAge
-      })
-    );
-  }, [formData, selectedGender, selectedAge]);
-
   // step이 변경될 때마다 URL 업데이트
   useEffect(() => {
     router.push(`?step=${step}`);
@@ -133,6 +121,15 @@ const RegularContent = () => {
 
   // 쓰로틀링된 다음 단계 핸들러
   const throttledHandleNext = useThrottle(() => {
+    localStorage.setItem(
+      REGULAR_CLUB_CREATE,
+      JSON.stringify({
+        formData,
+        selectedGender,
+        selectedAge
+      })
+    );
+
     if (step === 3) {
       if (formData.egg_club_people_limited === null) {
         setFormData({
@@ -191,10 +188,6 @@ const RegularContent = () => {
       alert("정기적 모임 생성 중 오류가 발생했습니다.");
     }
   };
-
-  // useEffect(() => {
-  //   console.log("우울", formData);
-  // }, [formData]);
 
   // 렌더링 함수
   const renderStep = () => {
