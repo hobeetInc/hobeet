@@ -12,7 +12,7 @@ export default function MyClubListPage() {
   };
 
   return (
-    <div className="w-full max-w-[480px] mx-auto min-h-screen bg-white">
+    <div className="w-full mx-auto min-h-screen bg-white">
       <TabBar activeTab={activeTab} onTabChange={handleTabChange} value={"myclub"} />
       <div className="mt-9">
         <ClubListContent activeTab={activeTab} />
