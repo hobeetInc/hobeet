@@ -5,7 +5,7 @@ import HomeContent from "./_components/HomeContent";
 import RegularNotification from "./_components/RegularNotification";
 import { MemberInfo } from "@/types/user.types";
 
-const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
+const RegularTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   const regularClubId = Number(params.id);
 
   const [memberData, notificationData, subCategories] = await Promise.all([
@@ -16,7 +16,6 @@ const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
 
   // 클럽 정보만 추출
   const clubInfo = memberData[0]?.egg_club;
-  // console.log("클럽인포:", clubInfo);
 
   // 일치하는 카테고리 찾기
   const matchCategory = subCategories.find((category) => category.sub_category_id === clubInfo.sub_category_id);
@@ -40,7 +39,6 @@ const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
       </div>
 
       <TabLayout>
-        {/* props를 통해 데이터 전달 */}
         <HomeContent
           clubInfo={clubInfo}
           hostInfo={hostInfo}
@@ -59,4 +57,4 @@ const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default OneTimeClubSubPage;
+export default RegularTimeClubSubPage;

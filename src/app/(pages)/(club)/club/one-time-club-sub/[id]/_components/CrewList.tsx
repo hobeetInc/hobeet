@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { getOneTimeMember } from "../../../_api/supabase";
+import { useState } from "react";
 import FullScreenModal from "./FullScreenModal";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
@@ -12,6 +11,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import { MemberInfo } from "@/types/user.types";
 import { useAuthStore } from "@/store/authStore";
+import { useEggPopCrewList } from "@/hooks/utils/list/crewList";
 
 // CrewList 컴포넌트 props 타입
 interface CrewListProps {
@@ -20,37 +20,11 @@ interface CrewListProps {
   clubHostId: string;
 }
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewListProps) => {
-  const [crewList, setCrewList] = useState(initialCrewMembers);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
 
-  useEffect(() => {
-    // 데이터 새로고침 함수
-    const refreshData = async () => {
-      try {
-        const data = await getOneTimeMember(clubId);
-
-        const newCrewMembers = data.map((member) => ({
-          memberId: member.egg_pop_member_id,
-          userId: member.user_id,
-          userName: member.user.user_name,
-          userImage: member.user.user_profile_img
-        }));
-
-        setCrewList(newCrewMembers);
-      } catch (error) {
-        console.error("크루인원 가져오는 중 오류:", error);
-      }
-    };
-
-    // 15분마다 데이터 새로고침
-    const interval = setInterval(refreshData, 900000);
-    refreshData();
-
-    //클린업 함수
-    return () => clearInterval(interval);
-  }, [clubId]);
+  const { data: crewList = initialCrewMembers, isLoading, isError } = useEggPopCrewList(clubId);
 
   // 8개의 고정 슬롯 생성
   const displaySlots = Array(8)
@@ -153,6 +127,9 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
     );
   };
 
+  if (isLoading) return <Text variant="subtitle-16">로딩 중...</Text>;
+  if (isError) return <Text variant="subtitle-16">오류가 발생하였습니다...</Text>;
+
   return (
     <>
       <div className="w-full h-20 flex-col justify-start items-start gap-4 flex mb-[155px]">
@@ -167,7 +144,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         </div>
         <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
 
-        <div className="w-full fixed bottom-[34px] right-0 left-0">{renderJoinButton()}</div>
+        <div className="w-full  fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
     </>

@@ -6,8 +6,9 @@ import DayHeader from "./_components/DayHeader";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
+import { formatterDate, formatterLocation, formatterTax } from "../../../../_utils/formatter";
 
-export const revalidate = 0; // 페이지 상단에 추가
+export const revalidate = 0;
 
 interface SubSubPageProps {
   params: {
@@ -31,25 +32,6 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
     }
 
     const member = await getNotificationMember(secondId);
-
-    // 날짜 커스텀
-    const date = clubInfo.egg_day_date_time;
-    const currentDate = new Date(date);
-    const addZero = (num: number) => String(num).padStart(2, "0");
-
-    const hours = currentDate.getHours();
-    const ampm = hours >= 12 ? "오후" : "오전";
-    const displayHours = hours % 12 || 12;
-
-    const formDate = `${currentDate.getFullYear()}년 ${
-      currentDate.getMonth() + 1
-    }월 ${currentDate.getDate()}일 ${ampm} ${displayHours}:${addZero(currentDate.getMinutes())}`;
-
-    const location = clubInfo.egg_day_location || "";
-    const currentLocation = location.split(" ").slice(1).join(" ");
-
-    const tax = clubInfo.egg_day_tax ?? 0;
-    const currentTax = tax === 0 ? "X" : tax.toLocaleString() + "원";
 
     const crewMembers = member.map((member) => ({
       memberId: member.egg_day_id,
@@ -78,8 +60,6 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
         <div className="w-full flex-col justify-start items-start gap-8 px-4 inline-flex">
           <div className="self-stretch flex-col justify-start items-start gap-5 flex">
-            {/* 여기  */}
-
             <div className="self-stretch flex-col justify-start items-start gap-1 flex">
               <Tag tagName="eggday" />
               <div className="self-stretch justify-start items-center gap-1.5 inline-flex">
@@ -111,19 +91,19 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
                 <Text variant="subtitle-14" className="w-[40px]">
                   일시
                 </Text>
-                <Text variant="body-14">{formDate}</Text>
+                <Text variant="body-14">{formatterDate(clubInfo.egg_day_date_time)}</Text>
               </div>
               <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
                 <Text variant="subtitle-14" className="w-[40px]">
                   장소
                 </Text>
-                <Text variant="body-14">{currentLocation}</Text>
+                <Text variant="body-14">{formatterLocation(clubInfo.egg_day_location)}</Text>
               </div>
               <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
                 <Text variant="subtitle-14" className="w-[40px]">
                   참가비
                 </Text>
-                <Text variant="body-14">{currentTax}</Text>
+                <Text variant="body-14">{formatterTax(clubInfo.egg_day_tax)}</Text>
               </div>
             </div>
           </div>

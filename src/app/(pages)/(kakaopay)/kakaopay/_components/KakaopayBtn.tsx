@@ -1,7 +1,7 @@
 "use client";
 
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { useAuth } from "@/store/AuthContext";
+import { useAuthStore } from "@/store/authStore";
 interface PaymentButtonProps {
   clubType: boolean;
   clubId: number;
@@ -9,7 +9,7 @@ interface PaymentButtonProps {
 }
 
 const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) => {
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
 
   const onClickKakaopayBtn = async () => {
     if (!agreeChecked) {

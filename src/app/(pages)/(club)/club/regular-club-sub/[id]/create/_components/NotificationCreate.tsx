@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
-import { useAuth } from "@/store/AuthContext";
 import { submitRegularClubNotification, submitRegularMember, uploadImage } from "../../../../_api/supabase";
 import { useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
@@ -12,11 +11,12 @@ import { EggDay, EggDayRequired } from "@/types/eggday.types";
 import { AddressData, DaumPostcodeData } from "@/types/address.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import ImageUpload from "@/components/uiComponents/Image/ImageUpload";
-import { IoIosArrowBack } from "react-icons/io";
 import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
 import ClubCreateTextArea from "@/components/uiComponents/Input/Textarea";
 import SearchInput from "@/components/uiComponents/Input/SearchInput";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
+import { ChevronLeft } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
 
 // 커스텀 스타일
 const customStyles = `
@@ -44,7 +44,7 @@ const loadDaumPostcodeScript = () => {
 };
 
 const NotificationCreate = ({ params }: { params: { id: string } }) => {
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<Date | null>(null);
@@ -354,7 +354,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
       <style>{customStyles}</style>
       <div className="flex justify-between items-center h-[48px] p-4 relative">
         <button onClick={() => router.back()} className="absolute left-4 text-lg">
-          <IoIosArrowBack className="w-6 h-6" />
+          <ChevronLeft className="w-6 h-6" />
         </button>
         <Text variant="header-16" className="flex-1 text-center">
           에그데이

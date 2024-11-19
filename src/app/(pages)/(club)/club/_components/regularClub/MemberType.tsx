@@ -14,7 +14,7 @@ const MemberType = ({
   setSelectedAge
 }: MemberTypeProps) => {
   // 인원수 입력값을 관리할 state 추가
-  const [peopleLimit, setPeopleLimit] = useState<string>("");
+  const [peopleLimit, setPeopleLimit] = useState<string>("2");
 
   const gender = ["누구나", "여자만", "남자만"];
   const age = ["누구나", "10대", "20대", "30대", "40대", "50대 이상"];
@@ -118,7 +118,7 @@ const MemberType = ({
 
         <div className="flex flex-col gap-2">
           <Text variant="body_medium-16">최대 인원</Text>
-          <NumberSpinner value={Number(peopleLimit)} onChange={handlePeopleLimit} max={100} min={0} />
+          <NumberSpinner value={Number(peopleLimit)} onChange={handlePeopleLimit} max={100} min={2} />
         </div>
       </div>
     </div>
