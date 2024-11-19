@@ -14,7 +14,7 @@ const AllOneTimeClubListPage = () => {
   }
 
   if (isError) {
-    return <div className="flex items-center justify-center w-full h-36 text-red-500">{error}</div>;
+    return <div className="flex items-center justify-center w-full h-36 text-red-500">{isError}</div>;
   }
 
   return (
