@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getOneTimeChatRoom } from "../../_api/onetime";
 import { useAuthStore } from "@/store/authStore";
+import Link from "next/link";
 
 const OneTimeClubChattingRoomPage = () => {
   // 채팅방 목록, 로딩 상태, 에러 메시지 상태 관리
@@ -157,7 +158,7 @@ const OneTimeClubChattingRoomPage = () => {
             // 채팅방이 있는 경우 목록 표시
             chatRooms.map((room: EggPopChattingRoom) => (
               <div key={room.egg_pop_chatting_room_id} className={cn("border-b")}>
-                <a
+                <Link
                   href={`/chat/onetimeChat/${room.egg_pop_chatting_room_id}`}
                   className={cn("flex items-center p-4 border-b w-full hover:bg-gray-50")}
                 >
@@ -194,7 +195,7 @@ const OneTimeClubChattingRoomPage = () => {
                       {room.last_message}
                     </Text>
                   </div>
-                </a>
+                </Link>
               </div>
             ))
           ) : (

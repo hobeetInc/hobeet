@@ -1,35 +1,62 @@
-import { EggClubSearchResults, EggPopSearchResults } from "@/types/search.types";
+import { EggClubSearchResults, EggPopSearchResults, WishItem } from "@/types/search.types";
 import browserClient from "@/utils/supabase/client";
 
+interface GroupedClub {
+  [key: string]: {
+    egg_club_id: string;
+    egg_club_name: string;
+    egg_club_image: string;
+    egg_club_people_limited: number;
+    user_id: {
+      user_name: string;
+      user_profile_img: string;
+    };
+    egg_club_member: {
+      count: number;
+    }[];
+    count: number;
+  };
+}
+
 export const getPopularClubs = async () => {
-  const { data, error } = await browserClient
-    .from("wish_list")
-    .select(
-      `
-      *,
-      egg_club(
+  const { data, error } = await browserClient.from("wish_list").select(`
+      egg_club_id (
         egg_club_id,
         egg_club_name,
         egg_club_image,
         egg_club_people_limited,
-        user(
+        user_id (
           user_name,
           user_profile_img
         ),
         egg_club_member (
           count
         ),
-        wish_list(
-          count
-        )
+        wish_list(*)
       )
-    `
-    )
-    .order("wish_list(count)", { ascending: false })
-    .limit(10);
+    `);
 
   if (error) throw error;
-  return data;
+
+  const wishes = data as unknown as WishItem[];
+
+  const grouped = wishes.reduce<GroupedClub>((acc, curr) => {
+    const clubId = curr.egg_club_id.egg_club_id;
+    if (!acc[clubId]) {
+      acc[clubId] = {
+        ...curr.egg_club_id,
+        egg_club_id: String(curr.egg_club_id.egg_club_id),
+        count: 1
+      };
+    } else {
+      acc[clubId].count += 1;
+    }
+    return acc;
+  }, {});
+
+  return Object.values(grouped)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 10);
 };
 
 export const getSearchedRegularClubs = async (searchTerm: string): Promise<EggClubSearchResults[]> => {
