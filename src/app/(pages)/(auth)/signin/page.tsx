@@ -47,13 +47,14 @@ const SigninPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center ">
-      <div className="fixed top-[12px] right-0 left-0 flex w-full h-12 bg-white items-center">
-        <div className="left-0 m-6">
+      <div className="flex justify-start w-full h-12">
+        <div className="w-12 h-12 flex justify-center items-center">
           <Link href="/">
-            <HiOutlineChevronLeft className="w-6 h-6" />
+            <HiOutlineChevronLeft className="w-6 h-6 " />
           </Link>
         </div>
       </div>
+
       <div className="fixed top-[209px] flex flex-col items-center">
         <h1 className="text-[#0c0c0c] text-2xl font-black leading-normal">EGG FRIENDS</h1>
         <Text variant="body_medium-16" className="text-gray-900">
