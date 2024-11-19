@@ -27,7 +27,7 @@ const EggDayPayDetail = () => {
           onClick={() => {
             router.push(`/club/regular-club-sub/${notification.egg_club_id}/create/${notification.egg_day.egg_day_id}`);
           }}
-          className="flex flex-col w-full h-[163px] border-b border-solid border-gray-100 mt-4 mb-[32px]"
+          className="flex flex-col w-full h-[163px] border-b border-solid border-gray-100 mb-[32px]"
         >
           <div className="h-[35px] py-2 justify-start items-center gap-2.5 inline-flex">
             <Text variant="subtitle-14"> {customDateFormat(notification.egg_day_kakaopay_create_at)}</Text>

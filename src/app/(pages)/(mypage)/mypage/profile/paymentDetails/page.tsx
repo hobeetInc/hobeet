@@ -27,10 +27,10 @@ const PaymentHistory = () => {
         </div>
         <div className="w-6 m-3"></div>
       </div>
-      <div className="w-full fixed top-12 right-0 left-0">
+      <div className="bg-white">
         <TabBar value="payment" activeTab={selectedTab} onTabChange={setSelectedTab} />
       </div>
-      <div className="mt-[60px]">{selectedTab ? <EggPopPayDetail /> : <EggDayPayDetail />}</div>
+      <div className="pt-[16px]">{selectedTab ? <EggPopPayDetail /> : <EggDayPayDetail />}</div>
     </div>
   );
 };
