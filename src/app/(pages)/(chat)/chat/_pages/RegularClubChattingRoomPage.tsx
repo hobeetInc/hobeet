@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { fetchChatRoomMembers } from "../../_api/regular";
 import { useAuthStore } from "@/store/authStore";
+import Link from "next/link";
 
 const RegularClubChattingRoomPage = () => {
   const [chatRooms, setChatRooms] = useState<EggClubChattingRoom[]>([]);
@@ -197,7 +198,7 @@ const RegularClubChattingRoomPage = () => {
             chatRooms.map((room: EggClubChattingRoom) => (
               <div key={room.egg_day_chatting_room_id} className={cn("border-b")}>
                 {/* TODO a링크 Link로 변경 예정 */}
-                <a
+                <Link
                   href={`/chat/regularChat/${room.egg_day_chatting_room_id}`}
                   className={cn("flex items-center p-4 w-full hover:bg-gray-50")}
                 >
@@ -235,7 +236,7 @@ const RegularClubChattingRoomPage = () => {
                       {room.last_message}
                     </Text>
                   </div>
-                </a>
+                </Link>
               </div>
             ))
           ) : (

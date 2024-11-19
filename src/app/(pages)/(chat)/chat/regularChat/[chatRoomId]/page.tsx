@@ -7,11 +7,11 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { ExtendEggClubMessage } from "@/types/eggclubchat.types";
 import Text from "@/components/uiComponents/TextComponents/Text";
-import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import { useAuthStore } from "@/store/authStore";
 import { fetchChatInfo, fetchEggClubId, fetchMemberData, fetchMessages } from "../../../_api/regular";
 import { queryKeys } from "@/hooks/utils/queryKeys";
 import { sendMessage } from "../../../_api/regular";
+import ChatInput from "./_components/ChatInput";
 
 const supabase = createClient();
 
@@ -46,35 +46,46 @@ const ChatPage = () => {
   const queryClient = useQueryClient();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [sendIconColor, setSentIconColor] = useState<boolean>(false);
   const userId = useAuthStore((state) => state.userId);
 
   // 1. 모임 ID 조회
   const { data: rec, isSuccess: isRecFetched } = useQuery({
     queryKey: queryKeys.regularChat.eggClubId(roomId as string),
     queryFn: () => fetchEggClubId(roomId as string),
-    enabled: Boolean(roomId) && Boolean(userId)
+    enabled: Boolean(roomId) && Boolean(userId),
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    staleTime: 0
   });
 
   // 2. 멤버 데이터 조회
   const { data: memberData } = useQuery({
     queryKey: queryKeys.regularChat.memberData(userId as string),
     queryFn: () => fetchMemberData(userId as string, rec.egg_club_id),
-    enabled: Boolean(userId) && isRecFetched
+    enabled: Boolean(userId) && isRecFetched,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    staleTime: 0
   });
 
   // 3. 채팅방 정보 조회
   const { data: chatInfo } = useQuery({
     queryKey: queryKeys.regularChat.chatInfo(roomId as string),
     queryFn: () => fetchChatInfo(roomId as string, memberData.egg_club_member_id),
-    enabled: Boolean(roomId) && Boolean(memberData)
+    enabled: Boolean(roomId) && Boolean(memberData),
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    staleTime: 0
   });
 
   // 4. 메시지 목록 조회
   const { data: regularMessages = [], isLoading: isLoadingMessages } = useQuery({
     queryKey: queryKeys.regularChat.messages(roomId as string, chatInfo?.chat_room_entry_time),
-    queryFn: () => fetchMessages(roomId as string, chatInfo.chat_room_entry_time),
-    enabled: Boolean(roomId) && Boolean(chatInfo?.chat_room_entry_time)
+    queryFn: () => fetchMessages(roomId as string, chatInfo?.chat_room_entry_time),
+    enabled: Boolean(roomId) && Boolean(chatInfo?.chat_room_entry_time),
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    staleTime: 0
   });
 
   // 스크롤을 맨 아래로 이동시키는 함수
@@ -98,21 +109,24 @@ const ChatPage = () => {
         messageContent
       });
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       setNewMessage("");
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.regularChat.messages(roomId as string)
+      // 즉시 쿼리를 무효화하고 다시 가져오기
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.regularChat.messages(roomId as string, chatInfo?.chat_room_entry_time)
+      });
+      await queryClient.refetchQueries({
+        queryKey: queryKeys.regularChat.messages(roomId as string, chatInfo?.chat_room_entry_time)
       });
     }
   });
 
   // 실시간 구독 설정
   useEffect(() => {
-    if (!roomId) return;
+    if (!roomId || !chatInfo?.chat_room_entry_time) return;
 
-    // 실시간 채널 구독 설정
-    const subscription = supabase
-      .channel("chatting")
+    const channel = supabase
+      .channel(`room-${roomId}`)
       .on(
         "postgres_changes",
         {
@@ -121,18 +135,22 @@ const ChatPage = () => {
           table: "egg_day_chatting_message",
           filter: `egg_day_chatting_room_id=eq.${roomId}`
         },
-        () => {
-          queryClient.invalidateQueries({
-            queryKey: queryKeys.regularChat.messages(roomId as string)
+        async () => {
+          // 즉시 쿼리를 무효화하고 다시 가져오기
+          await queryClient.invalidateQueries({
+            queryKey: queryKeys.regularChat.messages(roomId as string, chatInfo?.chat_room_entry_time)
+          });
+          await queryClient.refetchQueries({
+            queryKey: queryKeys.regularChat.messages(roomId as string, chatInfo?.chat_room_entry_time)
           });
         }
       )
       .subscribe();
 
     return () => {
-      supabase.removeChannel(subscription);
+      supabase.removeChannel(channel);
     };
-  }, [roomId, queryClient]);
+  }, [roomId, queryClient, chatInfo?.chat_room_entry_time]);
 
   // 텍스트영역 높이 자동조절
   useEffect(() => {
@@ -261,49 +279,9 @@ const ChatPage = () => {
           <div ref={messagesEndRef} />
         </div>
       </div>
-      {/* TODO 컴포넌트 분리 */}
-      {/* 채팅 입력 */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t">
-        <div className="p-4">
-          <div className="flex items-center">
-            <textarea
-              ref={textareaRef}
-              value={newMessage}
-              onChange={(e) => {
-                if (e.target.value.length === 0) {
-                  setSentIconColor(false);
-                } else {
-                  setSentIconColor(true);
-                }
 
-                const lines = e.target.value.split("\n");
-                if (lines.length <= 5) {
-                  setNewMessage(e.target.value);
-                }
-              }}
-              onKeyPress={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSendMessage();
-                }
-              }}
-              rows={1}
-              maxLength={100}
-              className="flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px] focus:outline-none focus:ring-2 transition duration-200 min-h-[48px] max-h-[120px] content-center resize-none overflow-y-auto text-body-14"
-              placeholder="메시지를 입력하세요..."
-            />
-            <button
-              type="button"
-              onClick={handleSendMessage}
-              className={`w-[40px] h-[40px] ml-4 ${
-                sendIconColor ? "bg-primary-400" : "bg-gray-50"
-              } text-white rounded-full flex items-center justify-center`}
-            >
-              <Icon name="rocket" />
-            </button>
-          </div>
-        </div>
-      </div>
+      {/* 채팅 입력 */}
+      <ChatInput newMessage={newMessage} setNewMessage={setNewMessage} handleSendMessage={handleSendMessage} />
     </div>
   );
 };
