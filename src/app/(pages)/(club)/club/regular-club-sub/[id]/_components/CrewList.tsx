@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getParticipationStatus, getRegularMember } from "../../../_api/supabase";
-import { useAuth } from "@/store/AuthContext";
+import { getParticipationStatus } from "../../../_api/supabase";
 import FullScreenModal from "./FullScreenModal";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
@@ -15,6 +14,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import { EggDayWithEggDayMember } from "@/types/eggday.types";
 import { MemberInfo } from "@/types/user.types";
+import { useEggClubCrewList } from "@/hooks/utils/list/crewList";
+import { useAuthStore } from "@/store/authStore";
 
 // CrewList 컴포넌트 props 타입
 interface CrewListProps {
@@ -25,27 +26,17 @@ interface CrewListProps {
 }
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notificationData }: CrewListProps) => {
-  const [crewList, setCrewList] = useState(initialCrewMembers);
   const [participationStatus, setParticipationStatus] = useState<UserStatus>("not_applied");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
+
+  const { data: crewList = initialCrewMembers, isLoading, isError } = useEggClubCrewList(clubId);
 
   useEffect(() => {
     // 데이터 새로고침 함수
     const refreshData = async () => {
       try {
-        const memberResult = await getRegularMember(clubId);
-
-        const newCrewMembers = memberResult.map((member) => ({
-          memberId: member.egg_club_member_id,
-          userId: member.user_id,
-          userName: member.user.user_name,
-          userImage: member.user.user_profile_img
-        }));
-
-        setCrewList(newCrewMembers);
-
         if (userId) {
           const statusResult = await getParticipationStatus({ userId, clubId });
 
@@ -204,6 +195,9 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         );
     }
   };
+
+  if (isLoading) return <Text variant="subtitle-16">로딩 중...</Text>;
+  if (isError) return <Text variant="subtitle-16">오류가 발생하였습니다...</Text>;
 
   return (
     <>

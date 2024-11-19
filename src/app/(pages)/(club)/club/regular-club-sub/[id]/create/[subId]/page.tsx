@@ -7,6 +7,7 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { formatterDate, formatterLocation, formatterTax } from "../../../../_utils/formatter";
+import { useEggDayCrewList } from "@/hooks/utils/list/crewList";
 
 export const revalidate = 0;
 

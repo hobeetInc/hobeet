@@ -1,9 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { useAuth } from "@/store/AuthContext";
-import { getNotificationMember, submitRegularMember } from "@/app/(pages)/(club)/club/_api/supabase";
 import FullScreenModal from "./FullScreenModal";
 import { useRouter } from "next/navigation";
 import { EggDay } from "@/types/eggday.types";
@@ -12,6 +10,9 @@ import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import { IoIosArrowForward } from "react-icons/io";
 import browserClient from "@/utils/supabase/client";
 import { MemberInfo } from "@/types/user.types";
+import { useState } from "react";
+import { submitRegularMember } from "@/app/(pages)/(club)/club/_api/notifications";
+import { useEggDayCrewList } from "@/hooks/utils/list/crewList";
 
 interface CrewListProps {
   crewMembers: MemberInfo[];
@@ -22,28 +23,11 @@ interface CrewListProps {
 }
 
 const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInfo, secondId }: CrewListProps) => {
-  const [crewList, setCrewList] = useState(initialCrewMembers);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { userId } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    const refreshData = async () => {
-      try {
-        const memberResult = await getNotificationMember(secondId);
-        const newCrewMembers = memberResult.map((member) => ({
-          memberId: member.egg_club_member_id,
-          userId: member.user_id,
-          userName: member.user.user_name,
-          userImage: member.user.user_profile_img
-        }));
-        setCrewList(newCrewMembers);
-      } catch (error) {
-        console.error("크루인원 가져오는 중 오류:", error);
-      }
-    };
-    refreshData();
-  }, [clubId, userId, secondId]);
+  const { data: crewList = initialCrewMembers, isLoading, isError } = useEggDayCrewList(secondId);
 
   const displaySlots = Array(8)
     .fill(null)
@@ -158,6 +142,9 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
       </div>
     );
   };
+
+  if (isLoading) return <Text variant="subtitle-16">로딩 중...</Text>;
+  if (isError) return <Text variant="subtitle-16">오류가 발생하였습니다...</Text>;
 
   return (
     <>
