@@ -96,7 +96,7 @@ const OneTimeClubList = () => {
                     WebkitLineClamp: 2,
                     alignSelf: "stretch",
                     color: "var(--Gray-scale-900, #0D0D0D)",
-                    lineHeight: "135%" // line-height를 135%로 설정
+                    lineHeight: "135%"
                   }}
                 >
                   {club.egg_pop_name}

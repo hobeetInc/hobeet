@@ -9,7 +9,6 @@ export const getSubCategory = async (main_category_id: number) => {
     if (error) {
       throw new Error("데이터를 가져오는 중 오류가 발생했습니다.");
     }
-    // console.log(data);
 
     return data;
   } catch (error) {
