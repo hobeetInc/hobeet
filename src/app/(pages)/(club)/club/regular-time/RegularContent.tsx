@@ -6,15 +6,15 @@ import { REGULAR_CLUB_CREATE } from "../_utils/localStorage";
 import Category from "../_components/regularClub/Category";
 import MemberType from "../_components/regularClub/MemberType";
 import { putRegularMember, putRepresentative } from "../_api/supabase";
-import { EggClubFormWithImageFile } from "@/types/eggclub.types";
+import { EggClubFormWithImageFile } from "@/types/features/club/eggclub.types";
 import ProgressBar from "../_components/ProgressBar";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import Introduction from "../_components/regularClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 import { createRegularChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/regular";
-import { useCreateClub } from "@/hooks/useCreate";
+import { useCreateClub } from "@/hooks/utils/api/useCreate";
 import { useAuthStore } from "@/store/authStore";
-import { useUploadImage } from "@/hooks/useUploadImage";
+import { useUploadImage } from "@/hooks/utils/api/useUploadImage";
 import { ChevronLeft } from "lucide-react";
 
 const RegularContent = () => {

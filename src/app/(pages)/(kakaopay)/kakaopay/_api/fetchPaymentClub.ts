@@ -1,5 +1,5 @@
+import { EggDayData, EggPopData } from "@/types/features/commerce/payment.types";
 import supabase from "@/utils/supabase/client";
-import { EggDayData, EggPopData } from "@/types/payment.types";
 
 interface ClubResponse {
   oneTimeClubData?: EggPopData;

@@ -1,5 +1,5 @@
+import { EggPopMemberInput } from "@/types/features/club/eggpop.types";
 import browserClient from "@/utils/supabase/client";
-import { EggPopMemberInput } from "@/types/eggpop.types";
 
 interface EggClubRequest {
   egg_club_id: number;

@@ -3,9 +3,9 @@ import React from "react";
 import { getNotificationData, getNotificationMember } from "../../../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import DayHeader from "./_components/DayHeader";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import { ProfileImageLarge } from "@/components/uiComponents/molecules/Images/ProfileImageLarge";
+import Tag from "@/components/uiComponents/atoms/tags/Tag";
 import { formatterDate, formatterLocation, formatterTax } from "../../../../_utils/formatter";
 
 export const revalidate = 0;

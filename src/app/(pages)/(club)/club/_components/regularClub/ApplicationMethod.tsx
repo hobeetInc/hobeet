@@ -1,4 +1,4 @@
-import { EggClubProps } from "@/types/eggclub.types";
+import { EggClubProps } from "@/types/features/club/eggclub.types";
 
 const ApplicationMethod = ({ formData, setFormData }: EggClubProps) => {
   const methods = [

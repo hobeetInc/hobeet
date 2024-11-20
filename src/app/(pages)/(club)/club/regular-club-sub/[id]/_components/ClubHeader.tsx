@@ -1,11 +1,11 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { ClubHeaderProps } from "@/types/eggclub.types";
 import { useEffect } from "react";
 import { ChevronLeft } from "lucide-react";
 import { GoPlus } from "react-icons/go";
 import { useAuthStore } from "@/store/authStore";
+import { ClubHeaderProps } from "@/types/features/club/eggclub.types";
 
 const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   const router = useRouter();

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useAuth } from "@/store/AuthContext";
 import { useRouter } from "next/navigation";
-import { useClubWishlist } from "@/hooks/utils/list/useClubWishlist";
+import { useClubWishlist } from "@/hooks";
 
 interface WishListHeartProps {
   egg_club_id: number;

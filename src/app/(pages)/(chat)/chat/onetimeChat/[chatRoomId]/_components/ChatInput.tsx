@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
 import { cn } from "@/utils/cn/util";
 
 interface ChatInputProps {

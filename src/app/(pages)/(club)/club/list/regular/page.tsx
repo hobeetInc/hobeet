@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEggClubAllList } from "@/hooks/utils/list/allList";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/atoms/text/Text";
 
 const AllRegularClubListPage = () => {
   const { data: allRegularClubList, isLoading, isError } = useEggClubAllList();

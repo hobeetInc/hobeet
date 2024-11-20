@@ -1,6 +1,6 @@
+import { EggClubForm } from "@/types/features/club/eggclub.types";
+import { EggPopForm } from "@/types/features/club/eggpop.types";
 import browserClient from "@/utils/supabase/client";
-import { EggPopForm } from "@/types/eggpop.types";
-import { EggClubForm } from "@/types/eggclub.types";
 
 export const submitOneTimeClubData = async (finalFormData: EggPopForm) => {
   const { data, error } = await browserClient.from("egg_pop").insert([finalFormData]).select("*").single();

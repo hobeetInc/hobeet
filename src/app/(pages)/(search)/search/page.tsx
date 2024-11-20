@@ -6,13 +6,14 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { getSearchedRegularClubs, getSearchedOneTimeClubs } from "../_api/supabase";
 import Link from "next/link";
 import Image from "next/image";
+
+import { IoSearchOutline } from "react-icons/io5";
+import { IoMdCloseCircle } from "react-icons/io";
+import { EggClubSearchResults, EggPopSearchResults } from "@/types/utils/search.types";
 import {
   HorizontalContentsListLargeEggClub,
   HorizontalContentsListLargeEggPop
-} from "@/components/uiComponents/HorizontalContentsListLarge";
-import { IoSearchOutline } from "react-icons/io5";
-import { IoMdCloseCircle } from "react-icons/io";
-import { EggClubSearchResults, EggPopSearchResults } from "@/types/search.types";
+} from "@/components/uiComponents/organisms/lists/HorizontalContentsListLarge";
 
 const SearchPage = () => {
   const router = useRouter();

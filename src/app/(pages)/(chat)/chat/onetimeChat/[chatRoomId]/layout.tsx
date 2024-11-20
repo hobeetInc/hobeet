@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, Menu } from "lucide-react";
 import { ChatProvider, useChatContext } from "./_components/ChatContext";
 import { cn } from "@/utils/cn/util";
-import { EggPopChattingMemberInfo, LayoutProps } from "@/types/eggpopchat.types";
 import { IoCloseOutline } from "react-icons/io5";
 import Image from "next/image";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import Tag from "@/components/uiComponents/atoms/tags/Tag";
 import { fetchChatRoomMembers } from "@/app/(pages)/(chat)/_api/onetime";
 import { ChatRoomExit } from "../../../_api/supabase";
 import { useAuthStore } from "@/store/authStore";
+import { EggPopChattingMemberInfo, LayoutProps } from "@/types/features/chat/eggpopchat.types";
 
 function ChatHeader() {
   const { roomName, isLoading, egg_pop_chatting_room_member_id, egg_pop_id } = useChatContext();

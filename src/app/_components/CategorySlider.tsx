@@ -1,9 +1,10 @@
 "use client";
-import { Category } from "@/types/category.types";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/atoms/text/Text";
 import { cn } from "@/utils/cn/util";
+import { Category } from "@/types/utils/category.types";
 
 const categories: Category[] = [
   { id: 0, name: "에그팝", icon: "/asset/Category/Category icon_voltage.png", alt: "eggpop" },

@@ -5,8 +5,8 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { ExtendEggClubMessage } from "@/types/eggclubchat.types";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import { ExtendEggClubMessage } from "@/types/features/chat/eggclubchat.types";
+import Text from "@/components/uiComponents/atoms/text/Text";
 import { useAuthStore } from "@/store/authStore";
 import { fetchChatInfo, fetchEggClubId, fetchMemberData, fetchMessages } from "../../../_api/regular";
 import { queryKeys } from "@/hooks/utils/queryKeys";
@@ -16,30 +16,6 @@ import { cn } from "@/utils/cn/util";
 
 const supabase = createClient();
 
-// 주요 기능:
-// 1. 실시간 메시지 처리
-//    - Supabase 실시간 구독 설정
-//    - 새 메시지 수신 시 자동 업데이트
-
-// 2. 메시지 그룹화 및 표시
-//    - 날짜별 메시지 그룹화
-//    - 사용자별 메시지 스타일 차별화 (본인/타인)
-//    - 시간 표시 및 프로필 이미지 처리
-
-// 3. 메시지 입력 처리
-//    - 텍스트 입력 자동 높이 조절
-//    - Enter 키 전송 지원
-//    - 최대 길이 제한 (100자)
-//    - 전송 버튼 상태 관리
-
-// 4. 스크롤 관리
-//    - 새 메시지 수신 시 자동 스크롤
-//    - 메시지 영역 오버플로우 처리
-
-// 5. 데이터 관리
-//    - React Query를 사용한 메시지 데이터 관리
-//    - 실시간 업데이트를 위한 쿼리 무효화
-//    - 로딩 상태 처리
 const ChatPage = () => {
   const params = useParams();
   const roomId = params.chatRoomId;

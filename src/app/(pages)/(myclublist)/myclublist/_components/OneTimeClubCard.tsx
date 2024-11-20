@@ -1,12 +1,11 @@
 import { format } from "date-fns";
 import { createClient } from "@/utils/supabase/client";
-import { EggPop } from "@/types/cardlist.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { EggPop } from "@/types/features/club/eggpop.types";
 
 const supabase = createClient();
-
 export const OneTimeClubCard = ({ club }: { club: EggPop }) => {
   const router = useRouter();
 

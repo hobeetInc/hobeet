@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/atoms/text/Text";
 import { cn } from "@/utils/cn/util";
 import { useAuthStore } from "@/store/authStore";
 import { queryKeys } from "@/hooks/utils/queryKeys";
