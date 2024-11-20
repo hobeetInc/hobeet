@@ -55,6 +55,7 @@ export default function Home() {
             src="/asset/Banner/Rectangle 20.png"
             alt="Rectangle 20"
             className="w-full h-auto"
+            priority
           />
           <Text
             variant="subtitle-18"

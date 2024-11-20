@@ -36,7 +36,8 @@ const nextConfig = {
         pathname: "**"
       }
     ]
-  }
+  },
+
 };
 // PWA 설정
 const withPWA = withPWAInit({
