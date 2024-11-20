@@ -4,7 +4,9 @@ import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
+import { HiOutlineChevronLeft } from "react-icons/hi";
 
 const SigninPage = () => {
   const supabase = browserClient;
@@ -16,8 +18,8 @@ const SigninPage = () => {
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
           queryParams: {
-            access_type: "offline",
-            prompt: "consent"
+            access_type: "offline", // 사용자가 앱에 로그인하지 않은 상태에서도 앱이 사용자의 데이터에 접근할 수 있게 해주는 권한
+            prompt: "consent" // 사용자 동의 화면 표시(매번)
           }
         }
       });
@@ -45,14 +47,22 @@ const SigninPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center ">
-      <div className="fixed top-[130px] flex flex-col items-center">
-        <h1 className="text-[#0c0c0c] text-2xl font-black font-['Como'] leading-loose mb-2">EGG FRIENDS</h1>
+      <div className="flex justify-start w-full h-12">
+        <div className="w-12 h-12 flex justify-center items-center">
+          <Link href="/">
+            <HiOutlineChevronLeft className="w-6 h-6 " />
+          </Link>
+        </div>
+      </div>
+
+      <div className="fixed top-[209px] flex flex-col items-center">
+        <h1 className="text-[#0c0c0c] text-2xl font-black leading-normal">EGG FRIENDS</h1>
         <Text variant="body_medium-16" className="text-gray-900">
           함께라서 더 즐거운 우리
         </Text>
       </div>
 
-      <div className="fixed top-[246px]">
+      <div className="fixed top-[295px]">
         <div className="flex items-center">
           <div className="w-[90px] h-[90px] z-10">
             <Icon name="whiteEgg" />
@@ -96,8 +106,9 @@ const SigninPage = () => {
       </div>
 
       <div className="fixed bottom-[72px] text-center">
-        <button className="text-gray-900" onClick={() => alert("서비스 준비 중입니다.")}>
-          <Text variant="body_medium-12">이메일로 간편하게 회원가입 👉</Text>
+        <button className="text-gray-900 flex" onClick={() => alert("서비스 준비 중입니다.")}>
+          <Text variant="body_medium-14">이메일로 간편하게 회원가입</Text>
+          <span className="h-[20px] ml-[2px] mb-[1px]">👉</span>
         </button>
       </div>
     </div>

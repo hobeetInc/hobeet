@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./_utils/localStorage";
-import { IoIosArrowBack } from "react-icons/io";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import { ChevronLeft } from "lucide-react";
 
 const TypeSelectionPage = () => {
   const router = useRouter();
@@ -34,7 +34,7 @@ const TypeSelectionPage = () => {
     <div className="relative flex flex-col justify-center items-center ">
       <div className="w-[390px] h-12 flex justify-start mb-10 ">
         <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex ">
-          <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
+          <ChevronLeft className="w-6 h-6 cursor-pointer" />
         </div>
       </div>
 

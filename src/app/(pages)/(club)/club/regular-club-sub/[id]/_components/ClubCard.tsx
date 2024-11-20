@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/store/AuthContext";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import { Icon } from "@/components/uiComponents/IconComponents/Icon";
 import { EggDayWithEggDayMember } from "@/types/eggday.types";
 import { MemberInfo } from "@/types/user.types";
+import { useAuthStore } from "@/store/authStore";
 
 interface ClubCardProps {
   notification: EggDayWithEggDayMember;
@@ -15,7 +15,7 @@ interface ClubCardProps {
 
 const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
   const router = useRouter();
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
 
   // 날짜와 시간 커스텀
   const DateTimeCustom = (dateTime: string) => {

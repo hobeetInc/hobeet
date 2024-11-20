@@ -43,7 +43,20 @@ const DateTime = ({ formData, setFormData }: EggPopProps) => {
       const combinedDate = new Date(date.setHours(time.getHours(), time.getMinutes()));
 
       setFormData({ ...formData, egg_pop_date_time: combinedDate.toISOString() });
+    } else {
+      setFormData({ ...formData, egg_pop_date_time: "" });
     }
+  };
+
+  const handleClearDate = () => {
+    setStartDate(null);
+    setStartTime(null);
+    setFormData({ ...formData, egg_pop_date_time: "" });
+  };
+
+  const handleClearTime = () => {
+    setStartTime(null);
+    setFormData({ ...formData, egg_pop_date_time: "" });
   };
 
   // 선택 가능한 시간 필터링
@@ -69,7 +82,7 @@ const DateTime = ({ formData, setFormData }: EggPopProps) => {
       <div className="flex flex-col gap-2">
         <Text variant="header-18">언제 만날까요?</Text>
         <label htmlFor="datePickerDate" className="cursor-pointer ">
-          <SearchInput>
+          <SearchInput hasValue={!!startDate} onClear={handleClearDate}>
             <DatePicker
               id="datePickerDate"
               selected={startDate}
@@ -78,7 +91,9 @@ const DateTime = ({ formData, setFormData }: EggPopProps) => {
               minDate={new Date()}
               locale={ko}
               placeholderText="날짜를 선택해주세요"
-              className="w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 text-gray-300"
+              className={`w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 ${
+                startDate ? "text-gray-900" : "text-gray-300"
+              }`}
               wrapperClassName="w-full"
               autoComplete="off"
             />
@@ -90,7 +105,7 @@ const DateTime = ({ formData, setFormData }: EggPopProps) => {
         <Text variant="header-18">몇 시에 만날까요?</Text>
 
         <label htmlFor="datePickerTime" className="cursor-pointer">
-          <SearchInput>
+          <SearchInput hasValue={!!startDate} onClear={handleClearTime}>
             <DatePicker
               id="datePickerTime"
               selected={startTime}
@@ -102,7 +117,9 @@ const DateTime = ({ formData, setFormData }: EggPopProps) => {
               dateFormat="aa h:mm"
               locale={ko}
               placeholderText="시간을 선택해주세요"
-              className="w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 text-gray-300"
+              className={`w-full h-full bg-transparent cursor-pointer focus:outline-none text-body-14 ${
+                startTime ? "text-gray-900" : "text-gray-300"
+              }`}
               wrapperClassName="w-full"
               filterTime={filterTime}
               disabled={!startDate}

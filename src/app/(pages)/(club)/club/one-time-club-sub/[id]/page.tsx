@@ -6,6 +6,14 @@ import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
 import Text from "@/components/uiComponents/TextComponents/Text";
 import Tag from "@/components/uiComponents/TagComponents/Tag";
 import { MemberInfo } from "@/types/user.types";
+import {
+  formatterAge,
+  formatterDate,
+  formatterGender,
+  formatterLocation,
+  formatterPeopleLimit,
+  formatterTax
+} from "../../_utils/formatter";
 
 const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   const oneTimeClubId = Number(params.id);
@@ -13,67 +21,6 @@ const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
 
   // 클럽 정보만 추출
   const clubInfo = data[0]?.egg_pop;
-
-  // 날짜 커스텀
-  const date = clubInfo.egg_pop_date_time;
-  const currentDate = new Date(date);
-  const addZero = (num: number) => String(num).padStart(2, "0");
-
-  // 오전/오후 판단
-  const hours = currentDate.getHours();
-  const isPm = hours >= 12 ? "오후" : "오전";
-  const displayHours = hours % 12 || 12;
-
-  const formDate = `${currentDate.getFullYear()}년 ${
-    currentDate.getMonth() + 1
-  }월 ${currentDate.getDate()}일 ${isPm} ${displayHours}:${addZero(currentDate.getMinutes())}`;
-
-  // 장소 커스텀
-  const location = clubInfo.egg_pop_location;
-  const currentLocation = location.split(" ").slice(1).join(" ");
-
-  // 참가비 커스텀
-  const tax = clubInfo.egg_pop_tax;
-  const currentTax = tax === 0 ? "X" : tax.toLocaleString() + "원";
-
-  // console.log("택스", tax);
-
-  // 성별 커스텀
-  const gender = (gender: null | string) => {
-    if (gender === null) {
-      return "누구나";
-    } else if (gender === "남성") {
-      return "남성만";
-    } else {
-      return "여성만";
-    }
-  };
-
-  // 나이 커스텀
-  const age = (age: number) => {
-    if (age === 100) {
-      return "제한 없음";
-    } else if (age === 50) {
-      return "50대";
-    } else if (age === 49) {
-      return "40대";
-    } else if (age === 39) {
-      return "30대";
-    } else if (age === 29) {
-      return "20대";
-    } else if (age === 19) {
-      return "10대";
-    }
-  };
-
-  // 인원 제한 커스텀
-  const limited = (limit: number) => {
-    if (limit === 100) {
-      return "최대 100명";
-    } else {
-      return `최대 ${limit}명`;
-    }
-  };
 
   // 참여 크루 정보 추출
   const crewMembers: MemberInfo[] = data.map((member) => ({
@@ -137,43 +84,41 @@ const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
               <Text variant="subtitle-14" className="w-[40px]">
                 일시
               </Text>
-              <Text variant="body-14">{formDate}</Text>
+              <Text variant="body-14">{formatterDate(clubInfo.egg_pop_date_time)}</Text>
             </div>
             <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
               <Text variant="subtitle-14" className="w-[40px]">
                 장소
               </Text>
-              <Text variant="body-14">{currentLocation}</Text>
+              <Text variant="body-14">{formatterLocation(clubInfo.egg_pop_location)}</Text>
             </div>
             <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
               <Text variant="subtitle-14" className="w-[40px]">
                 나이
               </Text>
-              <Text variant="body-14">{age(clubInfo.egg_pop_age)}</Text>
+              <Text variant="body-14">{formatterAge(clubInfo.egg_pop_age)}</Text>
             </div>
             <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
               <Text variant="subtitle-14" className="w-[40px]">
                 성별
               </Text>
-              <Text variant="body-14">{gender(clubInfo.egg_pop_gender)}</Text>
+              <Text variant="body-14">{formatterGender(clubInfo.egg_pop_gender)}</Text>
             </div>
             <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
               <Text variant="subtitle-14" className="w-[40px]">
                 인원
               </Text>
-              <Text variant="body-14">{limited(clubInfo.egg_pop_people_limited)}</Text>
+              <Text variant="body-14">{formatterPeopleLimit(clubInfo.egg_pop_people_limited)}</Text>
             </div>
             <div className="self-stretch justify-start items-start gap-[16px] inline-flex">
               <Text variant="subtitle-14" className="w-[40px]">
                 참가비
               </Text>
-              <Text variant="body-14">{currentTax}</Text>
+              <Text variant="body-14">{formatterTax(clubInfo.egg_pop_tax)}</Text>
             </div>
           </div>
         </div>
         <div className="self-stretch h-[0px] border border-solid border-gray-50"></div>
-
-        {/* 여기 */}
 
         <div className="self-stretch flex-col justify-start items-start gap-4 flex">
           <div className="self-stretch h-6 flex-col justify-start items-start gap-2 flex">

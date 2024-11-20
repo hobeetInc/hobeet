@@ -11,7 +11,6 @@ import MemberType from "../../_components/oneTimeClub/MemberType";
 import Tax from "../../_components/oneTimeClub/Tax";
 import { EggPopFormWithImageFile } from "@/types/eggpop.types";
 import ProgressBar from "../../_components/ProgressBar";
-import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/uiComponents/Button/ButtonCom";
 import Introduction from "../../_components/oneTimeClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
@@ -19,6 +18,7 @@ import { createOneTimeChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/
 import { useCreatePop } from "@/hooks/useCreate";
 import { useAuthStore } from "@/store/authStore";
 import { useUploadImage } from "@/hooks/useUploadImage";
+import { ChevronLeft } from "lucide-react";
 
 const OneTimeContent = () => {
   const router = useRouter();
@@ -235,7 +235,7 @@ const OneTimeContent = () => {
     <div className="relative flex flex-col justify-center items-center">
       <div className="w-[390px] h-12 flex justify-start">
         <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
-          <IoIosArrowBack className="w-6 h-6 cursor-pointer" />
+          <ChevronLeft className="w-6 h-6 cursor-pointer" />
         </div>
       </div>
 

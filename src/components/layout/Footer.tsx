@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import { useAuth } from "@/store/AuthContext";
 import { cn } from "@/utils/cn/util";
+import { useAuthStore } from "@/store/authStore";
 
 type NavItem = {
   path: string;
@@ -73,8 +73,8 @@ const noHeaderFooterRoutes = [
   /^\/club\/one-time-club-sub\/.*$/,
   /^\/club\/regular-club-sub\/.*$/,
   /^\/signupSecond\/.*$/,
-  "/mypage/profileUpdate",
-  "/mypage/inquiry",
+  "/mypage/profile/profileUpdate",
+  "/mypage/profile/inquiry",
   "/kakaopay/paymentConfirm",
   "/kakaopay/success",
   /^\/approvemembers\/.*$/
@@ -82,7 +82,8 @@ const noHeaderFooterRoutes = [
 
 export default function Footer() {
   const pathname = usePathname();
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
+
   const router = useRouter();
 
   const handleAuthRequired = (path: string) => {
