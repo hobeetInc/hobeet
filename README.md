@@ -88,7 +88,7 @@
 
 <br>
 
-# 💼 엔터티(Entity)
+# 💼 엔티티(Entity)
 
 <details>
 <summary>최초 ERD</summary>
