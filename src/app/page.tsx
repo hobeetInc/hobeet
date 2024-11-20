@@ -31,6 +31,9 @@ export default function Home() {
             height={296}
             className="w-[358px] h-[296px] object-cover"
             priority
+            loading="eager"
+            fetchPriority="high"
+            sizes="358px"
           />
         </div>
       </div>
