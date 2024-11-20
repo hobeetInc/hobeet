@@ -61,7 +61,7 @@ export default function Header({ children }) {
           {pathname === "/" && (
             <Link href="/">
               <div className="flex w-[96px] h-[24px] flex-shrink-0 ml-[16px] mt-[12px] mb-[12px]">
-                <Image src={"/asset/MainLogo.svg"} alt="MainLogo" width={96} height={24} />
+                <Image src={"/asset/Logo/MainLogo.svg"} alt="MainLogo" width={96} height={24} />
               </div>
             </Link>
           )}
