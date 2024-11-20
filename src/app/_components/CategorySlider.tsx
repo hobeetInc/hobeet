@@ -6,13 +6,13 @@ import Text from "@/components/uiComponents/TextComponents/Text";
 import { cn } from "@/utils/cn/util";
 
 const categories: Category[] = [
-  { id: 0, name: "에그팝", icon: "/asset/Category icon_voltage.png", alt: "eggpop" },
-  { id: 1, name: "아웃도어/여행", icon: "/asset/Category icon_airplane.png", alt: "여행" },
-  { id: 5, name: "운동/스포츠관람", icon: "/asset/Category icon_tennis.png", alt: "운동" },
-  { id: 3, name: "사교/인맥", icon: "/asset/Category icon_hot-beverage.png", alt: "사교" },
-  { id: 6, name: "문화/공연/축제", icon: "/asset/Category icon_guitar.png", alt: "문화" },
-  { id: 4, name: "사진/영상", icon: "/asset/Category icon_clapper-board.png", alt: "사진" },
-  { id: 2, name: "댄스/무용", icon: "/asset/Category icon_woman-dancing.png", alt: "댄스" }
+  { id: 0, name: "에그팝", icon: "/asset/Category/Category icon_voltage.png", alt: "eggpop" },
+  { id: 1, name: "아웃도어/여행", icon: "/asset/Category/Category icon_airplane.png", alt: "여행" },
+  { id: 5, name: "운동/스포츠관람", icon: "/asset/Category/Category icon_tennis.png", alt: "운동" },
+  { id: 3, name: "사교/인맥", icon: "/asset/Category/Category icon_hot-beverage.png", alt: "사교" },
+  { id: 6, name: "문화/공연/축제", icon: "/asset/Category/Category icon_guitar.png", alt: "문화" },
+  { id: 4, name: "사진/영상", icon: "/asset/Category/Category icon_clapper-board.png", alt: "사진" },
+  { id: 2, name: "댄스/무용", icon: "/asset/Category/Category icon_woman-dancing.png", alt: "댄스" }
 ];
 
 const CategorySlider = () => {

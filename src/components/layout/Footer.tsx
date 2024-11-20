@@ -20,24 +20,24 @@ const navItems: NavItem[] = [
   {
     path: "/",
     icon: {
-      active: "/asset/Bottom nav_Button_Home.png",
-      default: "/asset/Bottom nav_Button_Home_Default.png"
+      active: "/asset/Navigation/Bottom nav_Button_Home.png",
+      default: "/asset/Navigation/Bottom nav_Button_Home_Default.png"
     },
     alt: "Bottom nav_Button_Home_Default"
   },
   {
     path: "/search",
     icon: {
-      active: "/asset/Bottom nav_Button_Search.png",
-      default: "/asset/Bottom nav_Button_Search_Default.png"
+      active: "/asset/Navigation/Bottom nav_Button_Search.png",
+      default: "/asset/Navigation/Bottom nav_Button_Search_Default.png"
     },
     alt: "Bottom nav_Button_Search_Default"
   },
   {
     path: "/myclublist",
     icon: {
-      active: "/asset/Bottom nav_Button__My gathering.png",
-      default: "/asset/Bottom nav_Button__My gathering_Default.png"
+      active: "/asset/Navigation/Bottom nav_Button__My gathering.png",
+      default: "/asset/Navigation/Bottom nav_Button__My gathering_Default.png"
     },
     alt: "Bottom nav_Button__My gathering_Default",
     requiresAuth: true
@@ -45,8 +45,8 @@ const navItems: NavItem[] = [
   {
     path: "/chat",
     icon: {
-      active: "/asset/Bottom nav_Button_My chat.png",
-      default: "/asset/Bottom nav_Button_My chat_Default.png"
+      active: "/asset/Navigation/Bottom nav_Button_My chat.png",
+      default: "/asset/Navigation/Bottom nav_Button_My chat_Default.png"
     },
     alt: "Bottom nav_Button_My chat_Default",
     requiresAuth: true
@@ -54,8 +54,8 @@ const navItems: NavItem[] = [
   {
     path: "/mypage/profile",
     icon: {
-      active: "/asset/Bottom nav_Button_My page.png",
-      default: "/asset/Bottom nav_Button_My page_Default.png"
+      active: "/asset/Navigation/Bottom nav_Button_My page.png",
+      default: "/asset/Navigation/Bottom nav_Button_My page_Default.png"
     },
     alt: "Bottom nav_Button_My page_Default",
     requiresAuth: true

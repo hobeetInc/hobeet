@@ -14,7 +14,10 @@ export const useEggPopTenList = () => {
         console.error("에그팝 10개의 목록을 불러오지 못하였습니다: ", error);
         throw error;
       }
-    }
+    },
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    staleTime: 0
   });
 };
 
@@ -30,6 +33,9 @@ export const useEggClubTenList = () => {
         console.error("에그클럽 10개의 목록을 불러오지 못하였습니다: ", error);
         throw error;
       }
-    }
+    },
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    staleTime: 0
   });
 };
