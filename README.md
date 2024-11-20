@@ -70,7 +70,7 @@
   </tbody>
 </table>
 
-## 🌱 역할분담
+## 🌱 역할 분담
 
 | 이름   | 분담                            |
 | ------ | ------------------------------- |
@@ -83,7 +83,7 @@
 
 <br>
 
-# 🏗 아키텍쳐
+# 🏗 아키텍처
 ![image](https://github.com/user-attachments/assets/ac169a45-721d-4f16-99b3-da7a6f8c7178)
 
 <br>
@@ -902,17 +902,17 @@
 | ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white) | ![React Icons](https://img.shields.io/badge/React%20Icons-61DAFB?style=for-the-badge&logo=react&logoColor=black) |
 
 ### State Management & Library
-| React Query                           | Zustand                                | Context API                            |
-|---------------------------------------|----------------------------------------|----------------------------------------|
-| ![React Query](https://img.shields.io/badge/React%20Query-FF4154?style=for-the-badge&logo=react-query&logoColor=white) | ![Zustand](https://img.shields.io/badge/Zustand-brown?style=for-the-badge&logo=standardjs&logoColor=white) | ![Context API](https://img.shields.io/badge/contextAPI-61DAFB?style=for-the-badge&logo=react&logoColor=black) |
+ | Zustand                                | Context API                            |
+|---------------------------------------|----------------------------------------|
+| ![Zustand](https://img.shields.io/badge/Zustand-brown?style=for-the-badge&logo=standardjs&logoColor=white) | ![Context API](https://img.shields.io/badge/contextAPI-61DAFB?style=for-the-badge&logo=react&logoColor=black) |
 
 | Tanstack Query                        | React Slick                            | Lucide React                           |
 |---------------------------------------|----------------------------------------|----------------------------------------|
 | ![Tanstack Query](https://img.shields.io/badge/tanstack%20query-61DAFB?style=for-the-badge&logo=reactquery&logoColor=black) | ![React Slick](https://img.shields.io/badge/React%20Slick%20-61DAFB?style=for-the-badge&logo=react&logoColor=black) | ![Lucide React](https://img.shields.io/badge/Lucide%20React%20-61DAFB?style=for-the-badge&logo=react&logoColor=black) |
 
-| ShadCN UI                             | Sharp                                  | Date-fns                               |
-|---------------------------------------|----------------------------------------|----------------------------------------|
-| ![ShadCN UI](https://img.shields.io/badge/shadcnui-000000?style=for-the-badge&logo=shadcnui&logoColor=white) | ![Sharp](https://img.shields.io/badge/sharp-99CC00?style=for-the-badge&logo=sharp&logoColor=black) | ![Date-fns](https://img.shields.io/badge/datefns-770C56?style=for-the-badge&logo=datefns&logoColor=white) |
+| Sharp                                  | Date-fns                               |
+|---------------------------------------|----------------------------------------|
+![Sharp](https://img.shields.io/badge/sharp-99CC00?style=for-the-badge&logo=sharp&logoColor=black) | ![Date-fns](https://img.shields.io/badge/datefns-770C56?style=for-the-badge&logo=datefns&logoColor=white) |
 
 | Calendar                              | React Datepicker                       | PWA                                    |
 |---------------------------------------|----------------------------------------|----------------------------------------|
@@ -1208,9 +1208,9 @@
 
 <br>
 
-# 트러블 슈팅
+# 트러블슈팅
 <details>
-<summary><strong>트러블 슈팅 1</strong></summary>
+<summary><strong>트러블슈팅 1</strong></summary>
 
 ### 모임 가입 데이터베이스 요청 오류
 
@@ -1247,7 +1247,7 @@
 </details>
 
 <details>
-<summary><strong>트러블 슈팅 2</strong></summary>
+<summary><strong>트러블슈팅 2</strong></summary>
 
 ### 카카오페이 pg_token을 request body에 담아서 요청하기
 
@@ -1301,7 +1301,7 @@ const response = await fetch("/api/kakaopayApprove", {
 </details>
 
 <details>
-<summary><strong>트러블 슈팅 3</strong></summary>
+<summary><strong>트러블슈팅 3</strong></summary>
 
 ### Next.js 프로젝트 빌드 시 일회성 모임 생성 페이지 경로 관련 에러 해결
 
@@ -1403,7 +1403,7 @@ page.tsx에서 비즈니스 로직을 분리하여 더 깔끔하게 만듦으로
 </details>
 
 <details>
-<summary><strong>트러블 슈팅 4</strong></summary>
+<summary><strong>트러블슈팅 4</strong></summary>
 
 ## 데이터베이스 테이블명 및 컬럼명 수정
 
@@ -1435,10 +1435,10 @@ page.tsx에서 비즈니스 로직을 분리하여 더 깔끔하게 만듦으로
 프로젝트에서는 Sentry를 사용하여 실시간 오류 모니터링을 구현하였습니다. 이를 통해 프로덕션 환경에서 발생하는 오류를 신속하게 파악하고, 사용자 경험에 미치는 영향을 최소화할 수 있었습니다.
 
 1. 실시간 알림
-   1. 오류 발생 시 실시간으로 알림을 제공하여 즉시 대응할 수 있었습니다. 알림을 통해 빠르게 문제를 인식하고 대응할 수 있었습니다.
+오류 발생 시 실시간으로 알림을 제공하여 즉시 대응할 수 있었습니다. 알림을 통해 빠르게 문제를 인식하고 대응할 수 있었습니다.
 ![스크린샷 2024-11-20 21 53 53](https://github.com/user-attachments/assets/82b3d8a4-5a78-45de-bdb0-5bd75313f13d)
 2. 문제 해결 및 개선
-   1. Sentry에서 제공하는 오류 리포트와 트레이스 기능을 통해 주요 오류를 파악하고, 개선 사항을 빠르게 반영할 수 있었습니다. 이를 통해 코드 품질을 높이고, 반복되는 문제를 해결할 수 있었습니다.
+ Sentry에서 제공하는 오류 리포트와 트레이스 기능을 통해 주요 오류를 파악하고, 개선 사항을 빠르게 반영할 수 있었습니다. 이를 통해 코드 품질을 높이고, 반복되는 문제를 해결할 수 있었습니다.
 ![스크린샷 2024-11-20 21 50 04](https://github.com/user-attachments/assets/ec055389-5c3a-4bf0-9df8-f63aa909d528)
 
 <br>
