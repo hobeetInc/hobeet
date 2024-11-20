@@ -107,9 +107,377 @@
 
 # 프로젝트 구조
 <details>
-<summary>📦 리팩토링 후</summary>
+  <summary><strong>📦 리팩토링 전</strong></summary>
+  <details>
+<summary>🗂️ public 폴더</summary>
+
+```
+📦public
+ ┣ 📂asset
+ ┃ ┣ 📂Icon
+ ┃ ┃ ┣ 📜.DS_Store
+ ┃ ┃ ┣ 📜Arrow-Right-Outline.png
+ ┃ ┃ ┣ 📜Frame 1000007052.png
+ ┃ ┃ ┣ 📜Heart-Filled.png
+ ┃ ┃ ┣ 📜Heart-Outline.png
+ ┃ ┃ ┣ 📜Heart.png
+ ┃ ┃ ┣ 📜Icon-Heart.png
+ ┃ ┃ ┣ 📜Icon-Location.png
+ ┃ ┃ ┣ 📜State-filled.png
+ ┃ ┃ ┣ 📜checkbox-default 2.png
+ ┃ ┃ ┣ 📜checkbox-default.png
+ ┃ ┃ ┣ 📜checkbox-selected 2.png
+ ┃ ┃ ┣ 📜checkbox-selected.png
+ ┃ ┃ ┗ 📜icon-vector.svg
+ ┃ ┣ 📜.DS_Store
+ ┃ ┣ 📜BellIcon.png
+ ┃ ┣ 📜Bottom nav_Button_Home.png
+ ┃ ┣ 📜Bottom nav_Button_Home_Default.png
+ ┃ ┣ 📜Bottom nav_Button_My chat.png
+ ┃ ┣ 📜Bottom nav_Button_My chat_Default.png
+ ┃ ┣ 📜Bottom nav_Button_My page.png
+ ┃ ┣ 📜Bottom nav_Button_My page_Default.png
+ ┃ ┣ 📜Bottom nav_Button_Search.png
+ ┃ ┣ 📜Bottom nav_Button_Search_Default.png
+ ┃ ┣ 📜Bottom nav_Button__My gathering.png
+ ┃ ┣ 📜Bottom nav_Button__My gathering_Default.png
+ ┃ ┣ 📜Category icon_airplane.png
+ ┃ ┣ 📜Category icon_clapper-board.png
+ ┃ ┣ 📜Category icon_guitar.png
+ ┃ ┣ 📜Category icon_hot-beverage.png
+ ┃ ┣ 📜Category icon_tennis.png
+ ┃ ┣ 📜Category icon_voltage.png
+ ┃ ┣ 📜Category icon_woman-dancing.png
+ ┃ ┣ 📜Egg.png
+ ┃ ┣ 📜Frame 2307.png
+ ┃ ┣ 📜MainBanner.jpg
+ ┃ ┣ 📜MainLogo.svg
+ ┃ ┣ 📜MenuIcon.png
+ ┃ ┣ 📜Message-Filled.png
+ ┃ ┣ 📜PlusIcon.png
+ ┃ ┣ 📜Rectangle 20.png
+ ┃ ┣ 📜banner.png
+ ┃ ┣ 📜eggsBanner.png
+ ┃ ┣ 📜icon-google.png
+ ┃ ┣ 📜icon-kakao.png
+ ┗ ┗ 📜icon.svg
+```
+
+</details>
 <details>
-<summary>📦 public 폴더</summary>
+<summary>🗂️ src 폴더</summary>
+
+```
+ 📦src
+ ┣ 📂@types
+ ┃ ┗ 📜tailwind-scrollbar-hide.d.ts
+ ┣ 📂app
+ ┃ ┣ 📂(pages)
+ ┃ ┃ ┣ 📂(approvemembers)
+ ┃ ┃ ┃ ┗ 📂approvemembers
+ ┃ ┃ ┃ ┃ ┗ 📂[id]
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂(auth)
+ ┃ ┃ ┃ ┣ 📂auth
+ ┃ ┃ ┃ ┃ ┗ 📂callback
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂InsertUserInfo
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┣ 📂signin
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┗ 📂signupSecond
+ ┃ ┃ ┃ ┃ ┣ 📂[userId]
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┗ 📂_components
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜DateScrollPicker.tsx
+ ┃ ┃ ┣ 📂(categoryList)
+ ┃ ┃ ┃ ┣ 📂_api
+ ┃ ┃ ┃ ┃ ┗ 📜supabase.ts
+ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┗ 📜CategoryList.tsx
+ ┃ ┃ ┃ ┗ 📂category
+ ┃ ┃ ┃ ┃ ┗ 📂[categoryId]
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂(chat)
+ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┣ 📂oneTimeClub
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜OneTimeClubChatRoom.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜OneTimeClubChatRoomMeetingPlace.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜OneTimeClubChatRoomRecruiterEntrance.tsx
+ ┃ ┃ ┃ ┃ ┗ 📂regularClub
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜RegularClubChatRoom.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜RegularClubChatRoomMeetingPlace.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RegularClubChatRoomRecruiterEntrance.tsx
+ ┃ ┃ ┃ ┗ 📂chat
+ ┃ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜OneTimeClubChattingRoomPage.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RegularClubChattingRoomPage.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂onetimeChat
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂[chatRoomId]
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ChatContext.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂regularChat
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂[chatRoomId]
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ChatContext.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂(club)
+ ┃ ┃ ┃ ┗ 📂club
+ ┃ ┃ ┃ ┃ ┣ 📂_api
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜supabase.ts
+ ┃ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂oneTimeClub
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AddressSearch.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Category.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DateTime.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Introduction.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberType.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Tax.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂regularClub
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ApplicationMethod.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Category.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Introduction.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜MemberType.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreateButton.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜OneTimeClubList.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ProgressBar.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RegularClubList.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂_utils
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜localStorage.ts
+ ┃ ┃ ┃ ┃ ┣ 📂list
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂onetime
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂regular
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂one-time
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜OneTimeContent.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂one-time-club-sub
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂[id]
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CrewList.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FullScreenModal.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PopHeader.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂regular-club-sub
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂[id]
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ClubCard.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ClubHeader.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CrewList.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FullScreenModal.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜HomeContent.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜NotificationList.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RegularNotification.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜TabLayout.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜WishListHeart.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂create
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂[subId]
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CrewList.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DayHeader.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FullScreenModal.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationCreate.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂regular-time
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜RegularContent.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂(kakaopay)
+ ┃ ┃ ┃ ┗ 📂kakaopay
+ ┃ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜KakaopayBtn.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂isSuccess
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂paymentConfirm
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┗ 📂success
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂(myclublist)
+ ┃ ┃ ┃ ┗ 📂myclublist
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂(mypage)
+ ┃ ┃ ┃ ┣ 📂_api
+ ┃ ┃ ┃ ┃ ┗ 📜supabase.ts
+ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┣ 📜eggDayPayDetail.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜eggPopPayDetail.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜logout.ts
+ ┃ ┃ ┃ ┗ 📂mypage
+ ┃ ┃ ┃ ┃ ┣ 📂inquiry
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂paymentDetails
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂profile
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂profileUpdate
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┗ 📂wishClubList
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂(search)
+ ┃ ┃ ┃ ┣ 📂_api
+ ┃ ┃ ┃ ┃ ┗ 📜supabase.ts
+ ┃ ┃ ┃ ┣ 📂_components
+ ┃ ┃ ┃ ┃ ┗ 📜OverallPopularMeetings.tsx
+ ┃ ┃ ┃ ┗ 📂search
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┗ 📂testPage
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂api
+ ┃ ┃ ┣ 📂_ChatRoomExit
+ ┃ ┃ ┃ ┗ 📜ChatRoomExit.tsx
+ ┃ ┃ ┣ 📂chatRoomApproveRecruiterEntrance
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂chatRoomMeetingPlace
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂chatRoomRecruiterEntrance
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂createChatRoom
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂createOneTimeChatRoom
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂getChatRoom
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂getOneTimeChatRoom
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂kakaopayApprove
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂kakaopayOrder
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂oneTimeChatRoomMeetingPlace
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂oneTimeChatRoomRecruiterEntrance
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂oneTimeClubChattingRoom
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂payment
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┗ 📂regularClubChattingRoom
+ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┣ 📂fonts
+ ┃ ┃ ┣ 📜GeistMonoVF.woff
+ ┃ ┃ ┣ 📜GeistVF.woff
+ ┃ ┃ ┗ 📜PretendardVariable.woff2
+ ┃ ┣ 📂providers
+ ┃ ┃ ┗ 📜queryProvider.tsx
+ ┃ ┣ 📂store
+ ┃ ┃ ┣ 📜AuthContext.tsx
+ ┃ ┃ ┣ 📜authStore.ts
+ ┃ ┃ ┗ 📜useScreenSizeStore.ts
+ ┃ ┣ 📂test
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📜.DS_Store
+ ┃ ┣ 📜Footer.tsx
+ ┃ ┣ 📜Header.tsx
+ ┃ ┣ 📜error.tsx
+ ┃ ┣ 📜favicon.ico
+ ┃ ┣ 📜globals.css
+ ┃ ┣ 📜layout.tsx
+ ┃ ┣ 📜loading.tsx
+ ┃ ┣ 📜metadata.ts
+ ┃ ┣ 📜not-found.tsx
+ ┃ ┗ 📜page.tsx
+ ┣ 📂components
+ ┃ ┣ 📂myclublistcontent
+ ┃ ┃ ┣ 📂_api
+ ┃ ┃ ┃ ┗ 📜ClubListContentApi.ts
+ ┃ ┃ ┗ 📜ClubListContent.tsx
+ ┃ ┣ 📂onetimeclublist
+ ┃ ┃ ┗ 📜OneTimeClubCard.tsx
+ ┃ ┣ 📂regularclublist
+ ┃ ┃ ┗ 📜RegularClubCard.tsx
+ ┃ ┣ 📂uiComponents
+ ┃ ┃ ┣ 📂Button
+ ┃ ┃ ┃ ┗ 📜ButtonCom.tsx
+ ┃ ┃ ┣ 📂IconComponents
+ ┃ ┃ ┃ ┣ 📜Icon.tsx
+ ┃ ┃ ┃ ┗ 📜Icons.tsx
+ ┃ ┃ ┣ 📂Image
+ ┃ ┃ ┃ ┗ 📜ImageUpload.tsx
+ ┃ ┃ ┣ 📂Input
+ ┃ ┃ ┃ ┣ 📜ClubCreateInput.tsx
+ ┃ ┃ ┃ ┣ 📜NumberSpinner.tsx
+ ┃ ┃ ┃ ┣ 📜SearchInput.tsx
+ ┃ ┃ ┃ ┗ 📜Textarea.tsx
+ ┃ ┃ ┣ 📂ResponsiveDesign
+ ┃ ┃ ┃ ┗ 📜ScreenSizeInitializer.tsx
+ ┃ ┃ ┣ 📂TagComponents
+ ┃ ┃ ┃ ┗ 📜Tag.tsx
+ ┃ ┃ ┣ 📂TextComponents
+ ┃ ┃ ┃ ┗ 📜Text.tsx
+ ┃ ┃ ┣ 📜ApproveMemberTapBar.tsx
+ ┃ ┃ ┣ 📜EggClubMainImage.tsx
+ ┃ ┃ ┣ 📜HeartImage.tsx
+ ┃ ┃ ┣ 📜HorizontalContentsListLarge.tsx
+ ┃ ┃ ┣ 📜HorizontalList.tsx
+ ┃ ┃ ┣ 📜LeaderProfile.tsx
+ ┃ ┃ ┣ 📜LocationImage.tsx
+ ┃ ┃ ┣ 📜MainImage.tsx
+ ┃ ┃ ┣ 📜ProfileImageLarge.tsx
+ ┃ ┃ ┣ 📜Radio.tsx
+ ┃ ┃ ┣ 📜TapBar.tsx
+ ┃ ┃ ┣ 📜VerticalContentsList.tsx
+ ┃ ┃ ┣ 📜VerticalContentsListLarge.tsx
+ ┃ ┃ ┣ 📜VerticalContentsListMedium.tsx
+ ┃ ┃ ┣ 📜VerticalList.tsx
+ ┃ ┃ ┗ 📜profileList.tsx
+ ┃ ┣ 📜CategorySlider.tsx
+ ┃ ┣ 📜OneTimeClubJoinButtonCom.tsx
+ ┃ ┣ 📜OneTimeClubList.tsx
+ ┃ ┣ 📜RegularClubJoinButtonCom.tsx
+ ┃ ┗ 📜RegularClubList.tsx
+ ┣ 📂types
+ ┃ ┣ 📜address.types.ts
+ ┃ ┣ 📜cardlist.types.ts
+ ┃ ┣ 📜category.types.ts
+ ┃ ┣ 📜eggclub.types.ts
+ ┃ ┣ 📜eggclubchat.types.ts
+ ┃ ┣ 📜eggday.types.ts
+ ┃ ┣ 📜eggpop.types.ts
+ ┃ ┣ 📜eggpopchat.types.ts
+ ┃ ┣ 📜join.types.ts
+ ┃ ┣ 📜mypage.types.ts
+ ┃ ┣ 📜payment.types.ts
+ ┃ ┣ 📜search.types.ts
+ ┃ ┗ 📜user.types.ts
+ ┣ 📂utils
+ ┃ ┣ 📂cn
+ ┃ ┃ ┗ 📜util.ts
+ ┃ ┣ 📂onetimeclubjoin
+ ┃ ┃ ┣ 📂_api
+ ┃ ┃ ┃ ┗ 📜supabase.ts
+ ┃ ┃ ┗ 📜join.ts
+ ┃ ┣ 📂regularclubjoin
+ ┃ ┃ ┣ 📂_api
+ ┃ ┃ ┃ ┗ 📜supabase.ts
+ ┃ ┃ ┗ 📜join.ts
+ ┃ ┣ 📂supabase
+ ┃ ┃ ┣ 📜client.ts
+ ┃ ┃ ┣ 📜middleware.ts
+ ┃ ┃ ┗ 📜server.ts
+ ┃ ┣ 📜CustomAddress.ts
+ ┃ ┣ 📜CustomDate.ts
+ ┃ ┗ 📜sanitizeFileName.ts
+ ┗ 📜middleware.ts
+ ```
+
+</details>
+</details>
+
+<br>
+
+<details>
+<summary><strong>📦 리팩토링 후</strong></summary>
+<details>
+<summary>🗂️ public 폴더</summary>
 
 ```
 📦public
@@ -174,7 +542,7 @@
  </details>
 
 <details>
-<summary>📦 src 폴더</summary>
+<summary>🗂️ src 폴더</summary>
 
  ```
  📦src
@@ -602,7 +970,7 @@
 
 # 🗂️ 기능 설명
 <details>
-<summary>메인페이지</summary>
+<summary><strong>메인페이지</strong></summary>
 
 - **메인페이지 주요 기능**:
   - 새로 생긴 **에그팝모임**과 **에그클럽 모임**을 확인할 수 있습니다.
@@ -619,7 +987,7 @@
 
 </details>
 <details>
-<summary>회원가입 / 로그인</summary>
+<summary><strong>회원가입 / 로그인</strong></summary>
 
 - **회원가입 및 로그인 주요 기능**
   - **구글**, **카카오 소셜 로그인** 지원
@@ -637,7 +1005,7 @@
 
 </details>
 <details>
-<summary>모임 생성</summary>
+<summary><strong>모임 생성</strong></summary>
 
 ### **모임 생성 주요 기능**
 - **에그팝(일회성)**, **에그클럽(정기적)** 모임을 구분하여 생성할 수 있습니다.
@@ -684,7 +1052,7 @@
 </details>
 
 <details>
-<summary>모임 가입</summary>
+<summary><strong>모임 가입</strong></summary>
 
 ### **모임 가입 주요 기능**
 - **가입 제한 조건**
@@ -706,7 +1074,7 @@
 </details>
 
 <details>
-<summary>실시간 채팅</summary>
+<summary><strong>실시간 채팅</strong></summary>
 
 ### **실시간 채팅 주요 기능**
   - **채팅방 생성**
@@ -720,7 +1088,7 @@
 
 </details>
 <details>
-<summary>카카오 페이 결제</summary>
+<summary><strong>카카오 페이 결제</strong></summary>
 
 ### **카카오 페이 결제 주요 기능**
 - **참가비 결제**
@@ -732,7 +1100,7 @@
 </details>
 
 <details>
-<summary>검색 기능(카테고리)</summary>
+<summary><strong>검색 기능(카테고리)</strong></summary>
 
 ### **검색 기능(카테고리) 주요 기능**
 - **모임 제목 검색**
@@ -752,7 +1120,7 @@
 
 </details>
 <details>
-<summary>내 모임 리스트</summary>
+<summary><strong>내 모임 리스트</strong></summary>
 
 ### **내 모임 리스트 주요 기능**
 - **내가 모임장인 모임** 또는 **내가 참여한 모임** 리스트를 볼 수 있습니다.
@@ -761,7 +1129,7 @@
 
 </details>
 <details>
-<summary>마이페이지</summary>
+<summary><strong>마이페이지</strong></summary>
 
 ### **마이페이지 주요 기능**
 - **나의 프로필 정보**를 확인할 수 있습니다.
@@ -818,6 +1186,9 @@
 ---
 
 ## 역할별 권한 정리
+<details>
+<summary><strong>역할별 권한 정리</strong></summary>
+
 
 | 권한          | 비로그인 유저   | 로그인 유저   | 에그장(호스트)   |
 |---------------|-----------------|---------------|------------------|
@@ -832,27 +1203,14 @@
 | **모임 관리**     | ❌              | ❌            | ✅               |
 | **에그데이 생성** | ❌              | ❌            | ✅               |
 | **멤버 승인**     | ❌              | ❌            | ✅               |
-<br>
 
-
-
-# 배포링크 및 문서
-
-**`서비스 링크`** : [ 🔗 서비스 링크](https://www.eggfriends.site/)
-
-**`피그마 링크`** : [ 🔗 피그마 링크](https://www.figma.com/design/JQ3ib6L9YVGIek0S1eosTu/Egg-Friends?node-id=2810-31642&t=96T2aI1AJQay9f7m-1)
-
-**`팀 노션`** : [🔗 팀 노션 링크](https://www.notion.so/Hobeet-125119c5561680359cbfcfc5d49657cb?pvs=4)
-
-**`Miro`** : [🔗 설계 미로보드](https://miro.com/app/board/uXjVLRZ0kpM=/?share_link_id=686807338998)
-
-**`브로셔`** : [🔗 브로셔](https://nbcampreact6th.oopy.io/c3464045-dc17-4dc6-b857-a2baa2dc1e96)
+</details>
 
 <br>
 
 # 트러블 슈팅
 <details>
-<summary>트러블 슈팅 1</summary>
+<summary><strong>트러블 슈팅 1</strong></summary>
 
 ### 모임 가입 데이터베이스 요청 오류
 
@@ -889,7 +1247,7 @@
 </details>
 
 <details>
-<summary>트러블 슈팅 2</summary>
+<summary><strong>트러블 슈팅 2</strong></summary>
 
 ### 카카오페이 pg_token을 request body에 담아서 요청하기
 
@@ -943,7 +1301,7 @@ const response = await fetch("/api/kakaopayApprove", {
 </details>
 
 <details>
-<summary>트러블 슈팅 3</summary>
+<summary><strong>트러블 슈팅 3</strong></summary>
 
 ### Next.js 프로젝트 빌드 시 일회성 모임 생성 페이지 경로 관련 에러 해결
 
@@ -1045,7 +1403,7 @@ page.tsx에서 비즈니스 로직을 분리하여 더 깔끔하게 만듦으로
 </details>
 
 <details>
-<summary>트러블 슈팅 4</summary>
+<summary><strong>트러블 슈팅 4</strong></summary>
 
 ## 데이터베이스 테이블명 및 컬럼명 수정
 
@@ -1073,5 +1431,34 @@ page.tsx에서 비즈니스 로직을 분리하여 더 깔끔하게 만듦으로
 
 <br>
 
-# 🌈 함께 성장하는 Egg Friends
-더 나은 모임 문화를 만들어가는 여정에 함께해주세요!
+# 📊 오류 모니터링 - Sentry 활용
+프로젝트에서는 Sentry를 사용하여 실시간 오류 모니터링을 구현하였습니다. 이를 통해 프로덕션 환경에서 발생하는 오류를 신속하게 파악하고, 사용자 경험에 미치는 영향을 최소화할 수 있었습니다.
+
+1. 실시간 알림
+   1. 오류 발생 시 실시간으로 알림을 제공하여 즉시 대응할 수 있었습니다. 알림을 통해 빠르게 문제를 인식하고 대응할 수 있었습니다.
+![스크린샷 2024-11-20 21 53 53](https://github.com/user-attachments/assets/82b3d8a4-5a78-45de-bdb0-5bd75313f13d)
+2. 문제 해결 및 개선
+   1. Sentry에서 제공하는 오류 리포트와 트레이스 기능을 통해 주요 오류를 파악하고, 개선 사항을 빠르게 반영할 수 있었습니다. 이를 통해 코드 품질을 높이고, 반복되는 문제를 해결할 수 있었습니다.
+![스크린샷 2024-11-20 21 50 04](https://github.com/user-attachments/assets/ec055389-5c3a-4bf0-9df8-f63aa909d528)
+
+<br>
+
+# 배포링크 및 문서
+
+**`서비스 링크`** : [ 🔗 서비스 링크](https://www.eggfriends.site/)
+
+**`피그마 링크`** : [ 🔗 피그마 링크](https://www.figma.com/design/JQ3ib6L9YVGIek0S1eosTu/Egg-Friends?node-id=2810-31642&t=96T2aI1AJQay9f7m-1)
+
+**`팀 노션`** : [🔗 팀 노션 링크](https://www.notion.so/Hobeet-125119c5561680359cbfcfc5d49657cb?pvs=4)
+
+**`Miro`** : [🔗 설계 미로보드](https://miro.com/app/board/uXjVLRZ0kpM=/?share_link_id=686807338998)
+
+**`브로셔`** : [🔗 브로셔](https://nbcampreact6th.oopy.io/c3464045-dc17-4dc6-b857-a2baa2dc1e96)
+
+<br>
+
+# 🌱 학습의 여정, Egg Friends
+
+이 프로젝트는 학습을 목적으로 시작된 프로젝트로, 다양한 기술과 아이디어를 실험해보고 적용해보는 기회였습니다. 그 과정에서 얻은 경험과 지식을 바탕으로 더 나은 개발자가 되기 위한 첫걸음을 내딛었습니다. 앞으로도 지속적으로 성장하며, 더욱 나은 코드와 경험을 쌓아가겠습니다!
+
+읽어주셔서 감사합니다!
