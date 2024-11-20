@@ -2,11 +2,11 @@
 
 import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { regularClubJoin } from "@/utils/regularclubjoin/join";
-import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 
 import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import { enterRegularChatRoom } from "@/app/(pages)/(chat)/_api/regular";
+import { useAuthStore } from "@/store/authStore";
 
 interface EggClubJoinButtonProps {
   clubId: number;
@@ -17,19 +17,20 @@ interface EggClubJoinButtonProps {
 
 export default function RegularClubJoinButton({ clubId, onSuccess, onError }: EggClubJoinButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const supabase = createClient();
 
+  // Zustand store에서 userId 가져오기
+  const userId = useAuthStore((state) => state.userId);
+
+  /**
+   * 참여하기 버튼 클릭 핸들러
+   * 로그인 상태 확인 후 모임 참여 처리
+   */
   const handleJoin = async () => {
     try {
       setIsLoading(true);
 
-      // 현재 로그인한 사용자 정보 조회
-      const {
-        data: { user },
-        error: authError
-      } = await supabase.auth.getUser();
-
-      if (authError || !user) {
+      // userId가 없으면 로그인 필요
+      if (!userId) {
         onError?.("로그인이 필요합니다.");
         return;
       }
@@ -37,13 +38,14 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError }: Eg
       // 정기 모임 가입 요청
       const result = await regularClubJoin({
         clubId: clubId,
-        userId: user.id
+        userId: userId
       });
 
       // 가입 성공 시 처리
       if (result.success) {
         onSuccess?.();
-        enterRegularChatRoom({ egg_club_id: clubId }); // 모임원 채팅방 입장(자동 승인)
+        // 모임원 채팅방 입장(자동 승인)
+        enterRegularChatRoom({ egg_club_id: clubId });
         alert(result.message);
         location.reload();
       }

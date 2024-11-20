@@ -1,9 +1,9 @@
 import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { oneTimeClubJoin } from "@/utils/onetimeclubjoin/join";
-import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
+import { useAuthStore } from "@/store/authStore";
 
 interface JoinClubButtonProps {
   clubId: number;
@@ -12,27 +12,28 @@ interface JoinClubButtonProps {
 }
 export default function OneTimeClubJoinButton({ clubId, onError }: JoinClubButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const supabase = createClient();
   const router = useRouter();
 
-  // 참여하기 버튼 클릭 핸들러
+  // Zustand store에서 userId 가져오기
+  const userId = useAuthStore((state) => state.userId);
+
+  /**
+   * 참여하기 버튼 클릭 핸들러
+   * 로그인 상태 확인 후 모임 참여 처리
+   */
   const handleJoinRequest = async () => {
     try {
       setIsLoading(true);
 
-      const {
-        data: { user },
-        error: authError
-      } = await supabase.auth.getUser();
-
-      if (authError || !user) {
+      // userId가 없으면 로그인 필요
+      if (!userId) {
         onError?.("로그인이 필요합니다.");
         return;
       }
 
       const result = await oneTimeClubJoin({
         clubId: clubId,
-        userId: user.id
+        userId: userId
       });
 
       // 가입 성공 시 결제 페이지로 이동
