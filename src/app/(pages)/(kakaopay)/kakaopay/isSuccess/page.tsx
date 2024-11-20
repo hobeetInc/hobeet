@@ -42,7 +42,7 @@ const Page = () => {
     };
 
     insertMember();
-  }, [clubId, requestUserId, router, isMemberInserted]);
+  }, [clubId, requestUserId, router, isMemberInserted, pgToken, clubType]);
 
   return <div>로딩중...</div>;
 };
