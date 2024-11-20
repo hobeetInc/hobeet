@@ -101,11 +101,13 @@
 
 #### 최종 ERD
 
-![Untitled](https://github.com/user-attachments/assets/e5f7388c-99e7-4419-aec7-72926b2c6c40)
+![Untitled (1)](https://github.com/user-attachments/assets/3b9cca0e-9df6-41ea-9a9e-4070531dc9a7)
 
 <br>
 
 # 프로젝트 구조
+<details>
+<summary>📦 리팩토링 후</summary>
 <details>
 <summary>📦 public 폴더</summary>
 
@@ -515,6 +517,7 @@
  ┗ 📜middleware.ts 
 ```
 </details>
+</details>
 
 <br>
 
@@ -844,6 +847,229 @@
 **`Miro`** : [🔗 설계 미로보드](https://miro.com/app/board/uXjVLRZ0kpM=/?share_link_id=686807338998)
 
 **`브로셔`** : [🔗 브로셔](https://nbcampreact6th.oopy.io/c3464045-dc17-4dc6-b857-a2baa2dc1e96)
+
+<br>
+
+# 트러블 슈팅
+<details>
+<summary>트러블 슈팅 1</summary>
+
+### 모임 가입 데이터베이스 요청 오류
+
+#### 문제 상황
+
+모임 가입 시, 승인 요청이 필요한 모임에 가입했을 때 즉시 가입되어 버리는 현상이 발생했습니다. 예상한대로 **승인 대기 상태(pending)**로 요청 테이블에 들어가야 하는데, 바로 **활성 상태(active)**로 가입이 되어 버린 것이 문제였습니다.
+
+#### 문제 원인
+
+가입 로직에서 **insertMember**와 **insert**의 실행 순서가 잘못 되어 있었습니다. 이로 인해 insertMember 로직이 먼저 실행되어 승인이 필요한 모임에도 불구하고 회원이 바로 활성화 상태로 등록되었습니다.
+
+#### 문제 해결 과정
+
+문제를 해결하기 위해, 가입 처리 로직의 순서를 변경하였습니다.
+	1.	insert 로직을 먼저 실행하여 승인 요청이 필요한 모임은 pending 상태로 가입 대기 상태로 테이블에 기록됩니다.
+	2.	승인 절차가 필요 없는 모임은 바로 active 상태로 member 테이블에 저장됩니다.
+	3.	승인이 완료된 후, insertMember 로직을 통해 회원을 active 상태로 정상 가입하도록 처리하였습니다.
+
+#### 해결된 흐름
+
+- 승인 요청이 필요한 모임
+1.	가입 요청이 들어오면 pending 상태로 insert 테이블에 기록.
+2.	모임장이 승인을 진행하면, 회원은 active 상태로 insertMember 테이블에 저장됨.
+- 승인 요청이 필요 없는 모임
+1.	가입 요청이 들어오면 바로 active 상태로 insertMember 테이블에 기록.
+
+#### 결론
+
+로직 순서를 변경한 후, 승인 대기 상태로 가입할 수 있는 모임과 즉시 가입이 가능한 모임을 올바르게 처리할 수 있게 되었으며, 문제는 완전히 해결되었습니다.
+
+![image](https://github.com/user-attachments/assets/210febdf-e84f-4bd7-a4ef-8dc8c29a2197)
+![image](https://github.com/user-attachments/assets/833f7ab3-ce33-4985-93e4-88bc28357006)
+
+</details>
+
+<details>
+<summary>트러블 슈팅 2</summary>
+
+### 카카오페이 pg_token을 request body에 담아서 요청하기
+
+#### 문제 상황
+
+카카오페이 결제승인 요청을 진행할 때, 결제요청 후 결제승인을 위한 요청에서 필요한 pg_token을 어디서 받아야 할지 몰라 어려움을 겪었습니다. 공식 문서에서는 결제 요청 성공 후, 결제승인 요청 시 pg_token을 request body에 포함시켜 보내야 한다고 되어 있었는데, pg_token이 어디 있는지 찾을 수 없었습니다.
+
+![image](https://github.com/user-attachments/assets/5b6eb60c-6c3a-4d0e-8e79-97767eb81d79)
+
+#### 문제 해결 과정
+
+1.	공식 문서에 명시된 대로 결제 요청 후, 결제 승인에 필요한 **pg_token**을 리다이렉트 페이지의 쿼리 스트링에 포함시켜 전달한다고 설명되어 있었습니다.
+-  결제 요청이 성공하면, 리다이렉트 되는 페이지에서 쿼리 스트링으로 pg_token을 확인할 수 있었습니다.
+- 리다이렉트되는 URL에서 pg_token이 포함되어 있음을 확인하고, 이를 추출하여 결제승인 요청에 사용해야 한다는 것을 알게 되었습니다.
+
+![image](https://github.com/user-attachments/assets/ff9a70cb-03db-4585-9940-241db7cbb0f3)
+
+2.	결제 요청 후 리다이렉트된 URL을 확인해보면, **pg_token**이 쿼리 스트링으로 포함되어 있었습니다.
+- 이 pg_token을 추출하여 결제 승인 요청의 request body에 담아야 했습니다.
+3. 결제 승인 요청에 pg_token을 포함시키는 방식으로 코드를 작성했습니다.
+-	pg_token을 추출한 후 POST 요청의 body에 포함시켜 결제승인 API에 전달합니다.
+
+![image](https://github.com/user-attachments/assets/33c885a1-6d8f-473d-b2dd-767d0e62fb82)
+
+```
+const response = await fetch("/api/kakaopayApprove", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            cid: oneTimeClubPayData?.egg_pop_kakaopay_cid || regularClubPayData?.egg_day_kakaopay_cid,
+            tid: oneTimeClubPayData?.egg_pop_kakaopay_tid || regularClubPayData?.egg_day_kakaopay_tid,
+            partner_order_id: clubId,
+            partner_user_id: requestUserId,
+            pg_token: pgToken // @@@ 여기 @@@
+          })
+        });
+```
+결제 승인 요청이 정상적으로 처리된 후
+
+-	pg_token을 정상적으로 요청 body에 담아서 결제승인 API에 전송하였고, 이제 결제승인 요청이 정상적으로 처리되었습니다.
+-	이를 통해 결제 승인이 정상적으로 이루어졌습니다.
+
+![image](https://github.com/user-attachments/assets/781d54c1-5a7d-4a14-aad1-0a29de0295d7)![image](https://github.com/user-attachments/assets/9065cf7b-783e-4350-ac18-efcba8ddd5eb)
+
+#### 결론
+
+카카오페이 결제 과정에서 발생한 문제는 **pg_token**을 결제 요청 후 리다이렉트된 URL에서 쿼리 스트링으로 추출하여, 결제 승인 요청의 request body에 담는 방법으로 해결되었습니다. 이 과정을 통해 결제승인이 성공적으로 완료되었습니다.
+
+</details>
+
+<details>
+<summary>트러블 슈팅 3</summary>
+
+### Next.js 프로젝트 빌드 시 일회성 모임 생성 페이지 경로 관련 에러 해결
+
+### 1. **문제 상황 🔍︎**
+#### 1.1. Next.js 프로젝트 빌드 시 일회성 모임 생성 페이지 경로 관련 에러 발생
+
+빌드 과정에서 다음과 같은 에러가 발생했습니다:
+
+```
+Export encountered errors on following paths:
+/(pages)/(club)/club/type-selection/create/one-time/page
+/(pages)/(club)/club/type-selection/create/regular-time/page
+error Command failed with exit code 1.
+```
+#### 1.2. 기존 page.tsx 파일
+page.tsx 파일에는 복잡한 상태 관리와 useEffect 훅이 과도하게 사용되었습니다.
+```
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { OneTimeClubForm } from "../../../_types/ClubForm";
+// ... 다수의 import문
+
+const OneTimePage = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(currentStep);
+  const [selectedGender, setSelectedGender] = useState<string>("");
+  const [selectedAge, setSelectedAge] = useState<string>("");
+  // ... 복잡한 상태 관리 및 로직
+
+  useEffect(() => {
+    // ... 여러 useEffect
+  }, []);
+
+  return (
+    <div className="container">
+      {/* 복잡한 JSX 구조 */}
+    </div>
+  );
+};
+
+export default OneTimePage;
+```
+
+### 2. 원인 추론 ❓︎
+
+#### 2.1. page.tsx 파일의 과도하게 복잡한 구조
+
+	•	너무 많은 상태 관리 로직
+	•	복잡한 useEffect 사용
+	•	많은 import 문
+	•	코드 분할(code splitting)이 어려움
+	•	Next.js 빌드 최적화와 충돌
+
+### 3. 해결 과정 🧐
+
+#### 3.1. 비즈니스 로직을 _components 폴더로 이동
+
+	•	OneTimeContent.tsx로 주요 비즈니스 로직을 분리하여 page.tsx의 복잡도를 낮췄습니다.
+
+#### 3.2. OneTimeContent.tsx로 주요 로직 분리
+
+OneTimeContent.tsx로 파일을 분리하여 비즈니스 로직을 관리합니다.
+```
+import { Suspense } from "react";
+import OneTimeContent from "./OneTime";
+
+const OnePage = () => {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <OneTimeContent />
+    </Suspense>
+  );
+};
+
+export default OnePage;
+```
+
+#### 3.3. page.tsx 파일 단순화
+
+page.tsx에서 비즈니스 로직을 분리하여 더 깔끔하게 만듦으로써 빌드 최적화를 도왔습니다.
+
+### 4. 결과 ❤‍🔥
+
+#### 4.1. 빌드 에러 해결
+
+	•	비즈니스 로직을 분리한 후, 빌드 에러가 해결되었습니다.
+
+#### 4.2. 코드가 깔끔해짐
+
+	•	각 기능별로 파일이 분리되어 코드 관리가 용이해졌습니다.
+	•	OneTimeContent.tsx 파일을 별도로 관리함으로써, Next.js가 더 잘 작동하게 되었습니다.
+
+### 결론
+
+이 과정을 통해 Next.js 프로젝트에서 발생한 빌드 에러를 해결하고, 코드 관리가 쉬워지며 성능 또한 개선되었습니다. page.tsx 파일을 단순화하고 코드 분할을 통해 최적화할 수 있었습니다.
+</details>
+
+<details>
+<summary>트러블 슈팅 4</summary>
+
+## 데이터베이스 테이블명 및 컬럼명 수정
+
+### 문제 상황
+
+- 기획 단계에서 데이터베이스 테이블명이나 컬럼명을 충분히 고려하지 않아, 직관적이지 않고 축약된 형태로 작성되었습니다.
+- 작업 중 팀원들이 테이블명이 헷갈려서 의도한 테이블이 아닌 다른 테이블에서 조회를 요청하거나, 데이터를 잘못 추가하는 일이 발생했습니다.
+- 중간중간 테이블명을 확인하려면 ERD나 Supabase를 계속 열어보는 번거로움이 있었습니다.
+
+---
+
+### 해결 과정
+
+- 서비스 기능 네이밍에 맞게 테이블명과 컬럼명을 전부 수정하여 직관적인 형태로 변경했습니다.
+- 변경된 테이블명과 컬럼명을 통해 팀원들이 코드 작업을 할 때 혼동을 줄일 수 있었습니다.
+![image](https://github.com/user-attachments/assets/2c9f25bf-0fe7-4e8e-9704-46dce478a241)
+---
+
+### 결과
+
+- 데이터베이스 테이블명과 컬럼명이 명확해져서, 코드 작성 시 의도한 테이블을 정확히 사용하게 되었습니다.
+- ERD나 Supabase를 자주 확인하지 않아도 되어, 작업 효율성이 개선되었습니다.
+
+</details>
 
 <br>
 
