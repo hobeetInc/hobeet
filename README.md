@@ -89,7 +89,7 @@
 
 <br>
 
-## 🛠 Tech Stack
+# 🛠 Tech Stack
 
 ### Framework & Language
 | React                                 | Next.js 14                             | TypeScript                              |
@@ -102,20 +102,20 @@
 | ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white) | ![React Icons](https://img.shields.io/badge/React%20Icons-61DAFB?style=for-the-badge&logo=react&logoColor=black) |
 
 ### State Management & Library
-| React Query                           | Zustand                                | Context API                           |
-|---------------------------------------|----------------------------------------|---------------------------------------|
+| React Query                           | Zustand                                | Context API                            |
+|---------------------------------------|----------------------------------------|----------------------------------------|
 | ![React Query](https://img.shields.io/badge/React%20Query-FF4154?style=for-the-badge&logo=react-query&logoColor=white) | ![Zustand](https://img.shields.io/badge/Zustand-brown?style=for-the-badge&logo=standardjs&logoColor=white) | ![Context API](https://img.shields.io/badge/contextAPI-61DAFB?style=for-the-badge&logo=react&logoColor=black) |
 
-| Tanstack Query                        | React Slick                            | Lucide React                          |
-|---------------------------------------|----------------------------------------|---------------------------------------|
+| Tanstack Query                        | React Slick                            | Lucide React                           |
+|---------------------------------------|----------------------------------------|----------------------------------------|
 | ![Tanstack Query](https://img.shields.io/badge/tanstack%20query-61DAFB?style=for-the-badge&logo=reactquery&logoColor=black) | ![React Slick](https://img.shields.io/badge/React%20Slick%20-61DAFB?style=for-the-badge&logo=react&logoColor=black) | ![Lucide React](https://img.shields.io/badge/Lucide%20React%20-61DAFB?style=for-the-badge&logo=react&logoColor=black) |
 
-| ShadCN UI                             | Sharp                                  | Date-fns                              |
-|---------------------------------------|----------------------------------------|---------------------------------------|
+| ShadCN UI                             | Sharp                                  | Date-fns                               |
+|---------------------------------------|----------------------------------------|----------------------------------------|
 | ![ShadCN UI](https://img.shields.io/badge/shadcnui-000000?style=for-the-badge&logo=shadcnui&logoColor=white) | ![Sharp](https://img.shields.io/badge/sharp-99CC00?style=for-the-badge&logo=sharp&logoColor=black) | ![Date-fns](https://img.shields.io/badge/datefns-770C56?style=for-the-badge&logo=datefns&logoColor=white) |
 
-| Calendar                              | React Datepicker                       | PWA                                   |
-|---------------------------------------|----------------------------------------|---------------------------------------|
+| Calendar                              | React Datepicker                       | PWA                                    |
+|---------------------------------------|----------------------------------------|----------------------------------------|
 | ![Calendar](https://img.shields.io/badge/Calendar-000000?style=for-the-badge&logo=Calendar&logoColor=white) | ![React Datepicker](https://img.shields.io/badge/React%20Datepicker-000000?style=for-the-badge&logo=React%20Datepicker&logoColor=white) | ![PWA](https://img.shields.io/badge/pwa-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white) |
 
 ### Backend & Database
@@ -124,9 +124,9 @@
 | ![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white) |
 
 ### Development Tools
-| VSCode                                | Yarn                                   |
-|---------------------------------------|----------------------------------------|
-| ![VSCode](https://img.shields.io/badge/vscode-61DAFB?style=for-the-badge&logo=vscode&logoColor=black) | ![Yarn](https://img.shields.io/badge/yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white) |
+| VSCode                                | Yarn                                   | Figma                                  | ESLint                                |
+|---------------------------------------|----------------------------------------|----------------------------------------|---------------------------------------|
+| ![VSCode](https://img.shields.io/badge/vscode-61DAFB?style=for-the-badge&logo=vscode&logoColor=black) | ![Yarn](https://img.shields.io/badge/yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white) | ![Figma](https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white) | ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white) |
 
 ### Technology Stack
 | App Router                            |
@@ -134,8 +134,8 @@
 | ![App Router](https://img.shields.io/badge/App%20Router-000000?style=for-the-badge&logo=next.js&logoColor=white) |
 
 ### Collaboration Tools
-| Slack                                 | Zep                                    | Miro                                  | Notion                               |
-|---------------------------------------|----------------------------------------|---------------------------------------|--------------------------------------|
+| Slack                                 | Zep                                    | Miro                                   | Notion                                |
+|---------------------------------------|----------------------------------------|----------------------------------------|---------------------------------------|
 | ![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white) | ![Zep](https://img.shields.io/badge/Zep-4A8F2D?style=for-the-badge&logo=zep&logoColor=white) | ![Miro](https://img.shields.io/badge/Miro-2A75A7?style=for-the-badge&logo=miro&logoColor=white) | ![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white) |
 
 ### Version Control
@@ -149,7 +149,7 @@
 | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white) |
 
 
-## 서비스 특징
+# 서비스 특징
 1. 에그팝(Eggpop)
     - 부담없이 참여할 수 있는 일회성 모임
     - 인원, 성별, 나이 제한 설정 가능
@@ -158,7 +158,7 @@
 2. 에그클럽(Eggclub)
     - 지속적인 관계 형성을 위한 정기적 모임
     - 인원, 성별, 나이 제한 설정 가능
-    - 승인제 / 비승인제 선택 가능
+    - 승인제 가입
 
    2-1. 에그데이(Eggday)
     - 에그클럽 내 정기 모임 공지 시스템
@@ -167,7 +167,7 @@
     - 간편한 정기모임 일정 관리
 
 
-## 주요 기술 특징
+# 주요 기술 특징
     1. 결제 시스템
     - 카카오페이 API 연동
     - 에그팝, 에그데이 참가 시 결제-참여 연동
@@ -180,8 +180,182 @@
     - 안정적인 실시간 커뮤니케이션
     - 모임별 독립된 채팅방 제공
 
+# 🗂️ 기능 설명
+<details>
+<summary>메인페이지</summary>
 
- ## 권한 관리 🔐
+- **메인페이지 주요 기능**:
+  - 새로 생긴 **에그팝모임**과 **에그클럽 모임**을 확인할 수 있습니다.
+  - 다양한 **카테고리 종류**를 확인할 수 있습니다.
+  - 각 모임별로 아래 정보를 확인할 수 있습니다:
+    - **모임명**  
+    - **모임 위치**  
+    - **모임 날짜/시간**  
+    - **모임장 이름**  
+    - **참여 인원**과 **최대 인원**
+
+![스크린샷 2024-11-20 17 21 53](https://github.com/user-attachments/assets/62347fdb-a3c1-4419-b90f-732672c3ae92)![스크린샷 2024-11-20 17 23 25](https://github.com/user-attachments/assets/950092bb-e028-4531-b042-7aa3177be55a)
+
+
+</details>
+<details>
+<summary>회원가입 / 로그인</summary>
+
+- **회원가입 및 로그인 주요 기능**
+  - **구글**, **카카오 소셜 로그인** 지원
+  - 최초 로그인한 사용자일 경우:
+    - 프로필 이미지를 **소셜 계정**에서 가져와 보여줌
+    - 프로필 이미지를 **변경 가능**
+  - 사용자 정보 입력:
+    - **이름**
+    - **성별**
+    - **생년월일**
+
+![image](https://github.com/user-attachments/assets/2ca334e9-104e-4610-b774-96df9fd0dba7)
+![스크린샷 2024-11-20 17 41 33](https://github.com/user-attachments/assets/21507986-47b5-4f1d-92b6-7979db85c902)
+![스크린샷 2024-11-20 17 41 55](https://github.com/user-attachments/assets/bd339dc1-bcac-41b5-9011-bc0871b739f4)
+
+</details>
+<details>
+<summary>모임 생성</summary>
+
+### **모임 생성 주요 기능**
+- **에그팝(일회성)**, **에그클럽(정기적)** 모임을 구분하여 생성할 수 있습니다.
+
+![image](https://github.com/user-attachments/assets/0b672b00-dfc5-47f6-ada8-99b212b0c4ad)
+
+#### 🟡 **에그팝 모임**
+- 모임 생성 시 아래의 정보를 입력할 수 있습니다:
+  - **모임 주제 카테고리 선택**
+  - **모임 소개 이미지**
+  - **모임 제목**
+  - **모임 소개글**
+  - **모임 날짜와 시간**
+  - **모임 장소**
+  - **성별 제한**
+  - **참여 인원**
+  - **나이 제한**
+  - **참가비 유무 및 비용**
+
+![image](https://github.com/user-attachments/assets/43787ccc-7263-4a7e-a287-976b7d100780)
+
+#### 🟠 **에그클럽**
+- 클럽 생성 시 아래의 정보를 입력할 수 있습니다:
+  - **모임 주제 카테고리 선택**
+  - **클럽 소개 이미지**
+  - **클럽 이름**
+  - **클럽 소개글**
+  - **성별 제한**
+  - **참여 인원**
+  - **나이 제한**
+
+![image](https://github.com/user-attachments/assets/aecce078-f848-4529-bf61-fbd449766f8a)
+
+##### 🟣 **에그 데이**
+- **에그 클럽**에 **에그 데이**를 등록할 수 있습니다.
+  - 등록 시 아래의 정보를 입력할 수 있습니다:
+  - **에그 데이 이름**
+  - **에그 데이 소개 이미지**
+  - **에그 데이 내용**
+  - **참가비 유무 및 비용**
+
+![image](https://github.com/user-attachments/assets/e880d887-6528-40ba-b77a-746dc51a05ea)
+
+</details>
+
+<details>
+<summary>모임 가입</summary>
+
+### **모임 가입 주요 기능**
+- **가입 제한 조건**
+  - 모임 가입 시 **성별**과 **나이 제한** 조건이 있을 경우, 조건에 부합하지 않으면 **알림(Alert)**으로 가입 가능/불가능 여부를 표시합니다.
+  - **인원 제한**이 있고 모임 인원이 가득 찼을 경우, **알림(Alert)**으로 가입 가능/불가능 여부를 표시합니다.
+
+#### 🟡 **에그팝 모임**
+- 참가비가 있을 경우 **카카오페이 결제** 완료 후 가입 처리가 됩니다.
+
+#### 🟠 **에그클럽**
+- 가입 시 **모임장의 승인**을 받아야 최종적으로 가입 처리가 됩니다.
+
+#### 🟣 **에그 데이 참여**
+- 참가비가 있을 경우 **카카오페이 결제** 완료 후 참여 처리가 됩니다.
+
+![image](https://github.com/user-attachments/assets/8a3bf358-2073-459e-9700-d331fe95e62c)
+![image](https://github.com/user-attachments/assets/545fd34d-0f50-48c2-ade8-76e0a4724d59)
+
+</details>
+
+<details>
+<summary>실시간 채팅</summary>
+
+### **실시간 채팅 주요 기능**
+  - **채팅방 생성**
+    - **에그팝**과 **에그클럽** 모임 생성 시, 해당 모임에 대한 **채팅방**이 자동으로 생성됩니다.
+
+  #### 🟠 **에그클럽**
+  - **가입 승인 후 채팅방 입장**
+    - 모임장이 가입을 승인한 후, 해당 회원이 채팅방에 입장할 수 있습니다.
+
+![image](https://github.com/user-attachments/assets/795ab026-9f47-48ef-a323-d186ce47d533)
+
+</details>
+<details>
+<summary>카카오 페이 결제</summary>
+
+### **카카오 페이 결제 주요 기능**
+- **참가비 결제**
+  - 가입하려는 모임(에그팝, 에그데이 등)에 **참가비**가 있을 경우, **카카오 페이 결제**를 통해 결제를 완료해야 가입이 가능합니다.
+  - 결제 완료 후, 해당 모임의 **가입 절차가 자동으로 처리**됩니다.
+
+![image](https://github.com/user-attachments/assets/36036d66-adaf-4891-aa97-e5ca4ca6ef1d)
+
+</details>
+
+<details>
+<summary>검색 기능(카테고리)</summary>
+
+### **검색 기능(카테고리) 주요 기능**
+- **모임 제목 검색**
+  - 모임 제목을 기준으로 검색하여 원하는 모임을 쉽게 찾을 수 있습니다.
+
+![image](https://github.com/user-attachments/assets/e862e253-2a3c-416c-bdbc-d33533cbd7b0)
+
+- **카테고리별 모임 리스트**
+  - 특정 카테고리의 모임들을 리스트 형태로 볼 수 있습니다.
+
+![image](https://github.com/user-attachments/assets/309cefd3-6fa8-4ffb-873f-45adc0ef1841)
+
+- **인기 모임 Top 10**
+  - 찜(좋아요)이 많은 상위 **Top 10 모임 리스트**를 확인할 수 있습니다.
+
+![스크린샷 2024-11-20 18 34 25](https://github.com/user-attachments/assets/92e467fa-54e5-4a3a-8d1a-60c3da71fc38)
+
+</details>
+<details>
+<summary>내 모임 리스트</summary>
+
+### **내 모임 리스트 주요 기능**
+- **내가 모임장인 모임** 또는 **내가 참여한 모임** 리스트를 볼 수 있습니다.
+
+![image](https://github.com/user-attachments/assets/ab442a4a-c4a2-4d4f-a401-1a05e9befac2)
+
+</details>
+<details>
+<summary>마이페이지</summary>
+
+### **마이페이지 주요 기능**
+- **나의 프로필 정보**를 확인할 수 있습니다.
+
+![스크린샷 2024-11-20 18 38 57](https://github.com/user-attachments/assets/39f67ae4-b6fd-4595-81fc-aec1b25180ad)
+
+  - 프로필 이미지를 수정할 수 있습니다.
+- **내가 찜한 모임** 및 **결제 내역** 등을 확인할 수 있습니다.
+
+![image](https://github.com/user-attachments/assets/51b16447-1cc0-43b8-a505-04bc194beb74)
+
+</details>
+
+# 권한 관리 🔐
 
     1. 비로그인 유저
         - 모임 검색 및 모임 확인
@@ -199,7 +373,7 @@
         - 멤버 승인
 
 
-## 프로젝트 구조
+# 프로젝트 구조
 <details>
 <summary>📦 public 폴더</summary>
 
