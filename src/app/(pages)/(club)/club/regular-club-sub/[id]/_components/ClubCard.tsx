@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { Icon } from "@/components/uiComponents/IconComponents/Icon";
-import { EggDayWithEggDayMember } from "@/types/eggday.types";
-import { MemberInfo } from "@/types/user.types";
+import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
+import { EggDayWithEggDayMember } from "@/types/features/club/eggday.types";
+import { MemberInfo } from "@/types/features/user/user.types";
 import { useAuthStore } from "@/store/authStore";
 
 interface ClubCardProps {

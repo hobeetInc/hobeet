@@ -5,7 +5,7 @@ import { regularClubJoin } from "@/utils/regularclubjoin/join";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import { enterRegularChatRoom } from "@/app/(pages)/(chat)/_api/regular";
 
 interface EggClubJoinButtonProps {

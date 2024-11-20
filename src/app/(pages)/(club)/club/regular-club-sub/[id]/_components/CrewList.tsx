@@ -7,13 +7,13 @@ import FullScreenModal from "./FullScreenModal";
 import NotificationList from "./NotificationList";
 import { useRouter } from "next/navigation";
 import browserClient from "@/utils/supabase/client";
-import { UserStatus } from "@/types/eggclub.types";
+import { UserStatus } from "@/types/features/club/eggclub.types";
 import RegularClubJoinButton from "@/app/(pages)/(club)/club/regular-club-sub/[id]/_components/RegularClubJoinButtonCom";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/atoms/text/Text";
 import { IoIosArrowForward } from "react-icons/io";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
-import { EggDayWithEggDayMember } from "@/types/eggday.types";
-import { MemberInfo } from "@/types/user.types";
+import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
+import { EggDayWithEggDayMember } from "@/types/features/club/eggday.types";
+import { MemberInfo } from "@/types/features/user/user.types";
 import { useEggClubCrewList } from "@/hooks/utils/list/crewList";
 import { useAuthStore } from "@/store/authStore";
 

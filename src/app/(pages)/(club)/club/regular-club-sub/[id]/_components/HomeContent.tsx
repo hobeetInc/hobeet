@@ -1,13 +1,13 @@
 import Image from "next/image";
 import CrewList from "./CrewList";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import { ProfileImageLarge } from "@/components/uiComponents/molecules/Images/ProfileImageLarge";
+import Tag from "@/components/uiComponents/atoms/tags/Tag";
 import WishListHeart from "./WishListHeart";
-import { EggClub } from "@/types/cardlist.types";
-import { MemberInfo } from "@/types/user.types";
-import { EggDayWithEggDayMember } from "@/types/eggday.types";
 import { formatterAge, formatterGender, formatterPeopleLimit } from "../../../_utils/formatter";
+import { EggClub } from "@/types/features/commerce/cardlist.types";
+import { MemberInfo } from "@/types/features/user/user.types";
+import { EggDayWithEggDayMember } from "@/types/features/club/eggday.types";
 
 interface HomeContentProps {
   clubInfo: EggClub;

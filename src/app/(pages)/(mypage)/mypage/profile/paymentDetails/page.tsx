@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 
-import TabBar from "@/components/uiComponents/TapBar";
+import TabBar from "@/components/uiComponents/molecules/navigation/TapBar";
 import Link from "next/link";
 import { HiOutlineChevronLeft } from "react-icons/hi";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/atoms/text/Text";
 import EggPopPayDetail from "../../../_components/eggPopPayDetail";
 import EggDayPayDetail from "../../../_components/eggDayPayDetail";
 

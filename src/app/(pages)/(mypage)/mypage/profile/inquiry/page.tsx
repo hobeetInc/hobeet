@@ -1,4 +1,4 @@
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/atoms/text/Text";
 import Link from "next/link";
 import React from "react";
 import { HiOutlineChevronLeft } from "react-icons/hi";

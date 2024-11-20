@@ -1,6 +1,5 @@
 "use client";
-
-import ApproveMemberTabBar from "@/components/uiComponents/ApproveMemberTapBar";
+import ApproveMemberTabBar from "@/components/uiComponents/molecules/navigation/ApproveMemberTapBar";
 import { ReactNode, useState } from "react";
 
 interface TabLayoutProps {

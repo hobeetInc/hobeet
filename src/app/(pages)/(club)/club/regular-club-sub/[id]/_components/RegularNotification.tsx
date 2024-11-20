@@ -1,7 +1,7 @@
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/atoms/text/Text";
 import ClubCard from "./ClubCard";
-import { EggDayWithEggDayMember } from "@/types/eggday.types";
-import { MemberInfo } from "@/types/user.types";
+import { EggDayWithEggDayMember } from "@/types/features/club/eggday.types";
+import { MemberInfo } from "@/types/features/user/user.types";
 
 interface EggClubNotificationProps {
   notificationData: EggDayWithEggDayMember[];

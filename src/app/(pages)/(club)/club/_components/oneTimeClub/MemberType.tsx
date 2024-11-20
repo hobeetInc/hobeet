@@ -1,8 +1,8 @@
 "use client";
 
-import NumberSpinner from "@/components/uiComponents/Input/NumberSpinner";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { MemberTypeProps } from "@/types/eggpop.types";
+import NumberSpinner from "@/components/uiComponents/atoms/Inputs/NumberSpinner";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import { MemberTypeProps } from "@/types/features/club/eggpop.types";
 import { useState } from "react";
 
 const MemberType = ({

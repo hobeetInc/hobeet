@@ -3,7 +3,7 @@ import { oneTimeClubJoin } from "@/utils/onetimeclubjoin/join";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 
 interface JoinClubButtonProps {
   clubId: number;

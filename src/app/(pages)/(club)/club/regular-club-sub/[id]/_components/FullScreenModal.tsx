@@ -1,8 +1,8 @@
 "use client";
 
-import Tag from "@/components/uiComponents/TagComponents/Tag";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { FullScreenModalProps } from "@/types/common.types";
+import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import { FullScreenModalProps } from "@/types/core/common.types";
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 

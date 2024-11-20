@@ -3,16 +3,16 @@
 import Image from "next/image";
 import FullScreenModal from "./FullScreenModal";
 import { useRouter } from "next/navigation";
-import { EggDay } from "@/types/eggday.types";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import { IoIosArrowForward } from "react-icons/io";
 import browserClient from "@/utils/supabase/client";
-import { MemberInfo } from "@/types/user.types";
+import { MemberInfo } from "@/types/features/user/user.types";
 import { useState } from "react";
 import { submitRegularMember } from "@/app/(pages)/(club)/club/_api/notifications";
 import { useEggDayCrewList } from "@/hooks/utils/list/crewList";
 import { useAuthStore } from "@/store/authStore";
+import { EggDay } from "@/types/features/club/eggday.types";
 
 interface CrewListProps {
   crewMembers: MemberInfo[];

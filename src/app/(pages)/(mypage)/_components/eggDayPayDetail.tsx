@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/atoms/text/Text";
 import { useRouter } from "next/navigation";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
-import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
 import { useAuthStore } from "@/store/authStore";
-import { usePayments } from "@/hooks/usePayment";
+import { usePayments } from "@/hooks/utils/api/usePayment";
 
 const EggDayPayDetail = () => {
   const router = useRouter();

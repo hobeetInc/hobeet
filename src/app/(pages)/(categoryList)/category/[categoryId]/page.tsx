@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getSubCategory } from "../../_api/supabase";
 import CategoryList from "../../_components/CategoryList";
-import { SubCategory } from "@/types/category.types";
+import { SubCategory } from "@/types/utils/category.types";
 
 const CategoryPage = () => {
   const params = useParams();

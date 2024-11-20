@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { getRegularClubList } from "../_api/supabase";
-
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
-import { EggClubForm } from "@/types/eggclub.types";
+import { EggClubForm } from "@/types/features/club/eggclub.types";
 
 const RegularClubList = () => {
   const [list, setList] = useState<EggClubForm[]>([]);
@@ -61,10 +60,6 @@ const RegularClubList = () => {
               )}
               <div className="mt-4 flex flex-col justify-center items-center">
                 <h1 className="font-bold text-[13px]">{club.egg_club_name}</h1>
-                {/* <div className="mt-2">
-                <p className="text-[11px]">{customAddress(club.regular)}</p>
-                <p className="text-[11px]">{customDate(club.one_time_club_date_time)}</p>
-              </div> */}
               </div>
             </div>
           </Link>

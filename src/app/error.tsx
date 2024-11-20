@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
-import { Icon } from "@/components/uiComponents/IconComponents/Icon";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
+import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
+import Text from "@/components/uiComponents/atoms/text/Text";
 import { useRouter } from "next/navigation";
 import React from "react";
 

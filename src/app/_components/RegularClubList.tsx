@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { EggClubForm } from "@/types/cardlist.types";
-import { VerticalContentsListMediumEggClub } from "@/components/uiComponents/VerticalContentsListMedium";
+
+import { VerticalContentsListMediumEggClub } from "@/components/uiComponents/organisms/lists/VerticalContentsListMedium";
 import { useAuthStore } from "@/store/authStore";
 import { useEggClubTenList } from "@/hooks/utils/list/tenList";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import { EggClubForm } from "@/types/features/commerce/cardlist.types";
 
 const RegularClubList = () => {
   const { data: list, isLoading, error } = useEggClubTenList();
-
   const userId = useAuthStore((state) => state.userId);
 
   const isWishedByUser = (club: EggClubForm): boolean => {

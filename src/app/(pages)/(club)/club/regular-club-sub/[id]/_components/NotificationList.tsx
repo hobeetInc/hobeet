@@ -4,9 +4,10 @@ import { ReactNode, useState } from "react";
 import { format, parseISO } from "date-fns";
 import ClubCard from "./ClubCard";
 import { ko } from "date-fns/locale";
-import { EggDayWithEggDayMember } from "@/types/eggday.types";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { MemberInfo } from "@/types/user.types";
+
+import Text from "@/components/uiComponents/atoms/text/Text";
+import { EggDayWithEggDayMember } from "@/types/features/club/eggday.types";
+import { MemberInfo } from "@/types/features/user/user.types";
 
 interface NotificationListProps {
   notificationData: EggDayWithEggDayMember[];
