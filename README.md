@@ -84,7 +84,7 @@
 <br>
 
 # 🏗 아키텍처
-![image](https://github.com/user-attachments/assets/ac169a45-721d-4f16-99b3-da7a6f8c7178)
+![image](https://github.com/user-attachments/assets/ac169a45-721d-4f16-99b3-da7a6f8c7178)![image](https://github.com/user-attachments/assets/ddd3fa07-cd79-4158-8367-568bcde6ab6d)
 
 <br>
 
