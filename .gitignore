@@ -34,3 +34,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+certificates
+
+# public/icon*
+# public/manifest*
+# public/sw*
+# public/workbox*
+
+# Sentry Config File
+.env.sentry-build-plugin
