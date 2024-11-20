@@ -11,7 +11,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
 import { EggClubSearchResults, EggPopSearchResults } from "@/types/utils/search.types";
 import {
-  HorizontalContentsListLargeEggClub,
+  HorizontalContentsListLargeEggClubSearch,
   HorizontalContentsListLargeEggPop
 } from "@/components/uiComponents/organisms/lists/HorizontalContentsListLarge";
 
@@ -62,7 +62,7 @@ const SearchPage = () => {
     <div className="flex flex-col items-start w-full  mx-auto px-4 ">
       <form onSubmit={handleSearch} className="relative flex items-center w-full bg-[#f2f2f2] rounded-[22px] py-2 px-5">
         <input
-          className="w-full h-[11px] bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
+          className="w-full h-[15px] bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
           type="text"
           placeholder="검색어를 입력하세요"
           value={searchTerm}
@@ -83,11 +83,8 @@ const SearchPage = () => {
         <div className="w-full mt-4">
           {regularClubs.map((club) => (
             <div key={club.egg_club_id} className="p-4 bg-white rounded-lg mb-2 shadow-sm">
-              <Link
-                href={`/club/regular-club-sub/${club.egg_club_id}`}
-                className="h-[90px] flex items-center gap-[8px] mx-4"
-              >
-                <HorizontalContentsListLargeEggClub eggClub={club} />
+              <Link href={`/club/regular-club-sub/${club.egg_club_id}`} className="w-[160px] h-[311px] mr-4">
+                <HorizontalContentsListLargeEggClubSearch eggClub={club} />
               </Link>
             </div>
           ))}
