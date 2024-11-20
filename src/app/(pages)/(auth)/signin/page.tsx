@@ -78,7 +78,7 @@ const SigninPage = () => {
           onClick={handleSignInWithGoogle}
           className="w-full flex items-center px-7 py-3.5 mb-3 bg-white border border-gray-100 rounded-[27px]"
         >
-          <Image width={24} height={24} src="/asset/icon-google.png" alt="Google Icon" />
+          <Image width={24} height={24} src="/asset/Logo/icon-google.png" alt="Google Icon" />
           <Text as="span" variant="subtitle-16" className="flex-1 text-center text-gray-900">
             구글로 시작하기
           </Text>
@@ -88,7 +88,7 @@ const SigninPage = () => {
           onClick={handleSignInWithKakao}
           className="w-full flex items-center px-7 py-3.5 mb-3 bg-[#fcec4e] rounded-[27px]"
         >
-          <Image width={24} height={24} src="/asset/icon-kakao.png" alt="Kakao Icon" />
+          <Image width={24} height={24} src="/asset/Logo/icon-kakao.png" alt="Kakao Icon" />
           <Text variant="subtitle-16" className="flex-1 text-center text-gray-900">
             카카오로 시작하기
           </Text>
@@ -98,7 +98,7 @@ const SigninPage = () => {
           onClick={() => alert("서비스 준비 중입니다.")}
           className="w-full flex items-center px-7 py-3.5 bg-gray-50 rounded-[27px]"
         >
-          <Image width={24} height={24} src="/asset/Message-Filled.png" alt="Email Icon" />
+          <Image width={24} height={24} src="/asset/Logo/Message-Filled.png" alt="Email Icon" />
           <Text variant="subtitle-16" className="flex-1 text-center text-gray-900">
             이메일로 시작하기
           </Text>

@@ -101,7 +101,7 @@ const SearchPage = () => {
       ) : (
         <>
           <Image
-            src="/asset/smallBanner.svg"
+            src="/asset/Banner/smallBanner.svg"
             alt="smallBanner"
             width={358}
             height={80}

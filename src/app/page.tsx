@@ -25,7 +25,7 @@ export default function Home() {
       <div className="flex mx-4 justify-center items-center mt-2">
         <div className="w-[358px] flex-shrink-0 rounded-[12px] bg-[#d9d9d9] overflow-hidden ">
           <Image
-            src={"/asset/banner.svg"}
+            src={"/asset/Banner/banner.svg"}
             alt="MainBanner"
             width={358}
             height={296}
@@ -49,7 +49,13 @@ export default function Home() {
       <OneTimeClubList />
       <div className="relative flex justify-center mx-4 mt-16">
         <div className="relative w-full ">
-          <Image width={358} height={173} src="/asset/Rectangle 20.png" alt="Rectangle 20" className="w-full h-auto" />
+          <Image
+            width={358}
+            height={173}
+            src="/asset/Banner/Rectangle 20.png"
+            alt="Rectangle 20"
+            className="w-full h-auto"
+          />
           <Text
             variant="subtitle-18"
             className="absolute inset-0 flex justify-start items-center mt-[40px] ml-[14px] mb-9 text-white"
@@ -79,7 +85,7 @@ export default function Home() {
           <Image
             width={358}
             height={226}
-            src="/asset/Frame 2307.png"
+            src="/asset/Banner/Frame 2307.png"
             alt="Frame 2307"
             className="object-cover w-full "
           />
