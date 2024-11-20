@@ -1,7 +1,6 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import { GoPlus } from "react-icons/go";
 import { useAuthStore } from "@/store/authStore";
@@ -11,54 +10,60 @@ const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
   const router = useRouter();
   const userId = useAuthStore((state) => state.userId);
 
-  const currentPath = useParams();
+  // 추후에 뒤로가기 고칠예정(지우지 마세요)
 
-  useEffect(() => {
-    const isJustCreated = localStorage.getItem("justCreated") === "true";
+  // const currentPath = useParams();
 
-    if (isJustCreated) {
-      // 뒤로가기 방지를 위한 history 조작
-      window.history.pushState(null, "", window.location.href);
+  // useEffect(() => {
+  //   const isJustCreated = localStorage.getItem("justCreated") === "true";
 
-      const handlePopState = () => {
-        window.history.pushState(null, "", window.location.href);
-        router.push("/"); // 또는 다른 페이지로 리다이렉트
-      };
+  //   if (isJustCreated) {
+  //     // 뒤로가기 방지를 위한 history 조작
+  //     window.history.pushState(null, "", window.location.href);
 
-      window.addEventListener("popstate", handlePopState);
+  //     const handlePopState = () => {
+  //       window.history.pushState(null, "", window.location.href);
+  //       router.push("/"); // 또는 다른 페이지로 리다이렉트
+  //     };
 
-      // cleanup
-      localStorage.removeItem("justCreated");
+  //     window.addEventListener("popstate", handlePopState);
 
-      return () => {
-        window.removeEventListener("popstate", handlePopState);
-      };
-    }
-  }, [router]);
+  //     // cleanup
+  //     localStorage.removeItem("justCreated");
 
-  const handleBack = () => {
-    if (clubInfo.egg_club_id === Number(currentPath)) {
-      router.push("/");
-      return;
-    }
+  //     return () => {
+  //       window.removeEventListener("popstate", handlePopState);
+  //     };
+  //   }
+  // }, [router]);
 
-    if (localStorage.getItem("fromKakaoPay") === "true") {
-      router.push("/");
-      return;
-    }
+  // const handleBack = () => {
+  //   if (clubInfo.egg_club_id === Number(currentPath)) {
+  //     router.push("/");
+  //     return;
+  //   }
 
-    // 생성 직후가 아닐 때만 뒤로가기 허용
-    if (localStorage.getItem("justCreated") !== "true") {
-      router.back();
-      return;
-    } else {
-      router.push("/");
-      return;
-    }
-  };
+  //   if (localStorage.getItem("fromKakaoPay") === "true") {
+  //     router.push("/");
+  //     return;
+  //   }
+
+  //   // 생성 직후가 아닐 때만 뒤로가기 허용
+  //   if (localStorage.getItem("justCreated") !== "true") {
+  //     router.back();
+  //     return;
+  //   } else {
+  //     router.push("/");
+  //     return;
+  //   }
+  // };
 
   const handleCreate = () => {
     router.replace(`/club/regular-club-sub/${clubInfo.egg_club_id}/create`);
+  };
+
+  const handleBack = () => {
+    router.push("/");
   };
 
   return (
