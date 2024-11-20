@@ -51,8 +51,6 @@ const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
 
       <div className="w-full flex-col justify-start items-start gap-8 px-4 inline-flex">
         <div className="self-stretch flex-col justify-start items-start gap-5 flex">
-          {/* 여기  */}
-
           <div className="self-stretch flex-col justify-start items-start gap-1 flex">
             <Tag tagName="eggpop" />
             <div className="self-stretch justify-start items-center gap-1.5 inline-flex">

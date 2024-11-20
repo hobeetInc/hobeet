@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { EggPop } from "@/types/features/club/eggpop.types";
-import { useEffect } from "react";
 import Text from "@/components/uiComponents/atoms/text/Text";
 import { ChevronLeft } from "lucide-react";
 
@@ -12,57 +11,62 @@ interface PopHeaderProps {
 const PopHeader = ({ clubInfo }: PopHeaderProps) => {
   const router = useRouter();
 
-  useEffect(() => {
-    const isJustCreated = localStorage.getItem("justCreated") === "true";
-    const fromKakaoPay = localStorage.getItem("fromKakaoPay") === "true";
+  // 추후 뒤로가기 고칠 예정 (지우지 마세요)
+  // useEffect(() => {
+  //   const isJustCreated = localStorage.getItem("justCreated") === "true";
+  //   const fromKakaoPay = localStorage.getItem("fromKakaoPay") === "true";
 
-    if (isJustCreated) {
-      // 뒤로가기 방지를 위한 history 조작
-      window.history.pushState(null, "", window.location.href);
+  //   if (isJustCreated) {
+  //     // 뒤로가기 방지를 위한 history 조작
+  //     window.history.pushState(null, "", window.location.href);
 
-      const handlePopState = () => {
-        window.history.pushState(null, "", window.location.href);
-        router.push("/"); // 또는 다른 페이지로 리다이렉트
-      };
+  //     const handlePopState = () => {
+  //       window.history.pushState(null, "", window.location.href);
+  //       router.push("/"); // 또는 다른 페이지로 리다이렉트
+  //     };
 
-      window.addEventListener("popstate", handlePopState);
+  //     window.addEventListener("popstate", handlePopState);
 
-      // cleanup
-      localStorage.removeItem("justCreated");
+  //     // cleanup
+  //     localStorage.removeItem("justCreated");
 
-      return () => {
-        window.removeEventListener("popstate", handlePopState);
-      };
-    }
+  //     return () => {
+  //       window.removeEventListener("popstate", handlePopState);
+  //     };
+  //   }
 
-    if (fromKakaoPay) {
-      window.history.pushState(null, "", window.location.href);
+  //   if (fromKakaoPay) {
+  //     window.history.pushState(null, "", window.location.href);
 
-      const handlePaymentPopState = () => {
-        if (document.referrer.includes("kakaopay")) {
-          window.history.pushState(null, "", window.location.href);
-          router.push("/club");
-        }
-      };
+  //     const handlePaymentPopState = () => {
+  //       if (document.referrer.includes("kakaopay")) {
+  //         window.history.pushState(null, "", window.location.href);
+  //         router.push("/club");
+  //       }
+  //     };
 
-      window.addEventListener("popstate", handlePaymentPopState);
+  //     window.addEventListener("popstate", handlePaymentPopState);
 
-      return () => {
-        window.removeEventListener("popstate", handlePaymentPopState);
-      };
-    }
-  }, [router]);
+  //     return () => {
+  //       window.removeEventListener("popstate", handlePaymentPopState);
+  //     };
+  //   }
+  // }, [router]);
+
+  // const handleBack = () => {
+  //   const isJustCreated = localStorage.getItem("justCreated") === "true";
+  //   const isFromKakaoPay = localStorage.getItem("fromKakaoPay") === "true";
+
+  //   if (isJustCreated || (isFromKakaoPay && !isJustCreated)) {
+  //     router.push("/");
+  //     return;
+  //   }
+
+  //   router.back();
+  // };
 
   const handleBack = () => {
-    const isJustCreated = localStorage.getItem("justCreated") === "true";
-    const isFromKakaoPay = localStorage.getItem("fromKakaoPay") === "true";
-
-    if (isJustCreated || (isFromKakaoPay && !isJustCreated)) {
-      router.push("/");
-      return;
-    }
-
-    router.back();
+    router.push("/");
   };
 
   return (
