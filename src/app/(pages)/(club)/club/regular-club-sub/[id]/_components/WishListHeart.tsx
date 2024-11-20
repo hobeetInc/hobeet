@@ -13,8 +13,6 @@ const WishListHeart = ({ egg_club_id }: WishListHeartProps) => {
   const { userId } = useAuth();
   const router = useRouter();
 
-  console.log("유저아이디", userId);
-
   const { isWished, isLoading, addWishlist, removeWishlist } = useClubWishlist({ egg_club_id });
 
   const hasWished = Boolean(isWished);

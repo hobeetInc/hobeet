@@ -111,8 +111,7 @@ const ChatPage = () => {
           table: "egg_pop_chatting_room_message",
           filter: `egg_pop_chatting_room_id=eq.${roomId}`
         },
-        async (payload) => {
-          console.log("New message received:", payload);
+        async () => {
           await queryClient.invalidateQueries({
             queryKey: queryKeys.oneTimeChat.messages(roomId as string, chatInfo?.created_at)
           });

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { EggClubHorizontalList, EggPopHorizontalList } from "./HorizontalList";
+import { EggClubHorizontalList, EggClubHorizontalListSearch, EggPopHorizontalList } from "./HorizontalList";
 
 // // 에그팝 가로 리스트
 export const HorizontalContentsListLargeEggPop = ({ eggPop }) => {
@@ -52,6 +52,23 @@ export const HorizontalContentsListLargeEggClubImage88Size = ({ eggClub }) => {
         />
       </div>
       <EggClubHorizontalList eggClub={eggClub} />
+    </div>
+  );
+};
+
+export const HorizontalContentsListLargeEggClubSearch = ({ eggClub }) => {
+  return (
+    <div className="h-[102px] justify-start items-start gap-2 inline-flex">
+      <div className="w-[102px] h-[102px] relative overflow-hidden rounded-[12px]">
+        <Image
+          width={102}
+          height={102}
+          src={eggClub.egg_club_image}
+          alt={eggClub.egg_club_name}
+          className="w-[102px] h-[102px] object-cover"
+        />
+      </div>
+      <EggClubHorizontalListSearch eggClub={eggClub} />
     </div>
   );
 };
