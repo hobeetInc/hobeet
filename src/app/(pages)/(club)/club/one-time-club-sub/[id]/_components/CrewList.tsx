@@ -6,12 +6,12 @@ import FullScreenModal from "./FullScreenModal";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import OneTimeClubJoinButton from "./OneTimeClubJoinButtonCom";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/atoms/text/Text";
 import { IoIosArrowForward } from "react-icons/io";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
-import { MemberInfo } from "@/types/user.types";
+import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import { useAuthStore } from "@/store/authStore";
 import { useEggPopCrewList } from "@/hooks/utils/list/crewList";
+import { MemberInfo } from "@/types/features/user/user.types";
 
 // CrewList 컴포넌트 props 타입
 interface CrewListProps {

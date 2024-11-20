@@ -1,10 +1,10 @@
 import { getCategoryList, getUserId } from "../_api/supabase";
 import { useQuery } from "@tanstack/react-query";
-import { EggClubForm } from "@/types/cardlist.types";
 
-import { VerticalContentsListLargeEggClub } from "@/components/uiComponents/VerticalContentsListLarge";
+import { VerticalContentsListLargeEggClub } from "@/components/uiComponents/organisms/lists/VerticalContentsListLarge";
 import Link from "next/link";
 import { queryKeys } from "@/hooks/utils/queryKeys";
+import { EggClubForm } from "@/types/features/commerce/cardlist.types";
 
 // 카테고리 리스트 props
 interface CategoryListProps {

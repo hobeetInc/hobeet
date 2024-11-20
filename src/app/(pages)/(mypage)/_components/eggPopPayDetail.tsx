@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
-import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
 import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { useAuthStore } from "@/store/authStore";
-import { usePayments } from "@/hooks/usePayment";
+import { usePayments } from "@/hooks/utils/api/usePayment";
 
 const EggPopPayDetail = () => {
   const router = useRouter();

@@ -3,7 +3,8 @@
 import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { regularClubJoin } from "@/utils/regularclubjoin/join";
 import { useState } from "react";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
+
+import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import { enterRegularChatRoom } from "@/app/(pages)/(chat)/_api/regular";
 import { useAuthStore } from "@/store/authStore";
 

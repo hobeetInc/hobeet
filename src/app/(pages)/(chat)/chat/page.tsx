@@ -2,7 +2,7 @@
 import { useState } from "react";
 import RegularClubChattingRoomPage from "./_pages/RegularClubChattingRoomPage";
 import OneTimeClubChattingRoomPage from "./_pages/OneTimeClubChattingRoomPage";
-import TabBar from "@/components/uiComponents/TapBar";
+import TabBar from "@/components/uiComponents/molecules/navigation/TapBar";
 
 const ChatPage = () => {
   const [chattingRooms, setChattingRooms] = useState(true);

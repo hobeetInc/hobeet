@@ -3,8 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { getPopularClubs } from "../_api/supabase";
 import Link from "next/link";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { HorizontalContentsListLargeEggClubImage88Size } from "@/components/uiComponents/HorizontalContentsListLarge";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import { HorizontalContentsListLargeEggClubImage88Size } from "@/components/uiComponents/organisms/lists/HorizontalContentsListLarge";
 
 const OverallPopularMeetings = () => {
   const { data, isLoading } = useQuery({

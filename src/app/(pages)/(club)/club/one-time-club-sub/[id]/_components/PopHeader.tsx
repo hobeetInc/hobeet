@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { EggPop } from "@/types/eggpop.types";
+import { EggPop } from "@/types/features/club/eggpop.types";
 import { useEffect } from "react";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/uiComponents/atoms/text/Text";
 import { ChevronLeft } from "lucide-react";
 
 interface PopHeaderProps {

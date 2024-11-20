@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext } from "react";
-import { useOneTimeChat } from "@/hooks/useOneTimeChat";
-import { EggPopChatContextType } from "@/types/eggpopchat.types";
+import { useOneTimeChat } from "@/hooks/utils/features/chat/useOneTimeChat";
+import { EggPopChatContextType } from "@/types/features/chat/eggpopchat.types";
 
 const ChatContext = createContext<EggPopChatContextType>({
   roomName: "",

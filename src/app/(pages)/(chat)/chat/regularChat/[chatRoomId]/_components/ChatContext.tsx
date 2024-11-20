@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext } from "react";
-import { EggClubChatContextType } from "@/types/eggclubchat.types";
-import { useRegularChat } from "@/hooks/useRegularChat";
+import { EggClubChatContextType } from "@/types/features/chat/eggclubchat.types";
+import { useRegularChat } from "@/hooks/utils/features/chat/useRegularChat";
 
 // 채팅방의 기본 컨텍스트 정의
 // roomName: 채팅방 이름

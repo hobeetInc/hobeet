@@ -1,7 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-// 컴포넌트 임포트
 import { ONETIME_CLUB_CREATE } from "../../_utils/localStorage";
 import { putOneTimeMember } from "../../_api/supabase";
 import Category from "../../_components/oneTimeClub/Category";
@@ -9,16 +8,16 @@ import DateTime from "../../_components/oneTimeClub/DateTime";
 import AddressSearch from "../../_components/oneTimeClub/AddressSearch";
 import MemberType from "../../_components/oneTimeClub/MemberType";
 import Tax from "../../_components/oneTimeClub/Tax";
-import { EggPopFormWithImageFile } from "@/types/eggpop.types";
+import { EggPopFormWithImageFile } from "@/types/features/club/eggpop.types";
 import ProgressBar from "../../_components/ProgressBar";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import Introduction from "../../_components/oneTimeClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 import { createOneTimeChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/onetime";
-import { useCreatePop } from "@/hooks/useCreate";
 import { useAuthStore } from "@/store/authStore";
-import { useUploadImage } from "@/hooks/useUploadImage";
 import { ChevronLeft } from "lucide-react";
+import { useCreatePop } from "@/hooks/utils/api/useCreate";
+import { useUploadImage } from "@/hooks/utils/api/useUploadImage";
 
 const OneTimeContent = () => {
   const router = useRouter();

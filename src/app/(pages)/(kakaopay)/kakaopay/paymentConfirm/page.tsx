@@ -4,17 +4,17 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import Image from "next/image";
 import PaymentButton from "../_components/KakaopayBtn";
-import { EggDayData, EggPopData } from "@/types/payment.types";
-import Radio from "@/components/uiComponents/Radio";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
+import Radio from "@/components/uiComponents/atoms/Radio";
+import Tag from "@/components/uiComponents/atoms/tags/Tag";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { HiOutlineChevronLeft } from "react-icons/hi";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { Icon } from "@/components/uiComponents/IconComponents/Icon";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
+import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import { customDateNotWeek } from "@/utils/CustomDate";
-import { useKakaopayRequest } from "@/hooks/useKakaopayRequest";
 import { useAuthStore } from "@/store/authStore";
+import { useKakaopayRequest } from "@/hooks/utils/api/useKakaopayRequest";
+import { EggDayData, EggPopData } from "@/types/features/commerce/payment.types";
 
 const PaymentConfirmPage = () => {
   const [agreeChecked, setAgreeChecked] = useState(false);

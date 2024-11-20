@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./_utils/localStorage";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import Text from "@/components/uiComponents/atoms/text/Text";
+import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import { ChevronLeft } from "lucide-react";
 
 const TypeSelectionPage = () => {

@@ -1,4 +1,4 @@
-import { EggClubSearchResults, EggPopSearchResults, WishItem } from "@/types/search.types";
+import { EggClubSearchResults, EggPopSearchResults, WishItem } from "@/types/utils/search.types";
 import browserClient from "@/utils/supabase/client";
 
 interface GroupedClub {

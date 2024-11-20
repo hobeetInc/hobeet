@@ -1,5 +1,5 @@
+import { EggClubDataNoTax, EggPopDataNoTax } from "@/types/features/commerce/payment.types";
 import supabase from "@/utils/supabase/client";
-import { EggPopDataNoTax, EggClubDataNoTax } from "@/types/payment.types";
 
 interface ClubResponse {
   oneTimeClubData?: EggPopDataNoTax;
