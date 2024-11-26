@@ -1,0 +1,3 @@
+// 로컬스토리지 키
+export const ONETIME_CLUB_CREATE = "ONETIME_CLUB_CREATE";
+export const REGULAR_CLUB_CREATE = "REGULAR_CLUB_CREATE";
