@@ -4,6 +4,7 @@ import ClubHeader from "./_components/ClubHeader";
 import HomeContent from "./_components/HomeContent";
 import RegularNotification from "./_components/RegularNotification";
 import { MemberInfo } from "@/types/features/user/user.types";
+import { useEggDayList } from "@/hooks/utils/list/eggdayList";
 
 const RegularTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   const regularClubId = Number(params.id);
