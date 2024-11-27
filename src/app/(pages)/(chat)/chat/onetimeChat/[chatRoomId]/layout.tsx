@@ -64,7 +64,12 @@ function ChatHeader() {
         </button>
 
         <Text variant="header-16" className="text-gray-900">
-          {isLoading ? "로딩중..." : roomName}
+          {isLoading 
+            ? "로딩중..." 
+            : roomName?.length > 20 
+              ? `${roomName.slice(0, 20)}...` 
+              : roomName
+          }
         </Text>
 
         <button onClick={() => setIsModalOpen(true)} className="p-2">
