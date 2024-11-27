@@ -215,7 +215,7 @@ const ChatPage = () => {
                                 alt={`${message.user.user_name}의 프로필 이미지`}
                                 width={40}
                                 height={40}
-                                className={cn("rounded-full")}
+                                className={cn("rounded-full w-10 h-10")}
                               />
                             </div>
                             <span className={cn("text-sm content-center text-gray-600 block")}>
@@ -237,11 +237,11 @@ const ChatPage = () => {
                           <div
                             className={cn(
                               "max-w-xs break-words p-3 rounded-[16px]",
-                              isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2] ml-10",
+                              isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2] ml-10 -mt-3",
                               "text-gray-900"
                             )}
                           >
-                            <p className={cn("max-w-[150px]")}>{message.egg_day_chatting_message_content}</p>
+                            <p className={cn("max-w-[238px]")}>{message.egg_day_chatting_message_content}</p>
                           </div>
                           {!isCurrentUser && (
                             <span className={cn("text-xs text-gray-500 block self-end ml-1")}>
