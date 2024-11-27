@@ -76,7 +76,7 @@ const PopHeader = ({ clubInfo }: PopHeaderProps) => {
       </div>
       <div className="flex-1 text-center pr-7">
         <Text variant="header-16">
-          {clubInfo.egg_pop_name.length > 8 ? `${clubInfo.egg_pop_name.slice(0, 8)}...` : clubInfo.egg_pop_name}
+          {clubInfo.egg_pop_name.length > 20 ? `${clubInfo.egg_pop_name.slice(0, 20)}...` : clubInfo.egg_pop_name}
         </Text>
       </div>
     </div>
