@@ -72,8 +72,13 @@ function ChatHeader() {
           <ChevronLeft className={cn("w-6 h-6")} />
         </button>
 
-        <Text variant="header-16" className={cn("text-gray-900")}>
-          {isLoading ? "로딩중..." : roomName}
+       <Text variant="header-16" className="text-gray-900">
+          {isLoading 
+            ? "로딩중..." 
+            : roomName?.length > 20 
+              ? `${roomName.slice(0, 20)}...` 
+              : roomName
+          }
         </Text>
 
         <button onClick={() => setIsModalOpen(true)} className={cn("p-2")}>
