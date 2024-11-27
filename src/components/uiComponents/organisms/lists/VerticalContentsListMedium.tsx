@@ -53,7 +53,9 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImag, m
 
         {/* 모임 제목 */}
         {/* <div className="self-stretch text-gray-900 text-subtitle-16">{eggPop.egg_pop_name}</div> */}
-        <Text variant="subtitle-16">{eggPop.egg_pop_name}</Text>
+        <Text variant="subtitle-16" className="overflow-hidden text-overflow-ellipsis line-clamp-1 max-w-[160px]">
+          {eggPop.egg_pop_name}
+        </Text>
         {/* 위치 정보 */}
         <div className="self-stretch pt-0.5 justify-start items-center gap-0.5 inline-flex">
           <div className="w-4 h-4 justify-center items-center flex">

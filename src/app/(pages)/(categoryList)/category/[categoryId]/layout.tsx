@@ -60,11 +60,13 @@ export default function CategoryLayout({ children, params }: CategoryLayoutProps
           {isModalOpen && (
             <div className="absolute top-12 bg-white min-w-[358px] ml-[30px] rounded-[8px] border border-solid border-gray-50 shadow-lg z-50 justify-items-center">
               <div className="w-[358px] h-36 px-[0.50px] bg-white rounded-lg border-2 border-gray-50 grid grid-cols-3 grid-rows-3 gap-0.5">
-                <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-solid border-gray-100 justify-center items-center gap-2 flex">
-                  <Text variant="body_medium-12" className="text-gray-900">
-                    에그팝
-                  </Text>
-                </div>
+                <Link href={"/category/0"}>
+                  <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-solid border-gray-100 justify-center items-center gap-2 flex">
+                    <Text variant="body_medium-12" className="text-gray-900">
+                      에그팝
+                    </Text>
+                  </div>
+                </Link>
                 <Link href={`/category/${categories[0].main_category_id}`}>
                   <div className="w-[119px] h-12 p-2 bg-white border-r border-b border-solid border-gray-100 justify-center items-center gap-2 flex">
                     <Text variant="body_medium-12" className="text-gray-900">

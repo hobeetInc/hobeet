@@ -42,7 +42,7 @@ const AllRegularClubListPage = () => {
                     에그클럽
                   </p>
                 </div>
-                <p className="text-[14px] leading-[18.9px] font-[600] overflow-hidden text-overflow-ellipsis">
+                <p className="text-[14px] leading-[18.9px] font-[600] overflow-hidden text-overflow-ellipsis line-clamp-1 max-w-[250px]">
                   {club.egg_club_name}
                 </p>
                 <div className="flex items-center gap-2">
