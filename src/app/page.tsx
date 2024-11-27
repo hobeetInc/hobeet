@@ -2,7 +2,11 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./(pages)/(club)/club/_utils/localStorage";
+import {
+  NOTIFICATION_CREATE,
+  ONETIME_CLUB_CREATE,
+  REGULAR_CLUB_CREATE
+} from "./(pages)/(club)/club/_utils/localStorage";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Text from "@/components/uiComponents/atoms/text/Text";
 
@@ -16,6 +20,8 @@ export default function Home() {
   useEffect(() => {
     localStorage.removeItem(ONETIME_CLUB_CREATE);
     localStorage.removeItem(REGULAR_CLUB_CREATE);
+    localStorage.removeItem(NOTIFICATION_CREATE);
+
     localStorage.removeItem("justCreated");
     localStorage.removeItem("fromKakaoPay");
   }, []);

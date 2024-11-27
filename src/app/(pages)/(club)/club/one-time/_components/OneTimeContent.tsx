@@ -9,7 +9,7 @@ import AddressSearch from "../../_components/oneTimeClub/AddressSearch";
 import MemberType from "../../_components/oneTimeClub/MemberType";
 import Tax from "../../_components/oneTimeClub/Tax";
 import { EggPopFormWithImageFile } from "@/types/features/club/eggpop.types";
-import ProgressBar from "../../_components/ProgressBar";
+import ProgressBar from "../../../../../_components/ProgressBar";
 import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import Introduction from "../../_components/oneTimeClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";

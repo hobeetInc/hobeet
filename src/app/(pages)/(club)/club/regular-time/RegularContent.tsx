@@ -7,7 +7,7 @@ import Category from "../_components/regularClub/Category";
 import MemberType from "../_components/regularClub/MemberType";
 import { putRegularMember, putRepresentative } from "../_api/supabase";
 import { EggClubFormWithImageFile } from "@/types/features/club/eggclub.types";
-import ProgressBar from "../_components/ProgressBar";
+import ProgressBar from "../../../../_components/ProgressBar";
 import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import Introduction from "../_components/regularClub/Introduction";
 import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";

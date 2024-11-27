@@ -78,7 +78,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
       return (
         <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
           <Text variant="subtitle-16" className="w-[50%]">
-            내가 만든 에그데이에요
+            참여 중인 에그데이에요
           </Text>
           <Button colorType="yellow" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
             에그클럽 채팅방

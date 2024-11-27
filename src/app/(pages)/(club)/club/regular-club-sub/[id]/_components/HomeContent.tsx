@@ -52,13 +52,21 @@ const HomeContent = ({
                 <WishListHeart egg_club_id={clubInfo.egg_club_id} />
               </div>
             </div>
+            <Text variant="body_medium-14" className="text-gray-400">
+              멤버 {crewMembers.length}/100
+            </Text>
           </div>
-          <div className="w-[252px] justify-start items-center gap-3 inline-flex">
-            <ProfileImageLarge image={hostInfo?.userImage} />
-            <div className="w-[133px] flex-col justify-start items-start gap-1 inline-flex">
-              <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                <Text variant="subtitle-16">{hostInfo?.userName}</Text>
-                <Tag tagName="eggmaster" variant="black" />
+          <div>
+            <Text variant="subtitle-18" className="text-gray-900 mb-4">
+              이 모임의 호스트
+            </Text>
+            <div className="w-[252px] justify-start items-center gap-3 inline-flex">
+              <ProfileImageLarge image={hostInfo?.userImage} />
+              <div className="w-[133px] flex-col justify-start items-start gap-1 inline-flex">
+                <div className="self-stretch justify-start items-center gap-2 inline-flex">
+                  <Text variant="subtitle-16">{hostInfo?.userName}</Text>
+                  <Tag tagName="eggmaster" variant="black" />
+                </div>
               </div>
             </div>
           </div>
