@@ -1,3 +1,6 @@
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import { cn } from "@/utils/cn/util";
+
 interface TabBarProps {
   activeTab: boolean;
   onTabChange: (newActiveTab: boolean) => void;
@@ -5,7 +8,9 @@ interface TabBarProps {
 }
 
 // 내 모임 리스트 탭바
-export const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, value }) => {
+export const TabBar = ({ activeTab, onTabChange, value }: TabBarProps) => {
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
+
   const getTabText = (tabType: boolean) => {
     if (value === "myclub") {
       return tabType ? "내가 에그장" : "내가 에그즈";
@@ -18,27 +23,49 @@ export const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabChange, value })
   };
 
   return (
-    <div className="w-full px-4 pt-2.5 border-b border-gray-50 flex">
-      <button className="w-[50%] text-base font-semibold font-pretendard relative" onClick={() => onTabChange(true)}>
+    <div className={cn("w-full border-b border-gray-50 flex", isLargeScreen ? "px-6 pt-4" : "px-4 pt-2.5")}>
+      <button
+        className={cn("font-semibold relative", isLargeScreen ? "text-lg w-[93px]" : "text-base w-[50%]")}
+        onClick={() => onTabChange(true)}
+      >
         <span
-          className={`text-center text-base font-pretendard relative ${
-            activeTab === true ? "text-gray-900 text-body-16" : "text-gray-300 font-pretendard"
-          }`}
+          className={cn(
+            "text-center relative",
+            isLargeScreen ? "text-lg" : "text-base",
+            activeTab === true ? "text-gray-900 text-body-16" : "text-gray-300"
+          )}
         >
           {getTabText(true)}
         </span>
-        <div className={`left-0 w-full h-0.5 mt-3 ${activeTab === true ? "bg-primary-500" : "bg-gray-50"}`} />
+        <div
+          className={cn(
+            "left-0 w-full h-0.5",
+            isLargeScreen ? "mt-4" : "mt-3",
+            activeTab === true ? "bg-primary-500" : isLargeScreen ? "bg-transparent" : "bg-gray-50"
+          )}
+        />
       </button>
 
-      <button className="w-[50%] text-base font-semibold font-pretendard relative" onClick={() => onTabChange(false)}>
+      <button
+        className={cn("font-semibold relative", isLargeScreen ? "text-lg w-[93px]" : "text-base w-[50%]")}
+        onClick={() => onTabChange(false)}
+      >
         <span
-          className={`text-center text-base font-pretendard relative ${
-            activeTab === false ? "text-gray-900 text-body-16" : "text-gray-300 font-pretendard"
-          }`}
+          className={cn(
+            "text-center relative",
+            isLargeScreen ? "text-lg" : "text-base",
+            activeTab === false ? "text-gray-900 text-body-16" : "text-gray-300"
+          )}
         >
           {getTabText(false)}
         </span>
-        <div className={`left-0 w-full h-0.5 mt-3 ${activeTab === false ? "bg-primary-500" : "bg-gray-50"}`} />
+        <div
+          className={cn(
+            "left-0 w-full h-0.5",
+            isLargeScreen ? "mt-4" : "mt-3",
+            activeTab === false ? "bg-primary-500" : isLargeScreen ? "bg-transparent" : "bg-gray-50"
+          )}
+        />
       </button>
     </div>
   );
