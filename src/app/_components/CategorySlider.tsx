@@ -24,10 +24,8 @@ const CategorySlider = () => {
   };
 
   return (
-    <div
-      className={cn("relative w-full max-w-full mx-auto px-4 mt-4 overflow-x-auto scrollbar-hide whitespace-nowrap")}
-    >
-      <div className={cn("flex items-center space-x-4")}>
+    <div className={cn("w-full mt-4 overflow-x-auto scrollbar-hide whitespace-nowrap")}>
+      <div className={cn("flex justify-first items-center w-[600px] gap-4 px-4")}>
         {categories.map((category) => (
           <button
             key={category.id}
@@ -42,6 +40,7 @@ const CategorySlider = () => {
             </div>
           </button>
         ))}
+        <div className="w-4 h-full bg-yellow-200" />
       </div>
     </div>
   );

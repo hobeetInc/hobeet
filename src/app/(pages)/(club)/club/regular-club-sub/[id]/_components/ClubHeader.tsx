@@ -5,6 +5,7 @@ import { ChevronLeft } from "lucide-react";
 import { GoPlus } from "react-icons/go";
 import { useAuthStore } from "@/store/authStore";
 import { useClubStore } from "@/store/crewStore";
+import Text from "@/components/uiComponents/atoms/text/Text";
 
 const ClubHeader = () => {
   const router = useRouter();
@@ -73,9 +74,9 @@ const ClubHeader = () => {
       <button onClick={handleBack} className="w-6 h-6">
         <ChevronLeft className="w-full h-full" />
       </button>
-      <h1 className="flex-1 text-center text-lg font-semibold">
-        {clubInfo.egg_club_name.length > 8 ? `${clubInfo.egg_club_name.slice(0, 8)}...` : clubInfo.egg_club_name}
-      </h1>
+      <Text variant="header-16" className={`flex-1 text-center ${clubInfo.user_id === userId ? "" : "pr-5"}`}>
+        {clubInfo.egg_club_name.length > 20 ? `${clubInfo.egg_club_name.slice(0, 20)}...` : clubInfo.egg_club_name}
+      </Text>
       {clubInfo.user_id === userId ? (
         <button onClick={handleCreate} className="w-6 h-6">
           <GoPlus className="w-full h-full" />
