@@ -9,8 +9,9 @@ import { useEffect, useState } from "react";
 import { fetchChatRoomMembers } from "../../_api/regular";
 import { useAuthStore } from "@/store/authStore";
 import Link from "next/link";
-
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 const RegularClubChattingRoomPage = () => {
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const [chatRooms, setChatRooms] = useState<EggClubChattingRoom[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -197,7 +198,6 @@ const RegularClubChattingRoomPage = () => {
             // 채팅방이 있는 경우 목록 표시
             chatRooms.map((room: EggClubChattingRoom) => (
               <div key={room.egg_day_chatting_room_id} className={cn("border-b")}>
-                {/* TODO a링크 Link로 변경 예정 */}
                 <Link
                   href={`/chat/regularChat/${room.egg_day_chatting_room_id}`}
                   className={cn("flex items-center p-4 w-full hover:bg-gray-50")}
@@ -213,20 +213,19 @@ const RegularClubChattingRoomPage = () => {
                   </div>
 
                   <div className={cn("flex-1 ml-4")}>
-                    <div className={cn("flex justify-between items-center mb-1")}>
+                    <div className={cn("flex items-center mb-1")}>
                       <Text variant="subtitle-16" className={cn("text-gray-900 font-medium truncate max-w-[200px]")}>
                         {room.egg_day_chatting_room_name}
                       </Text>
-                      <div className={cn("flex items-center gap-4")}>
-                        {typeof room.egg_day_chatting[0].count === "number" && room.egg_day_chatting[0].count > 0 && (
-                          <Text variant="subtitle-16" className={cn("text-gray-200")}>
-                            {room.egg_day_chatting[0].count}{" "}
-                          </Text>
-                        )}
-                        <Text variant="body-12" className={cn("text-gray-400")}>
-                          {room.last_message_time_value}
+
+                      {room.egg_day_chatting[0].count > 0 && (
+                        <Text variant="subtitle-16" className={cn("text-gray-200", isLargeScreen ? "ml-2" : "ml-auto")}>
+                          {room.egg_day_chatting[0].count}
                         </Text>
-                      </div>
+                      )}
+                      <Text variant="body-12" className={cn("text-gray-400 ml-2")}>
+                        {room.last_message_time_value}
+                      </Text>
                     </div>
 
                     <Text
