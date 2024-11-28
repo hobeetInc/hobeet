@@ -9,7 +9,7 @@ import { formatterAge, formatterGender, formatterPeopleLimit } from "../../../_u
 import { useClubStore } from "@/store/crewStore";
 
 const HomeContent = () => {
-  const { clubInfo, stringCategory, hostInfo } = useClubStore();
+  const { clubInfo, stringCategory, hostInfo, crewMembers } = useClubStore();
 
   return (
     <div className="flex flex-col items-center justify-center">
