@@ -4,11 +4,13 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import { GoPlus } from "react-icons/go";
 import { useAuthStore } from "@/store/authStore";
-import { ClubHeaderProps } from "@/types/features/club/eggclub.types";
+import { useClubStore } from "@/store/crewStore";
 
-const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
+const ClubHeader = () => {
   const router = useRouter();
   const userId = useAuthStore((state) => state.userId);
+
+  const { clubInfo } = useClubStore();
 
   // 추후에 뒤로가기 고칠예정(지우지 마세요)
 
