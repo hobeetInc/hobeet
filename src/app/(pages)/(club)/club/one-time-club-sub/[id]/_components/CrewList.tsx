@@ -14,6 +14,7 @@ import { useEggPopCrewList } from "@/hooks/utils/list/crewList";
 import { MemberInfo } from "@/types/features/user/user.types";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { cn } from "@/utils/cn/util";
+import FloatingButton from "../../../_components/FloatingButton";
 
 // CrewList 컴포넌트 props 타입
 interface CrewListProps {
@@ -156,6 +157,8 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         <div className="w-full  fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
+
+      {isLargeScreen && <FloatingButton />}
     </>
   );
 };

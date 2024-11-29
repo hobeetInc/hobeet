@@ -15,6 +15,7 @@ import { useAuthStore } from "@/store/authStore";
 import { EggDay } from "@/types/features/club/eggday.types";
 import { cn } from "@/utils/cn/util";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
+import FloatingButton from "@/app/(pages)/(club)/club/_components/FloatingButton";
 
 interface CrewListProps {
   crewMembers: MemberInfo[];
@@ -162,6 +163,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
         <div className="w-full  fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
+      {isLargeScreen && <FloatingButton />}
     </>
   );
 };
