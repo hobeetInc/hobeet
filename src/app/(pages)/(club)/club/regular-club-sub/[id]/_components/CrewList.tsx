@@ -12,26 +12,21 @@ import RegularClubJoinButton from "@/app/(pages)/(club)/club/regular-club-sub/[i
 import Text from "@/components/uiComponents/atoms/text/Text";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
-import { EggDayWithEggDayMember } from "@/types/features/club/eggday.types";
-import { MemberInfo } from "@/types/features/user/user.types";
 import { useEggClubCrewList } from "@/hooks/utils/list/crewList";
 import { useAuthStore } from "@/store/authStore";
+import { useClubStore } from "@/store/crewStore";
 
-// CrewList 컴포넌트 props 타입
-interface CrewListProps {
-  crewMembers: MemberInfo[];
-  clubId: number;
-  clubHostId: string;
-  notificationData: EggDayWithEggDayMember[];
-}
-
-const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notificationData }: CrewListProps) => {
-  const [participationStatus, setParticipationStatus] = useState<UserStatus>("not_applied");
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+const CrewList = () => {
   const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
+  const { hostInfo, clubInfo, crewMembers } = useClubStore();
 
-  const { data: crewList = initialCrewMembers, isLoading, isError } = useEggClubCrewList(clubId);
+  const [participationStatus, setParticipationStatus] = useState<UserStatus>("not_applied");
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const clubId = clubInfo?.egg_club_id;
+
+  const { data: crewList = crewMembers, isLoading, isError } = useEggClubCrewList(clubId);
 
   useEffect(() => {
     // 데이터 새로고침 함수
@@ -126,7 +121,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
       );
     }
 
-    if (userId === clubHostId) {
+    if (userId === hostInfo.userId) {
       return (
         <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
           <Button
@@ -216,7 +211,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, notific
         <div className="self-stretch h-[0px] mt-[15px] mb-4 border border-solid border-gray-50"></div>
 
         <div className="w-full ">
-          <NotificationList notificationData={notificationData} crewMembers={crewList}>
+          <NotificationList crewMembers={crewList}>
             <div className="w-full  fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
           </NotificationList>
         </div>

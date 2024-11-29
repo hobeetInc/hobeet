@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import CrewList from "./CrewList";
 import Text from "@/components/uiComponents/atoms/text/Text";
@@ -5,27 +6,11 @@ import { ProfileImageLarge } from "@/components/uiComponents/molecules/Images/Pr
 import Tag from "@/components/uiComponents/atoms/tags/Tag";
 import WishListHeart from "./WishListHeart";
 import { formatterAge, formatterGender, formatterPeopleLimit } from "../../../_utils/formatter";
-import { EggClub } from "@/types/features/commerce/cardlist.types";
-import { MemberInfo } from "@/types/features/user/user.types";
-import { EggDayWithEggDayMember } from "@/types/features/club/eggday.types";
+import { useClubStore } from "@/store/crewStore";
 
-interface HomeContentProps {
-  clubInfo: EggClub;
-  hostInfo: MemberInfo | undefined;
-  crewMembers: MemberInfo[];
-  egg_club_id: number;
-  notificationData: EggDayWithEggDayMember[];
-  stringCategory: string | undefined;
-}
+const HomeContent = () => {
+  const { clubInfo, stringCategory, hostInfo, crewMembers } = useClubStore();
 
-const HomeContent = ({
-  clubInfo,
-  hostInfo,
-  crewMembers,
-  egg_club_id,
-  notificationData,
-  stringCategory
-}: HomeContentProps) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6">
@@ -109,12 +94,7 @@ const HomeContent = ({
 
         <div className="self-stretch h-[0px] border border-solid border-gray-50"></div>
 
-        <CrewList
-          crewMembers={crewMembers}
-          clubId={egg_club_id}
-          clubHostId={clubInfo.user_id}
-          notificationData={notificationData}
-        />
+        <CrewList />
       </div>
     </div>
   );
