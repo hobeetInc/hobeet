@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { cn } from "@/utils/cn/util";
 import { useAuthStore } from "@/store/authStore";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 type NavItem = {
   path: string;
@@ -83,6 +84,7 @@ const noHeaderFooterRoutes = [
 export default function Footer() {
   const pathname = usePathname();
   const userId = useAuthStore((state) => state.userId);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const router = useRouter();
 
@@ -125,7 +127,7 @@ export default function Footer() {
     typeof route === "string" ? route === pathname : route.test(pathname)
   );
 
-  if (!showHeaderFooter) return null;
+  if (!showHeaderFooter || isLargeScreen) return null;
 
   return (
     <footer

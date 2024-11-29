@@ -18,7 +18,7 @@ const buttonVariants = cva(
         rectangle: "rounded-[8px]"
       },
       sizeType: {
-        large: "w-full max-w-[358px]",
+        large: "w-full min-w-[358px]",
         small: "w-[174px] h-[50px]"
       }
     },

@@ -64,7 +64,7 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError }: Eg
   };
 
   return (
-    <Button colorType="black" borderType="circle" onClick={handleJoin} disabled={isLoading}>
+    <Button colorType="black" borderType="circle" onClick={handleJoin} disabled={isLoading} className="w-full">
       {isLoading ? "처리중..." : "참여하기"}
     </Button>
   );
