@@ -86,7 +86,7 @@ const TypeSelectionPage = () => {
           </div>
         </div>
 
-        <div className="w-full fixed bottom-[50px]">
+        <div className="w-[358px] fixed bottom-[50px]">
           {selectedType === null ? (
             <Button disabled borderType="circle" className="mt-[308px]">
               다음
