@@ -7,13 +7,15 @@ import Tag from "@/components/uiComponents/atoms/tags/Tag";
 import WishListHeart from "./WishListHeart";
 import { formatterAge, formatterGender, formatterPeopleLimit } from "../../../_utils/formatter";
 import { useClubStore } from "@/store/crewStore";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 const HomeContent = () => {
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const { clubInfo, stringCategory, hostInfo, crewMembers } = useClubStore();
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6">
+    <div className={`flex flex-col items-center justify-center ${isLargeScreen ? "mb-[126px]" : ""}`}>
+      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100">
         <Image
           src={clubInfo.egg_club_image}
           alt={clubInfo.egg_club_name}

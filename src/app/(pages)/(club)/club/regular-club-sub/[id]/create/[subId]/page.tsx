@@ -43,8 +43,8 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
     const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
     return (
-      <div className="flex flex-col items-center justify-center">
-        <div className="flex w-full h-[48px] fixed top-0 right-0 left-0 z-50 bg-white">
+      <div className="flex flex-col items-center justify-center mb-[166px]">
+        <div className="flex w-full h-[48px] fixed top-0 right-0 left-0 z-10 bg-white">
           <DayHeader clubInfo={clubInfo} />
         </div>
 

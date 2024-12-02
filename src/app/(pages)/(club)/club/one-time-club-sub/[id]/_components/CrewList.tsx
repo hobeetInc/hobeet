@@ -14,7 +14,7 @@ import { useEggPopCrewList } from "@/hooks/utils/list/crewList";
 import { MemberInfo } from "@/types/features/user/user.types";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { cn } from "@/utils/cn/util";
-import FloatingButton from "../../../_components/FloatingButton";
+import FloatingButton from "../../../../../../_components/FloatingButton";
 
 // CrewList 컴포넌트 props 타입
 interface CrewListProps {
