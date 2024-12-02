@@ -15,11 +15,15 @@ const RegularTimeClubSubPage = async ({ params }: { params: { id: string } }) =>
     fetchSubCategories()
   ]);
 
+  if (!memberData?.length || !memberData[0]?.egg_club) {
+    return <div>Loading...</div>;
+  }
+
   // 클럽 정보만 추출
   const clubInfo = memberData[0]?.egg_club;
 
   // 일치하는 카테고리 찾기
-  const matchCategory = subCategories.find((category) => category.sub_category_id === clubInfo.sub_category_id);
+  const matchCategory = subCategories.find((category) => category.sub_category_id === clubInfo?.sub_category_id);
   const stringCategory = matchCategory?.sub_category_name;
 
   // 참여 크루 정보 추출

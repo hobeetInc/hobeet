@@ -15,11 +15,14 @@ import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import { useEggClubCrewList } from "@/hooks/utils/list/crewList";
 import { useAuthStore } from "@/store/authStore";
 import { useClubStore } from "@/store/crewStore";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import { cn } from "@/utils/cn/util";
 
 const CrewList = () => {
   const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
   const { hostInfo, clubInfo, crewMembers } = useClubStore();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const [participationStatus, setParticipationStatus] = useState<UserStatus>("not_applied");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -105,10 +108,11 @@ const CrewList = () => {
     // 로그아웃 상태
     if (!userId) {
       return (
-        <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50">
+        <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50 px-4">
           <Button
             colorType="black"
             borderType="circle"
+            className="w-full"
             onClick={(e) => {
               e.preventDefault();
 
@@ -144,14 +148,14 @@ const CrewList = () => {
       case "active":
         return (
           <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
-            <Text variant="subtitle-16" className="w-[50%]">
+            <Text variant="subtitle-16" className={cn(isLargeScreen ? "" : "w-[50%]")}>
               참여 중인 에그클럽이에요
             </Text>
             <Button
               colorType="black"
               borderType="circle"
               sizeType="small"
-              className="w-[50%]"
+              className={cn(isLargeScreen ? "w-[732px]" : "w-[50%]")}
               onClick={handleChatClick}
             >
               에그클럽 채팅방
@@ -162,11 +166,14 @@ const CrewList = () => {
       case "pending":
         return (
           <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
-            <Text variant="subtitle-16" className="w-[50%]">
+            <Text variant="subtitle-16" className={cn(isLargeScreen ? "" : "w-[50%]")}>
               에그장이 승인중이예요
             </Text>
             <button
-              className="w-[50%] px-2.5 py-3.5 bg-gray-50 rounded-[25px] justify-center items-center gap-2.5 inline-flex"
+              className={cn(
+                "px-2.5 py-3.5 bg-gray-50 rounded-[25px] justify-center items-center gap-2.5 inline-flex",
+                isLargeScreen ? "w-[732px]" : "w-[50%]"
+              )}
               onClick={handleWaiting}
             >
               <Text variant="subtitle-16" className="text-gray-200">
@@ -178,7 +185,7 @@ const CrewList = () => {
 
       case "not_applied":
         return (
-          <div className="w-full  h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50 ">
+          <div className="w-full  h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50 px-4">
             <RegularClubJoinButton
               clubId={clubId}
               onSuccess={() => {}}
