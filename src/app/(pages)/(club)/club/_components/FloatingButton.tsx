@@ -27,7 +27,7 @@ export default function FloatingButton() {
   };
 
   return (
-    <div className="w-21 h-[176px] fixed right-0 bottom-[116px] flex flex-col justify-start gap-3 pr-5">
+    <div className="w-21 h-[176px] fixed right-0 bottom-[116px] flex flex-col justify-start gap-3 pr-5 z-10">
       <button className="w-16 h-16 rounded-full bg-white border border-1 border-gray-100 flex items-center justify-center">
         <Icon name="eggSpeechBubble" />
       </button>

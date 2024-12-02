@@ -47,7 +47,7 @@ const RegularTimeClubSubPage = async ({ params }: { params: { id: string } }) =>
         stringCategory={stringCategory}
       />
 
-      <div className="fixed top-0 right-0 left-0 bg-white z-50">
+      <div className="fixed top-0 right-0 left-0 bg-white z-10">
         <ClubHeader />
       </div>
 
