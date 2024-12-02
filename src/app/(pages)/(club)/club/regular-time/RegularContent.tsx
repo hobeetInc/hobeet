@@ -10,12 +10,12 @@ import { EggClubFormWithImageFile } from "@/types/features/club/eggclub.types";
 import ProgressBar from "../../../../_components/ProgressBar";
 import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import Introduction from "../_components/regularClub/Introduction";
-import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 import { createRegularChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/regular";
 import { useCreateClub } from "@/hooks/utils/api/useCreate";
 import { useAuthStore } from "@/store/authStore";
 import { useUploadImage } from "@/hooks/utils/api/useUploadImage";
 import { ChevronLeft } from "lucide-react";
+import { useThrottle } from "@/utils/throttle/throttleCreateClub";
 
 const RegularContent = () => {
   const router = useRouter();
@@ -149,7 +149,7 @@ const RegularContent = () => {
       const imageUrl = await uploadClubImage(formData.egg_club_image);
       const data = await createClub({ ...formData, egg_club_image: imageUrl });
 
-      const representive = {
+      const representative = {
         egg_club_id: data.egg_club_id,
         user_id: data.user_id,
         egg_club_participation_request_status: "active",
@@ -157,7 +157,7 @@ const RegularContent = () => {
       };
 
       // 승인 테이블에 넣기
-      const res = await putRepresentative(representive);
+      const res = await putRepresentative(representative);
 
       const member = {
         user_id: data.user_id,

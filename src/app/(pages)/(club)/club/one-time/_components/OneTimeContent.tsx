@@ -12,7 +12,7 @@ import { EggPopFormWithImageFile } from "@/types/features/club/eggpop.types";
 import ProgressBar from "../../../../../_components/ProgressBar";
 import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
 import Introduction from "../../_components/oneTimeClub/Introduction";
-import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
+import { useThrottle } from "@/utils/throttle/throttleCreateClub";
 import { createOneTimeChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/onetime";
 import { useAuthStore } from "@/store/authStore";
 import { ChevronLeft } from "lucide-react";
