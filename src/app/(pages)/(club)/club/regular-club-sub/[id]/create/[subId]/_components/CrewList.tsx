@@ -15,7 +15,7 @@ import { useAuthStore } from "@/store/authStore";
 import { EggDay } from "@/types/features/club/eggday.types";
 import { cn } from "@/utils/cn/util";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
-import FloatingButton from "@/app/(pages)/(club)/club/_components/FloatingButton";
+import FloatingButton from "@/app/_components/FloatingButton";
 
 interface CrewListProps {
   crewMembers: MemberInfo[];

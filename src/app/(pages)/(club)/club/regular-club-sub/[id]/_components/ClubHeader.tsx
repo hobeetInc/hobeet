@@ -69,6 +69,8 @@ const ClubHeader = () => {
     router.push("/");
   };
 
+  console.log("이태연", clubInfo);
+
   return (
     <div className="flex justify-between items-center h-[48px] p-3">
       <button onClick={handleBack} className="w-6 h-6">

@@ -2,7 +2,7 @@
 import ApproveMemberTabBar from "@/components/uiComponents/molecules/navigation/ApproveMemberTapBar";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { ReactNode, useState } from "react";
-import FloatingButton from "../../../_components/FloatingButton";
+import FloatingButton from "../../../../../../_components/FloatingButton";
 
 interface TabLayoutProps {
   children: [ReactNode, ReactNode];
