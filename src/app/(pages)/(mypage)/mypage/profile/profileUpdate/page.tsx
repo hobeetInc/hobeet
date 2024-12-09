@@ -8,9 +8,11 @@ import { HiOutlineChevronLeft } from "react-icons/hi";
 import Text from "@/components/ui/atoms/text/Text";
 import { useAuthStore } from "@/store/authStore";
 import { useProfile } from "@/hooks/utils/features/profile/useProfile";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 const ProfileEditPage = () => {
   const { userId, userEmail, userName, userGender, userBirth, userProfileImg, setUserProfileImg } = useAuthStore();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const { providerQuery, uploadImageMutation } = useProfile(userId);
 
@@ -37,19 +39,29 @@ const ProfileEditPage = () => {
   if (providerQuery.error) return <div>프로필 정보 처리 중 오류</div>;
 
   return (
-    <div className="w-full flex flex-col items-center">
-      <div className="flex w-full h-12 bg-white items-center">
-        <div className="left-0 m-3">
-          <Link href="/mypage/profile">
-            <HiOutlineChevronLeft className="w-6 h-6" />
-          </Link>
+    <div className="w-full flex flex-col items-center lg:mt-[132px]">
+      <div className="flex w-full h-12 bg-white items-center lg:text-center">
+        {isLargeScreen ? (
+          ""
+        ) : (
+          <div className="left-0 m-3">
+            <Link href="/mypage/profile">
+              <HiOutlineChevronLeft className="w-6 h-6" />
+            </Link>
+          </div>
+        )}
+
+        <div className="flex flex-grow justify-center lg:w-full lg:text-center lg:py-5 lg:mb-14">
+          {isLargeScreen ? (
+            <Text variant="header-20" className="text-gray-900 lg:justify-center">
+              내 프로필 수정
+            </Text>
+          ) : (
+            <Text variant="header-16" className="text-gray-900 lg:justify-center">
+              내 프로필 수정
+            </Text>
+          )}
         </div>
-        <div className="flex flex-grow justify-center">
-          <Text variant="header-16" className="text-gray-900">
-            내 프로필 수정
-          </Text>
-        </div>
-        <div className="w-6 m-3"></div>
       </div>
 
       <div className="relative flex justify-center mb-5">
@@ -77,47 +89,47 @@ const ProfileEditPage = () => {
           <input type="file" id="profileImg" className="hidden" onChange={handleImageChange} />
         </div>
       </div>
-      <div>
-        <div className="w-full flex flex-col justify-start items-start gap-2 my-[36px]">
-          <Text variant="subtitle-18" className="text-gray-900 ml-4">
+      <div className="lg:mt-10">
+        <div className="w-full flex flex-col justify-start items-start gap-2 my-[36px] lg:w-[480px] lg:my-10">
+          <Text variant="subtitle-18" className="text-gray-900 ml-4 lg:ml-0">
             이름
           </Text>
-          <div className="w-[358px] h-12 mx-4">
+          <div className="w-[358px] h-12 mx-4 lg:w-full lg:mx-0">
             <input
               id="userName"
               type="text"
               value={userName || "이름 정보가 없습니다"}
               readOnly
-              className="flex-1 w-[358px] h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-body-14 bg-gray-50"
+              className="flex-1 w-[358px] h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-body-14 bg-gray-50 lg:w-[480px]"
             />
           </div>
         </div>
 
-        <div className="w-full flex flex-col justify-start items-start gap-2 mb-[36px]">
-          <Text variant="subtitle-18" className="text-gray-900 ml-4">
+        <div className="w-full flex flex-col justify-start items-start gap-2 mb-[36px] lg:w-full lg:mb-10">
+          <Text variant="subtitle-18" className="text-gray-900 ml-4 lg:ml-0">
             이메일
           </Text>
-          <div className="w-[358px] h-12 mx-4">
+          <div className="w-[358px] h-12 mx-4 lg:mx-0">
             <input
               id="email"
               type="email"
               value={userEmail || "이메일 정보가 없습니다"}
               readOnly
-              className="flex-1 w-[358px] h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-body-14 bg-gray-50"
+              className="flex-1 w-[358px] h-12 pl-5 rounded-lg border border-gray-100 text-gray-300 text-body-14 bg-gray-50 lg:w-[480px]"
             />
           </div>
-          <Text className="text-gray-900 text-xs font-normal leading-[17.4px]  ml-4 ">
+          <Text className="text-gray-900 text-xs font-normal leading-[17.4px] ml-4 lg:ml-0">
             {`${providerQuery.data}로 가입한 계정이에요`}
           </Text>
         </div>
 
-        <div className="w-full flex flex-col justify-start items-start gap-2 mb-[36px]">
-          <Text variant="subtitle-14" className="text-gray-900 ml-4">
+        <div className="w-full flex flex-col justify-start items-start gap-2 mb-[36px] lg:mb-10">
+          <Text variant="subtitle-18" className="text-gray-900 ml-4 lg:ml-0">
             성별
           </Text>
-          <div className="flex gap-3 mx-4">
+          <div className="flex gap-3 mx-4 lg:mx-0">
             <div
-              className={`w-[173px] h-12 rounded-lg flex justify-center items-center ${
+              className={`w-[173px] h-12 rounded-lg flex justify-center items-center lg:w-[234px] lg:px-4 ${
                 userGender === "남성"
                   ? "border-2 border-solid border-[#fdb800] text-[#fdb800] font-semibold"
                   : "border border-solid border-[#d9d9d9] text-neutral-800 font-normal"
@@ -128,21 +140,23 @@ const ProfileEditPage = () => {
               </Text>
             </div>
             <div
-              className={`w-[173px] h-12 rounded-lg flex justify-center items-center ${
+              className={`w-[173px] h-12 rounded-lg flex justify-center items-center lg:w-[234px] lg:px-4 ${
                 userGender === "여성"
                   ? "border-2 border-solid border-[#fdb800] text-[#fdb800] font-semibold"
                   : "border border-solid border-[#d9d9d9] text-neutral-800 font-normal"
               }`}
             >
-              <Text className="text-center text-sm leading-[18.90px]">여성</Text>
+              <Text variant="subtitle-14" className="text-center">
+                여성
+              </Text>
             </div>
           </div>
         </div>
 
         <div className="w-full flex flex-col justify-start items-start gap-2">
-          <Text className="text-gray-900 text-lg font-semibold leading-normal ml-4">생년월일</Text>
-          <div className="self-stretch flex justify-start items-center gap-3 ml-4">
-            <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
+          <Text className="text-gray-900 text-lg font-semibold leading-normal ml-4 lg:ml-0">생년월일</Text>
+          <div className="self-stretch flex justify-start items-center gap-3 ml-4 lg:ml-0">
+            <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3 lg:w-[152px]">
               <Text variant="subtitle-14" className="text-center text-gray-100">
                 {userBirth ? userBirth.split("-")[0] : "----"}
               </Text>
@@ -150,7 +164,7 @@ const ProfileEditPage = () => {
                 년
               </Text>
             </div>
-            <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
+            <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3 lg:w-[152px]">
               <Text variant="subtitle-14" className="text-center text-gray-100 ">
                 {userBirth ? userBirth.split("-")[1] : "--"}
               </Text>
@@ -158,7 +172,7 @@ const ProfileEditPage = () => {
                 월
               </Text>
             </div>
-            <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3">
+            <div className="w-[111px] h-12 px-5 py-2.5 rounded-lg border border-solid border-gray-100 flex justify-end items-center gap-3 lg:w-[152px]">
               <Text variant="subtitle-14" className="text-center text-gray-100 ">
                 {userBirth ? userBirth.split("-")[2] : "--"}
               </Text>
