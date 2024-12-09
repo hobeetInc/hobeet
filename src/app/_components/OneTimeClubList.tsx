@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { VerticalContentsListMediumEggPop } from "@/components/uiComponents/organisms/lists/VerticalContentsListMedium";
+import { VerticalContentsListMediumEggPop } from "@/components/ui/organisms/lists/VerticalContentsListMedium";
 import { useEggPopTenList } from "@/hooks/utils/list/tenList";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 
 const OneTimeClubList = () => {
   const { data: list, isLoading, isError } = useEggPopTenList();

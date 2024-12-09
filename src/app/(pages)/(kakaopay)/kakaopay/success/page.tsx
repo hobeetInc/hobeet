@@ -9,10 +9,10 @@ import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { EggPopPay, EggClubPay, EggPopDataNoTax, EggClubDataNoTax } from "@/types/features/commerce/payment.types";
 import { approvePayment, fetchOrderData } from "../_api/kakaoPayment";
-import Text from "@/components/uiComponents/atoms/text/Text";
-import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
-import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import Text from "@/components/ui/atoms/text/Text";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
+import Tag from "@/components/ui/atoms/tags/Tag";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 
 const PaymentSuccessPage = () => {

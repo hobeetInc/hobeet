@@ -5,9 +5,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { ko } from "date-fns/locale";
 
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { EggPopProps } from "@/types/features/club/eggpop.types";
-import SearchInput from "@/components/uiComponents/atoms/Inputs/SearchInput";
+import SearchInput from "@/components/ui/atoms/Inputs/SearchInput";
 
 // 커스텀 스타일
 const customStyles = `

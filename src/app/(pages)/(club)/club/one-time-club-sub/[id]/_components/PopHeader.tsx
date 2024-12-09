@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { EggPop } from "@/types/features/club/eggpop.types";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { ChevronLeft } from "lucide-react";
 
 interface PopHeaderProps {

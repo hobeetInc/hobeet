@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
 import { GoPlus } from "react-icons/go";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { usePathname, useRouter } from "next/navigation";

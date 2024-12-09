@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 
-import { VerticalContentsListMediumEggClub } from "@/components/uiComponents/organisms/lists/VerticalContentsListMedium";
+import { VerticalContentsListMediumEggClub } from "@/components/ui/organisms/lists/VerticalContentsListMedium";
 import { useAuthStore } from "@/store/authStore";
 import { useEggClubTenList } from "@/hooks/utils/list/tenList";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { EggClubForm } from "@/types/features/commerce/cardlist.types";
 
 const RegularClubList = () => {

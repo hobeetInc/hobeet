@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
+import Text from "@/components/ui/atoms/text/Text";
 import { BsPlusLg } from "react-icons/bs";
 import { useAuthStore } from "@/store/authStore";
 

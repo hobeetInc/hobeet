@@ -1,7 +1,7 @@
 import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDate } from "@/utils/CustomDate";
 import Image from "next/image";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import Tag from "@/components/ui/atoms/tags/Tag";
 
 export const EggPopHorizontalList = ({ eggPop }) => {
   return (

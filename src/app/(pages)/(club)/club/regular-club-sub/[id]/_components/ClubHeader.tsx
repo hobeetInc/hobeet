@@ -5,7 +5,7 @@ import { ChevronLeft } from "lucide-react";
 import { GoPlus } from "react-icons/go";
 import { useAuthStore } from "@/store/authStore";
 import { useClubStore } from "@/store/crewStore";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 
 const ClubHeader = () => {
   const router = useRouter();

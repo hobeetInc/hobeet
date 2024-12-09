@@ -8,7 +8,7 @@ import { EggDayFormWithImageFile } from "@/types/features/club/eggday.types";
 import { useThrottle } from "@/utils/throttle/throttleCreateClub";
 import { ChevronLeft } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
-import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import { useUploadImage } from "@/hooks/utils/api/useUploadImage";
 import { NOTIFICATION_CREATE } from "../../../../_utils/localStorage";
 import { useCreateDay } from "@/hooks/utils/api/useCreate";

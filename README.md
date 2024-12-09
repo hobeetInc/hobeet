@@ -395,7 +395,7 @@
  ┃ ┃ ┗ 📜OneTimeClubCard.tsx
  ┃ ┣ 📂regularclublist
  ┃ ┃ ┗ 📜RegularClubCard.tsx
- ┃ ┣ 📂uiComponents
+ ┃ ┣ 📂ui
  ┃ ┃ ┣ 📂Button
  ┃ ┃ ┃ ┗ 📜ButtonCom.tsx
  ┃ ┃ ┣ 📂IconComponents

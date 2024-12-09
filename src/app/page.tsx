@@ -8,7 +8,7 @@ import {
   REGULAR_CLUB_CREATE
 } from "./(pages)/(club)/club/_utils/localStorage";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 
 import OneTimeClubList from "./_components/OneTimeClubList";
 import RegularClubList from "./_components/RegularClubList";

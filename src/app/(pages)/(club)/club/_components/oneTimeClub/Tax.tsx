@@ -1,6 +1,6 @@
 "use client";
-import ClubCreateInput from "@/components/uiComponents/atoms/Inputs/ClubCreateInput";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import ClubCreateInput from "@/components/ui/atoms/Inputs/ClubCreateInput";
+import Text from "@/components/ui/atoms/text/Text";
 import { EggPopProps } from "@/types/features/club/eggpop.types";
 import { useState } from "react";
 

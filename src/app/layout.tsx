@@ -4,7 +4,7 @@ import Providers from "@/components/providers/queryProvider";
 import { AuthProvider } from "@/store/AuthContext";
 import { FloatingButton, Footer, Header } from "@/components/layout";
 import { Metadata } from "next";
-import ScreenSizeInitializer from "@/components/uiComponents/responsiveDesign/ScreenSizeInitializer";
+import ScreenSizeInitializer from "@/components/ui/responsiveDesign/ScreenSizeInitializer";
 
 const pretendard = localFont({
   src: "../fonts/PretendardVariable.woff2",

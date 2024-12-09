@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { ExtendEggClubMessage } from "@/types/features/chat/eggclubchat.types";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { useAuthStore } from "@/store/authStore";
 import { fetchChatInfo, fetchEggClubId, fetchMemberData, fetchMessages } from "../../../_api/regular";
 import { queryKeys } from "@/hooks/utils/queryKeys";

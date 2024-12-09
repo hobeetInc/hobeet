@@ -9,12 +9,6 @@ import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 import { EggPopForm } from "@/types/features/club/eggpop.types";
 
-declare module "react-slick" {
-  export interface Settings {
-    ref?: React.Ref<Slider>;
-  }
-}
-
 // 주소 커스텀 함수
 const customAddress = (address: string) => {
   const withoutNumber = address.replace(/\[\d+\]\s*/, "");

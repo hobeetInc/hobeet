@@ -3,7 +3,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { fetchMainCategories, fetchSubCategories } from "../../_api/supabase";
 import { MainCategory, SubCategory } from "@/types/utils/category.types";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { EggClubProps } from "@/types/features/club/eggclub.types";
 
 const Category = ({ formData, setFormData }: EggClubProps) => {

@@ -5,7 +5,7 @@ import React from "react";
 import { FaCamera } from "react-icons/fa6";
 import Link from "next/link";
 import { HiOutlineChevronLeft } from "react-icons/hi";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { useAuthStore } from "@/store/authStore";
 import { useProfile } from "@/hooks/utils/features/profile/useProfile";
 

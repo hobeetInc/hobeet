@@ -1,7 +1,7 @@
 "use client";
 
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Tag from "@/components/ui/atoms/tags/Tag";
+import Text from "@/components/ui/atoms/text/Text";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { FullScreenModalProps } from "@/types/core/common.types";
 import { ChevronLeft } from "lucide-react";

@@ -6,8 +6,8 @@ import { ChatProvider, useChatContext } from "./_components/ChatContext";
 import Image from "next/image";
 import { EggClubChattingMemberInfo } from "@/types/features/chat/eggclubchat.types";
 import { IoCloseOutline } from "react-icons/io5";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Tag from "@/components/ui/atoms/tags/Tag";
+import Text from "@/components/ui/atoms/text/Text";
 import { ChatRoomExit } from "../../../_api/supabase";
 import { useAuthStore } from "@/store/authStore";
 import { fetchChattingMembers } from "../../../_api/regular";
@@ -72,13 +72,8 @@ function ChatHeader() {
           <ChevronLeft className={cn("w-6 h-6")} />
         </button>
 
-       <Text variant="header-16" className="text-gray-900">
-          {isLoading 
-            ? "로딩중..." 
-            : roomName?.length > 20 
-              ? `${roomName.slice(0, 20)}...` 
-              : roomName
-          }
+        <Text variant="header-16" className="text-gray-900">
+          {isLoading ? "로딩중..." : roomName?.length > 20 ? `${roomName.slice(0, 20)}...` : roomName}
         </Text>
 
         <button onClick={() => setIsModalOpen(true)} className={cn("p-2")}>

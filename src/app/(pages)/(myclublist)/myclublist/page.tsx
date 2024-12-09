@@ -1,7 +1,7 @@
 "use client";
 
 import ClubListContent from "@/app/(pages)/(myclublist)/myclublist/_components/ClubListContent";
-import TabBar from "@/components/uiComponents/molecules/navigation/TapBar";
+import TabBar from "@/components/ui/molecules/navigation/TapBar";
 import { useState } from "react";
 
 export default function MyClubListPage() {

@@ -5,7 +5,7 @@ import { RegularClubCard } from "./RegularClubCard";
 import { useAuthStore } from "@/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCreatedClubs, fetchJoinedClubs } from "../_apis/ClubListContentApi";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 
 interface ClubListContentProps {
   activeTab: boolean; // true: 에그장(내가 만든 모임), false: 에그즈(내가 참여한 모임)

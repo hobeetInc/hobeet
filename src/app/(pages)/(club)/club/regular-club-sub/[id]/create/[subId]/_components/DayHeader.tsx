@@ -1,6 +1,6 @@
 "use client";
 
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { EggDay } from "@/types/features/club/eggday.types";
 import { ChevronLeft } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";

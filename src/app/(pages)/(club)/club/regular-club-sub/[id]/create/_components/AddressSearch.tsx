@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { AddressData, DaumPostcodeData } from "@/types/features/location/address.types";
-import ClubCreateInput from "@/components/uiComponents/atoms/Inputs/ClubCreateInput";
-import SearchInput from "@/components/uiComponents/atoms/Inputs/SearchInput";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import ClubCreateInput from "@/components/ui/atoms/Inputs/ClubCreateInput";
+import SearchInput from "@/components/ui/atoms/Inputs/SearchInput";
+import Text from "@/components/ui/atoms/text/Text";
 import { EggDayProps } from "@/types/features/club/eggday.types";
 
 const AddressSearch = ({ formData, setFormData }: EggDayProps) => {

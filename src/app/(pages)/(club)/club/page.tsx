@@ -3,11 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./_utils/localStorage";
-import Text from "@/components/uiComponents/atoms/text/Text";
-import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
+import Text from "@/components/ui/atoms/text/Text";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import { ChevronLeft } from "lucide-react";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
-import Modal from "@/components/uiComponents/responsiveDesign/Modal";
+import Modal from "@/components/ui/responsiveDesign/Modal";
 
 const TypeSelectionPage = () => {
   const router = useRouter();

@@ -8,7 +8,7 @@ import MemberType from "../_components/regularClub/MemberType";
 import { putRegularMember, putRepresentative } from "../_api/supabase";
 import { EggClubFormWithImageFile } from "@/types/features/club/eggclub.types";
 import ProgressBar from "../../../../_components/ProgressBar";
-import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import Introduction from "../_components/regularClub/Introduction";
 import { createRegularChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/regular";
 import { useCreateClub } from "@/hooks/utils/api/useCreate";
