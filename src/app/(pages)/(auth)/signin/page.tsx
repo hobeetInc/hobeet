@@ -46,23 +46,25 @@ const SigninPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center ">
+    <div className="min-h-screen flex flex-col items-center">
       <div className="flex justify-start w-full h-12">
         <div className="w-12 h-12 flex justify-center items-center">
           <Link href="/">
-            <HiOutlineChevronLeft className="w-6 h-6 " />
+            <HiOutlineChevronLeft className="w-6 h-6" />
           </Link>
         </div>
       </div>
 
-      <div className="fixed top-[209px] flex flex-col items-center">
-        <h1 className="text-[#0c0c0c] text-2xl font-black leading-normal">EGG FRIENDS</h1>
-        <Text variant="body_medium-16" className="text-gray-900">
+      <div className="fixed top-[25vh] left-1/2 -translate-x-1/2 flex flex-col items-center">
+        <h1 className="text-[#0c0c0c] text-center text-2xl font-black leading-normal lg:text-[32px] lg:w-[223px] lg:h-[43px] lg:leading-[43.2px]">
+          EGG FRIENDS
+        </h1>
+        <Text variant="body_medium-16" className="text-gray-900 lg:text-body_medium-18">
           함께라서 더 즐거운 우리
         </Text>
       </div>
 
-      <div className="fixed top-[295px]">
+      <div className="fixed top-[35vh] left-1/2 -translate-x-1/2 lg:top-[32vh]">
         <div className="flex items-center">
           <div className="w-[90px] h-[90px] z-10">
             <Icon name="whiteEgg" />
@@ -73,7 +75,7 @@ const SigninPage = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-[129px] w-full px-4">
+      <div className="fixed bottom-[20vh] w-full max-w-[480px] px-4 lg:bottom-[40vh] lg:w-[480px] lg:p-0">
         <button
           onClick={handleSignInWithGoogle}
           className="w-full flex items-center px-7 py-3.5 mb-3 bg-white border border-gray-100 rounded-[27px]"
@@ -96,7 +98,7 @@ const SigninPage = () => {
 
         <button
           onClick={() => alert("서비스 준비 중입니다.")}
-          className="w-full flex items-center px-7 py-3.5 bg-gray-50 rounded-[27px]"
+          className="w-full flex items-center px-7 py-3.5  bg-gray-50 rounded-[27px]"
         >
           <Image width={24} height={24} src="/asset/Logo/Message-Filled.png" alt="Email Icon" />
           <Text variant="subtitle-16" className="flex-1 text-center text-gray-900">
@@ -105,7 +107,7 @@ const SigninPage = () => {
         </button>
       </div>
 
-      <div className="fixed bottom-[72px] text-center">
+      <div className="fixed bottom-[13vh] left-1/2 -translate-x-1/2 text-center lg:bottom-[35vh]">
         <button className="text-gray-900 flex" onClick={() => alert("서비스 준비 중입니다.")}>
           <Text variant="body_medium-14">이메일로 간편하게 회원가입</Text>
           <span className="h-[20px] ml-[2px] mb-[1px]">👉</span>

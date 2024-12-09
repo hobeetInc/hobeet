@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getOneTimeClub } from "../_api/supabase";
 import { format, parseISO } from "date-fns";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
@@ -84,7 +84,7 @@ const OneTimeClubList = () => {
             <div className="flex w-[160px] h-[23px] flex-col items-start gap-1">
               <div
                 className="flex py-[2px] px-[8px] justify-center items-center
-                rounded-[128px] bg-[#fdb800]"
+                 rounded-[128px] bg-[#fdb800]"
               >
                 <p className="font-pretendard text-[10px] not-italic font-normal">에그팝</p>
               </div>
