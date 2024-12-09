@@ -17,6 +17,7 @@ import { useAuthStore } from "@/store/authStore";
 import { useClubStore } from "@/store/crewStore";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { cn } from "@/utils/cn/util";
+import ApproveModal from "@/app/(pages)/(approvemembers)/approvemembers/_components/ApproveModal";
 
 const CrewList = () => {
   const userId = useAuthStore((state) => state.userId);
@@ -26,6 +27,7 @@ const CrewList = () => {
 
   const [participationStatus, setParticipationStatus] = useState<UserStatus>("not_applied");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
 
   const clubId = clubInfo?.egg_club_id;
 
@@ -103,6 +105,15 @@ const CrewList = () => {
     }
   };
 
+  //에그즈 관리 처리 함수 추가
+  const handleManagerMembers = () => {
+    if (isLargeScreen) {
+      setIsApproveModalOpen(true);
+    } else {
+      router.push(`/approvemembers/${clubId}`);
+    }
+  };
+
   // 버튼 렌더링 함수
   const renderJoinButton = () => {
     // 로그아웃 상태
@@ -127,20 +138,28 @@ const CrewList = () => {
 
     if (userId === hostInfo.userId) {
       return (
-        <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
-          <Button
-            borderType="circle"
-            sizeType="small"
-            className="w-[50%] bg-gray-100 text-primary-900"
-            onClick={() => router.push(`/approvemembers/${clubId}`)}
-          >
-            에그즈 관리
-          </Button>
+        <>
+          <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+            <Button
+              borderType="circle"
+              sizeType="small"
+              className="w-[50%] bg-gray-100 text-primary-900"
+              onClick={handleManagerMembers}
+            >
+              에그즈 관리
+            </Button>
 
-          <Button colorType="black" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
-            에그클럽 채팅방
-          </Button>
-        </div>
+            <Button
+              colorType="black"
+              borderType="circle"
+              sizeType="small"
+              className="w-[50%]"
+              onClick={handleChatClick}
+            >
+              에그클럽 채팅방
+            </Button>
+          </div>
+        </>
       );
     }
 
@@ -223,6 +242,9 @@ const CrewList = () => {
           </NotificationList>
         </div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        {isLargeScreen && (
+          <ApproveModal isOpen={isApproveModalOpen} onClose={() => setIsApproveModalOpen(false)} clubId={clubId} />
+        )}
       </div>
     </>
   );

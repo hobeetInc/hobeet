@@ -38,6 +38,7 @@ const RAW_RUNTIME_STATE =
           ["@supabase/supabase-js", "npm:2.47.2"],\
           ["@tanstack/react-query", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:5.62.3"],\
           ["@tanstack/react-query-devtools", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:5.62.3"],\
+          ["@types/jquery", "npm:3.5.32"],\
           ["@types/node", "npm:20.17.9"],\
           ["@types/react", "npm:18.3.14"],\
           ["@types/react-datepicker", "npm:7.0.0"],\
@@ -63,6 +64,7 @@ const RAW_RUNTIME_STATE =
           ["slick-carousel", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:1.8.1"],\
           ["styled-jsx", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:5.1.6"],\
           ["supabase", "npm:1.226.4"],\
+          ["sweetalert2", "npm:11.14.5"],\
           ["tailwind-merge", "npm:2.5.5"],\
           ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.16"],\
@@ -4582,6 +4584,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/jquery", [\
+      ["npm:3.5.32", {\
+        "packageLocation": "../../../.yarn/berry/cache/@types-jquery-npm-3.5.32-f7d77321fa-10c0.zip/node_modules/@types/jquery/",\
+        "packageDependencies": [\
+          ["@types/jquery", "npm:3.5.32"],\
+          ["@types/sizzle", "npm:2.3.9"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/json-schema", [\
       ["npm:7.0.15", {\
         "packageLocation": "../../../.yarn/berry/cache/@types-json-schema-npm-7.0.15-fd16381786-10c0.zip/node_modules/@types/json-schema/",\
@@ -4741,6 +4753,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/@types-shimmer-npm-1.2.0-ff593a1ec3-10c0.zip/node_modules/@types/shimmer/",\
         "packageDependencies": [\
           ["@types/shimmer", "npm:1.2.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/sizzle", [\
+      ["npm:2.3.9", {\
+        "packageLocation": "../../../.yarn/berry/cache/@types-sizzle-npm-2.3.9-217217649f-10c0.zip/node_modules/@types/sizzle/",\
+        "packageDependencies": [\
+          ["@types/sizzle", "npm:2.3.9"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7710,6 +7731,7 @@ const RAW_RUNTIME_STATE =
           ["@supabase/supabase-js", "npm:2.47.2"],\
           ["@tanstack/react-query", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:5.62.3"],\
           ["@tanstack/react-query-devtools", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:5.62.3"],\
+          ["@types/jquery", "npm:3.5.32"],\
           ["@types/node", "npm:20.17.9"],\
           ["@types/react", "npm:18.3.14"],\
           ["@types/react-datepicker", "npm:7.0.0"],\
@@ -7735,6 +7757,7 @@ const RAW_RUNTIME_STATE =
           ["slick-carousel", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:1.8.1"],\
           ["styled-jsx", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:5.1.6"],\
           ["supabase", "npm:1.226.4"],\
+          ["sweetalert2", "npm:11.14.5"],\
           ["tailwind-merge", "npm:2.5.5"],\
           ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.16"],\
@@ -10707,7 +10730,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/__virtual__/slick-carousel-virtual-12d17ad33f/4/.yarn/berry/cache/slick-carousel-npm-1.8.1-8382d373c2-10c0.zip/node_modules/slick-carousel/",\
         "packageDependencies": [\
           ["slick-carousel", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:1.8.1"],\
-          ["@types/jquery", null],\
+          ["@types/jquery", "npm:3.5.32"],\
           ["jquery", null]\
         ],\
         "packagePeers": [\
@@ -11170,6 +11193,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/supports-preserve-symlinks-flag-npm-1.0.0-f17c4d0028-10c0.zip/node_modules/supports-preserve-symlinks-flag/",\
         "packageDependencies": [\
           ["supports-preserve-symlinks-flag", "npm:1.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["sweetalert2", [\
+      ["npm:11.14.5", {\
+        "packageLocation": "../../../.yarn/berry/cache/sweetalert2-npm-11.14.5-bcb33614ea-10c0.zip/node_modules/sweetalert2/",\
+        "packageDependencies": [\
+          ["sweetalert2", "npm:11.14.5"]\
         ],\
         "linkType": "HARD"\
       }]\

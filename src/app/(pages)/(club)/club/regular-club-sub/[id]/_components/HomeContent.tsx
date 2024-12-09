@@ -8,6 +8,7 @@ import WishListHeart from "./WishListHeart";
 import { formatterAge, formatterGender, formatterPeopleLimit } from "../../../_utils/formatter";
 import { useClubStore } from "@/store/crewStore";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
+import CrewList from "./CrewList";
 
 const HomeContent = () => {
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
