@@ -5,7 +5,7 @@ import { format, parseISO } from "date-fns";
 import ClubCard from "./ClubCard";
 import { ko } from "date-fns/locale";
 
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { EggDayWithEggDayMember } from "@/types/features/club/eggday.types";
 import { MemberInfo } from "@/types/features/user/user.types";
 import { useClubStore } from "@/store/crewStore";

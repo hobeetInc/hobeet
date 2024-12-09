@@ -2,9 +2,9 @@ import Image from "next/image";
 import { getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import PopHeader from "./_components/PopHeader";
-import { ProfileImageLarge } from "@/components/uiComponents/molecules/Images/ProfileImageLarge";
-import Text from "@/components/uiComponents/atoms/text/Text";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import { ProfileImageLarge } from "@/components/ui/molecules/Images/ProfileImageLarge";
+import Text from "@/components/ui/atoms/text/Text";
+import Tag from "@/components/ui/atoms/tags/Tag";
 import { MemberInfo } from "@/types/features/user/user.types";
 import {
   formatterAge,

@@ -1,7 +1,7 @@
 "use client";
 
-import NumberSpinner from "@/components/uiComponents/atoms/Inputs/NumberSpinner";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import NumberSpinner from "@/components/ui/atoms/Inputs/NumberSpinner";
+import Text from "@/components/ui/atoms/text/Text";
 import { MemberTypeProps } from "@/types/features/club/eggclub.types";
 import { useState } from "react";
 

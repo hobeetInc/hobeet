@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { EggClubVerticalList, EggPopVerticalList } from "./VerticalList";
-import { EggClubMainImage } from "@/components/uiComponents/molecules/Images/EggClubMainImage";
-import { HeartImage } from "@/components/uiComponents/molecules/Images/HeartImage";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import { EggClubMainImage } from "@/components/ui/molecules/Images/EggClubMainImage";
+import { HeartImage } from "@/components/ui/molecules/Images/HeartImage";
+import Tag from "@/components/ui/atoms/tags/Tag";
+import Text from "@/components/ui/atoms/text/Text";
 import { FaHeart } from "react-icons/fa";
 
 export const EggPopVerticalContentsListLarge = ({ eggPop }) => {

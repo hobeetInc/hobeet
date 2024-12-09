@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { SlArrowRight } from "react-icons/sl";
 import { useRouter } from "next/navigation";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { FaCamera } from "react-icons/fa6";
 import { signOut } from "../../_api/logout";
 import { useAuthStore } from "@/store/authStore";

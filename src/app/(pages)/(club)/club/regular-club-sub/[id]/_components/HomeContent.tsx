@@ -1,8 +1,9 @@
 "use client";
 import Image from "next/image";
-import Text from "@/components/uiComponents/atoms/text/Text";
-import { ProfileImageLarge } from "@/components/uiComponents/molecules/Images/ProfileImageLarge";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import CrewList from "./CrewList";
+import Text from "@/components/ui/atoms/text/Text";
+import { ProfileImageLarge } from "@/components/ui/molecules/Images/ProfileImageLarge";
+import Tag from "@/components/ui/atoms/tags/Tag";
 import WishListHeart from "./WishListHeart";
 import { formatterAge, formatterGender, formatterPeopleLimit } from "../../../_utils/formatter";
 import { useClubStore } from "@/store/crewStore";

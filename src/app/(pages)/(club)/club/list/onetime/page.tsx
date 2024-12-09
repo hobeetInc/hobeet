@@ -5,7 +5,7 @@ import Image from "next/image";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDate } from "@/utils/CustomDate";
 import { useEggPopAllList } from "@/hooks/utils/list/allList";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 
 const AllOneTimeClubListPage = () => {
   const { data: allOneTimeClubList, isLoading, isError } = useEggPopAllList();

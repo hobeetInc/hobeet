@@ -1,6 +1,6 @@
 "use client";
 
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";

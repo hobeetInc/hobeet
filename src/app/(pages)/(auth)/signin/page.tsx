@@ -1,7 +1,7 @@
 "use client";
 
-import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
+import Text from "@/components/ui/atoms/text/Text";
 import browserClient from "@/utils/supabase/client";
 import Image from "next/image";
 import Link from "next/link";

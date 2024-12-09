@@ -1,5 +1,5 @@
 "use client";
-import ApproveMemberTabBar from "@/components/uiComponents/molecules/navigation/ApproveMemberTapBar";
+import ApproveMemberTabBar from "@/components/ui/molecules/navigation/ApproveMemberTapBar";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { ReactNode, useState } from "react";
 import FloatingButton from "../../../../../../_components/FloatingButton";

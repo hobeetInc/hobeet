@@ -1,6 +1,6 @@
 "use client";
 
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { EggClubChattingRoom } from "@/types/features/chat/eggclubchat.types";
 import { cn } from "@/utils/cn/util";
 import { createClient } from "@/utils/supabase/client";

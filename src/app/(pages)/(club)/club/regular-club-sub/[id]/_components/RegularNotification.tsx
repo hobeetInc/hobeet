@@ -1,6 +1,6 @@
 "use client";
 
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import ClubCard from "./ClubCard";
 import { useClubStore } from "@/store/crewStore";
 

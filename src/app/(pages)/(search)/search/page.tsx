@@ -13,7 +13,7 @@ import { EggClubSearchResults, EggPopSearchResults } from "@/types/utils/search.
 import {
   HorizontalContentsListLargeEggClubSearch,
   HorizontalContentsListLargeEggPop
-} from "@/components/uiComponents/organisms/lists/HorizontalContentsListLarge";
+} from "@/components/ui/organisms/lists/HorizontalContentsListLarge";
 
 const SearchPage = () => {
   const router = useRouter();

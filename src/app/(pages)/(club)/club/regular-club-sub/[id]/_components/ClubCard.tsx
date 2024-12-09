@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
-import Text from "@/components/uiComponents/atoms/text/Text";
-import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
+import Tag from "@/components/ui/atoms/tags/Tag";
+import Text from "@/components/ui/atoms/text/Text";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
 import { EggDayWithEggDayMember } from "@/types/features/club/eggday.types";
 import { MemberInfo } from "@/types/features/user/user.types";
 import { useAuthStore } from "@/store/authStore";

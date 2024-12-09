@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
 import { GoPlus } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";

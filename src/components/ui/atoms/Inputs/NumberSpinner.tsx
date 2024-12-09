@@ -1,7 +1,7 @@
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { FaMinus, FaPlus } from "react-icons/fa";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 
 const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));

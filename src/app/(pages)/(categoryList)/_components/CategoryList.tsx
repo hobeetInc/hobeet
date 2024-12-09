@@ -1,7 +1,7 @@
 import { getCategoryList, getUserId } from "../_api/supabase";
 import { useQuery } from "@tanstack/react-query";
 
-import { VerticalContentsListLargeEggClub } from "@/components/uiComponents/organisms/lists/VerticalContentsListLarge";
+import { VerticalContentsListLargeEggClub } from "@/components/ui/organisms/lists/VerticalContentsListLarge";
 import Link from "next/link";
 import { queryKeys } from "@/hooks/utils/queryKeys";
 import { EggClubForm } from "@/types/features/commerce/cardlist.types";

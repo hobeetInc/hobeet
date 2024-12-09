@@ -2,7 +2,7 @@ import { ClubJoinError } from "@/utils/onetimeclubjoin/_api/supabase";
 import { oneTimeClubJoin } from "@/utils/onetimeclubjoin/join";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import { useAuthStore } from "@/store/authStore";
 
 interface JoinClubButtonProps {

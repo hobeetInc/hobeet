@@ -3,8 +3,8 @@
 import Image from "next/image";
 import FullScreenModal from "./FullScreenModal";
 import { useRouter } from "next/navigation";
-import Text from "@/components/uiComponents/atoms/text/Text";
-import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
+import Text from "@/components/ui/atoms/text/Text";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import { IoIosArrowForward } from "react-icons/io";
 import browserClient from "@/utils/supabase/client";
 import { MemberInfo } from "@/types/features/user/user.types";
