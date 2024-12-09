@@ -44,6 +44,7 @@ certificates
 # Sentry Config File
 .env.sentry-build-plugin
 
+.pnp.*
 .yarn/*
 !.yarn/cache
 !.yarn/patches
