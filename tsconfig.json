@@ -33,5 +33,5 @@
     "src/hooks/useClubWishlist.ts",
     "src/utils/throttle"
   ],
-  "exclude": ["node_modules", ".next"]
+  "exclude": [".next"]
 }
