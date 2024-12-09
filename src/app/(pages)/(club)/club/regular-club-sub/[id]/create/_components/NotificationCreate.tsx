@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { submitRegularMember } from "../../../../_api/supabase";
 import { useRouter, useSearchParams } from "next/navigation";
 import { EggDayFormWithImageFile } from "@/types/features/club/eggday.types";
-import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
+import { useThrottle } from "@/utils/throttle/throttleCreateClub";
 import { ChevronLeft } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";

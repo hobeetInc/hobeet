@@ -4,6 +4,7 @@ import ClubHeader from "./_components/ClubHeader";
 import HomeContent from "./_components/HomeContent";
 import RegularNotification from "./_components/RegularNotification";
 import { MemberInfo } from "@/types/features/user/user.types";
+import { StoreInitializer } from "./_components/StoreInitializer";
 
 const RegularTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   const regularClubId = Number(params.id);
@@ -14,11 +15,15 @@ const RegularTimeClubSubPage = async ({ params }: { params: { id: string } }) =>
     fetchSubCategories()
   ]);
 
+  if (!memberData?.length || !memberData[0]?.egg_club) {
+    return <div>Loading...</div>;
+  }
+
   // 클럽 정보만 추출
   const clubInfo = memberData[0]?.egg_club;
 
   // 일치하는 카테고리 찾기
-  const matchCategory = subCategories.find((category) => category.sub_category_id === clubInfo.sub_category_id);
+  const matchCategory = subCategories.find((category) => category.sub_category_id === clubInfo?.sub_category_id);
   const stringCategory = matchCategory?.sub_category_name;
 
   // 참여 크루 정보 추출
@@ -34,24 +39,21 @@ const RegularTimeClubSubPage = async ({ params }: { params: { id: string } }) =>
 
   return (
     <div className="mt-12">
-      <div className="fixed top-0 right-0 left-0 bg-white z-50">
-        <ClubHeader clubInfo={clubInfo} />
+      <StoreInitializer
+        clubInfo={clubInfo}
+        hostInfo={hostInfo}
+        crewMembers={crewMembers}
+        notificationData={notificationData}
+        stringCategory={stringCategory}
+      />
+
+      <div className="fixed top-0 right-0 left-0 bg-white z-10">
+        <ClubHeader />
       </div>
 
       <TabLayout>
-        <HomeContent
-          clubInfo={clubInfo}
-          hostInfo={hostInfo}
-          crewMembers={crewMembers}
-          egg_club_id={regularClubId}
-          notificationData={notificationData}
-          stringCategory={stringCategory}
-        />
-        <RegularNotification
-          notificationData={notificationData}
-          crewMembers={crewMembers}
-          egg_club_id={regularClubId}
-        />
+        <HomeContent />
+        <RegularNotification />
       </TabLayout>
     </div>
   );

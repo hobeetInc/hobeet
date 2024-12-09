@@ -1,7 +1,7 @@
 "use client";
 
-import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { useEffect } from "react";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 const ScreenSizeInitializer = () => {
   const setIsLargeScreen = useScreenSizeStore((state) => state.setIsLargeScreen);
   useEffect(() => {

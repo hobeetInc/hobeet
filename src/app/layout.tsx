@@ -2,7 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "@/components/providers/queryProvider";
 import { AuthProvider } from "@/store/AuthContext";
-import { Footer, Header } from "@/components/layout";
+import { FloatingButton, Footer, Header } from "@/components/layout";
 import { Metadata } from "next";
 import ScreenSizeInitializer from "@/components/uiComponents/responsiveDesign/ScreenSizeInitializer";
 
@@ -41,6 +41,7 @@ export default function RootLayout({
             <div className="flex flex-col h-full bg-white">
               <ScreenSizeInitializer />
               <Header>{children}</Header>
+              <FloatingButton />
               <Footer />
             </div>
           </Providers>

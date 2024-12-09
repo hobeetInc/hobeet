@@ -9,7 +9,8 @@ import {
   YellowEgg,
   Location,
   SearchIcon,
-  EmptySearchIcon
+  EmptySearchIcon,
+  EggSpeechBubble
 } from "./Icons";
 
 type IconType =
@@ -23,7 +24,8 @@ type IconType =
   | "locationIcon"
   | "location"
   | "searchIcon"
-  | "emptySearchIcon";
+  | "emptySearchIcon"
+  | "eggSpeechBubble";
 
 interface IconProps {
   name: IconType;
@@ -40,7 +42,8 @@ const ICON_MAP = {
   yellowEgg: YellowEgg,
   locationIcon: LocationIcon,
   searchIcon: SearchIcon,
-  emptySearchIcon:EmptySearchIcon
+  emptySearchIcon: EmptySearchIcon,
+  eggSpeechBubble: EggSpeechBubble
 } as const;
 
 export function Icon({ name }: IconProps) {
