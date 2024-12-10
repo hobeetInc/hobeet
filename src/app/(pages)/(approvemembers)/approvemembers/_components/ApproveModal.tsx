@@ -2,8 +2,8 @@
 import { useState } from "react";
 import ActiveMembersTab from "./ActiveMembers";
 import PendingRequestsTab from "./PendingRequestsTab";
-import ApproveMemberTabBar from "@/components/uiComponents/molecules/navigation/ApproveMemberTapBar";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import ApproveMemberTabBar from "@/components/ui/molecules/navigation/ApproveMemberTapBar";
+import Text from "@/components/ui/atoms/text/Text";
 import { IoClose } from "react-icons/io5";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { approveMember, fetchPendingAndActiveRequests } from "../_api/approve.api";
