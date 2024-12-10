@@ -24,7 +24,7 @@ export const BigVerticalContentsEggPopList = ({ eggPop, hostName, hostImage, mem
   };
 
   // 날짜와 시간 분리
-  const formattedDateTime = formatDateTime(eggPop.egg_pop_date);
+  const formattedDateTime = formatDateTime(eggPop.egg_pop_date_time);
 
   return (
     <div className="w-[228px] h-[383px] flex-col justify-start items-start gap-3 inline-flex">
