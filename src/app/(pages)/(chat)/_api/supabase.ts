@@ -2,7 +2,6 @@ import { createClient } from "@/utils/supabase/client";
 
 export async function ChatRoomExit(egg_day_chatting_id: number, clubCheck: boolean) {
   const supabase = createClient();
-  console.log(egg_day_chatting_id);
 
   if (!clubCheck) {
     try {

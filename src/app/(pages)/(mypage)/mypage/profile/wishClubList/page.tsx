@@ -3,14 +3,15 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { WishHeart } from "@/components/uiComponents/IconComponents/Icons";
-import { HeartImage } from "@/components/uiComponents/HeartImage";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
+import { WishHeart } from "@/components/ui/atoms/icons/Icons";
+
+import Text from "@/components/ui/atoms/text/Text";
+import Tag from "@/components/ui/atoms/tags/Tag";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
-import { useWishlist } from "@/hooks/useMyWishlist";
+import { useWishlist } from "@/hooks/utils/features/wishlist/useMyWishlist";
+import { HeartImage } from "@/components/ui/molecules/Images/HeartImage";
 
 const WishClubListPage = () => {
   const router = useRouter();

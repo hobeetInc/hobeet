@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { AddressData, DaumPostcodeData } from "@/types/address.types";
-import { EggPopProps } from "@/types/eggpop.types";
-import ClubCreateInput from "@/components/uiComponents/Input/ClubCreateInput";
-import SearchInput from "@/components/uiComponents/Input/SearchInput";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import { AddressData, DaumPostcodeData } from "@/types/features/location/address.types";
+import { EggPopProps } from "@/types/features/club/eggpop.types";
+import ClubCreateInput from "@/components/ui/atoms/Inputs/ClubCreateInput";
+import SearchInput from "@/components/ui/atoms/Inputs/SearchInput";
+import Text from "@/components/ui/atoms/text/Text";
 
 const AddressSearch = ({ formData, setFormData }: EggPopProps) => {
   const [addressData, setAddressData] = useState<AddressData>({

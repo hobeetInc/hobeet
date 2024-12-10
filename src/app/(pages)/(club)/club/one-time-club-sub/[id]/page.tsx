@@ -2,10 +2,10 @@ import Image from "next/image";
 import { getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import PopHeader from "./_components/PopHeader";
-import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
-import { MemberInfo } from "@/types/user.types";
+import { ProfileImageLarge } from "@/components/ui/molecules/Images/ProfileImageLarge";
+import Text from "@/components/ui/atoms/text/Text";
+import Tag from "@/components/ui/atoms/tags/Tag";
+import { MemberInfo } from "@/types/features/user/user.types";
 import {
   formatterAge,
   formatterDate,
@@ -34,8 +34,8 @@ const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex w-full h-[48px] fixed top-0 right-0 left-0 z-50 bg-white">
+    <div className="flex flex-col items-center justify-center mb-[166px]">
+      <div className="flex w-full h-[48px] fixed top-0 right-0 left-0 z-10 bg-white">
         <PopHeader clubInfo={clubInfo} />
       </div>
 
@@ -51,8 +51,6 @@ const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
 
       <div className="w-full flex-col justify-start items-start gap-8 px-4 inline-flex">
         <div className="self-stretch flex-col justify-start items-start gap-5 flex">
-          {/* 여기  */}
-
           <div className="self-stretch flex-col justify-start items-start gap-1 flex">
             <Tag tagName="eggpop" />
             <div className="self-stretch justify-start items-center gap-1.5 inline-flex">

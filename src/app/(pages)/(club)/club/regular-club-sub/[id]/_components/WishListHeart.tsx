@@ -1,19 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useAuth } from "@/store/AuthContext";
 import { useRouter } from "next/navigation";
-import { useClubWishlist } from "@/hooks/utils/list/useClubWishlist";
+import { useAuthStore } from "@/store/authStore";
+import { useClubWishlist } from "@/hooks";
 
 interface WishListHeartProps {
   egg_club_id: number;
 }
 
 const WishListHeart = ({ egg_club_id }: WishListHeartProps) => {
-  const { userId } = useAuth();
+  const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
-
-  console.log("유저아이디", userId);
 
   const { isWished, isLoading, addWishlist, removeWishlist } = useClubWishlist({ egg_club_id });
 

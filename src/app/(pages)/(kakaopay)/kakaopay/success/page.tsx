@@ -4,15 +4,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/store/AuthContext";
-import { useKakaopayRequest } from "@/hooks/useKakaopayRequest";
+import { useKakaopayRequest } from "@/hooks/utils/api/useKakaopayRequest";
 import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
 import { CustomAddress } from "@/utils/CustomAddress";
-import { EggPopPay, EggClubPay, EggPopDataNoTax, EggClubDataNoTax } from "@/types/payment.types";
+import { EggPopPay, EggClubPay, EggPopDataNoTax, EggClubDataNoTax } from "@/types/features/commerce/payment.types";
 import { approvePayment, fetchOrderData } from "../_api/kakaoPayment";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
-import { Icon } from "@/components/uiComponents/IconComponents/Icon";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
+import Text from "@/components/ui/atoms/text/Text";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
+import Tag from "@/components/ui/atoms/tags/Tag";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 
 const PaymentSuccessPage = () => {

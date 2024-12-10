@@ -89,7 +89,6 @@ export class SupabaseClubAPI {
       user_id: userId
     });
 
-    await enterOneTimeChatRoom({ egg_pop_id: Number(clubId) });
     if (error) {
       throw new ClubJoinError("모임 가입 처리 중 오류가 발생했습니다.");
     }

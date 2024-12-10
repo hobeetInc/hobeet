@@ -5,7 +5,7 @@ import Image from "next/image";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { CustomDate } from "@/utils/CustomDate";
 import { useEggPopAllList } from "@/hooks/utils/list/allList";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/ui/atoms/text/Text";
 
 const AllOneTimeClubListPage = () => {
   const { data: allOneTimeClubList, isLoading, isError } = useEggPopAllList();
@@ -47,19 +47,7 @@ const AllOneTimeClubListPage = () => {
                   <p className="font-pretendard text-[10px] not-italic leading-[14.5px] font-normal">에그팝</p>
                 </div>
                 <div className="w-[160px]">
-                  <p
-                    className="font-pretendard text-[14px] font-[600] overflow-hidden text-overflow-ellipsis"
-                    style={
-                      {
-                        display: "-webkit-box",
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 2,
-                        alignSelf: "stretch",
-                        color: "var(--Gray-scale-900, #0D0D0D)",
-                        lineHeight: "135%"
-                      } as React.CSSProperties
-                    }
-                  >
+                  <p className="text-[14px] leading-[18.9px] font-[600] overflow-hidden text-overflow-ellipsis line-clamp-1 max-w-[250px]">
                     {club.egg_pop_name}
                   </p>
                 </div>

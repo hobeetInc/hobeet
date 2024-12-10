@@ -1,6 +1,6 @@
-import { Suspense } from "react";
 import RegularContent from "./RegularContent";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/ui/atoms/text/Text";
+import { Suspense } from "react";
 
 const RegularPage = () => {
   return (

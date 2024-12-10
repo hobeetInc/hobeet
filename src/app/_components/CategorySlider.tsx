@@ -1,9 +1,11 @@
 "use client";
-import { Category } from "@/types/category.types";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { cn } from "@/utils/cn/util";
+import { Category } from "@/types/utils/category.types";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 const categories: Category[] = [
   { id: 0, name: "에그팝", icon: "/asset/Category/Category icon_voltage.png", alt: "eggpop" },
@@ -17,16 +19,15 @@ const categories: Category[] = [
 
 const CategorySlider = () => {
   const router = useRouter();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const handleCategory = (categoryId: number) => {
     router.push(`/category/${categoryId}`);
   };
 
   return (
-    <div
-      className={cn("relative w-full max-w-full mx-auto px-4 mt-4 overflow-x-auto scrollbar-hide whitespace-nowrap")}
-    >
-      <div className={cn("flex items-center space-x-4")}>
+    <div className={cn("w-full mt-4 overflow-x-auto scrollbar-hide whitespace-nowrap")}>
+      <div className={`flex justify-first items-center px-4 ${isLargeScreen ? "gap-6 w-[985px]" : "gap-4 w-[600px]"}`}>
         {categories.map((category) => (
           <button
             key={category.id}
@@ -41,6 +42,7 @@ const CategorySlider = () => {
             </div>
           </button>
         ))}
+        <div className="w-4 h-full bg-yellow-200" />
       </div>
     </div>
   );

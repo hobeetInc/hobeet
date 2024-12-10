@@ -1,8 +1,8 @@
-import { EggClub } from "@/types/cardlist.types";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { EggClub } from "@/types/features/club/eggclub.types";
 
 const supabase = createClient();
 

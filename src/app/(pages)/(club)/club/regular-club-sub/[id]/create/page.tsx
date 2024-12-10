@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import NotificationCreate from "./_components/NotificationCreate";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/ui/atoms/text/Text";
 
 const RegularClubNotificationCreatePage = ({ params }: { params: { id: string } }) => {
   return (

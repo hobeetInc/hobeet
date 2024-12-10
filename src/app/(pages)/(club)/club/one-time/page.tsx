@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import OneTimeContent from "./_components/OneTimeContent";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/ui/atoms/text/Text";
 
 const OnePage = () => {
   return (

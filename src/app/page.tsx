@@ -2,20 +2,28 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { ONETIME_CLUB_CREATE, REGULAR_CLUB_CREATE } from "./(pages)/(club)/club/_utils/localStorage";
+import {
+  NOTIFICATION_CREATE,
+  ONETIME_CLUB_CREATE,
+  REGULAR_CLUB_CREATE
+} from "./(pages)/(club)/club/_utils/localStorage";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/ui/atoms/text/Text";
 
 import OneTimeClubList from "./_components/OneTimeClubList";
 import RegularClubList from "./_components/RegularClubList";
 import CategorySlider from "./_components/CategorySlider";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 export default function Home() {
   const router = useRouter();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   useEffect(() => {
     localStorage.removeItem(ONETIME_CLUB_CREATE);
     localStorage.removeItem(REGULAR_CLUB_CREATE);
+    localStorage.removeItem(NOTIFICATION_CREATE);
+
     localStorage.removeItem("justCreated");
     localStorage.removeItem("fromKakaoPay");
   }, []);
@@ -23,16 +31,35 @@ export default function Home() {
   return (
     <div className="w-full ">
       <div className="flex mx-4 justify-center items-center mt-2">
-        <div className="w-[358px] flex-shrink-0 rounded-[12px] bg-[#d9d9d9] overflow-hidden ">
-          <Image
-            src={"/asset/Banner/banner.svg"}
-            alt="MainBanner"
-            width={358}
-            height={296}
-            className="w-[358px] h-[296px] object-cover"
-            priority
-          />
-        </div>
+        {isLargeScreen ? (
+          <div className="w-[984px] flex-shrink-0 rounded-[12px] bg-[#d9d9d9] overflow-hidden ">
+            <Image
+              src={"/asset/Banner/bigBanner.svg"}
+              alt="MainBigBanner"
+              width={984}
+              height={436}
+              className="w-[984px] h-[436px] object-cover"
+              priority
+              loading="eager"
+              fetchPriority="high"
+              sizes="984px"
+            />
+          </div>
+        ) : (
+          <div className="w-[358px] flex-shrink-0 rounded-[12px] bg-[#d9d9d9] overflow-hidden ">
+            <Image
+              src={"/asset/Banner/banner.svg"}
+              alt="MainBanner"
+              width={358}
+              height={296}
+              className="w-[358px] h-[296px] object-cover"
+              priority
+              loading="eager"
+              fetchPriority="high"
+              sizes="358px"
+            />
+          </div>
+        )}
       </div>
       <div className="flex flex-col items-start gap-[8px]">
         <Text variant="subtitle-18" className="mt-[32px] ml-[16px]">
@@ -48,7 +75,7 @@ export default function Home() {
       </div>
       <OneTimeClubList />
       <div className="relative flex justify-center mx-4 mt-16">
-        <div className="relative w-full ">
+        <div className="relative w-full">
           <Image
             width={358}
             height={173}

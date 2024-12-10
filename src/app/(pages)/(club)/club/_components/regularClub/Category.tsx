@@ -2,9 +2,9 @@
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { fetchMainCategories, fetchSubCategories } from "../../_api/supabase";
-import { MainCategory, SubCategory } from "@/types/category.types";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { EggClubProps } from "@/types/eggclub.types";
+import { MainCategory, SubCategory } from "@/types/utils/category.types";
+import Text from "@/components/ui/atoms/text/Text";
+import { EggClubProps } from "@/types/features/club/eggclub.types";
 
 const Category = ({ formData, setFormData }: EggClubProps) => {
   const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);
@@ -58,7 +58,7 @@ const Category = ({ formData, setFormData }: EggClubProps) => {
       <Text variant="header-18" className="flex items-center mb-6 h-11">
         어떤 주제로 시작해볼까요?
       </Text>
-      <div className="flex flex-col gap-2 h-[400px] overflow-y-auto scrollbar-hide">
+      <div className="flex flex-col gap-2 h-[562px] overflow-y-auto scrollbar-hide">
         {mainCategories?.map((main) => (
           <div
             key={main.main_category_id}

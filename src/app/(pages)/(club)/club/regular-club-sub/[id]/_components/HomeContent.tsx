@@ -1,34 +1,23 @@
+"use client";
 import Image from "next/image";
 import CrewList from "./CrewList";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { ProfileImageLarge } from "@/components/uiComponents/ProfileImageLarge";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
+import Text from "@/components/ui/atoms/text/Text";
+import { ProfileImageLarge } from "@/components/ui/molecules/Images/ProfileImageLarge";
+import Tag from "@/components/ui/atoms/tags/Tag";
 import WishListHeart from "./WishListHeart";
-import { EggClub } from "@/types/cardlist.types";
-import { MemberInfo } from "@/types/user.types";
-import { EggDayWithEggDayMember } from "@/types/eggday.types";
 import { formatterAge, formatterGender, formatterPeopleLimit } from "../../../_utils/formatter";
+import { useClubStore } from "@/store/crewStore";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
-interface HomeContentProps {
-  clubInfo: EggClub;
-  hostInfo: MemberInfo | undefined;
-  crewMembers: MemberInfo[];
-  egg_club_id: number;
-  notificationData: EggDayWithEggDayMember[];
-  stringCategory: string | undefined;
-}
+const HomeContent = () => {
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
+  const { clubInfo, stringCategory, hostInfo, crewMembers } = useClubStore();
 
-const HomeContent = ({
-  clubInfo,
-  hostInfo,
-  crewMembers,
-  egg_club_id,
-  notificationData,
-  stringCategory
-}: HomeContentProps) => {
+  if (!clubInfo) return null;
+
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6">
+    <div className={`flex flex-col items-center justify-center ${isLargeScreen ? "mb-[126px]" : ""}`}>
+      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100">
         <Image
           src={clubInfo.egg_club_image}
           alt={clubInfo.egg_club_name}
@@ -52,13 +41,21 @@ const HomeContent = ({
                 <WishListHeart egg_club_id={clubInfo.egg_club_id} />
               </div>
             </div>
+            <Text variant="body_medium-14" className="text-gray-400">
+              멤버 {crewMembers.length}/100
+            </Text>
           </div>
-          <div className="w-[252px] justify-start items-center gap-3 inline-flex">
-            <ProfileImageLarge image={hostInfo?.userImage} />
-            <div className="w-[133px] flex-col justify-start items-start gap-1 inline-flex">
-              <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                <Text variant="subtitle-16">{hostInfo?.userName}</Text>
-                <Tag tagName="eggmaster" variant="black" />
+          <div>
+            <Text variant="subtitle-18" className="text-gray-900 mb-4">
+              이 모임의 호스트
+            </Text>
+            <div className="w-[252px] justify-start items-center gap-3 inline-flex">
+              <ProfileImageLarge image={hostInfo?.userImage} />
+              <div className="w-[133px] flex-col justify-start items-start gap-1 inline-flex">
+                <div className="self-stretch justify-start items-center gap-2 inline-flex">
+                  <Text variant="subtitle-16">{hostInfo?.userName}</Text>
+                  <Tag tagName="eggmaster" variant="black" />
+                </div>
               </div>
             </div>
           </div>
@@ -101,12 +98,7 @@ const HomeContent = ({
 
         <div className="self-stretch h-[0px] border border-solid border-gray-50"></div>
 
-        <CrewList
-          crewMembers={crewMembers}
-          clubId={egg_club_id}
-          clubHostId={clubInfo.user_id}
-          notificationData={notificationData}
-        />
+        <CrewList />
       </div>
     </div>
   );

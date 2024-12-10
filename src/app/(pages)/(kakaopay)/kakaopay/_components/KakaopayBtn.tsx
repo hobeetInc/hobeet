@@ -1,6 +1,6 @@
 "use client";
 
-import Text from "@/components/uiComponents/TextComponents/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { useAuthStore } from "@/store/authStore";
 interface PaymentButtonProps {
   clubType: boolean;

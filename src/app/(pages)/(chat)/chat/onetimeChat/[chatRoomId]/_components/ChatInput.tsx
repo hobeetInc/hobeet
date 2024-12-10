@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { Icon } from "@/components/uiComponents/IconComponents/Icon";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
 import { cn } from "@/utils/cn/util";
 
 interface ChatInputProps {
@@ -22,7 +22,7 @@ const ChatInput = ({ newMessage, setNewMessage, handleSendMessage }: ChatInputPr
   }, [newMessage]);
 
   return (
-    <div className={cn("fixed bottom-0 left-0 right-0 bg-white border-t")}>
+    <div className={cn("fixed bottom-0 left-0 right-0 bg-white border-t ")}>
       <div className={cn("p-2")}>
         <div className={cn("flex items-center")}>
           <textarea

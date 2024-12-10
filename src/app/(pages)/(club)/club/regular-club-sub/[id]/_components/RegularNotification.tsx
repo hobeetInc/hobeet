@@ -1,15 +1,12 @@
-import Text from "@/components/uiComponents/TextComponents/Text";
+"use client";
+
+import Text from "@/components/ui/atoms/text/Text";
 import ClubCard from "./ClubCard";
-import { EggDayWithEggDayMember } from "@/types/eggday.types";
-import { MemberInfo } from "@/types/user.types";
+import { useClubStore } from "@/store/crewStore";
 
-interface EggClubNotificationProps {
-  notificationData: EggDayWithEggDayMember[];
-  crewMembers: MemberInfo[];
-  egg_club_id: number;
-}
+const RegularNotification = () => {
+  const { notificationData, crewMembers } = useClubStore();
 
-const RegularNotification = ({ notificationData, crewMembers }: EggClubNotificationProps) => {
   return (
     <div className="w-full">
       <div className="h-9 px-4 py-2 justify-start items-center gap-2.5 inline-flex">

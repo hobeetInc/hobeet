@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, Menu } from "lucide-react";
 import { ChatProvider, useChatContext } from "./_components/ChatContext";
 import { cn } from "@/utils/cn/util";
-import { EggPopChattingMemberInfo, LayoutProps } from "@/types/eggpopchat.types";
 import { IoCloseOutline } from "react-icons/io5";
 import Image from "next/image";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import Tag from "@/components/uiComponents/TagComponents/Tag";
+import Text from "@/components/ui/atoms/text/Text";
+import Tag from "@/components/ui/atoms/tags/Tag";
 import { fetchChatRoomMembers } from "@/app/(pages)/(chat)/_api/onetime";
 import { ChatRoomExit } from "../../../_api/supabase";
 import { useAuthStore } from "@/store/authStore";
+import { EggPopChattingMemberInfo, LayoutProps } from "@/types/features/chat/eggpopchat.types";
 
 function ChatHeader() {
   const { roomName, isLoading, egg_pop_chatting_room_member_id, egg_pop_id } = useChatContext();
@@ -64,7 +64,7 @@ function ChatHeader() {
         </button>
 
         <Text variant="header-16" className="text-gray-900">
-          {isLoading ? "로딩중..." : roomName}
+          {isLoading ? "로딩중..." : roomName?.length > 20 ? `${roomName.slice(0, 20)}...` : roomName}
         </Text>
 
         <button onClick={() => setIsModalOpen(true)} className="p-2">

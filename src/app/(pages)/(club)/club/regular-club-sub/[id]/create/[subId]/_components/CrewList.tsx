@@ -3,16 +3,19 @@
 import Image from "next/image";
 import FullScreenModal from "./FullScreenModal";
 import { useRouter } from "next/navigation";
-import { EggDay } from "@/types/eggday.types";
-import Text from "@/components/uiComponents/TextComponents/Text";
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import Text from "@/components/ui/atoms/text/Text";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import { IoIosArrowForward } from "react-icons/io";
 import browserClient from "@/utils/supabase/client";
-import { MemberInfo } from "@/types/user.types";
+import { MemberInfo } from "@/types/features/user/user.types";
 import { useState } from "react";
 import { submitRegularMember } from "@/app/(pages)/(club)/club/_api/notifications";
 import { useEggDayCrewList } from "@/hooks/utils/list/crewList";
 import { useAuthStore } from "@/store/authStore";
+import { EggDay } from "@/types/features/club/eggday.types";
+import { cn } from "@/utils/cn/util";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import FloatingButton from "@/app/_components/FloatingButton";
 
 interface CrewListProps {
   crewMembers: MemberInfo[];
@@ -26,6 +29,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const { data: crewList = initialCrewMembers, isLoading, isError } = useEggDayCrewList(secondId);
 
@@ -68,19 +72,20 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
     }
   };
 
-  const handleAlertLogin = () => {
-    alert("로그인 후 이용 가능한 서비스입니다");
-    return;
-  };
-
   const renderJoinButton = () => {
     if (userId === clubHostId) {
       return (
         <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
-          <Text variant="subtitle-16" className="w-[50%]">
-            내가 만든 에그데이에요
+          <Text variant="subtitle-16" className={cn(isLargeScreen ? "" : "w-[50%]")}>
+            참여 중인 에그데이에요
           </Text>
-          <Button colorType="yellow" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
+          <Button
+            colorType="yellow"
+            borderType="circle"
+            sizeType="small"
+            className={cn(isLargeScreen ? "w-[732px]" : "w-[50%]")}
+            onClick={handleChatClick}
+          >
             에그클럽 채팅방
           </Button>
         </div>
@@ -92,28 +97,24 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
     if (isAlreadyJoined) {
       return (
         <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
-          <Text variant="subtitle-16" className="w-[50%]">
+          <Text variant="subtitle-16" className={cn(isLargeScreen ? "" : "w-[50%]")}>
             참여 중인 에그데이에요
           </Text>
-          <Button colorType="yellow" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
+          <Button
+            colorType="yellow"
+            borderType="circle"
+            sizeType="small"
+            className={cn(isLargeScreen ? "w-[732px]" : "w-[50%]")}
+            onClick={handleChatClick}
+          >
             에그클럽 채팅방
           </Button>
         </div>
       );
     }
 
-    if (!userId) {
-      return (
-        <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50">
-          <Button onClick={handleAlertLogin} colorType="black" borderType="circle">
-            참여하기
-          </Button>
-        </div>
-      );
-    }
-
     return (
-      <div className="w-full h-20 bg-white flex justify-center items-center">
+      <div className="w-full h-20 bg-white flex justify-center items-center px-4">
         <Button
           colorType="yellow"
           borderType="circle"
@@ -162,6 +163,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
         <div className="w-full  fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
+      {isLargeScreen && <FloatingButton />}
     </>
   );
 };

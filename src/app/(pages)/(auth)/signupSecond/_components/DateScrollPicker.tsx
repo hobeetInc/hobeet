@@ -1,4 +1,4 @@
-import { Button } from "@/components/uiComponents/Button/ButtonCom";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import React, { useState, useRef } from "react";
 
 const DateScrollPicker = ({ values, selectedValue, onSelect, suffix = "", onClose }) => {
