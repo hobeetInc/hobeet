@@ -31,35 +31,33 @@ export default function Home() {
   return (
     <div className="w-full ">
       <div className="flex mx-4 justify-center items-center mt-2">
-        {isLargeScreen ? (
-          <div className="w-[984px] flex-shrink-0 rounded-[12px] bg-[#d9d9d9] overflow-hidden ">
-            <Image
-              src={"/asset/Banner/bigBanner.svg"}
-              alt="MainBigBanner"
-              width={984}
-              height={436}
-              className="w-[984px] h-[436px] object-cover"
-              priority
-              loading="eager"
-              fetchPriority="high"
-              sizes="984px"
-            />
-          </div>
-        ) : (
-          <div className="w-[358px] flex-shrink-0 rounded-[12px] bg-[#d9d9d9] overflow-hidden ">
-            <Image
-              src={"/asset/Banner/banner.svg"}
-              alt="MainBanner"
-              width={358}
-              height={296}
-              className="w-[358px] h-[296px] object-cover"
-              priority
-              loading="eager"
-              fetchPriority="high"
-              sizes="358px"
-            />
-          </div>
-        )}
+        <div className="relative w-full max-w-[984px] flex-shrink-0 rounded-[12px] bg-[#d9d9d9] overflow-hidden">
+          <Image
+            src={"/asset/Banner/banner1.svg"}
+            alt="MainBigBanner"
+            width={984}
+            height={436}
+            className="w-full h-auto object-cover"
+            priority
+            loading="eager"
+            fetchPriority="high"
+            sizes="984px"
+          />
+          <Text
+            variant="subtitle-18"
+            className="absolute inset-0 flex justify-start items-center mt-[40px] ml-[14px] mb-9"
+          >
+            Christmas with Cat 🐈
+          </Text>
+          <Text
+            variant="body-16"
+            className="absolute inset-0 flex justify-start items-center mt-[113px] ml-[14px] mb-8"
+          >
+            크리스마스에 고양이 집사들 모여요!
+            <br />
+            함께 캣 카페에서 모임 가질까요?
+          </Text>
+        </div>
       </div>
       <div className="flex flex-col items-start gap-[8px]">
         <Text variant="subtitle-18" className="mt-[32px] ml-[16px]">
@@ -75,27 +73,27 @@ export default function Home() {
       </div>
       <OneTimeClubList />
       <div className="relative flex justify-center mx-4 mt-16">
-        <div className="relative w-full">
+        <div className="relative w-full max-w-[984px] mx-auto">
           <Image
-            width={358}
-            height={173}
-            src="/asset/Banner/Rectangle 20.png"
+            width={984}
+            height={473}
+            src="/asset/Banner/banner2.svg"
             alt="Rectangle 20"
-            className="w-full h-auto"
+            className="w-full h-auto object-cover rounded-[12px]"
           />
           <Text
             variant="subtitle-18"
             className="absolute inset-0 flex justify-start items-center mt-[40px] ml-[14px] mb-9 text-white"
           >
-            Night Run🏃🏻‍♂
+            Winter Camping🏕️
           </Text>
           <Text
             variant="body-16"
             className="absolute inset-0 flex justify-start items-center mt-[113px] ml-[14px] mb-8 text-white"
           >
-            쌀쌀한 가을
+            추운 겨울이 오고 있어요
             <br />
-            한강 밤러닝 함께 달리러 가요
+            함께 캠핑을 떠나보는 건 어때요?
           </Text>
         </div>
       </div>
@@ -108,24 +106,25 @@ export default function Home() {
       <RegularClubList />
 
       <div className="flex mx-4 justify-center items-center">
-        <div className="w-full  justify-center	 flex flex-shrink-0  overflow-hidden mt-[64px] mx-4">
+        <div className="w-full max-w-[984px] justify-center flex flex-shrink-0  overflow-hidden mt-[64px] mx-4">
           <Image
-            width={358}
-            height={226}
-            src="/asset/Banner/Frame 2307.png"
+            width={984}
+            height={620}
+            src="/asset/Banner/banner3.svg"
             alt="Frame 2307"
-            className="object-cover w-full "
+            className="object-cover w-full rounded-[12px]"
           />
         </div>
       </div>
 
       <div className="w-full">
         <Text variant="subtitle-18" className="mt-[20px] mx-4">
-          가을 감성 충전! 지금 가기 좋은 여행지 5곳 🍂
+          겨울이 왔다! 인기 스키장 추천 TOP 5 ⛷️
         </Text>
       </div>
       <Text variant="body-14" className="mt-[8px] mx-4 mb-7  text-ellipsis">
-        조금 쌀쌀해진 날씨를 따라 울긋불긋하게 물든 단풍구경을 떠나보는 건 어때요? 가을에 가볼만한 곳들을 소개할게요!
+        하얀 설원에서 즐기는 짜릿한 겨울 스포츠! 올해는 어떤 스키장에서 추억을 만들어볼까요? 강력 추천 스키장을
+        소개할게요!
       </Text>
     </div>
   );

@@ -34,7 +34,7 @@ const RegularClubList = () => {
       <div className={`${isLargeScreen ? "w-[984px] h-[364px]" : "overflow-x-auto scrollbar-hide h-[320px]"}`}>
         <div
           className={`${
-            isLargeScreen ? "flex justify-between items-start gap-6" : "inline-flex items-center px-4 pt-4"
+            isLargeScreen ? "flex justify-between items-start gap-6 mt-5" : "inline-flex items-center px-4 pt-4"
           }`}
         >
           {displayedList?.map((club) => (
