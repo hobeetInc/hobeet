@@ -6,8 +6,11 @@ import { EggPopProps } from "@/types/features/club/eggpop.types";
 import ClubCreateInput from "@/components/ui/atoms/Inputs/ClubCreateInput";
 import SearchInput from "@/components/ui/atoms/Inputs/SearchInput";
 import Text from "@/components/ui/atoms/text/Text";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import { cn } from "@/utils/cn/util";
 
 const AddressSearch = ({ formData, setFormData }: EggPopProps) => {
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const [addressData, setAddressData] = useState<AddressData>({
     zonecode: "",
     address: "",
@@ -129,6 +132,7 @@ const AddressSearch = ({ formData, setFormData }: EggPopProps) => {
           value={addressData.detailAddress}
           onChange={handleDetailAddressChange}
           placeholder="상세주소를 입력해주세요(선택)"
+          className={cn(isLargeScreen ? "mb-[500px]" : "")}
         />
       </div>
     </div>
