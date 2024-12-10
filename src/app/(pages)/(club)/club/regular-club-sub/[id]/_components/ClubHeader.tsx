@@ -71,6 +71,8 @@ const ClubHeader = () => {
 
   console.log("이태연", clubInfo);
 
+  if (!clubInfo) return null;
+
   return (
     <div className="flex justify-between items-center h-[48px] p-3">
       <button onClick={handleBack} className="w-6 h-6">

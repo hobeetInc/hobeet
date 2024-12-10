@@ -37,6 +37,8 @@ const RegularTimeClubSubPage = async ({ params }: { params: { id: string } }) =>
   // 호스트 정보 추출
   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
+  if (!clubInfo) return null;
+
   return (
     <div className="mt-12">
       <StoreInitializer
