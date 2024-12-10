@@ -5,12 +5,14 @@ import { fetchMainCategories, fetchSubCategories } from "../../_api/supabase";
 import Text from "@/components/ui/atoms/text/Text";
 import { EggPopProps } from "@/types/features/club/eggpop.types";
 import { MainCategory, SubCategory } from "@/types/utils/category.types";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 const Category = ({ formData, setFormData }: EggPopProps) => {
   const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [openCategoryId, setOpenCategoryId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,12 +60,18 @@ const Category = ({ formData, setFormData }: EggPopProps) => {
       <Text variant="header-18" className="flex items-center mb-6 h-11">
         어떤 주제로 시작해볼까요?
       </Text>
-      <div className="flex flex-col gap-2 h-[562px] overflow-y-auto scrollbar-hide">
+      <div
+        className={`flex flex-col gap-[6px] ${
+          isLargeScreen ? "h-[570px]" : "h-[562px]"
+        } overflow-y-auto scrollbar-hide`}
+      >
         {mainCategories?.map((main) => (
           <div
             key={main.main_category_id}
             onClick={() => handleCategoryToggle(main.main_category_id)}
-            className={`w-[358px] rounded-xl border border-solid border-[#d9d9d9] hover:cursor-pointer ${
+            className={`${
+              isLargeScreen ? "w-[632px] " : "w-[358px]"
+            } rounded-xl border border-solid border-[#d9d9d9] hover:cursor-pointer ${
               formData.main_category_id === 0
                 ? "bg-white"
                 : openCategoryId === main.main_category_id
@@ -107,7 +115,6 @@ const Category = ({ formData, setFormData }: EggPopProps) => {
                           : "text-gray-300"
                       }`}
                     >
-                      {" "}
                       {sub.sub_category_name}
                     </Text>
                   </div>

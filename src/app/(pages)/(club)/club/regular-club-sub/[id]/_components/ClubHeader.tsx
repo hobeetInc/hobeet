@@ -69,7 +69,7 @@ const ClubHeader = () => {
     router.push("/");
   };
 
-  console.log("이태연", clubInfo);
+  if (!clubInfo) return null;
 
   if (!clubInfo) return null;
 
@@ -78,10 +78,10 @@ const ClubHeader = () => {
       <button onClick={handleBack} className="w-6 h-6">
         <ChevronLeft className="w-full h-full" />
       </button>
-      <Text variant="header-16" className={`flex-1 text-center ${clubInfo.user_id === userId ? "" : "pr-5"}`}>
-        {clubInfo.egg_club_name.length > 20 ? `${clubInfo.egg_club_name.slice(0, 20)}...` : clubInfo.egg_club_name}
+      <Text variant="header-16" className={`flex-1 text-center ${clubInfo?.user_id === userId ? "" : "pr-5"}`}>
+        {clubInfo?.egg_club_name.length > 20 ? `${clubInfo?.egg_club_name.slice(0, 20)}...` : clubInfo?.egg_club_name}
       </Text>
-      {clubInfo.user_id === userId ? (
+      {clubInfo?.user_id === userId ? (
         <button onClick={handleCreate} className="w-6 h-6">
           <GoPlus className="w-full h-full" />
         </button>

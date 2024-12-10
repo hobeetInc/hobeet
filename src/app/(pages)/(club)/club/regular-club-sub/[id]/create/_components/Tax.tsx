@@ -1,12 +1,15 @@
 "use client";
 import ClubCreateInput from "@/components/ui/atoms/Inputs/ClubCreateInput";
 import Text from "@/components/ui/atoms/text/Text";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { EggDayProps } from "@/types/features/club/eggday.types";
+import { cn } from "@/utils/cn/util";
 import { useState } from "react";
 
 const Tax = ({ formData, setFormData }: EggDayProps) => {
   const [showTaxInput, setShowTaxInput] = useState<boolean>(false);
   const [inputError, setInputError] = useState<string>("");
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const handleTaxToggle = (hasTax: boolean) => {
     setShowTaxInput(hasTax);
@@ -59,7 +62,9 @@ const Tax = ({ formData, setFormData }: EggDayProps) => {
       <div className="flex justify-center gap-2">
         <button
           onClick={() => handleTaxToggle(true)}
-          className={`w-[173px] h-12 px-4 rounded-lg border  justify-center items-center gap-2.5 inline-flex  ${
+          className={`${
+            isLargeScreen ? "w-[322px]" : "w-[173px]"
+          } h-12 px-4 rounded-lg border  justify-center items-center gap-2.5 inline-flex  ${
             showTaxInput ? "bg-primary-300 border-primary-300" : "border-gray-100"
           } `}
         >
@@ -69,7 +74,9 @@ const Tax = ({ formData, setFormData }: EggDayProps) => {
         </button>
         <button
           onClick={() => handleTaxToggle(false)}
-          className={`w-[173px] h-12 px-4 rounded-lg border justify-center items-center gap-2.5 inline-flex  ${
+          className={`${
+            isLargeScreen ? "w-[322px]" : "w-[173px]"
+          } h-12 px-4 rounded-lg border justify-center items-center gap-2.5 inline-flex  ${
             !showTaxInput ? "bg-primary-300 border-primary-300" : "border-gray-100"
           } `}
         >
@@ -79,7 +86,7 @@ const Tax = ({ formData, setFormData }: EggDayProps) => {
         </button>
       </div>
 
-      <div className="fixed top-[181px]">
+      <div className={cn(isLargeScreen ? "mb-[550px]" : "fixed top-[181px]")}>
         {showTaxInput && (
           <div>
             <ClubCreateInput
@@ -89,7 +96,7 @@ const Tax = ({ formData, setFormData }: EggDayProps) => {
               placeholder="금액을 입력해주세요"
             />
 
-            <div className="mx-2">
+            <div className={cn(isLargeScreen ? "mx-2 -mb-[100px]" : "mx-2")}>
               {inputError && <div className="text-red-500 text-sm mt-1">{inputError}</div>}
 
               {formData.egg_day_tax !== null && formData.egg_day_tax > 0 && !inputError && (
