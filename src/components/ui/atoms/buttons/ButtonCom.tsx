@@ -20,7 +20,8 @@ const buttonVariants = cva(
       sizeType: {
         large: "w-full max-w-[358px]",
         small: "w-[174px] h-[50px]",
-        web: "w-[480px] h-[50px]"
+        web: "w-[480px] h-[50px]",
+        largeWeb: "w-full max-w-[656px] h-[50px]"
       }
     },
     defaultVariants: {

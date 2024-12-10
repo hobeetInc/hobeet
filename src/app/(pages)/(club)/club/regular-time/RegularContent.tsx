@@ -16,11 +16,15 @@ import { useAuthStore } from "@/store/authStore";
 import { useUploadImage } from "@/hooks/utils/api/useUploadImage";
 import { ChevronLeft } from "lucide-react";
 import { useThrottle } from "@/utils/throttle/throttleCreateClub";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import Modal from "@/components/ui/responsiveDesign/Modal";
+import { IoCloseOutline } from "react-icons/io5";
 
 const RegularContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const userId = useAuthStore((state) => state.userId);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const uploadClubImage = useUploadImage();
 
@@ -75,6 +79,15 @@ const RegularContent = () => {
   const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedAge);
   const [formData, setFormData] = useState<EggClubFormWithImageFile>(initialData.formData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (isLargeScreen) {
+      setIsModalOpen(true);
+    } else {
+      setIsModalOpen(false);
+    }
+  }, [isLargeScreen]);
 
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
@@ -230,28 +243,61 @@ const RegularContent = () => {
   };
 
   return (
-    <div className="relative flex flex-col justify-center items-center">
-      <div className="w-[390px] h-12 flex justify-start">
-        <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
-          <ChevronLeft className="w-6 h-6 cursor-pointer" />
-        </div>
-      </div>
+    <>
+      {isLargeScreen ? (
+        <Modal isOpen={isModalOpen}>
+          <div className="relative flex flex-col justify-center items-center">
+            <div className="w-full flex justify-between items-center p-3">
+              <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
+                <ChevronLeft className="w-6 h-6 cursor-pointer" />
+              </div>
+              <button onClick={() => router.push("/")} className="p-2">
+                <IoCloseOutline className="w-6 h-6" />
+              </button>
+            </div>
 
-      <div className="mx-4 flex flex-col">
-        <ProgressBar currentStep={step} totalSteps={3} />
-        <div>{renderStep()}</div>
-      </div>
-      <div className="fixed bottom-[50px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
-        <Button
-          onClick={throttledHandleNext}
-          disabled={isNextButtonDisabled()}
-          colorType={isNextButtonDisabled() ? undefined : "black"}
-          borderType="circle"
-        >
-          {step === 3 ? (isPending ? "생성 중..." : "모임 생성") : "다음"}
-        </Button>
-      </div>
-    </div>
+            <div className="w-full px-5 mx-4 flex flex-col">
+              <ProgressBar currentStep={step} totalSteps={3} />
+              <div>{renderStep()}</div>
+            </div>
+            <div className="w-full -mt-4 flex justify-center items-center">
+              <Button
+                onClick={throttledHandleNext}
+                disabled={isNextButtonDisabled()}
+                colorType={isNextButtonDisabled() ? undefined : "black"}
+                borderType="circle"
+                sizeType="largeWeb"
+              >
+                {step === 3 ? (isPending ? "생성 중..." : "모임 생성") : "다음"}
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      ) : (
+        <div className="relative flex flex-col justify-center items-center">
+          <div className="w-[390px] h-12 flex justify-start">
+            <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
+              <ChevronLeft className="w-6 h-6 cursor-pointer" />
+            </div>
+          </div>
+
+          <div className="mx-4 flex flex-col">
+            <ProgressBar currentStep={step} totalSteps={3} />
+            <div>{renderStep()}</div>
+          </div>
+          <div className="fixed bottom-[50px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
+            <Button
+              onClick={throttledHandleNext}
+              disabled={isNextButtonDisabled()}
+              colorType={isNextButtonDisabled() ? undefined : "black"}
+              borderType="circle"
+            >
+              {step === 3 ? (isPending ? "생성 중..." : "모임 생성") : "다음"}
+            </Button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

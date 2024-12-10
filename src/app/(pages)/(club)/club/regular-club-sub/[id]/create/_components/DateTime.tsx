@@ -8,6 +8,8 @@ import { ko } from "date-fns/locale";
 import Text from "@/components/ui/atoms/text/Text";
 import SearchInput from "@/components/ui/atoms/Inputs/SearchInput";
 import { EggDayProps } from "@/types/features/club/eggday.types";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import { cn } from "@/utils/cn/util";
 
 // 커스텀 스타일
 const customStyles = `
@@ -26,6 +28,7 @@ const customStyles = `
 const DateTime = ({ formData, setFormData }: EggDayProps) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<Date | null>(null);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const handleDateChange = (date: Date | null) => {
     setStartDate(date);
@@ -106,7 +109,11 @@ const DateTime = ({ formData, setFormData }: EggDayProps) => {
         <Text variant="header-18">몇 시에 만날까요?</Text>
 
         <label htmlFor="datePickerTime" className="cursor-pointer">
-          <SearchInput hasValue={!!startDate} onClear={handleClearTime}>
+          <SearchInput
+            hasValue={!!startDate}
+            onClear={handleClearTime}
+            className={cn(isLargeScreen ? "mb-[440px]" : "")}
+          >
             <DatePicker
               id="datePickerTime"
               selected={startTime}

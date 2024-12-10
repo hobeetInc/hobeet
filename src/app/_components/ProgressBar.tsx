@@ -1,3 +1,5 @@
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+
 type ProgressBarProps = {
   currentStep: number;
   totalSteps: number;
@@ -5,9 +7,9 @@ type ProgressBarProps = {
 
 const ProgressBar = ({ currentStep, totalSteps }: ProgressBarProps) => {
   const progress = (currentStep / totalSteps) * 100;
-
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   return (
-    <div className="w-full mb-9">
+    <div className={`w-full ${isLargeScreen ? "mb-10" : "mb-9"}`}>
       <div className="w-full h-1 bg-gray-200 rounded-full">
         <div
           className={`h-full rounded-full transition-all duration-300 ease-in-out ${
