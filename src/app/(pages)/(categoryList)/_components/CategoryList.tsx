@@ -5,6 +5,9 @@ import { VerticalContentsListLargeEggClub } from "@/components/ui/organisms/list
 import Link from "next/link";
 import { queryKeys } from "@/hooks/utils/queryKeys";
 import { EggClubForm } from "@/types/features/commerce/cardlist.types";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import { BigVerticalContentsEggClubList } from "@/components/ui/organisms/lists/BigVerticalContentsList";
+import Text from "@/components/ui/atoms/text/Text";
 
 // 카테고리 리스트 props
 interface CategoryListProps {
@@ -13,6 +16,8 @@ interface CategoryListProps {
 }
 
 const CategoryList = ({ categoryId, selectedCategory }: CategoryListProps) => {
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
+
   const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.categoryList.list(categoryId, selectedCategory),
     queryFn: () => getCategoryList(categoryId, selectedCategory),
@@ -38,29 +43,46 @@ const CategoryList = ({ categoryId, selectedCategory }: CategoryListProps) => {
   };
 
   return (
-    <>
+    <div className={`${isLargeScreen ? "px-5" : "px-4"}`}>
       <div>
-        <div className="flex py-2 px-4 gap-[10px] mt-[28px]">
-          <p className="text-[14px] font-[500px] leading-[145%]">전체 {data?.length}</p>
+        <div className="flex py-2 gap-[10px] mt-[28px]">
+          <Text variant="body_medium-14">전체 {data?.length}</Text>
         </div>
       </div>
-      <div className="w-[390px] grid-cols-2 grid place-items-center px-4 pt-4 gap-2 mb-5">
+      <div
+        className={` ${
+          isLargeScreen
+            ? "w-full flex flex-wrap gap-x-6 gap-y-[68px] mb-[176px]"
+            : "w-[390px] grid-cols-2 grid place-items-center pt-4 gap-2 mb-5"
+        }`}
+      >
         {data?.map((club) => (
           <Link key={club.egg_club_id} href={`/club/regular-club-sub/${club.egg_club_id}`}>
-            <div className="flex flex-col">
-              <VerticalContentsListLargeEggClub
-                eggClub={club}
-                hostName={club.user.user_name}
-                hostImage={club.user.user_profile_img}
-                memberCount={club.egg_club_member[0].count}
-                isWished={isWishedByUser(club)}
-                wishListCount={club.wish_list.length}
-              />
+            <div className="">
+              {isLargeScreen ? (
+                <BigVerticalContentsEggClubList
+                  eggClub={club}
+                  hostName={club.user.user_name}
+                  hostImage={club.user.user_profile_img}
+                  memberCount={club.egg_club_member[0].count}
+                  isWished={isWishedByUser(club)}
+                  wishListCount={club.wish_list.length}
+                />
+              ) : (
+                <VerticalContentsListLargeEggClub
+                  eggClub={club}
+                  hostName={club.user.user_name}
+                  hostImage={club.user.user_profile_img}
+                  memberCount={club.egg_club_member[0].count}
+                  isWished={isWishedByUser(club)}
+                  wishListCount={club.wish_list.length}
+                />
+              )}
             </div>
           </Link>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

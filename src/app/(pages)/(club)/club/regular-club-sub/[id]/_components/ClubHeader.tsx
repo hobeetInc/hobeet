@@ -71,6 +71,8 @@ const ClubHeader = () => {
 
   if (!clubInfo) return null;
 
+  if (!clubInfo) return null;
+
   return (
     <div className="flex justify-between items-center h-[48px] p-3">
       <button onClick={handleBack} className="w-6 h-6">
