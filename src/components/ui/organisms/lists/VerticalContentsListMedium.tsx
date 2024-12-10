@@ -9,7 +9,7 @@ import { FaHeart } from "react-icons/fa";
 
 // eggPop 상세정보, hostName(모임장 이름), memberCount(모임 참여 인원) 프롭스
 // 에그팝 모임 리스트 (medium)
-export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImag, memberCount }) => {
+export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImage, memberCount }) => {
   // 날짜와 시간 포맷팅
   const dateObj = new Date(eggPop.egg_pop_date_time);
 
@@ -87,7 +87,7 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImag, m
           <div className="justify-start items-center gap-0.5 flex">
             <div className="flex w-[22px] h-[22px] justify-center items-center rounded-full overflow-hidden">
               <Image
-                src={hostImag}
+                src={hostImage}
                 alt="profile"
                 width={22}
                 height={22}
