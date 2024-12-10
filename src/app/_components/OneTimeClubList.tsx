@@ -5,7 +5,7 @@ import { VerticalContentsListMediumEggPop } from "@/components/ui/organisms/list
 import { useEggPopTenList } from "@/hooks/utils/list/tenList";
 import Text from "@/components/ui/atoms/text/Text";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
-import BigVerticalContentsList from "@/components/ui/organisms/lists/BigVerticalContentsList";
+import { BigVerticalContentsEggPopList } from "@/components/ui/organisms/lists/BigVerticalContentsList";
 
 const OneTimeClubList = () => {
   const { data: list, isLoading, isError } = useEggPopTenList();
@@ -32,7 +32,7 @@ const OneTimeClubList = () => {
               className={`${isLargeScreen ? "" : "mr-4 w-[160px] h-[311px]"}`}
             >
               {isLargeScreen ? (
-                <BigVerticalContentsList
+                <BigVerticalContentsEggPopList
                   eggPop={club}
                   hostName={club.user.user_name}
                   hostImage={club.user.user_profile_img}

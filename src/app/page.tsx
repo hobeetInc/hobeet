@@ -75,7 +75,7 @@ export default function Home() {
       </div>
       <OneTimeClubList />
       <div className="relative flex justify-center mx-4 mt-16">
-        <div className="relative w-full ">
+        <div className="relative w-full">
           <Image
             width={358}
             height={173}
