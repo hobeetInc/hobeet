@@ -13,6 +13,8 @@ const HomeContent = () => {
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const { clubInfo, stringCategory, hostInfo, crewMembers } = useClubStore();
 
+  if (!clubInfo) return null;
+
   return (
     <div className={`flex flex-col items-center justify-center ${isLargeScreen ? "mb-[126px]" : ""}`}>
       <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100">

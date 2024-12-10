@@ -1,16 +1,18 @@
 "use client";
 
 import Link from "next/link";
-
 import { VerticalContentsListMediumEggClub } from "@/components/ui/organisms/lists/VerticalContentsListMedium";
 import { useAuthStore } from "@/store/authStore";
 import { useEggClubTenList } from "@/hooks/utils/list/tenList";
 import Text from "@/components/ui/atoms/text/Text";
 import { EggClubForm } from "@/types/features/commerce/cardlist.types";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import { BigVerticalContentsEggClubList } from "@/components/ui/organisms/lists/BigVerticalContentsList";
 
 const RegularClubList = () => {
   const { data: list, isLoading, error } = useEggClubTenList();
   const userId = useAuthStore((state) => state.userId);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const isWishedByUser = (club: EggClubForm): boolean => {
     if (!userId) return false;
@@ -25,24 +27,41 @@ const RegularClubList = () => {
     return <Text variant="subtitle-16">에러가 발생했습니다.</Text>;
   }
 
+  const displayedList = isLargeScreen ? list?.slice(0, 4) : list;
+
   return (
-    <div className="relative mx-auto">
-      <div className="overflow-x-auto scrollbar-hide h-[320px]">
-        <div className="inline-flex items-center px-4 pt-4">
-          {list?.map((club) => (
+    <div className={`relative mx-auto ${isLargeScreen ? "px-4" : ""}`}>
+      <div className={`${isLargeScreen ? "w-[984px] h-[364px]" : "overflow-x-auto scrollbar-hide h-[320px]"}`}>
+        <div
+          className={`${
+            isLargeScreen ? "flex justify-between items-start gap-6" : "inline-flex items-center px-4 pt-4"
+          }`}
+        >
+          {displayedList?.map((club) => (
             <Link
               href={`/club/regular-club-sub/${club.egg_club_id}`}
               key={club.egg_club_id}
-              className="w-[160px] h-[292px] mr-4"
+              className={`${isLargeScreen ? "w-[228px] h-[364px]" : "w-[160px] h-[292px] mr-4"}`}
             >
-              <VerticalContentsListMediumEggClub
-                eggClub={club}
-                hostName={club.user.user_name}
-                hostImage={club.user.user_profile_img}
-                memberCount={club.egg_club_member[0].count}
-                isWished={isWishedByUser(club)}
-                wishListCount={club.wish_list.length}
-              />
+              {isLargeScreen ? (
+                <BigVerticalContentsEggClubList
+                  eggClub={club}
+                  hostName={club.user.user_name}
+                  hostImage={club.user.user_profile_img}
+                  memberCount={club.egg_club_member[0].count}
+                  isWished={isWishedByUser(club)}
+                  wishListCount={club.wish_list.length}
+                />
+              ) : (
+                <VerticalContentsListMediumEggClub
+                  eggClub={club}
+                  hostName={club.user.user_name}
+                  hostImage={club.user.user_profile_img}
+                  memberCount={club.egg_club_member[0].count}
+                  isWished={isWishedByUser(club)}
+                  wishListCount={club.wish_list.length}
+                />
+              )}
             </Link>
           ))}
         </div>

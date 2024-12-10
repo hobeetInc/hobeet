@@ -11,7 +11,7 @@ export const HorizontalContentsListLargeEggPop = ({ eggPop }) => {
           width={102}
           height={102}
           src={eggPop.egg_pop_image}
-          alt={eggPop.eggPop_name}
+          alt={eggPop.egg_pop_name}
           className="w-[102px] h-[102px] object-cover"
         />
       </div>
