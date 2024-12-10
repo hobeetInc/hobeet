@@ -6,13 +6,14 @@ import { useEggPopTenList } from "@/hooks/utils/list/tenList";
 import Text from "@/components/ui/atoms/text/Text";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { BigVerticalContentsEggPopList } from "@/components/ui/organisms/lists/BigVerticalContentsList";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 
 const OneTimeClubList = () => {
   const { data: list, isLoading, isError } = useEggPopTenList();
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   if (isLoading) {
-    return <Text variant="subtitle-16">로딩 중...</Text>;
+    return <LoadingSpinner />;
   }
 
   if (isError) {

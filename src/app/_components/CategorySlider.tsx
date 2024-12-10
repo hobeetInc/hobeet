@@ -27,7 +27,11 @@ const CategorySlider = () => {
 
   return (
     <div className={cn("w-full mt-4 overflow-x-auto scrollbar-hide whitespace-nowrap")}>
-      <div className={`flex justify-first items-center px-4 ${isLargeScreen ? "gap-6 w-[985px]" : "gap-4 w-[600px]"}`}>
+      <div
+        className={cn("flex justify-first items-center w-[600px] gap-4 px-4", {
+          "w-[985px] gap-6": isLargeScreen
+        })}
+      >
         {categories.map((category) => (
           <button
             key={category.id}
