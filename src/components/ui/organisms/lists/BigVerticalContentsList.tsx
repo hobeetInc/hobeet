@@ -5,7 +5,6 @@ import Tag from "../../atoms/tags/Tag";
 import Text from "../../atoms/text/Text";
 import { Icon } from "../../atoms/icons/Icon";
 import { CustomAddress } from "@/utils/CustomAddress";
-import { FaHeart } from "react-icons/fa";
 import { HeartImage } from "../../molecules/Images/HeartImage";
 
 export const BigVerticalContentsEggPopList = ({ eggPop, hostName, hostImage, memberCount }) => {
