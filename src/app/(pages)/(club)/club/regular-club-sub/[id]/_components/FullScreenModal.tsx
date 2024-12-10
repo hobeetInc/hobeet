@@ -44,7 +44,7 @@ const FullScreenModal = ({ crewList, isOpen, onClose }: FullScreenModalProps) =>
             <Text variant="body_medium-14">{`총 ${crewList.length}명`}</Text>
           </div>
 
-          <div className="w-[390px] h-[616px] px-4 flex-col justify-start items-start gap-6 inline-flex overflow-y-scroll scrollbar-hide">
+          <div className="w-full h-[616px] px-4 flex-col justify-start items-start gap-6 inline-flex overflow-y-scroll scrollbar-hide">
             {crewList?.map((member, index) => (
               <div key={member.userId} className="self-stretch justify-start items-center gap-3 inline-flex">
                 <div className="relative w-[37px] h-[37px] overflow-hidden rounded-full">
