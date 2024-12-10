@@ -13,11 +13,9 @@ import Text from "@/components/ui/atoms/text/Text";
 import OneTimeClubList from "./_components/OneTimeClubList";
 import RegularClubList from "./_components/RegularClubList";
 import CategorySlider from "./_components/CategorySlider";
-import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 export default function Home() {
   const router = useRouter();
-  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   useEffect(() => {
     localStorage.removeItem(ONETIME_CLUB_CREATE);
