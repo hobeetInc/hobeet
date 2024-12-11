@@ -21,17 +21,10 @@ const InquiryPage = () => {
         )}
 
         <div className="flex flex-grow justify-center lg:py-5 lg:mt-[132px]">
-          {isLargeScreen ? (
-            <Text variant="header-20" className="text-gray-900">
-              문의하기
-            </Text>
-          ) : (
-            <Text variant="header-16" className="text-gray-900">
-              문의하기
-            </Text>
-          )}
+          <Text variant={isLargeScreen ? "header-20" : "header-16"} className="text-gray-900">
+            문의하기
+          </Text>
         </div>
-        <div className="w-6 m-3"></div>
       </div>
 
       <div className="mt-[60px] lg:w-full">

@@ -42,15 +42,9 @@ const WishClubListPage = () => {
         )}
 
         <div className="flex flex-grow justify-center lg:justify-start lg:ml-4 lg:py-5">
-          {isLargeScreen ? (
-            <Text variant="header-20" className="text-gray-900">
-              내가 찜한 클럽
-            </Text>
-          ) : (
-            <Text variant="header-16" className="text-gray-900">
-              내가 찜한 클럽
-            </Text>
-          )}
+          <Text variant={isLargeScreen ? "header-20" : "header-16"} className="text-gray-900">
+            내가 찜한 클럽
+          </Text>
         </div>
       </div>
 

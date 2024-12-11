@@ -52,15 +52,9 @@ const ProfileEditPage = () => {
         )}
 
         <div className="flex flex-grow justify-center lg:w-full lg:text-center lg:py-5 lg:mb-14">
-          {isLargeScreen ? (
-            <Text variant="header-20" className="text-gray-900 lg:justify-center">
-              내 프로필 수정
-            </Text>
-          ) : (
-            <Text variant="header-16" className="text-gray-900 lg:justify-center">
-              내 프로필 수정
-            </Text>
-          )}
+          <Text variant={isLargeScreen ? "header-20" : "header-16"} className="text-gray-900 lg:justify-center">
+            내 프로필 수정
+          </Text>
         </div>
       </div>
 
