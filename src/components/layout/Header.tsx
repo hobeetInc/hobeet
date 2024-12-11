@@ -8,6 +8,7 @@ import { BsPlusLg } from "react-icons/bs";
 import { useAuthStore } from "@/store/authStore";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { cn } from "@/utils/cn/util";
+import HeaderSearchInput from "@/app/_components/HeaderSearchInput";
 
 type NavItem = {
   path: string;
@@ -237,12 +238,16 @@ export default function Header({ children }) {
   );
 
   const DesktopHeader = () => (
-    <header className="flex w-full h-[88px] items-center justify-between px-8 fixed top-0 bg-white border-b border-[#F2F2F2] z-50">
-      <div className="flex items-center gap-8">
+    <header className="flex  w-full h-[88px] px-5 fixed right-0 bg-white z-50">
+      <div className="flex items-center justify-between w-full gap-5">
         <Link href="/">
           <Image src="/asset/Logo/MainLogo.svg" alt="MainLogo" width={96} height={24} priority />
         </Link>
-        <nav className="flex items-center gap-6">
+
+        <div>
+          <HeaderSearchInput />
+        </div>
+        <nav className="w-[240px] flex items-center gap-4">
           {navItems.map((item, index) => (
             <NavButton key={index} item={item} />
           ))}
