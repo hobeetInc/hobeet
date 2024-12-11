@@ -10,7 +10,7 @@ import ActiveMembersTab from "../_components/ActiveMembers";
 import PendingRequestsTab from "../_components/PendingRequestsTab";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ApproveMemberTabBar from "@/components/ui/molecules/navigation/ApproveMemberTapBar";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 export default function ApproveMembersPage() {
   // 활성 탭 상태 관리 (true: 활성, false: 대기)
   const [activeTab, setActiveTab] = useState(true);
@@ -49,7 +49,7 @@ export default function ApproveMembersPage() {
   };
 
   if (isLoading) {
-    return <Text variant="subtitle-16">로딩 중...</Text>;
+    return <LoadingSpinner />;
   }
 
   if (error) {

@@ -6,6 +6,7 @@ import { getAllMainCategory, getSubCategory } from "../../_api/supabase";
 import CategoryList from "../../_components/CategoryList";
 import { MainCategory, SubCategory } from "@/types/utils/category.types";
 import EggPopCategoryList from "../../_components/EggPopCategoryList";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 
 const CategoryPage = () => {
   const params = useParams();
@@ -44,7 +45,7 @@ const CategoryPage = () => {
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center w-full h-36">로딩 중...</div>;
+    return <LoadingSpinner />;
   }
 
   if (error) {

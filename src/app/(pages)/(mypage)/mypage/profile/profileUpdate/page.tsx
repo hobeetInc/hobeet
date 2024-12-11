@@ -8,6 +8,7 @@ import { HiOutlineChevronLeft } from "react-icons/hi";
 import Text from "@/components/ui/atoms/text/Text";
 import { useAuthStore } from "@/store/authStore";
 import { useProfile } from "@/hooks/utils/features/profile/useProfile";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 
 const ProfileEditPage = () => {
   const { userId, userEmail, userName, userGender, userBirth, userProfileImg, setUserProfileImg } = useAuthStore();
@@ -33,7 +34,7 @@ const ProfileEditPage = () => {
     }
   };
 
-  if (providerQuery.isLoading) return <div>로딩중...</div>;
+  if (providerQuery.isLoading) return <LoadingSpinner />;
   if (providerQuery.error) return <div>프로필 정보 처리 중 오류</div>;
 
   return (

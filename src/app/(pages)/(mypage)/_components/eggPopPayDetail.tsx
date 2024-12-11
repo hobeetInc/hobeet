@@ -9,6 +9,7 @@ import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { useAuthStore } from "@/store/authStore";
 import { usePayments } from "@/hooks/utils/api/usePayment";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 
 const EggPopPayDetail = () => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const EggPopPayDetail = () => {
 
   const { popPayments, isLoading, isError } = usePayments(userId);
 
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <div>에그팝 결제 정보 처리 중 오류</div>;
 
   return (

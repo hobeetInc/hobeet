@@ -10,7 +10,7 @@ import { useAuthStore } from "@/store/authStore";
 import Link from "next/link";
 import { EggPopChattingRoom } from "@/types/features/chat/eggpopchat.types";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 const OneTimeClubChattingRoomPage = () => {
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
@@ -137,7 +137,7 @@ const OneTimeClubChattingRoomPage = () => {
 
   // 로딩 상태 UI
   if (loading) {
-    return <Text variant="subtitle-16">로딩 중...</Text>;
+    return <LoadingSpinner />;
   }
 
   // 에러 상태 UI

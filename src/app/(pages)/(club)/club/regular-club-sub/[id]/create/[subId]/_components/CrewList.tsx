@@ -16,7 +16,7 @@ import { EggDay } from "@/types/features/club/eggday.types";
 import { cn } from "@/utils/cn/util";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import FloatingButton from "@/app/_components/FloatingButton";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 interface CrewListProps {
   crewMembers: MemberInfo[];
   clubId: number;
@@ -144,7 +144,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
     );
   };
 
-  if (isLoading) return <Text variant="subtitle-16">로딩 중...</Text>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <Text variant="subtitle-16">오류가 발생하였습니다...</Text>;
 
   return (

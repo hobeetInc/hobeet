@@ -9,6 +9,7 @@ import { signOut } from "../../_api/logout";
 import { useAuthStore } from "@/store/authStore";
 import { useProfile } from "@/hooks/utils/features/profile/useProfile";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const ProfilePage = () => {
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const { profileQuery } = useProfile(userId);
 
-  if (profileQuery.isLoading) return <div>로딩중...</div>;
+  if (profileQuery.isLoading) return <LoadingSpinner />;
   if (profileQuery.error) return <div>프로필 정보 처리 중 오류</div>;
 
   const { user_name: userName, user_profile_img: userProfileImg } = profileQuery.data;

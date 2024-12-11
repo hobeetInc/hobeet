@@ -18,6 +18,7 @@ import { useClubStore } from "@/store/crewStore";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { cn } from "@/utils/cn/util";
 import ApproveModal from "@/app/(pages)/(approvemembers)/approvemembers/_components/ApproveModal";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 
 const CrewList = () => {
   const userId = useAuthStore((state) => state.userId);
@@ -217,7 +218,7 @@ const CrewList = () => {
     }
   };
 
-  if (isLoading) return <Text variant="subtitle-16">로딩 중...</Text>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <Text variant="subtitle-16">오류가 발생하였습니다...</Text>;
 
   return (

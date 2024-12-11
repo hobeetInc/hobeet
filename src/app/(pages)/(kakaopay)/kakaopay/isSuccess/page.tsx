@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { SupabaseClubAPI } from "@/utils/onetimeclubjoin/_api/supabase";
 import { useRouter, useSearchParams } from "next/navigation";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -44,7 +44,7 @@ const Page = () => {
     insertMember();
   }, [clubId, requestUserId, router, isMemberInserted, pgToken, clubType]);
 
-  return <div>로딩중...</div>;
+  return <LoadingSpinner />;
 };
 
 export default Page;

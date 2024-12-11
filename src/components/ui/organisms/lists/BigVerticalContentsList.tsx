@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Tag from "../../atoms/tags/Tag";
 import Text from "../../atoms/text/Text";
@@ -35,6 +33,10 @@ export const BigVerticalContentsEggPopList = ({ eggPop, hostName, hostImage, mem
           alt={eggPop.egg_pop_name}
           src={eggPop.egg_pop_image}
           className="w-[228px] h-[228px] object-cover"
+          quality={50}
+          sizes="228px"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
         />
       </div>
 
@@ -66,6 +68,10 @@ export const BigVerticalContentsEggPopList = ({ eggPop, hostName, hostImage, mem
                 alt={hostName}
                 src={hostImage}
                 className="w-[22px] h-[22px] object-cover"
+                quality={50}
+                sizes="22px"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
               />
             </div>
             <Text variant="body_medium-14" className="text-gray-400">
@@ -103,7 +109,10 @@ export const BigVerticalContentsEggClubList = ({
           alt={eggClub.egg_club_name}
           src={eggClub.egg_club_image}
           className="w-full h-full object-cover"
-          priority
+          quality={50}
+          sizes="228px"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
         />
         <div className="absolute bottom-2 right-2">
           <HeartImage selectedId={isWished ? 2 : 1} />
@@ -120,7 +129,16 @@ export const BigVerticalContentsEggClubList = ({
         <div className="self-stretch justify-start items-center gap-1 inline-flex">
           <div className="justify-start items-center gap-0.5 flex">
             <div className="w-[22px] h-[22px] rounded-full overflow-hidden bg-gray-200">
-              <Image width={22} height={22} alt={hostName} src={hostImage} className="w-full h-full object-cover" />
+              <Image
+                width={22}
+                height={22}
+                alt={hostName}
+                src={hostImage}
+                className="w-full h-full object-cover"
+                sizes="22px"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
+              />
             </div>
             <Text variant="body_medium-14" className="text-gray-400">
               {hostName}

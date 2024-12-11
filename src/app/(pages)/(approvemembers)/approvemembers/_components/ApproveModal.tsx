@@ -7,7 +7,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { approveMember, fetchPendingAndActiveRequests } from "../_api/approve.api";
 import Text from "@/components/ui/atoms/text/Text";
 import ApproveMemberTabBar from "@/components/ui/molecules/navigation/ApproveMemberTapBar";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 type ApproveModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -42,7 +42,7 @@ const ApproveModal = ({ isOpen, onClose, clubId }: ApproveModalProps) => {
   if (!isOpen) return null;
 
   if (isLoading) {
-    return <Text variant="subtitle-16">로딩 중...</Text>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
