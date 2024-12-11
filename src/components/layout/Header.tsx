@@ -118,11 +118,13 @@ export default function Header({ children }) {
   // 웹에서 헤더, 푸터 숨길 경로
   const desktopNoHeaderFooterRoutes = ["/signin", "/club"];
 
-  const noHeaderRoutes = [/^\/category\/.*$/];
+  const mobileNoHeaderRoutes = [/^\/category\/.*$/];
+  const desktopNoHeaderRoutes = [];
+
   const showHeaderFooter = !(isLargeScreen ? desktopNoHeaderFooterRoutes : mobileNoHeaderFooterRoutes).some((route) =>
     typeof route === "string" ? route === pathname : route.test(pathname)
   );
-  const showHeader = !noHeaderRoutes.some((route) =>
+  const showHeader = !(isLargeScreen ? desktopNoHeaderRoutes : mobileNoHeaderRoutes).some((route) =>
     typeof route === "string" ? route === pathname : route.test(pathname)
   );
 
@@ -135,6 +137,14 @@ export default function Header({ children }) {
         <Image src={iconSrc} alt={item.alt} width={48} height={48} />
       </div>
     );
+
+    if (item.onClick) {
+      return (
+        <button onClick={item.onClick}>
+          <ButtonContent />
+        </button>
+      );
+    }
 
     if (item.requiresAuth) {
       return (
