@@ -29,7 +29,7 @@ const WishClubListPage = () => {
   if (error) return <div>찜 목록을 가져오는 중 오류가 발생했습니다.</div>;
 
   return (
-    <div className="relative lg:static">
+    <div className="relative lg:static lg:max-w-[1024px]">
       <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center lg:static lg:mt-[84px]">
         {isLargeScreen ? (
           ""
