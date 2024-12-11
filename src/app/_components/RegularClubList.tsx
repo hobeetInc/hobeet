@@ -8,6 +8,7 @@ import Text from "@/components/ui/atoms/text/Text";
 import { EggClubForm } from "@/types/features/commerce/cardlist.types";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { BigVerticalContentsEggClubList } from "@/components/ui/organisms/lists/BigVerticalContentsList";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 
 const RegularClubList = () => {
   const { data: list, isLoading, error } = useEggClubTenList();
@@ -20,7 +21,7 @@ const RegularClubList = () => {
   };
 
   if (isLoading) {
-    return <Text variant="subtitle-16">로딩 중...</Text>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
@@ -34,7 +35,7 @@ const RegularClubList = () => {
       <div className={`${isLargeScreen ? "w-[984px] h-[364px]" : "overflow-x-auto scrollbar-hide h-[320px]"}`}>
         <div
           className={`${
-            isLargeScreen ? "flex justify-between items-start gap-6" : "inline-flex items-center px-4 pt-4"
+            isLargeScreen ? "flex justify-between items-start gap-6 mt-5" : "inline-flex items-center px-4 pt-4"
           }`}
         >
           {displayedList?.map((club) => (

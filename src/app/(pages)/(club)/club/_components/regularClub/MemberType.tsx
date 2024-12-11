@@ -2,6 +2,7 @@
 
 import NumberSpinner from "@/components/ui/atoms/Inputs/NumberSpinner";
 import Text from "@/components/ui/atoms/text/Text";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { MemberTypeProps } from "@/types/features/club/eggclub.types";
 import { useState } from "react";
 
@@ -15,6 +16,7 @@ const MemberType = ({
 }: MemberTypeProps) => {
   // 인원수 입력값을 관리할 state 추가
   const [peopleLimit, setPeopleLimit] = useState<string>("2");
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const gender = ["누구나", "여자만", "남자만"];
   const age = ["누구나", "10대", "20대", "30대", "40대", "50대 이상"];
@@ -116,7 +118,7 @@ const MemberType = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className={`flex flex-col gap-2 ${isLargeScreen ? "mb-[215px]" : ""}`}>
           <Text variant="body_medium-16">최대 인원</Text>
           <NumberSpinner value={Number(peopleLimit)} onChange={handlePeopleLimit} max={100} min={2} />
         </div>

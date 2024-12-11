@@ -3,9 +3,21 @@ import { cn } from "@/utils/cn/util";
 import { forwardRef, ReactNode } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoMdCloseCircle } from "react-icons/io";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 const inputVariants = cva(
-  "w-[358px] h-12 pl-5 bg-gray-50 rounded-lg justify-start items-center inline-flex overflow-hidden"
+  "w-[358px] h-12 pl-5 bg-gray-50 rounded-lg justify-start items-center inline-flex overflow-hidden",
+  {
+    variants: {
+      isLarge: {
+        true: "w-[656px]",
+        false: "w-[358px]"
+      }
+    },
+    defaultVariants: {
+      isLarge: false
+    }
+  }
 );
 
 interface SearchInputProps extends VariantProps<typeof inputVariants> {
@@ -17,8 +29,9 @@ interface SearchInputProps extends VariantProps<typeof inputVariants> {
 
 const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
   ({ className, children, hasValue, onClear, ...props }, ref) => {
+    const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
     return (
-      <div className={cn(inputVariants(), className)} ref={ref} {...props}>
+      <div className={cn(inputVariants({ isLarge: isLargeScreen }), className)} ref={ref} {...props}>
         {children}
         <div className="justify-start items-center flex">
           <div className="pr-3 py-3 justify-start items-center flex">

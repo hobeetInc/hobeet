@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import { ChevronLeft } from "lucide-react";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import Modal from "@/components/ui/responsiveDesign/Modal";
+import { IoCloseOutline } from "react-icons/io5";
 
 const TypeSelectionPage = () => {
   const router = useRouter();
@@ -35,12 +36,15 @@ const TypeSelectionPage = () => {
   return (
     <>
       {isLargeScreen ? (
-        <Modal isOpen={true} onClose={handleBack}>
+        <Modal isOpen={true}>
           <div className="flex flex-col justify-center items-center mt-6">
-            <div className="w-full flex justify-start mb-10 p-3">
+            <div className="w-full flex justify-between items-center mb-10 p-3">
               <div onClick={handleBack} className="inline-flex">
                 <ChevronLeft className="w-6 h-6 cursor-pointer" />
               </div>
+              <button onClick={() => router.push("/")} className="p-2">
+                <IoCloseOutline className="w-6 h-6" />
+              </button>
             </div>
             <div className="w-full mx-4 p-5">
               <h1 className="text-header-18 mb-6 h-11">어떤 모임을 만들어볼까요?</h1>
@@ -94,17 +98,17 @@ const TypeSelectionPage = () => {
                 </div>
               </div>
 
-              <div className="w-full mt-[302px]">
+              <div className="w-full mt-[280px]">
                 {selectedType === null ? (
-                  <Button disabled borderType="circle" className="">
+                  <Button disabled borderType="circle" sizeType="largeWeb">
                     다음
                   </Button>
                 ) : selectedType === "one-time" ? (
-                  <Button onClick={handleNext} colorType="orange" borderType="circle" className="">
+                  <Button onClick={handleNext} colorType="orange" borderType="circle" sizeType="largeWeb">
                     다음
                   </Button>
                 ) : (
-                  <Button onClick={handleNext} colorType="black" borderType="circle" className="">
+                  <Button onClick={handleNext} colorType="black" borderType="circle" sizeType="largeWeb">
                     다음
                   </Button>
                 )}
