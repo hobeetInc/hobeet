@@ -11,7 +11,7 @@ import {
   BigVerticalContentsEggPopList,
   BigVerticalContentsEggClubList
 } from "@/components/ui/organisms/lists/BigVerticalContentsList";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 interface ClubListContentProps {
   activeTab: boolean; // true: 에그장(내가 만든 모임), false: 에그즈(내가 참여한 모임)
 }
@@ -33,7 +33,7 @@ export default function ClubListContent({ activeTab }: ClubListContentProps) {
   });
 
   if (isLoading) {
-    return <Text variant="subtitle-16">로딩 중...</Text>;
+    return <LoadingSpinner />;
   }
 
   if (isError) {

@@ -55,6 +55,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-next", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:14.2.15"],\
           ["lucide-react", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:0.453.0"],\
           ["next", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:14.2.15"],\
+          ["plaiceholder", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:3.0.0"],\
           ["postcss", "npm:8.4.49"],\
           ["react", "npm:18.3.1"],\
           ["react-datepicker", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:7.5.0"],\
@@ -8162,6 +8163,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-next", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:14.2.15"],\
           ["lucide-react", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:0.453.0"],\
           ["next", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:14.2.15"],\
+          ["plaiceholder", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:3.0.0"],\
           ["postcss", "npm:8.4.49"],\
           ["react", "npm:18.3.1"],\
           ["react-datepicker", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:7.5.0"],\
@@ -10197,6 +10199,28 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/pirates-npm-4.0.6-a8ec571a43-10c0.zip/node_modules/pirates/",\
         "packageDependencies": [\
           ["pirates", "npm:4.0.6"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["plaiceholder", [\
+      ["npm:3.0.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/plaiceholder-npm-3.0.0-219e57f961-10c0.zip/node_modules/plaiceholder/",\
+        "packageDependencies": [\
+          ["plaiceholder", "npm:3.0.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:3.0.0", {\
+        "packageLocation": "./.yarn/__virtual__/plaiceholder-virtual-4d77b895c3/4/.yarn/berry/cache/plaiceholder-npm-3.0.0-219e57f961-10c0.zip/node_modules/plaiceholder/",\
+        "packageDependencies": [\
+          ["plaiceholder", "virtual:8da22f585ea36b40620f0fd34aa40380b318442de4f3c2af29bc6851b50c2719654781a2df35b88c74e3a742a9b5c2fa7cc931d6f0f96780f88076f78962890e#npm:3.0.0"],\
+          ["@types/sharp", null],\
+          ["sharp", "npm:0.33.5"]\
+        ],\
+        "packagePeers": [\
+          "@types/sharp",\
+          "sharp"\
         ],\
         "linkType": "HARD"\
       }]\

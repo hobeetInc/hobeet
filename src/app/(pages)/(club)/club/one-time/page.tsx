@@ -1,10 +1,11 @@
 import { Suspense } from "react";
 import OneTimeContent from "./_components/OneTimeContent";
-import Text from "@/components/ui/atoms/text/Text";
+
+import Loading from "@/app/loading";
 
 const OnePage = () => {
   return (
-    <Suspense fallback={<Text variant="subtitle-16">로딩 중...</Text>}>
+    <Suspense fallback={<Loading />}>
       <OneTimeContent />
     </Suspense>
   );

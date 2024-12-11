@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import { Icon } from "@/components/ui/atoms/icons/Icon";
 import Tag from "@/components/ui/atoms/tags/Tag";
 import { HiOutlineChevronLeft } from "react-icons/hi";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 const PaymentSuccessPage = () => {
   const [paymentAmount, setPaymentAmount] = useState<number | null>(null);
   const router = useRouter();
@@ -76,7 +76,7 @@ const PaymentSuccessPage = () => {
     processPayment();
   }, [paymentQuery.data, pgToken, clubId, requestUserId, isOneTimeClub]);
 
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <div>에러가 발생했습니다</div>;
 
   const clubData = isOneTimeClub ? clubQuery.data?.oneTimeClubData : clubQuery.data?.regularClubData;

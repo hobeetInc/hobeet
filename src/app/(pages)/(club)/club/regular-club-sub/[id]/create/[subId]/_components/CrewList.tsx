@@ -16,7 +16,7 @@ import { EggDay } from "@/types/features/club/eggday.types";
 import { cn } from "@/utils/cn/util";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import FloatingButton from "@/app/_components/FloatingButton";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 interface CrewListProps {
   crewMembers: MemberInfo[];
   clubId: number;
@@ -75,7 +75,11 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
   const renderJoinButton = () => {
     if (userId === clubHostId) {
       return (
-        <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+        <div
+          className={`w-full h-20 px-4 bg-white border-t border-solid border-gray-50 ${
+            isLargeScreen ? "justify-center " : "justify-between"
+          } items-center inline-flex gap-[10px]`}
+        >
           <Text variant="subtitle-16" className={cn(isLargeScreen ? "" : "w-[50%]")}>
             참여 중인 에그데이에요
           </Text>
@@ -83,7 +87,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
             colorType="yellow"
             borderType="circle"
             sizeType="small"
-            className={cn(isLargeScreen ? "w-[732px]" : "w-[50%]")}
+            className={cn(isLargeScreen ? "w-[550px] ml-[250px]" : "w-[50%]")}
             onClick={handleChatClick}
           >
             에그클럽 채팅방
@@ -96,7 +100,11 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
 
     if (isAlreadyJoined) {
       return (
-        <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+        <div
+          className={`w-full h-20 px-4 bg-white border-t border-solid border-gray-50 ${
+            isLargeScreen ? "justify-center " : "justify-between"
+          } items-center inline-flex gap-[10px]`}
+        >
           <Text variant="subtitle-16" className={cn(isLargeScreen ? "" : "w-[50%]")}>
             참여 중인 에그데이에요
           </Text>
@@ -104,7 +112,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
             colorType="yellow"
             borderType="circle"
             sizeType="small"
-            className={cn(isLargeScreen ? "w-[732px]" : "w-[50%]")}
+            className={cn(isLargeScreen ? "w-[550px] ml-[250px]" : "w-[50%]")}
             onClick={handleChatClick}
           >
             에그클럽 채팅방
@@ -136,7 +144,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
               console.log("공지 맴버 추가 중 오류:", error);
             }
           }}
-          className="w-full h-[50px] bg-yellow-300 rounded-full"
+          className={`${isLargeScreen ? "w-[1024px]" : "w-full"} h-[50px] bg-yellow-300 rounded-full`}
         >
           참여하기
         </Button>
@@ -144,7 +152,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId, clubInf
     );
   };
 
-  if (isLoading) return <Text variant="subtitle-16">로딩 중...</Text>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <Text variant="subtitle-16">오류가 발생하였습니다...</Text>;
 
   return (

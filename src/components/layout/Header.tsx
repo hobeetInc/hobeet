@@ -26,6 +26,7 @@ export default function Header({ children }) {
   const userId = useAuthStore((state) => state.userId);
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const pathname = usePathname();
+
   const router = useRouter();
 
   const handleCreateMeet = () => {
@@ -260,7 +261,7 @@ export default function Header({ children }) {
     <>
       {showHeaderFooter && showHeader && (isLargeScreen ? <DesktopHeader /> : <MobileHeader />)}
       <main
-        className={`flex-1 overflow-y-auto scrollbar-hide ${
+        className={`flex-1 overflow-y-auto scrollbar-hide ${isLargeScreen ? "self-center w-[1024px]" : ""} ${
           isLargeScreen
             ? showHeaderFooter
               ? "mt-[88px]"

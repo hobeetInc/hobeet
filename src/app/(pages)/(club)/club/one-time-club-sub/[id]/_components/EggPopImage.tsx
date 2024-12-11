@@ -15,7 +15,9 @@ const EggPopImage = ({ clubInfo }) => {
         alt={clubInfo.egg_pop_name}
         width={390}
         height={332}
+        sizes="390px"
         className="w-[390px] h-[332px] object-cover"
+        priority
       />
     </div>
   );
