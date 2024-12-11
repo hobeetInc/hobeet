@@ -40,7 +40,7 @@ const RegularTimeClubSubPage = async ({ params }: { params: { id: string } }) =>
   if (!clubInfo) return null;
 
   return (
-    <div className="mt-12">
+    <div className="mt-12 lg:mt-0">
       <StoreInitializer
         clubInfo={clubInfo}
         hostInfo={hostInfo}

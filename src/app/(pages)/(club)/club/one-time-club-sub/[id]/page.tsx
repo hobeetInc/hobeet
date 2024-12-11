@@ -14,6 +14,7 @@ import {
   formatterPeopleLimit,
   formatterTax
 } from "../../_utils/formatter";
+import EggPopImage from "./_components/EggPopImage";
 
 const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   const oneTimeClubId = Number(params.id);
@@ -39,15 +40,7 @@ const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
         <PopHeader clubInfo={clubInfo} />
       </div>
 
-      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6 mt-12">
-        <Image
-          src={clubInfo.egg_pop_image}
-          alt={clubInfo.egg_pop_name}
-          width={390}
-          height={332}
-          className="w-[390px] h-[332px] object-cover"
-        />
-      </div>
+      <EggPopImage clubInfo={clubInfo} />
 
       <div className="w-full flex-col justify-start items-start gap-8 px-4 inline-flex">
         <div className="self-stretch flex-col justify-start items-start gap-5 flex">
