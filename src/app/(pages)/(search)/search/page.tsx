@@ -1,85 +1,79 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import OverallPopularMeetings from "../_components/OverallPopularMeetings";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getSearchedRegularClubs, getSearchedOneTimeClubs } from "../_api/supabase";
 import Link from "next/link";
 import Image from "next/image";
-
-import { IoSearchOutline } from "react-icons/io5";
-import { IoMdCloseCircle } from "react-icons/io";
 import { EggClubSearchResults, EggPopSearchResults } from "@/types/utils/search.types";
 import {
   HorizontalContentsListLargeEggClubSearch,
   HorizontalContentsListLargeEggPop
 } from "@/components/ui/organisms/lists/HorizontalContentsListLarge";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import HeaderSearchInput from "@/app/_components/HeaderSearchInput";
 
 const SearchPage = () => {
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState("");
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams.get("query") || "";
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
+
   const [regularClubs, setRegularClubs] = useState<EggClubSearchResults[]>([]);
   const [oneTimeClubs, setOneTimeClubs] = useState<EggPopSearchResults[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
+  const [searchAttempted, setSearchAttempted] = useState<boolean>(false);
 
-  const handleCreateClub = () => {
-    router.push("/club");
-  };
   useEffect(() => {
     const search = async () => {
-      if (!searchTerm.trim() || !isSearching) return;
+      if (!initialQuery) {
+        setRegularClubs([]);
+        setOneTimeClubs([]);
+        setSearchAttempted(false);
+        return;
+      }
 
       try {
+        setSearchAttempted(true);
         const [regularResults, oneTimeResults] = await Promise.all([
-          getSearchedRegularClubs(searchTerm),
-          getSearchedOneTimeClubs(searchTerm)
+          getSearchedRegularClubs(initialQuery),
+          getSearchedOneTimeClubs(initialQuery)
         ]);
 
         setRegularClubs(regularResults);
         setOneTimeClubs(oneTimeResults);
-        setIsSearching(false);
       } catch (error) {
         console.error("검색 중 에러 발생:", error);
-        setIsSearching(false);
+        setRegularClubs([]);
+        setOneTimeClubs([]);
       }
     };
 
     search();
-  }, [searchTerm, isSearching]);
+  }, [initialQuery]);
 
-  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchTerm.trim()) {
-      setIsSearching(true);
-    }
+  const handleCreateClub = () => {
+    router.push("/club");
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+  const handleClear = () => {
+    setRegularClubs([]);
+    setOneTimeClubs([]);
+    setSearchAttempted(false);
   };
 
   return (
-    <div className="flex flex-col items-start w-full  mx-auto px-4 ">
-      <form onSubmit={handleSearch} className="relative flex items-center w-full bg-[#f2f2f2] rounded-[22px] py-2 px-5">
-        <input
-          className="w-full h-[15px] bg-transparent outline-none text-[14px] font-[400px] placeholder:text-[#a6a6a6]"
-          type="text"
-          placeholder="검색어를 입력하세요"
-          value={searchTerm}
-          onChange={handleInputChange}
-        />
-        {searchTerm.length > 0 && (
-          <button type="button" onClick={() => setSearchTerm("")}>
-            <IoMdCloseCircle className="w-5 h-5" color="#A6A6A6" />
-          </button>
-        )}
-        <button type="submit" className="flex items-center justify-center ml-2 flex-shrink-0">
-          <IoSearchOutline className="w-5 h-5" color="#A6A6A6" />
-        </button>
-      </form>
+    <div className="flex flex-col items-start w-full mx-auto px-4">
+      {isLargeScreen ? null : <HeaderSearchInput variant="page" onClear={handleClear} />}
 
-      {/* 검색 결과 표시 */}
-      {regularClubs.length > 0 || oneTimeClubs.length > 0 ? (
+      {searchAttempted && regularClubs.length === 0 && oneTimeClubs.length === 0 ? (
+        // 검색 결과가 없는 경우
+        <div className="w-full text-center mt-10">
+          <p className="text-gray-500">검색 결과가 없습니다.</p>
+          <p className="text-gray-400 text-sm mt-2">다른 검색어로 시도해보세요.</p>
+        </div>
+      ) : regularClubs.length > 0 || oneTimeClubs.length > 0 ? (
+        // 검색 결과가 있는 경우
         <div className="w-full mt-4">
           {regularClubs.map((club) => (
             <div key={club.egg_club_id} className="p-4 bg-white rounded-lg mb-2 shadow-sm">
@@ -97,6 +91,7 @@ const SearchPage = () => {
           ))}
         </div>
       ) : (
+        // 검색 하지 않은 초기 상태
         <>
           <Image
             src="/asset/Banner/smallBanner.svg"
@@ -106,7 +101,6 @@ const SearchPage = () => {
             onClick={handleCreateClub}
             className="rounded-xl w-[358px] h-[80px] mt-[24px]"
           />
-
           <p className="text-[18px] font-semibold py-4 leading-[135%] mt-4">전체 인기 모임</p>
           <OverallPopularMeetings />
         </>
