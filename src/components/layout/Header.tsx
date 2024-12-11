@@ -245,7 +245,7 @@ export default function Header({ children }) {
         </Link>
 
         <div>
-          <HeaderSearchInput />
+          <HeaderSearchInput variant="header" />
         </div>
         <nav className="w-[240px] flex items-center gap-4">
           {navItems.map((item, index) => (
