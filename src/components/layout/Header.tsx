@@ -118,7 +118,7 @@ export default function Header({ children }) {
   ];
 
   // 웹에서 헤더, 푸터 숨길 경로
-  const desktopNoHeaderFooterRoutes = ["/signin", "/club"];
+  const desktopNoHeaderFooterRoutes = ["/club"];
 
   const mobileNoHeaderRoutes = [/^\/category\/.*$/];
   const desktopNoHeaderRoutes = [];
@@ -239,22 +239,31 @@ export default function Header({ children }) {
   );
 
   const DesktopHeader = () => (
-    <header className="flex  w-full h-[88px] px-5 fixed right-0 bg-white z-50">
-      <div className="flex items-center justify-between w-full gap-5">
-        <Link href="/">
-          <Image src="/asset/Logo/MainLogo.svg" alt="MainLogo" width={96} height={24} priority />
-        </Link>
-
-        <div>
-          <HeaderSearchInput variant="header" />
+    <div className="fixed top-0 w-full h-[132px] flex flex-col justify-center items-center">
+      <div className="w-[1024px] h-11 px-5 flex justify-end items-center">
+        <div className="flex w-[142px] h-5 gap-9">
+          <Text variant="body-14">회원가입</Text>
+          <Text variant="body-14">로그인</Text>
         </div>
-        <nav className="w-[240px] flex items-center gap-4">
-          {navItems.map((item, index) => (
-            <NavButton key={index} item={item} />
-          ))}
-        </nav>
       </div>
-    </header>
+
+      <header className="flex w-[1024px] h-[88px] px-5 bg-white">
+        <div className="flex items-center justify-between w-full gap-5">
+          <Link href="/">
+            <Image src="/asset/Logo/MainLogo.svg" alt="MainLogo" width={96} height={24} priority />
+          </Link>
+
+          <div>
+            <HeaderSearchInput variant="header" />
+          </div>
+          <nav className="w-[240px] flex items-center gap-4">
+            {navItems.map((item, index) => (
+              <NavButton key={index} item={item} />
+            ))}
+          </nav>
+        </div>
+      </header>
+    </div>
   );
 
   return (
@@ -264,7 +273,7 @@ export default function Header({ children }) {
         className={`flex-1 overflow-y-auto scrollbar-hide ${isLargeScreen ? "self-center w-[1024px]" : ""} ${
           isLargeScreen
             ? showHeaderFooter
-              ? "mt-[88px]"
+              ? "mt-[132px]"
               : ""
             : showHeaderFooter
             ? showHeader
