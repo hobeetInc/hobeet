@@ -4,12 +4,14 @@ import { useRouter } from "next/navigation";
 import { EggPop } from "@/types/features/club/eggpop.types";
 import Text from "@/components/ui/atoms/text/Text";
 import { ChevronLeft } from "lucide-react";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 interface PopHeaderProps {
   clubInfo: EggPop;
 }
 const PopHeader = ({ clubInfo }: PopHeaderProps) => {
   const router = useRouter();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   // 추후 뒤로가기 고칠 예정 (지우지 마세요)
   // useEffect(() => {
@@ -68,6 +70,8 @@ const PopHeader = ({ clubInfo }: PopHeaderProps) => {
   const handleBack = () => {
     router.push("/");
   };
+
+  if (isLargeScreen) return null;
 
   return (
     <div className="flex justify-center items-center w-full">
