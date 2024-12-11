@@ -1,11 +1,12 @@
 import { Suspense } from "react";
 import NotificationCreate from "./_components/NotificationCreate";
-import Text from "@/components/ui/atoms/text/Text";
+
+import Loading from "@/app/loading";
 
 const RegularClubNotificationCreatePage = ({ params }: { params: { id: string } }) => {
   return (
     <>
-      <Suspense fallback={<Text variant="subtitle-16">로딩 중...</Text>}>
+      <Suspense fallback={<Loading />}>
         <NotificationCreate params={params} />
       </Suspense>
     </>

@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import { useWishlist } from "@/hooks/utils/features/wishlist/useMyWishlist";
 import { HeartImage } from "@/components/ui/molecules/Images/HeartImage";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 
 const WishClubListPage = () => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const WishClubListPage = () => {
     router.push(`/club/regular-club-sub/${egg_club_id}`);
   };
 
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (error) return <div>찜 목록을 가져오는 중 오류가 발생했습니다.</div>;
 
   return (

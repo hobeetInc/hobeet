@@ -42,7 +42,10 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImage, 
           height={160}
           className="p-[112px 0px 0px 112px] rounded-[12px] w-[160px] h-[160px]"
           alt={`${eggPop.egg_pop_image}`}
-          priority
+          quality={50}
+          sizes="160px"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
         />
       </div>
 
@@ -92,6 +95,9 @@ export const VerticalContentsListMediumEggPop = ({ eggPop, hostName, hostImage, 
                 width={22}
                 height={22}
                 className="rounded-full object-cover w-[22px] h-[22px]"
+                sizes="22px"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
               />
             </div>
             <div className="grow shrink basis-0">
@@ -163,6 +169,10 @@ export const VerticalContentsListMediumEggClub = ({
                 width={22}
                 height={22}
                 className="rounded-full object-cover w-[22px] h-[22px]"
+                quality={50}
+                sizes="22px"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
               />
             </div>
             {/* 호스트 이름 */}

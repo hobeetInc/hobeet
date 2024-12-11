@@ -15,7 +15,7 @@ import { customDateNotWeek } from "@/utils/CustomDate";
 import { useAuthStore } from "@/store/authStore";
 import { useKakaopayRequest } from "@/hooks/utils/api/useKakaopayRequest";
 import { EggDayData, EggPopData } from "@/types/features/commerce/payment.types";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 const PaymentConfirmPage = () => {
   const [agreeChecked, setAgreeChecked] = useState(false);
   const router = useRouter();
@@ -28,7 +28,7 @@ const PaymentConfirmPage = () => {
   // 결제할 클럽 상세 정보 조회
   const { paymentClubQuery, isLoading, isError } = useKakaopayRequest(userId, clubId, isOneTimeClub);
 
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <div>결제 모임 정보 처리 중 오류</div>;
 
   // 모임 유형에 따른 분기 처리

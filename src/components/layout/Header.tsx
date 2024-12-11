@@ -6,11 +6,13 @@ import { Icon } from "@/components/ui/atoms/icons/Icon";
 import Text from "@/components/ui/atoms/text/Text";
 import { BsPlusLg } from "react-icons/bs";
 import { useAuthStore } from "@/store/authStore";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 export default function Header({ children }) {
   const userId = useAuthStore((state) => state.userId);
 
   const pathname = usePathname();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const router = useRouter();
   const handleCreateMeet = () => {
@@ -133,7 +135,7 @@ export default function Header({ children }) {
       <main
         className={`flex-1 overflow-y-auto scrollbar-hide ${
           showHeaderFooter ? (showHeader ? "mt-[60px] mb-[60px]" : "mb-[60px]") : showHeader ? "" : ""
-        }`}
+        } ${isLargeScreen ? "self-center w-[1024px]" : ""}`}
       >
         {children}
       </main>
