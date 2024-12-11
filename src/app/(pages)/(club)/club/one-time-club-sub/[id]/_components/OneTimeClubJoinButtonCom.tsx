@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import { useAuthStore } from "@/store/authStore";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 interface JoinClubButtonProps {
   clubId: number;
@@ -13,6 +14,7 @@ interface JoinClubButtonProps {
 export default function OneTimeClubJoinButton({ clubId, onError }: JoinClubButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   // Zustand store에서 userId 가져오기
   const userId = useAuthStore((state) => state.userId);
@@ -57,7 +59,14 @@ export default function OneTimeClubJoinButton({ clubId, onError }: JoinClubButto
   };
 
   return (
-    <Button colorType="orange" borderType="circle" onClick={handleJoinRequest} disabled={isLoading}>
+    <Button
+      colorType="orange"
+      borderType="circle"
+      sizeType="large"
+      onClick={handleJoinRequest}
+      disabled={isLoading}
+      className={`${isLargeScreen ? "w-[1024px]" : ""}`}
+    >
       {isLoading ? "처리중..." : "참여하기"}
     </Button>
   );
