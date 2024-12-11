@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import PopHeader from "./_components/PopHeader";
