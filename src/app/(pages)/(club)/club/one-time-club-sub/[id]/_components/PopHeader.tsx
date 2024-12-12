@@ -74,14 +74,16 @@ const PopHeader = ({ clubInfo }: PopHeaderProps) => {
   if (isLargeScreen) return null;
 
   return (
-    <div className="flex justify-center items-center w-full">
-      <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
-        <ChevronLeft className="w-6 h-6 cursor-pointer" />
-      </div>
-      <div className="flex-1 text-center pr-7">
-        <Text variant="header-16">
-          {clubInfo.egg_pop_name.length > 20 ? `${clubInfo.egg_pop_name.slice(0, 20)}...` : clubInfo.egg_pop_name}
-        </Text>
+    <div className="flex w-full h-[48px] fixed top-0 right-0 left-0 z-10 bg-white">
+      <div className="flex justify-center items-center w-full">
+        <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
+          <ChevronLeft className="w-6 h-6 cursor-pointer" />
+        </div>
+        <div className="flex-1 text-center pr-7">
+          <Text variant="header-16">
+            {clubInfo.egg_pop_name.length > 20 ? `${clubInfo.egg_pop_name.slice(0, 20)}...` : clubInfo.egg_pop_name}
+          </Text>
+        </div>
       </div>
     </div>
   );

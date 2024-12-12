@@ -9,6 +9,7 @@ import { useAuthStore } from "@/store/authStore";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { cn } from "@/utils/cn/util";
 import HeaderSearchInput from "@/app/_components/HeaderSearchInput";
+import { signOut } from "@/app/(pages)/(auth)/_api/logOut";
 
 type NavItem = {
   path: string;
@@ -26,6 +27,7 @@ export default function Header({ children }) {
   const userId = useAuthStore((state) => state.userId);
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const pathname = usePathname();
+  const userName = useAuthStore((state) => state.userName);
 
   const router = useRouter();
 
@@ -116,6 +118,24 @@ export default function Header({ children }) {
     "/kakaopay/success",
     /^\/approvemembers\/.*$/
   ];
+
+  const handleSignin = () => {
+    if (!userId) {
+      router.push("/signin");
+    } else {
+      return;
+    }
+  };
+
+  const handleLogin = () => {
+    if (userId) {
+      signOut();
+      alert("로그아웃 되었습니다");
+      window.location.reload();
+    } else {
+      router.push(`/signin`);
+    }
+  };
 
   // 웹에서 헤더, 푸터 숨길 경로
   const desktopNoHeaderFooterRoutes = ["/club"];
@@ -241,9 +261,13 @@ export default function Header({ children }) {
   const DesktopHeader = () => (
     <div className="fixed top-0 w-full h-[132px] flex flex-col justify-center items-center">
       <div className="w-[1024px] h-11 px-5 flex justify-end items-center">
-        <div className="flex w-[142px] h-5 gap-9">
-          <Text variant="body-14">회원가입</Text>
-          <Text variant="body-14">로그인</Text>
+        <div className="flex h-5 gap-9">
+          <button onClick={handleSignin}>
+            <Text variant="body-14">{userId ? `${userName}님` : "회원가입"}</Text>
+          </button>
+          <button onClick={handleLogin} className="mr-2">
+            <Text variant="body-14">{userId ? "로그아웃" : "로그인"}</Text>
+          </button>
         </div>
       </div>
 
