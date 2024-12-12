@@ -93,16 +93,33 @@ const SearchPage = () => {
       ) : (
         // 검색 하지 않은 초기 상태
         <>
-          <Image
-            src="/asset/Banner/smallBanner.svg"
-            alt="smallBanner"
-            width={358}
-            height={80}
-            onClick={handleCreateClub}
-            className="rounded-xl w-[358px] h-[80px] mt-[24px]"
-          />
-          <p className="text-[18px] font-semibold py-4 leading-[135%] mt-4">전체 인기 모임</p>
-          <OverallPopularMeetings />
+          {isLargeScreen ? (
+            <>
+              <Image
+                src="/asset/Banner/smallWebBanner.svg"
+                alt="smallWebBanner"
+                width={984}
+                height={80}
+                onClick={handleCreateClub}
+                className="rounded-xl w-full h-auto mt-[24px]"
+              />
+              <p className="text-[18px] font-semibold py-4 leading-[135%] mt-4">전체 인기 모임</p>
+              <OverallPopularMeetings />
+            </>
+          ) : (
+            <>
+              <Image
+                src="/asset/Banner/smallBanner.svg"
+                alt="smallBanner"
+                width={358}
+                height={80}
+                onClick={handleCreateClub}
+                className="rounded-xl w-full h-auto mt-[24px]"
+              />
+              <p className="text-[18px] font-semibold py-4 leading-[135%] mt-4">전체 인기 모임</p>
+              <OverallPopularMeetings />
+            </>
+          )}
         </>
       )}
     </div>
