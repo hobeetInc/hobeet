@@ -21,7 +21,7 @@ const OverallPopularMeetings = () => {
   console.log("데이터", data);
 
   return (
-    <div className={`flex   mb-[46px] ${isLargeScreen ? "flex-wrap w-full" : "flex-col items-start"}`}>
+    <div className={`flex  mb-[46px] ${isLargeScreen ? "flex-wrap w-full" : "flex-col items-start"}`}>
       {data?.map((club, index) => (
         <div
           key={club.egg_club_id}

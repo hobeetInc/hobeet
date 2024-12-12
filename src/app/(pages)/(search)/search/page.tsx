@@ -13,6 +13,11 @@ import {
 } from "@/components/ui/organisms/lists/HorizontalContentsListLarge";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import HeaderSearchInput from "@/app/_components/HeaderSearchInput";
+import Text from "@/components/ui/atoms/text/Text";
+import {
+  BigVerticalContentsEggClubList,
+  BigVerticalContentsEggPopList
+} from "@/components/ui/organisms/lists/BigVerticalContentsList";
 
 const SearchPage = () => {
   const router = useRouter();
@@ -62,6 +67,8 @@ const SearchPage = () => {
     setSearchAttempted(false);
   };
 
+  console.log("에그클럽리스트:", regularClubs);
+
   return (
     <div className="flex flex-col items-start w-full mx-auto px-4">
       {isLargeScreen ? null : <HeaderSearchInput variant="page" onClear={handleClear} />}
@@ -74,18 +81,38 @@ const SearchPage = () => {
         </div>
       ) : regularClubs.length > 0 || oneTimeClubs.length > 0 ? (
         // 검색 결과가 있는 경우
-        <div className="w-full mt-4">
+        <div className={`w-full mt-4 ${isLargeScreen ? "flex flex-wrap " : ""}`}>
           {regularClubs.map((club) => (
-            <div key={club.egg_club_id} className="p-4 bg-white rounded-lg mb-2 shadow-sm">
+            <div key={club.egg_club_id} className={`bg-white rounded-lg mb-2 ${isLargeScreen ? "" : "p-4 shadow-sm"}`}>
               <Link href={`/club/regular-club-sub/${club.egg_club_id}`} className="w-[160px] h-[311px] mr-4">
-                <HorizontalContentsListLargeEggClubSearch eggClub={club} />
+                {isLargeScreen ? (
+                  <BigVerticalContentsEggClubList
+                    eggClub={club}
+                    hostName={club.user.user_name}
+                    hostImage={club.user_id.user_profile_img}
+                    memberCount={club.egg_club_member[0].countt}
+                    isWished={null}
+                    wishListCount={club.wish_list.length}
+                  />
+                ) : (
+                  <HorizontalContentsListLargeEggClubSearch eggClub={club} />
+                )}
               </Link>
             </div>
           ))}
-          {oneTimeClubs.map((club) => (
-            <div key={club.egg_pop_id} className="p-4 bg-white rounded-lg mb-2 shadow-sm">
-              <Link href={`/club/one-time-club-sub/${club.egg_pop_id}`} className="w-[160px] h-[311px] mr-4">
-                <HorizontalContentsListLargeEggPop eggPop={club} />
+          {oneTimeClubs.map((pop) => (
+            <div key={pop.egg_pop_id} className={`bg-white rounded-lg mb-2 ${isLargeScreen ? "" : "p-4 shadow-sm"}`}>
+              <Link href={`/club/one-time-club-sub/${pop.egg_pop_id}`} className="w-[160px] h-[311px] mr-4">
+                {isLargeScreen ? (
+                  <BigVerticalContentsEggPopList
+                    eggPop={pop}
+                    hostName={pop.user.user_name}
+                    hostImage={pop.user.user_profile_img}
+                    memberCount={pop.egg_pop_member[0].count}
+                  />
+                ) : (
+                  <HorizontalContentsListLargeEggPop eggPop={pop} />
+                )}
               </Link>
             </div>
           ))}
@@ -94,32 +121,29 @@ const SearchPage = () => {
         // 검색 하지 않은 초기 상태
         <>
           {isLargeScreen ? (
-            <>
-              <Image
-                src="/asset/Banner/smallWebBanner.svg"
-                alt="smallWebBanner"
-                width={984}
-                height={80}
-                onClick={handleCreateClub}
-                className="rounded-xl w-full h-auto mt-[24px]"
-              />
-              <p className="text-[18px] font-semibold py-4 leading-[135%] mt-4">전체 인기 모임</p>
-              <OverallPopularMeetings />
-            </>
+            <Image
+              src="/asset/Banner/smallWebBanner.svg"
+              alt="smallWebBanner"
+              width={984}
+              height={80}
+              onClick={handleCreateClub}
+              className="rounded-xl w-full h-auto mt-[24px]"
+            />
           ) : (
-            <>
-              <Image
-                src="/asset/Banner/smallBanner.svg"
-                alt="smallBanner"
-                width={358}
-                height={80}
-                onClick={handleCreateClub}
-                className="rounded-xl w-full h-auto mt-[24px]"
-              />
-              <p className="text-[18px] font-semibold py-4 leading-[135%] mt-4">전체 인기 모임</p>
-              <OverallPopularMeetings />
-            </>
+            <Image
+              src="/asset/Banner/smallBanner.svg"
+              alt="smallBanner"
+              width={358}
+              height={80}
+              onClick={handleCreateClub}
+              className="rounded-xl w-full h-auto mt-[24px]"
+            />
           )}
+
+          <Text variant={`${isLargeScreen ? "header-20" : "header-18"}`} className="py-4 mt-4">
+            전체 인기 모임
+          </Text>
+          <OverallPopularMeetings />
         </>
       )}
     </div>
