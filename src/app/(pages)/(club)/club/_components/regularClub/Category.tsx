@@ -6,7 +6,7 @@ import { MainCategory, SubCategory } from "@/types/utils/category.types";
 import Text from "@/components/ui/atoms/text/Text";
 import { EggClubProps } from "@/types/features/club/eggclub.types";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 const Category = ({ formData, setFormData }: EggClubProps) => {
   const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
@@ -52,7 +52,7 @@ const Category = ({ formData, setFormData }: EggClubProps) => {
   };
 
   if (isLoading) {
-    return <Text variant="subtitle-16">로딩 중...</Text>;
+    return <LoadingSpinner />;
   }
 
   return (

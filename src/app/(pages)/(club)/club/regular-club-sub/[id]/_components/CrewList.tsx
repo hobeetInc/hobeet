@@ -18,6 +18,7 @@ import { useClubStore } from "@/store/crewStore";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { cn } from "@/utils/cn/util";
 import ApproveModal from "@/app/(pages)/(approvemembers)/approvemembers/_components/ApproveModal";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 
 const CrewList = () => {
   const userId = useAuthStore((state) => state.userId);
@@ -123,7 +124,8 @@ const CrewList = () => {
           <Button
             colorType="black"
             borderType="circle"
-            className="w-full"
+            sizeType="small"
+            className={cn(isLargeScreen ? "w-[1024px]" : "")}
             onClick={(e) => {
               e.preventDefault();
 
@@ -139,11 +141,15 @@ const CrewList = () => {
     if (userId === hostInfo.userId) {
       return (
         <>
-          <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+          <div
+            className={`w-full h-20 px-4 bg-white border-t border-solid border-gray-50 items-center inline-flex gap-[10px] ${
+              isLargeScreen ? "justify-center" : " justify-between"
+            }`}
+          >
             <Button
               borderType="circle"
               sizeType="small"
-              className="w-[50%] bg-gray-100 text-primary-900"
+              className={`${isLargeScreen ? "w-[500px]" : "w-[50%]"} bg-gray-100 text-primary-900`}
               onClick={handleManagerMembers}
             >
               에그즈 관리
@@ -153,7 +159,7 @@ const CrewList = () => {
               colorType="black"
               borderType="circle"
               sizeType="small"
-              className="w-[50%]"
+              className={cn(isLargeScreen ? "w-[500px] ml-[10px]" : "w-[50%]")}
               onClick={handleChatClick}
             >
               에그클럽 채팅방
@@ -166,7 +172,11 @@ const CrewList = () => {
     switch (participationStatus) {
       case "active":
         return (
-          <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+          <div
+            className={`w-full h-20 px-4 bg-white border-t border-solid border-gray-50 ${
+              isLargeScreen ? "justify-center " : "justify-between"
+            } items-center inline-flex gap-[10px]`}
+          >
             <Text variant="subtitle-16" className={cn(isLargeScreen ? "" : "w-[50%]")}>
               참여 중인 에그클럽이에요
             </Text>
@@ -174,7 +184,7 @@ const CrewList = () => {
               colorType="black"
               borderType="circle"
               sizeType="small"
-              className={cn(isLargeScreen ? "w-[732px]" : "w-[50%]")}
+              className={cn(isLargeScreen ? "w-[550px] ml-[250px]" : "w-[50%]")}
               onClick={handleChatClick}
             >
               에그클럽 채팅방
@@ -184,14 +194,18 @@ const CrewList = () => {
 
       case "pending":
         return (
-          <div className="w-full h-20 px-4 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
+          <div
+            className={`w-full h-20 px-4 bg-white border-t border-solid border-gray-50 ${
+              isLargeScreen ? "justify-center " : "justify-between"
+            } items-center inline-flex gap-[10px]`}
+          >
             <Text variant="subtitle-16" className={cn(isLargeScreen ? "" : "w-[50%]")}>
               에그장이 승인중이예요
             </Text>
             <button
               className={cn(
                 "px-2.5 py-3.5 bg-gray-50 rounded-[25px] justify-center items-center gap-2.5 inline-flex",
-                isLargeScreen ? "w-[732px]" : "w-[50%]"
+                isLargeScreen ? "w-[550px] ml-[250px]" : "w-[50%]"
               )}
               onClick={handleWaiting}
             >
@@ -217,7 +231,7 @@ const CrewList = () => {
     }
   };
 
-  if (isLoading) return <Text variant="subtitle-16">로딩 중...</Text>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <Text variant="subtitle-16">오류가 발생하였습니다...</Text>;
 
   return (
@@ -238,7 +252,13 @@ const CrewList = () => {
 
         <div className="w-full ">
           <NotificationList crewMembers={crewList}>
-            <div className="w-full  fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
+            <div
+              className={` ${
+                isLargeScreen ? "text-center w-full justify-center" : "w-full"
+              } fixed bottom-0 right-0 left-0 bg-white h-[114px]`}
+            >
+              {renderJoinButton()}
+            </div>
           </NotificationList>
         </div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

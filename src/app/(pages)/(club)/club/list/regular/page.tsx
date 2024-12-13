@@ -7,7 +7,7 @@ import Text from "@/components/ui/atoms/text/Text";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { BigVerticalContentsEggClubList } from "@/components/ui/organisms/lists/BigVerticalContentsList";
 import { useAuthStore } from "@/store/authStore";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 const AllRegularClubListPage = () => {
   const { data: allRegularClubList, isLoading, isError } = useEggClubAllList();
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
@@ -19,7 +19,7 @@ const AllRegularClubListPage = () => {
   };
 
   if (isLoading) {
-    return <Text variant="subtitle-16">로딩 중...</Text>;
+    return <LoadingSpinner />;
   }
 
   if (isError) {

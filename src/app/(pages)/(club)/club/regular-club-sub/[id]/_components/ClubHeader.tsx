@@ -6,10 +6,12 @@ import { GoPlus } from "react-icons/go";
 import { useAuthStore } from "@/store/authStore";
 import { useClubStore } from "@/store/crewStore";
 import Text from "@/components/ui/atoms/text/Text";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 const ClubHeader = () => {
   const router = useRouter();
   const userId = useAuthStore((state) => state.userId);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const { clubInfo } = useClubStore();
 
@@ -71,7 +73,7 @@ const ClubHeader = () => {
 
   if (!clubInfo) return null;
 
-  if (!clubInfo) return null;
+  if (isLargeScreen) return null;
 
   return (
     <div className="flex justify-between items-center h-[48px] p-3">

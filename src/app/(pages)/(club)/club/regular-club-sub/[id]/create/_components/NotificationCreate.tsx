@@ -202,7 +202,7 @@ const NotificationCreate = ({ params }: { params: { id: string } }) => {
               <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
                 <ChevronLeft className="w-6 h-6 cursor-pointer" />
               </div>
-              <button onClick={() => router.push("/")} className="p-2">
+              <button onClick={() => router.push(`/club/regular-club-sub/${params.id}`)} className="p-2">
                 <IoCloseOutline className="w-6 h-6" />
               </button>
             </div>

@@ -4,7 +4,7 @@ import { useAuth } from "@/store/AuthContext";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 const InsertUserInfo = () => {
   const supabase = browserClient;
   const router = useRouter();
@@ -45,7 +45,7 @@ const InsertUserInfo = () => {
     insertUserInfo();
   }, []);
 
-  return <div>...로딩중</div>;
+  return <LoadingSpinner />;
 };
 
 export default InsertUserInfo;

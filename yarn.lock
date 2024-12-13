@@ -5792,6 +5792,7 @@ __metadata:
     eslint-config-next: "npm:14.2.15"
     lucide-react: "npm:^0.453.0"
     next: "npm:14.2.15"
+    plaiceholder: "npm:^3.0.0"
     postcss: "npm:^8"
     react: "npm:^18"
     react-datepicker: "npm:^7.5.0"
@@ -7613,6 +7614,15 @@ __metadata:
   version: 4.0.6
   resolution: "pirates@npm:4.0.6"
   checksum: 10c0/00d5fa51f8dded94d7429700fb91a0c1ead00ae2c7fd27089f0c5b63e6eca36197fe46384631872690a66f390c5e27198e99006ab77ae472692ab9c2ca903f36
+  languageName: node
+  linkType: hard
+
+"plaiceholder@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "plaiceholder@npm:3.0.0"
+  peerDependencies:
+    sharp: ">= 0.30.6"
+  checksum: 10c0/b85879ac06f89f6229786237a9f64c920509d6cda7b0dfb8f984edb5c576b170c08bf401ab7e2be428694fd8978791e2ee8458d2cefa41f67f8c5935964a0639
   languageName: node
   linkType: hard
 

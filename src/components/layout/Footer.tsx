@@ -104,7 +104,7 @@ export default function Footer() {
 
     const ButtonContent = () => (
       <div className={cn("flex w-[48px] h-[48px] flex-col justify-center items-center flex-shrink-0")}>
-        <Image src={iconSrc} alt={item.alt} width={48} height={48} />
+        <Image src={iconSrc} alt={item.alt} width={48} height={48} priority />
       </div>
     );
 
