@@ -16,7 +16,7 @@ const PaymentHistory = () => {
 
   return (
     <div>
-      <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center lg:static lg:mt-[84px]">
+      <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center lg:static lg:mt-10">
         {isLargeScreen ? (
           ""
         ) : (

@@ -40,7 +40,7 @@ const ProfileEditPage = () => {
   if (providerQuery.error) return <div>프로필 정보 처리 중 오류</div>;
 
   return (
-    <div className="w-full flex flex-col items-center lg:mt-[132px]">
+    <div className="w-full flex flex-col items-center lg:mt-6">
       <div className="flex w-full h-12 bg-white items-center lg:text-center">
         {isLargeScreen ? (
           ""
@@ -52,14 +52,14 @@ const ProfileEditPage = () => {
           </div>
         )}
 
-        <div className="flex flex-grow justify-center lg:w-full lg:text-center lg:py-5 lg:mb-14">
+        <div className="flex flex-grow justify-center lg:w-full lg:text-center lg:py-5 lg:mb-2">
           <Text variant={isLargeScreen ? "header-20" : "header-16"} className="text-gray-900 lg:justify-center">
             내 프로필 수정
           </Text>
         </div>
       </div>
 
-      <div className="relative flex justify-center mb-5">
+      <div className="relative flex justify-center mb-4">
         <div className="relative w-[78px] h-[78px]">
           <div className="rounded-full overflow-hidden w-[78px] h-[78px] mt-9">
             {userProfileImg ? (
@@ -84,7 +84,7 @@ const ProfileEditPage = () => {
           <input type="file" id="profileImg" className="hidden" onChange={handleImageChange} />
         </div>
       </div>
-      <div className="lg:mt-10">
+      <div className="lg:mt-6">
         <div className="w-full flex flex-col justify-start items-start gap-2 my-[36px] lg:w-[480px] lg:my-10">
           <Text variant="subtitle-18" className="text-gray-900 ml-4 lg:ml-0">
             이름

@@ -188,14 +188,14 @@ const SignupSecondPage = () => {
           </div>
         )}
 
-        <div className="flex flex-grow justify-center lg:justify-start lg:ml-5 lg:py-5 lg:mt-[132px]">
-          <Text variant="header-16" className="text-gray-900">
+        <div className="flex flex-grow justify-center lg:ml-5 lg:py-5 lg:mt-10">
+          <Text variant={isLargeScreen ? "header-20" : "header-16"} className="text-gray-900">
             회원가입
           </Text>
         </div>
       </div>
 
-      <div className="mt-4 flex flex-col gap-12 lg:fixed lg:top-[21vh] lg:left-1/2 lg:-translate-x-1/2 lg:w-[480px] lg:mt-0 lg:h-[438px] lg:gap-10">
+      <div className="mt-4 flex flex-col gap-12 lg:relative lg:w-[480px] lg:mt-20 lg:gap-10">
         <div className="flex flex-col gap-2">
           {!isLargeScreen ? <Text variant="subtitle-18">프로필</Text> : ""}
           <div className="relative w-[78px] h-[78px] mt-2 lg:mt-0">
@@ -347,7 +347,7 @@ const SignupSecondPage = () => {
         </div>
       </div>
 
-      <div className="fixed ml-[16px] mr-[16px] w-full bottom-0 mb-[54px] justify-items-center lg:w-[480px] lg:left-1/2 lg:-translate-x-1/2 lg:mx-0">
+      <div className="fixed ml-[16px] mr-[16px] w-full bottom-0 mb-[54px] justify-items-center lg:static lg:w-[480px] lg:mb-0 lg:mt-16 lg:mx-auto">
         {isFormComplete ? (
           <Button
             colorType="orange"

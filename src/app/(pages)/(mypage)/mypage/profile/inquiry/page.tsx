@@ -8,7 +8,7 @@ import { HiOutlineChevronLeft } from "react-icons/hi";
 const InquiryPage = () => {
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   return (
-    <div className="max-w-md mx-auto bg-white p-6 border border-gray-200 rounded-lg lg:mt-[132px] lg:mx-5 lg:max-w-none">
+    <div className="max-w-md mx-auto bg-white p-6 border border-gray-200 rounded-lg lg:mx-5 lg:max-w-none lg:mt-10">
       <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
         {isLargeScreen ? (
           ""
@@ -20,14 +20,14 @@ const InquiryPage = () => {
           </div>
         )}
 
-        <div className="flex flex-grow justify-center lg:py-5 lg:mt-[132px]">
-          <Text variant={isLargeScreen ? "header-20" : "header-16"} className="text-gray-900">
+        <div className="flex flex-grow items-center justify-center lg:py-5 lg:mt-[150px]">
+          <Text variant={isLargeScreen ? "header-20" : "header-16"} className="text-gray-900 mt-10">
             문의하기
           </Text>
         </div>
       </div>
 
-      <div className="mt-[60px] lg:w-full">
+      <div className="mt-[60px] lg:w-full lg:mt-0">
         <div className="mb-6 mt-10">
           <h1 className="font-bold text-gray-800 mb-4 lg:mb-6">{`[운영 관련 안내]`}</h1>
           <h2 className="text-sm font-bold text-gray-800 mb-2 ml-1">1. 탈퇴 및 강퇴</h2>
