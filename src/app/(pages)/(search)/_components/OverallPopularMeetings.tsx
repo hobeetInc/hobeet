@@ -18,8 +18,6 @@ const OverallPopularMeetings = () => {
 
   if (isLoading) return <div>Loading...</div>;
 
-  console.log("데이터", data);
-
   return (
     <div className={`flex mb-[46px] ${isLargeScreen ? "flex-wrap w-full h-[784px] mt-8" : "flex-col items-start"}`}>
       {data?.map((club, index) => (

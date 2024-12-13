@@ -74,8 +74,6 @@ const SearchPage = () => {
     return club.wish_list?.some((wish) => wish.user_id === userId) || false;
   };
 
-  console.log("에그클럽리스트:", regularClubs);
-
   return (
     <div className="flex flex-col items-start w-full mx-auto px-4">
       {isLargeScreen ? null : <HeaderSearchInput variant="page" onClear={handleClear} />}
@@ -88,17 +86,20 @@ const SearchPage = () => {
         </div>
       ) : regularClubs.length > 0 || oneTimeClubs.length > 0 ? (
         // 검색 결과가 있는 경우
-        <div className={`w-full mt-4 ${isLargeScreen ? "flex flex-wrap " : ""}`}>
+        <div className={`w-full mt-4 ${isLargeScreen ? "flex flex-wrap gap-4" : ""}`}>
           {regularClubs.map((club) => (
             <div key={club.egg_club_id} className={`bg-white rounded-lg mb-2 ${isLargeScreen ? "" : "p-4 shadow-sm"}`}>
-              <Link href={`/club/regular-club-sub/${club.egg_club_id}`} className="w-[160px] h-[311px] mr-4">
+              <Link
+                href={`/club/regular-club-sub/${club.egg_club_id}`}
+                className={`${isLargeScreen ? "w-[311px]" : ""} h-[311px]`}
+              >
                 {isLargeScreen ? (
                   <BigVerticalContentsEggClubList
                     eggClub={club}
                     hostName={club.user.user_name}
-                    hostImage={club.user_id.user_profile_img}
-                    memberCount={club.egg_club_member[0].countt}
-                    isWished={isWishedByUser(club)} // 아직 고치는중
+                    hostImage={club.user.user_profile_img}
+                    memberCount={club.egg_club_member[0].count}
+                    isWished={isWishedByUser(club)}
                     wishListCount={club.wish_list.length}
                   />
                 ) : (
@@ -109,7 +110,10 @@ const SearchPage = () => {
           ))}
           {oneTimeClubs.map((pop) => (
             <div key={pop.egg_pop_id} className={`bg-white rounded-lg mb-2 ${isLargeScreen ? "" : "p-4 shadow-sm"}`}>
-              <Link href={`/club/one-time-club-sub/${pop.egg_pop_id}`} className="w-[160px] h-[311px] mr-4">
+              <Link
+                href={`/club/one-time-club-sub/${pop.egg_pop_id}`}
+                className={`${isLargeScreen ? "w-[311px]" : ""} h-[311px]`}
+              >
                 {isLargeScreen ? (
                   <BigVerticalContentsEggPopList
                     eggPop={pop}
