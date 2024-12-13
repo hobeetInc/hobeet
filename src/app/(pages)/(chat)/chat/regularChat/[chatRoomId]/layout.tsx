@@ -12,7 +12,7 @@ import { ChatRoomExit } from "../../../_api/supabase";
 import { useAuthStore } from "@/store/authStore";
 import { fetchChattingMembers } from "../../../_api/regular";
 import { cn } from "@/utils/cn/util";
-
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 interface LayoutProps {
   children: React.ReactNode;
   params: {
@@ -30,6 +30,7 @@ function ChatHeader() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ChattingMember, setChattingMember] = useState<EggClubChattingMemberInfo[]>();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   useEffect(() => {
     if (egg_club_id) {
@@ -65,7 +66,8 @@ function ChatHeader() {
     <>
       <div
         className={cn(
-          "flex items-center justify-between h-[60px] border-b border-gray-200 bg-white fixed top-0 left-0 right-0 z-10"
+          "flex items-center justify-between h-[60px] border-b border-gray-200 bg-white fixed top-0 left-0 right-0 z-10",
+          isLargeScreen ? "mt-[85px] w-[1024px] justify-self-center" : ""
         )}
       >
         <button onClick={handleBack} className={cn("p-2")}>

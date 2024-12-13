@@ -16,13 +16,18 @@ const HomeContent = () => {
   if (!clubInfo) return null;
   return (
     <div className={`flex flex-col items-center justify-center ${isLargeScreen ? "mb-[126px]" : ""}`}>
-      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100">
+      <div
+        className={`flex overflow-hidden relative ${
+          isLargeScreen ? "w-[1024px] h-[405px] bg-white" : "w-[390px] h-[332px] bg-gray-100"
+        }`}
+      >
         <Image
           src={clubInfo.egg_club_image}
           alt={clubInfo.egg_club_name}
-          width={390}
-          height={332}
-          className="w-[390px] h-[332px] object-cover"
+          width={isLargeScreen ? 1024 : 390}
+          height={isLargeScreen ? 405 : 332}
+          sizes={isLargeScreen ? "1024px" : "390px"}
+          className={`${isLargeScreen ? "w-[1024px] h-[405px] object-fill" : "w-[390px] h-[332px]"} object-cover`}
         />
       </div>
 
