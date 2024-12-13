@@ -13,6 +13,7 @@ import { queryKeys } from "@/hooks/utils/queryKeys";
 import { sendMessage } from "../../../_api/regular";
 import ChatInput from "./_components/ChatInput";
 import { cn } from "@/utils/cn/util";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 const supabase = createClient();
 
@@ -24,6 +25,7 @@ const ChatPage = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const userId = useAuthStore((state) => state.userId);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   // 1. 모임 ID 조회
   const { data: rec, isSuccess: isRecFetched } = useQuery({
@@ -176,7 +178,7 @@ const ChatPage = () => {
   }
 
   return (
-    <div className={cn("flex flex-col h-full")}>
+    <div className={cn("flex flex-col h-full", isLargeScreen ? "overflow-hidden mt-[100px]" : "")}>
       <div className={cn("flex-grow overflow-y-auto")}>
         <div className={cn("p-4")}>
           {Object.keys(groupedMessages).length > 0 ? (

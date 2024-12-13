@@ -1,6 +1,8 @@
+"use client";
 import { useRef, useEffect, useState } from "react";
 import { Icon } from "@/components/ui/atoms/icons/Icon";
 import { cn } from "@/utils/cn/util";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 interface ChatInputProps {
   newMessage: string;
@@ -11,6 +13,7 @@ interface ChatInputProps {
 const ChatInput = ({ newMessage, setNewMessage, handleSendMessage }: ChatInputProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [sendIconColor, setSentIconColor] = useState<boolean>(false);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   // 텍스트영역 높이 자동조절
   useEffect(() => {
@@ -23,8 +26,8 @@ const ChatInput = ({ newMessage, setNewMessage, handleSendMessage }: ChatInputPr
   }, [newMessage]);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t">
-      <div className="p-4">
+    <div className={`fixed  bottom-0 left-0 right-0 bg-white border-t ${isLargeScreen ? "justify-self-center	" : ""}`}>
+      <div className={cn("p-4", isLargeScreen ? "w-[1024px]" : "w-full")}>
         <div className="flex items-center">
           <textarea
             ref={textareaRef}
