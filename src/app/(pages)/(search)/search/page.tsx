@@ -18,12 +18,14 @@ import {
   BigVerticalContentsEggClubList,
   BigVerticalContentsEggPopList
 } from "@/components/ui/organisms/lists/BigVerticalContentsList";
+import { useAuthStore } from "@/store/authStore";
 
 const SearchPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("query") || "";
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
+  const userId = useAuthStore((state) => state.userId);
 
   const [regularClubs, setRegularClubs] = useState<EggClubSearchResults[]>([]);
   const [oneTimeClubs, setOneTimeClubs] = useState<EggPopSearchResults[]>([]);
@@ -67,6 +69,11 @@ const SearchPage = () => {
     setSearchAttempted(false);
   };
 
+  const isWishedByUser = (club) => {
+    if (!userId) return false;
+    return club.wish_list?.some((wish) => wish.user_id === userId) || false;
+  };
+
   console.log("에그클럽리스트:", regularClubs);
 
   return (
@@ -91,7 +98,7 @@ const SearchPage = () => {
                     hostName={club.user.user_name}
                     hostImage={club.user_id.user_profile_img}
                     memberCount={club.egg_club_member[0].countt}
-                    isWished={null}
+                    isWished={isWishedByUser(club)} // 아직 고치는중
                     wishListCount={club.wish_list.length}
                   />
                 ) : (
