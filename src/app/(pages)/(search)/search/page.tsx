@@ -88,7 +88,10 @@ const SearchPage = () => {
         // 검색 결과가 있는 경우
         <div className={`w-full mt-4 ${isLargeScreen ? "flex flex-wrap gap-4" : ""}`}>
           {regularClubs.map((club) => (
-            <div key={club.egg_club_id} className={`bg-white rounded-lg mb-2 ${isLargeScreen ? "" : "p-4 shadow-sm"}`}>
+            <div
+              key={club.egg_club_id}
+              className={`bg-white rounded-lg mb-2 ${isLargeScreen ? "w-[228px]" : "p-4 shadow-sm"}`}
+            >
               <Link
                 href={`/club/regular-club-sub/${club.egg_club_id}`}
                 className={`${isLargeScreen ? "w-[311px]" : ""} h-[311px]`}
