@@ -9,6 +9,7 @@ import { useAuthStore } from "@/store/authStore";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { cn } from "@/utils/cn/util";
 import HeaderSearchInput from "@/app/_components/HeaderSearchInput";
+import { signOut } from "@/app/(pages)/(auth)/_api/logOut";
 
 type NavItem = {
   path: string;
@@ -26,6 +27,7 @@ export default function Header({ children }) {
   const userId = useAuthStore((state) => state.userId);
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const pathname = usePathname();
+  const userName = useAuthStore((state) => state.userName);
 
   const router = useRouter();
 
@@ -117,8 +119,26 @@ export default function Header({ children }) {
     /^\/approvemembers\/.*$/
   ];
 
+  const handleSignin = () => {
+    if (!userId) {
+      router.push("/signin");
+    } else {
+      return;
+    }
+  };
+
+  const handleLogin = () => {
+    if (userId) {
+      signOut();
+      alert("로그아웃 되었습니다");
+      window.location.reload();
+    } else {
+      router.push(`/signin`);
+    }
+  };
+
   // 웹에서 헤더, 푸터 숨길 경로
-  const desktopNoHeaderFooterRoutes = ["/signin", "/club"];
+  const desktopNoHeaderFooterRoutes = ["/club"];
 
   const mobileNoHeaderRoutes = [/^\/category\/.*$/];
   const desktopNoHeaderRoutes = [];
@@ -239,22 +259,35 @@ export default function Header({ children }) {
   );
 
   const DesktopHeader = () => (
-    <header className="flex  w-full h-[88px] px-5 fixed right-0 bg-white z-50">
-      <div className="flex items-center justify-between w-full gap-5">
-        <Link href="/">
-          <Image src="/asset/Logo/MainLogo.svg" alt="MainLogo" width={96} height={24} priority />
-        </Link>
-
-        <div>
-          <HeaderSearchInput variant="header" />
+    <div className="fixed top-0 w-full h-[132px] flex flex-col justify-center items-center">
+      <div className="w-[1024px] h-11 px-5 flex justify-end items-center">
+        <div className="flex h-5 gap-9">
+          <button onClick={handleSignin}>
+            <Text variant="body-14">{userId ? `${userName}님` : "회원가입"}</Text>
+          </button>
+          <button onClick={handleLogin} className="mr-2">
+            <Text variant="body-14">{userId ? "로그아웃" : "로그인"}</Text>
+          </button>
         </div>
-        <nav className="w-[240px] flex items-center gap-4">
-          {navItems.map((item, index) => (
-            <NavButton key={index} item={item} />
-          ))}
-        </nav>
       </div>
-    </header>
+
+      <header className="flex w-[1024px] h-[88px] px-5 bg-white">
+        <div className="flex items-center justify-between w-full gap-5">
+          <Link href="/">
+            <Image src="/asset/Logo/MainLogo.svg" alt="MainLogo" width={96} height={24} priority />
+          </Link>
+
+          <div>
+            <HeaderSearchInput variant="header" />
+          </div>
+          <nav className="w-[240px] flex items-center gap-4">
+            {navItems.map((item, index) => (
+              <NavButton key={index} item={item} />
+            ))}
+          </nav>
+        </div>
+      </header>
+    </div>
   );
 
   return (
@@ -264,7 +297,7 @@ export default function Header({ children }) {
         className={`flex-1 overflow-y-auto scrollbar-hide ${isLargeScreen ? "self-center w-[1024px]" : ""} ${
           isLargeScreen
             ? showHeaderFooter
-              ? "mt-[88px]"
+              ? "mt-[132px]"
               : ""
             : showHeaderFooter
             ? showHeader

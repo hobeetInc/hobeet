@@ -13,12 +13,19 @@ import {
 } from "@/components/ui/organisms/lists/HorizontalContentsListLarge";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import HeaderSearchInput from "@/app/_components/HeaderSearchInput";
+import Text from "@/components/ui/atoms/text/Text";
+import {
+  BigVerticalContentsEggClubList,
+  BigVerticalContentsEggPopList
+} from "@/components/ui/organisms/lists/BigVerticalContentsList";
+import { useAuthStore } from "@/store/authStore";
 
 const SearchPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("query") || "";
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
+  const userId = useAuthStore((state) => state.userId);
 
   const [regularClubs, setRegularClubs] = useState<EggClubSearchResults[]>([]);
   const [oneTimeClubs, setOneTimeClubs] = useState<EggPopSearchResults[]>([]);
@@ -62,6 +69,11 @@ const SearchPage = () => {
     setSearchAttempted(false);
   };
 
+  const isWishedByUser = (club) => {
+    if (!userId) return false;
+    return club.wish_list?.some((wish) => wish.user_id === userId) || false;
+  };
+
   return (
     <div className="flex flex-col items-start w-full mx-auto px-4">
       {isLargeScreen ? null : <HeaderSearchInput variant="page" onClear={handleClear} />}
@@ -74,18 +86,47 @@ const SearchPage = () => {
         </div>
       ) : regularClubs.length > 0 || oneTimeClubs.length > 0 ? (
         // 검색 결과가 있는 경우
-        <div className="w-full mt-4">
+        <div className={`w-full mt-4 ${isLargeScreen ? "flex flex-wrap gap-4" : ""}`}>
           {regularClubs.map((club) => (
-            <div key={club.egg_club_id} className="p-4 bg-white rounded-lg mb-2 shadow-sm">
-              <Link href={`/club/regular-club-sub/${club.egg_club_id}`} className="w-[160px] h-[311px] mr-4">
-                <HorizontalContentsListLargeEggClubSearch eggClub={club} />
+            <div
+              key={club.egg_club_id}
+              className={`bg-white rounded-lg mb-2 ${isLargeScreen ? "w-[228px]" : "p-4 shadow-sm"}`}
+            >
+              <Link
+                href={`/club/regular-club-sub/${club.egg_club_id}`}
+                className={`${isLargeScreen ? "w-[311px]" : ""} h-[311px]`}
+              >
+                {isLargeScreen ? (
+                  <BigVerticalContentsEggClubList
+                    eggClub={club}
+                    hostName={club.user.user_name}
+                    hostImage={club.user.user_profile_img}
+                    memberCount={club.egg_club_member[0].count}
+                    isWished={isWishedByUser(club)}
+                    wishListCount={club.wish_list.length}
+                  />
+                ) : (
+                  <HorizontalContentsListLargeEggClubSearch eggClub={club} />
+                )}
               </Link>
             </div>
           ))}
-          {oneTimeClubs.map((club) => (
-            <div key={club.egg_pop_id} className="p-4 bg-white rounded-lg mb-2 shadow-sm">
-              <Link href={`/club/one-time-club-sub/${club.egg_pop_id}`} className="w-[160px] h-[311px] mr-4">
-                <HorizontalContentsListLargeEggPop eggPop={club} />
+          {oneTimeClubs.map((pop) => (
+            <div key={pop.egg_pop_id} className={`bg-white rounded-lg mb-2 ${isLargeScreen ? "" : "p-4 shadow-sm"}`}>
+              <Link
+                href={`/club/one-time-club-sub/${pop.egg_pop_id}`}
+                className={`${isLargeScreen ? "w-[311px]" : ""} h-[311px]`}
+              >
+                {isLargeScreen ? (
+                  <BigVerticalContentsEggPopList
+                    eggPop={pop}
+                    hostName={pop.user.user_name}
+                    hostImage={pop.user.user_profile_img}
+                    memberCount={pop.egg_pop_member[0].count}
+                  />
+                ) : (
+                  <HorizontalContentsListLargeEggPop eggPop={pop} />
+                )}
               </Link>
             </div>
           ))}
@@ -93,15 +134,29 @@ const SearchPage = () => {
       ) : (
         // 검색 하지 않은 초기 상태
         <>
-          <Image
-            src="/asset/Banner/smallBanner.svg"
-            alt="smallBanner"
-            width={358}
-            height={80}
-            onClick={handleCreateClub}
-            className="rounded-xl w-[358px] h-[80px] mt-[24px]"
-          />
-          <p className="text-[18px] font-semibold py-4 leading-[135%] mt-4">전체 인기 모임</p>
+          {isLargeScreen ? (
+            <Image
+              src="/asset/Banner/smallWebBanner.svg"
+              alt="smallWebBanner"
+              width={984}
+              height={80}
+              onClick={handleCreateClub}
+              className="rounded-xl w-full h-auto mt-[24px]"
+            />
+          ) : (
+            <Image
+              src="/asset/Banner/smallBanner.svg"
+              alt="smallBanner"
+              width={358}
+              height={80}
+              onClick={handleCreateClub}
+              className="rounded-xl w-full h-auto mt-[24px]"
+            />
+          )}
+
+          <Text variant={`${isLargeScreen ? "header-20" : "header-18"}`} className="py-4 mt-4">
+            전체 인기 모임
+          </Text>
           <OverallPopularMeetings />
         </>
       )}

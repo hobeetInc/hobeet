@@ -25,7 +25,7 @@ const AllOneTimeClubListPage = () => {
     <div className={`${isLargeScreen ? "px-5" : ""}`}>
       {isLargeScreen && (
         <div className="h-[67px] flex items-center">
-          <Text variant="header-20">프레쉬 에그클럽</Text>
+          <Text variant="header-20">따끈따끈한 에그팝</Text>
         </div>
       )}
 
