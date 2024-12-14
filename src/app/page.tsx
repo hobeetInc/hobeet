@@ -15,9 +15,18 @@ import RegularClubList from "./_components/RegularClubList";
 import CategorySlider from "./_components/CategorySlider";
 
 import useScreenSizeStore from "@/store/useScreenSizeStore";
-import ChristmasBanner from "./_components/banners/ChristmasBanner";
-import WinterCampingBanner from "./_components/banners/WinterCampingBanner";
-import SkiBanner from "./_components/banners/SkiBanner";
+import dynamic from "next/dynamic";
+
+// Dynamic imports for banners
+const ChristmasBanner = dynamic(() => import("./_components/banners/ChristmasBanner"), {
+  loading: () => <div className="w-full h-[200px] animate-pulse bg-gray-200" />
+});
+const WinterCampingBanner = dynamic(() => import("./_components/banners/WinterCampingBanner"), {
+  loading: () => <div className="w-full h-[200px] animate-pulse bg-gray-200" />
+});
+const SkiBanner = dynamic(() => import("./_components/banners/SkiBanner"), {
+  loading: () => <div className="w-full h-[200px] animate-pulse bg-gray-200" />
+});
 
 export default function Home() {
   const router = useRouter();

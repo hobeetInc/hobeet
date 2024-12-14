@@ -17,6 +17,7 @@ import {
   createMutations
 } from "@/app/(pages)/(chat)/_api/onetime";
 import ChatInput from "./_components/ChatInput";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 const supabase = createClient();
 
@@ -27,7 +28,7 @@ const ChatPage = () => {
   const queryClient = useQueryClient();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const userId = useAuthStore((state) => state.userId);
-
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const { data: rec, isSuccess: isRecFetched } = useQuery({
     queryKey: queryKeys.oneTimeChat.eggPopId(roomId as string),
     queryFn: () => fetchEggPopId(roomId as string),
@@ -161,7 +162,7 @@ const ChatPage = () => {
   }
 
   return (
-    <div className={cn("flex flex-col h-full")}>
+    <div className={cn("flex flex-col h-full", isLargeScreen ? "overflow-hidden mt-[100px]" : "")}>
       {/* 메시지 출력 */}
       <div className={cn("flex-grow overflow-y-auto")}>
         <div className={cn("p-4")}>

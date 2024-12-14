@@ -30,7 +30,7 @@ export default function WinterCampingBanner({ isLargeScreen }: BannerProps) {
         >
           추운 겨울이 오고 있어요
           <br />
-          함께 캠핑을 떠��보는 건 어때요?
+          함께 캠핑을 떠나보는 건 어때요?
         </Text>
       </div>
     </div>

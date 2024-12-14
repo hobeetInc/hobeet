@@ -56,10 +56,17 @@ export default function FloatingButton() {
 
   return (
     <div className="w-21 h-[176px] fixed right-0 bottom-0 flex flex-col justify-start gap-3 pr-5">
-      <button className="w-16 h-16 rounded-full bg-white border border-1 border-gray-100 flex items-center justify-center">
+      <button
+        className="w-16 h-16 rounded-full bg-white border border-1 border-gray-100 flex items-center justify-center"
+        aria-label="챗봇"
+      >
         <Icon name="eggSpeechBubble" />
       </button>
-      <button onClick={handlePlus} className="w-16 h-16 rounded-full bg-primary-500 flex items-center justify-center">
+      <button
+        onClick={handlePlus}
+        className="w-16 h-16 rounded-full bg-primary-500 flex items-center justify-center"
+        aria-label="모임 생성 버튼"
+      >
         <GoPlus className="w-6 h-6 text-white" />
       </button>
     </div>

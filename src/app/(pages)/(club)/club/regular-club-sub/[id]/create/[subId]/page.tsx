@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import { getNotificationData, getNotificationMember } from "../../../../_api/supabase";
 import CrewList from "./_components/CrewList";
@@ -7,6 +6,7 @@ import Text from "@/components/ui/atoms/text/Text";
 import { ProfileImageLarge } from "@/components/ui/molecules/Images/ProfileImageLarge";
 import Tag from "@/components/ui/atoms/tags/Tag";
 import { formatterDate, formatterLocation, formatterTax } from "../../../../_utils/formatter";
+import DayImage from "./_components/DayImage";
 
 export const revalidate = 0;
 
@@ -48,15 +48,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
           <DayHeader clubInfo={clubInfo} />
         </div>
 
-        <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6 mt-12">
-          <Image
-            src={clubInfo.egg_day_image}
-            alt={clubInfo.egg_day_name}
-            width={390}
-            height={332}
-            className="w-[390px] h-[332px] object-cover"
-          />
-        </div>
+        <DayImage imageSrc={clubInfo.egg_day_image} imageName={clubInfo.egg_day_name} />
 
         <div className="w-full flex-col justify-start items-start gap-8 px-4 inline-flex">
           <div className="self-stretch flex-col justify-start items-start gap-5 flex">
