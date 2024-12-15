@@ -52,7 +52,10 @@ export default function Home() {
       <CategorySlider />
       <div className="flex justify-between items-center mt-9 mx-4">
         <Text variant="subtitle-18">따끈따끈 에그팝</Text>
-        <div className="w-[24px] h-[24px] flex items-center" onClick={() => router.push("/club/list/onetime")}>
+        <div
+          className="w-[24px] h-[24px] flex items-center hover:cursor-pointer"
+          onClick={() => router.push("/club/list/onetime")}
+        >
           <MdOutlineKeyboardArrowRight className="w-6 h-6" />
         </div>
       </div>
@@ -60,7 +63,10 @@ export default function Home() {
       <WinterCampingBanner isLargeScreen={isLargeScreen} />
       <div className="flex justify-between items-center gap-2 mt-16 mx-4">
         <Text variant="subtitle-18">프레쉬 에그클럽</Text>
-        <div className="flex w-[24px] h-[24px]  flex-col items-start" onClick={() => router.push("/club/list/regular")}>
+        <div
+          className="flex w-[24px] h-[24px]  flex-col items-start hover:cursor-pointer"
+          onClick={() => router.push("/club/list/regular")}
+        >
           <MdOutlineKeyboardArrowRight className="w-6 h-6" />
         </div>
       </div>
