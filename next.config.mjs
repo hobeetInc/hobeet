@@ -38,30 +38,30 @@ const nextConfig = {
       }
     ]
   },
-  // 웹팩 설정 추가
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        minSize: 20000,
-        maxSize: 244000,
-        cacheGroups: {
-          commons: {
-            test: /[\\/]node_modules[\\/]/,
-            name(module, chunks, cacheGroupKey) {
-              const moduleFileName = module
-                .identifier()
-                .split('/')
-                .reduceRight((item) => item);
-              return `${cacheGroupKey}-${moduleFileName}`;
-            },
-            chunks: 'all',
-          },
-        },
-      };
-    }
-    return config;
-  },
+  // // 웹팩 설정 추가
+  // webpack: (config, { isServer }) => {
+  //   if (!isServer) {
+  //     config.optimization.splitChunks = {
+  //       chunks: 'all',
+  //       minSize: 20000,
+  //       maxSize: 244000,
+  //       cacheGroups: {
+  //         commons: {
+  //           test: /[\\/]node_modules[\\/]/,
+  //           name(module, chunks, cacheGroupKey) {
+  //             const moduleFileName = module
+  //               .identifier()
+  //               .split(/[\\/]/)
+  //               .reduceRight((item) => item);
+  //             return `${cacheGroupKey}-${moduleFileName}`;
+  //           },
+  //           chunks: 'all',
+  //         },
+  //       },
+  //     };
+  //   }
+  //   return config;
+  // },
 };
 // PWA 설정
 const withPWA = withPWAInit({

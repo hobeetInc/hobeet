@@ -23,7 +23,14 @@ const ProfilePage = () => {
   const { user_name: userName, user_profile_img: userProfileImg } = profileQuery.data;
 
   return (
-    <div className="max-w-md mx-auto p-4 lg:max-w-[1024px] lg:mx-0 lg:mt-[135px]">
+    <div className="max-w-md mx-auto p-4 lg:max-w-[1024px] lg:mx-0 lg:mt-6">
+      {isLargeScreen ? (
+        <div className="py-5">
+          <Text variant="header-20">마이</Text>
+        </div>
+      ) : (
+        ""
+      )}
       <div
         className="flex items-center bg-primary-200 p-4 rounded-lg mb-6 justify-between cursor-pointer lg:w-full lg:justify-start"
         onClick={() => router.push("/mypage/profile/profileUpdate")}
