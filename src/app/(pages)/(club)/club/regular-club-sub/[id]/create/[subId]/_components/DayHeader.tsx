@@ -1,6 +1,6 @@
 "use client";
 
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { EggDay } from "@/types/features/club/eggday.types";
 import { ChevronLeft } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
@@ -76,7 +76,7 @@ const DayHeader = ({ clubInfo }: DayHeaderProps) => {
       </div>
       <div className="flex-1 text-center pr-7">
         <Text variant="header-16">
-          {clubInfo?.egg_day_name.length > 8 ? `${clubInfo?.egg_day_name.slice(0, 8)}...` : clubInfo?.egg_day_name}
+          {clubInfo?.egg_day_name.length > 20 ? `${clubInfo?.egg_day_name.slice(0, 20)}...` : clubInfo?.egg_day_name}
         </Text>
       </div>
     </div>

@@ -1,22 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { useRouter } from "next/navigation";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
-import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
+import Tag from "@/components/ui/atoms/tags/Tag";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
 import { useAuthStore } from "@/store/authStore";
 import { usePayments } from "@/hooks/utils/api/usePayment";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 const EggDayPayDetail = () => {
   const router = useRouter();
   const userId = useAuthStore((state) => state.userId);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const { dayPayments, isLoading, isError } = usePayments(userId);
 
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <div>에그데이 결제 정보 처리 중 오류</div>;
 
   return (
@@ -35,21 +38,24 @@ const EggDayPayDetail = () => {
                   `/club/regular-club-sub/${notification.egg_club_id}/create/${notification.egg_day.egg_day_id}`
                 );
               }}
-              className="flex flex-col w-full h-[163px] border-b border-solid border-gray-100 mb-[32px]"
+              className="flex flex-col w-full h-[163px] border-b border-solid border-gray-100 mb-[32px] lg:h-[192px]"
             >
               <div className="h-[35px] py-2 justify-start items-center gap-2.5 inline-flex">
-                <Text variant="subtitle-14">{customDateFormat(notification.egg_day_kakaopay_create_at)}</Text>
+                <Text variant={isLargeScreen ? "subtitle-16" : "subtitle-14"}>
+                  {customDateFormat(notification.egg_day_kakaopay_create_at)}
+                </Text>
               </div>
 
-              <div className="w-[358px] h-[88px] justify-start items-center gap-2 inline-flex mt-2">
-                <div className="h-[88px] justify-start items-center gap-2 inline-flex">
-                  <Image
-                    src={notification.egg_day.egg_day_image}
-                    alt="payList"
-                    width={88}
-                    height={88}
-                    className="w-[88px] h-[88px] relative bg-gray-100 rounded-xl"
-                  />
+              <div className="w-[358px] h-[88px] justify-start items-center gap-2 inline-flex mt-2 lg:ml-[164px]">
+                <div className="h-[88px] justify-start items-center gap-2 inline-flex lg:w-[144px] lg:h-[144px] lg:mr-2">
+                  <div className="relative w-[88px] h-[88px] lg:w-[144px] lg:h-[144px]">
+                    <Image
+                      src={notification.egg_day.egg_day_image}
+                      alt="payList"
+                      fill
+                      className="w-[88px] h-[88px] bg-gray-100 rounded-xl"
+                    />
+                  </div>
                 </div>
                 <div className="w-[248px] py-0.5 flex-col justify-start items-start gap-0.5 inline-flex">
                   <Tag tagName="eggday" />

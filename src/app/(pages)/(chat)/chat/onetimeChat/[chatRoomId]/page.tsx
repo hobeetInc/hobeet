@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { cn } from "@/utils/cn/util";
 import { useAuthStore } from "@/store/authStore";
 import { queryKeys } from "@/hooks/utils/queryKeys";
@@ -17,6 +17,7 @@ import {
   createMutations
 } from "@/app/(pages)/(chat)/_api/onetime";
 import ChatInput from "./_components/ChatInput";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 const supabase = createClient();
 
@@ -27,7 +28,7 @@ const ChatPage = () => {
   const queryClient = useQueryClient();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const userId = useAuthStore((state) => state.userId);
-
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const { data: rec, isSuccess: isRecFetched } = useQuery({
     queryKey: queryKeys.oneTimeChat.eggPopId(roomId as string),
     queryFn: () => fetchEggPopId(roomId as string),
@@ -161,7 +162,7 @@ const ChatPage = () => {
   }
 
   return (
-    <div className={cn("flex flex-col h-full")}>
+    <div className={cn("flex flex-col h-full", isLargeScreen ? "overflow-hidden mt-[100px]" : "")}>
       {/* 메시지 출력 */}
       <div className={cn("flex-grow overflow-y-auto")}>
         <div className={cn("p-4")}>
@@ -201,10 +202,10 @@ const ChatPage = () => {
                                 alt={`${message.user.user_name}의 프로필 이미지`}
                                 width={40}
                                 height={40}
-                                className={cn("rounded-full")}
+                                className={cn("rounded-full w-10 h-10")}
                               />
                             </div>
-                            <span className={cn("text-sm content-center text-gray-600 block")}>
+                            <span className={cn("text-sm content-center text-gray-600 block -mt-3")}>
                               {message.user.user_name}
                             </span>
                           </div>
@@ -223,10 +224,10 @@ const ChatPage = () => {
                           <div
                             className={cn(
                               "max-w-xs break-words p-3 rounded-[16px] text-gray-900",
-                              isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2]"
+                              isCurrentUser ? "bg-[#ffe399]" : "bg-[#f2f2f2] ml-10 -mt-3"
                             )}
                           >
-                            <p className={cn("max-w-[150px]")}>{message.egg_pop_chatting_room_message_content}</p>
+                            <p className={cn("max-w-[238px]")}>{message.egg_pop_chatting_room_message_content}</p>
                           </div>
                           {!isCurrentUser && (
                             <span className={cn("text-xs text-gray-500 block self-end ml-1")}>

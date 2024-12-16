@@ -3,6 +3,8 @@ import { EggPopForm } from "@/types/features/club/eggpop.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/hooks/utils/queryKeys";
 import { EggClubForm } from "@/types/features/club/eggclub.types";
+import { EggDayRequired } from "@/types/features/club/eggday.types";
+import { submitRegularClubNotification } from "@/app/(pages)/(club)/club/_api/notifications";
 
 export const useCreatePop = () => {
   const queryClient = useQueryClient();
@@ -52,4 +54,21 @@ export const useCreateClub = () => {
   });
 
   return { createClub, isPending };
+};
+
+export const useCreateDay = () => {
+  const queryClient = useQueryClient();
+
+  // 모임 생성 mutation
+  const { mutateAsync: createDay, isPending } = useMutation({
+    mutationFn: async (formData: EggDayRequired) => {
+      const data = await submitRegularClubNotification(formData);
+      return data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.day.byClub(data.egg_club_id) });
+    }
+  });
+
+  return { createDay, isPending };
 };

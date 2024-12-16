@@ -1,3 +1,4 @@
+
 # 🥚 Egg Friends
 모임을 더 쉽고 즐겁게, **Egg Friends**와 함께하세요! 
 
@@ -394,7 +395,7 @@
  ┃ ┃ ┗ 📜OneTimeClubCard.tsx
  ┃ ┣ 📂regularclublist
  ┃ ┃ ┗ 📜RegularClubCard.tsx
- ┃ ┣ 📂uiComponents
+ ┃ ┣ 📂ui
  ┃ ┃ ┣ 📂Button
  ┃ ┃ ┃ ┗ 📜ButtonCom.tsx
  ┃ ┃ ┣ 📂IconComponents

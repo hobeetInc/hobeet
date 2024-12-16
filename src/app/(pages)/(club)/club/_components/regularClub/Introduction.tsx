@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import ImageUpload from "@/components/uiComponents/molecules/Images/ImageUpload";
-import ClubCreateInput from "@/components/uiComponents/atoms/Inputs/ClubCreateInput";
-import ClubCreateTextArea from "@/components/uiComponents/atoms/Inputs/Textarea";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import ImageUpload from "@/components/ui/molecules/Images/ImageUpload";
+import ClubCreateInput from "@/components/ui/atoms/Inputs/ClubCreateInput";
+import ClubCreateTextArea from "@/components/ui/atoms/Inputs/Textarea";
+import Text from "@/components/ui/atoms/text/Text";
 import { EggClubProps } from "@/types/features/club/eggclub.types";
 
 const Introduction = ({ formData, setFormData }: EggClubProps) => {

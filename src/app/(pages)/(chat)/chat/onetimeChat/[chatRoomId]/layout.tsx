@@ -6,12 +6,13 @@ import { ChatProvider, useChatContext } from "./_components/ChatContext";
 import { cn } from "@/utils/cn/util";
 import { IoCloseOutline } from "react-icons/io5";
 import Image from "next/image";
-import Text from "@/components/uiComponents/atoms/text/Text";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import Text from "@/components/ui/atoms/text/Text";
+import Tag from "@/components/ui/atoms/tags/Tag";
 import { fetchChatRoomMembers } from "@/app/(pages)/(chat)/_api/onetime";
 import { ChatRoomExit } from "../../../_api/supabase";
 import { useAuthStore } from "@/store/authStore";
 import { EggPopChattingMemberInfo, LayoutProps } from "@/types/features/chat/eggpopchat.types";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 function ChatHeader() {
   const { roomName, isLoading, egg_pop_chatting_room_member_id, egg_pop_id } = useChatContext();
@@ -20,6 +21,7 @@ function ChatHeader() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ChattingMember, setChattingMember] = useState<EggPopChattingMemberInfo[]>();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   useEffect(() => {
     if (egg_pop_id) {
       const fetchData = async () => {
@@ -56,7 +58,8 @@ function ChatHeader() {
     <>
       <div
         className={cn(
-          "flex items-center justify-between h-[60px] border-b border-gray-200 bg-white fixed top-0 left-0 right-0 z-10"
+          "flex items-center justify-between h-[60px] border-b border-gray-200 bg-white fixed top-0 left-0 right-0 z-10",
+          isLargeScreen ? "mt-[85px] w-[1024px] justify-self-center" : ""
         )}
       >
         <button onClick={handleBack} className="p-2">
@@ -64,7 +67,7 @@ function ChatHeader() {
         </button>
 
         <Text variant="header-16" className="text-gray-900">
-          {isLoading ? "로딩중..." : roomName}
+          {isLoading ? "로딩중..." : roomName?.length > 20 ? `${roomName.slice(0, 20)}...` : roomName}
         </Text>
 
         <button onClick={() => setIsModalOpen(true)} className="p-2">

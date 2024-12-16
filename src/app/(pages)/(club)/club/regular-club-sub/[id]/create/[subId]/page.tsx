@@ -1,12 +1,12 @@
-import Image from "next/image";
 import React from "react";
 import { getNotificationData, getNotificationMember } from "../../../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import DayHeader from "./_components/DayHeader";
-import Text from "@/components/uiComponents/atoms/text/Text";
-import { ProfileImageLarge } from "@/components/uiComponents/molecules/Images/ProfileImageLarge";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import Text from "@/components/ui/atoms/text/Text";
+import { ProfileImageLarge } from "@/components/ui/molecules/Images/ProfileImageLarge";
+import Tag from "@/components/ui/atoms/tags/Tag";
 import { formatterDate, formatterLocation, formatterTax } from "../../../../_utils/formatter";
+import DayImage from "./_components/DayImage";
 
 export const revalidate = 0;
 
@@ -43,20 +43,12 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
     const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
     return (
-      <div className="flex flex-col items-center justify-center">
-        <div className="flex w-full h-[48px] fixed top-0 right-0 left-0 z-50 bg-white">
+      <div className="flex flex-col items-center justify-center mb-[166px]">
+        <div className="flex w-full h-[48px] fixed top-0 right-0 left-0 z-10 bg-white">
           <DayHeader clubInfo={clubInfo} />
         </div>
 
-        <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6 mt-12">
-          <Image
-            src={clubInfo.egg_day_image}
-            alt={clubInfo.egg_day_name}
-            width={390}
-            height={332}
-            className="w-[390px] h-[332px] object-cover"
-          />
-        </div>
+        <DayImage imageSrc={clubInfo.egg_day_image} imageName={clubInfo.egg_day_name} />
 
         <div className="w-full flex-col justify-start items-start gap-8 px-4 inline-flex">
           <div className="self-stretch flex-col justify-start items-start gap-5 flex">

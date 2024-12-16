@@ -4,11 +4,16 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import { GoPlus } from "react-icons/go";
 import { useAuthStore } from "@/store/authStore";
-import { ClubHeaderProps } from "@/types/features/club/eggclub.types";
+import { useClubStore } from "@/store/crewStore";
+import Text from "@/components/ui/atoms/text/Text";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
-const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
+const ClubHeader = () => {
   const router = useRouter();
   const userId = useAuthStore((state) => state.userId);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
+
+  const { clubInfo } = useClubStore();
 
   // 추후에 뒤로가기 고칠예정(지우지 마세요)
 
@@ -66,15 +71,19 @@ const ClubHeader = ({ clubInfo }: ClubHeaderProps) => {
     router.push("/");
   };
 
+  if (!clubInfo) return null;
+
+  if (isLargeScreen) return null;
+
   return (
     <div className="flex justify-between items-center h-[48px] p-3">
       <button onClick={handleBack} className="w-6 h-6">
         <ChevronLeft className="w-full h-full" />
       </button>
-      <h1 className="flex-1 text-center text-lg font-semibold">
-        {clubInfo.egg_club_name.length > 8 ? `${clubInfo.egg_club_name.slice(0, 8)}...` : clubInfo.egg_club_name}
-      </h1>
-      {clubInfo.user_id === userId ? (
+      <Text variant="header-16" className={`flex-1 text-center ${clubInfo?.user_id === userId ? "" : "pr-5"}`}>
+        {clubInfo?.egg_club_name.length > 20 ? `${clubInfo?.egg_club_name.slice(0, 20)}...` : clubInfo?.egg_club_name}
+      </Text>
+      {clubInfo?.user_id === userId ? (
         <button onClick={handleCreate} className="w-6 h-6">
           <GoPlus className="w-full h-full" />
         </button>

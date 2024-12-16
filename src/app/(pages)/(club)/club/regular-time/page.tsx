@@ -1,10 +1,10 @@
-import { Suspense } from "react";
 import RegularContent from "./RegularContent";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import { Suspense } from "react";
+import Loading from "@/app/loading";
 
 const RegularPage = () => {
   return (
-    <Suspense fallback={<Text variant="subtitle-16">로딩 중...</Text>}>
+    <Suspense fallback={<Loading />}>
       <RegularContent />
     </Suspense>
   );

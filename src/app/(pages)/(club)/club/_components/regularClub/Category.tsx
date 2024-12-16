@@ -3,14 +3,16 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { fetchMainCategories, fetchSubCategories } from "../../_api/supabase";
 import { MainCategory, SubCategory } from "@/types/utils/category.types";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { EggClubProps } from "@/types/features/club/eggclub.types";
-
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 const Category = ({ formData, setFormData }: EggClubProps) => {
   const [mainCategories, setMainCategories] = useState<MainCategory[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [openCategoryId, setOpenCategoryId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +52,7 @@ const Category = ({ formData, setFormData }: EggClubProps) => {
   };
 
   if (isLoading) {
-    return <Text variant="subtitle-16">로딩 중...</Text>;
+    return <LoadingSpinner />;
   }
 
   return (
@@ -58,12 +60,16 @@ const Category = ({ formData, setFormData }: EggClubProps) => {
       <Text variant="header-18" className="flex items-center mb-6 h-11">
         어떤 주제로 시작해볼까요?
       </Text>
-      <div className="flex flex-col gap-2 h-[400px] overflow-y-auto scrollbar-hide">
+      <div
+        className={`flex flex-col gap-2 ${isLargeScreen ? "h-[570px]" : "h-[562px]"} overflow-y-auto scrollbar-hide`}
+      >
         {mainCategories?.map((main) => (
           <div
             key={main.main_category_id}
             onClick={() => handleCategoryToggle(main.main_category_id)}
-            className={`w-[358px] rounded-xl border border-solid border-[#d9d9d9] hover:cursor-pointer ${
+            className={` ${
+              isLargeScreen ? "w-[632px]" : "w-[358px]"
+            } rounded-xl border border-solid border-[#d9d9d9] hover:cursor-pointer ${
               formData.main_category_id === 0
                 ? "bg-white"
                 : openCategoryId === main.main_category_id

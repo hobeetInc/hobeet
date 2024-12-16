@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { HiOutlineChevronLeft } from "react-icons/hi";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 
 import { fetchPendingAndActiveRequests, approveMember } from "../_api/approve.api";
 import ActiveMembersTab from "../_components/ActiveMembers";
 import PendingRequestsTab from "../_components/PendingRequestsTab";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import ApproveMemberTabBar from "@/components/uiComponents/molecules/navigation/ApproveMemberTapBar";
-
+import ApproveMemberTabBar from "@/components/ui/molecules/navigation/ApproveMemberTapBar";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 export default function ApproveMembersPage() {
   // 활성 탭 상태 관리 (true: 활성, false: 대기)
   const [activeTab, setActiveTab] = useState(true);
@@ -49,7 +49,7 @@ export default function ApproveMembersPage() {
   };
 
   if (isLoading) {
-    return <Text variant="subtitle-16">로딩 중...</Text>;
+    return <LoadingSpinner />;
   }
 
   if (error) {

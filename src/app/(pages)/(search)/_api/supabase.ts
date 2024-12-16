@@ -15,6 +15,11 @@ interface GroupedClub {
       count: number;
     }[];
     count: number;
+    wish_list: {
+      user_id: string;
+      egg_club_id: number;
+      wish_list_id: number;
+    }[];
   };
 }
 

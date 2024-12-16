@@ -1,6 +1,6 @@
 "use client";
 
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { cn } from "@/utils/cn/util";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
@@ -9,8 +9,11 @@ import { getOneTimeChatRoom } from "../../_api/onetime";
 import { useAuthStore } from "@/store/authStore";
 import Link from "next/link";
 import { EggPopChattingRoom } from "@/types/features/chat/eggpopchat.types";
-
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
 const OneTimeClubChattingRoomPage = () => {
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
+
   // 채팅방 목록, 로딩 상태, 에러 메시지 상태 관리
   const [chatRooms, setChatRooms] = useState<EggPopChattingRoom[]>([]);
   const [loading, setLoading] = useState(true);
@@ -134,7 +137,7 @@ const OneTimeClubChattingRoomPage = () => {
 
   // 로딩 상태 UI
   if (loading) {
-    return <Text variant="subtitle-16">로딩 중...</Text>;
+    return <LoadingSpinner />;
   }
 
   // 에러 상태 UI
@@ -172,21 +175,28 @@ const OneTimeClubChattingRoomPage = () => {
                     />
                   </div>
 
-                  <div className={cn("flex-1 ml-4")}>
-                    <div className={cn("flex justify-between items-center mb-1")}>
+                  <div className={cn("flex-1 ml-4 ")}>
+                    <div className={cn("flex  items-center mb-1")}>
                       <Text variant="subtitle-16" className={cn("text-gray-900 font-medium truncate max-w-[200px]")}>
                         {room.egg_pop_chatting_room_name}
                       </Text>
-                      <div className={cn("flex items-center gap-4")}>
-                        {room.egg_pop_chatting_room_member[0].count > 0 && (
-                          <Text variant="subtitle-16" className={cn("text-gray-200")}>
-                            {room.egg_pop_chatting_room_member[0].count}{" "}
-                          </Text>
-                        )}
-                        <Text variant="body-12" className={cn("text-gray-400")}>
+                      {room.egg_pop_chatting_room_member[0].count > 0 && (
+                        <Text variant="subtitle-16" className={cn("text-gray-200", isLargeScreen ? "ml-2" : "ml-auto")}>
+                          {room.egg_pop_chatting_room_member[0].count}
+                        </Text>
+                      )}
+                      {!isLargeScreen && (
+                        <Text variant="body-12" className={cn("text-gray-400 ml-2")}>
                           {room.last_message_time_value}
                         </Text>
-                      </div>
+                      )}
+                      {isLargeScreen && (
+                        <div className={cn("ml-auto")}>
+                          <Text variant="body-12" className={cn("text-gray-400")}>
+                            {room.last_message_time_value}
+                          </Text>
+                        </div>
+                      )}
                     </div>
                     <Text
                       variant="body_medium-12"

@@ -7,20 +7,24 @@ import Category from "../_components/regularClub/Category";
 import MemberType from "../_components/regularClub/MemberType";
 import { putRegularMember, putRepresentative } from "../_api/supabase";
 import { EggClubFormWithImageFile } from "@/types/features/club/eggclub.types";
-import ProgressBar from "../_components/ProgressBar";
-import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
+import ProgressBar from "../../../../_components/ProgressBar";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import Introduction from "../_components/regularClub/Introduction";
-import { useThrottle } from "@/utils/throttle.tsx/torottleCreateClub";
 import { createRegularChatRoomAndEnterAsAdmin } from "@/app/(pages)/(chat)/_api/regular";
 import { useCreateClub } from "@/hooks/utils/api/useCreate";
 import { useAuthStore } from "@/store/authStore";
 import { useUploadImage } from "@/hooks/utils/api/useUploadImage";
 import { ChevronLeft } from "lucide-react";
+import { useThrottle } from "@/utils/throttle/throttleCreateClub";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import Modal from "@/components/ui/responsiveDesign/Modal";
+import { IoCloseOutline } from "react-icons/io5";
 
 const RegularContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const userId = useAuthStore((state) => state.userId);
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const uploadClubImage = useUploadImage();
 
@@ -75,6 +79,15 @@ const RegularContent = () => {
   const [selectedGender, setSelectedGender] = useState<string>(initialData.selectedGender);
   const [selectedAge, setSelectedAge] = useState<string>(initialData.selectedAge);
   const [formData, setFormData] = useState<EggClubFormWithImageFile>(initialData.formData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (isLargeScreen) {
+      setIsModalOpen(true);
+    } else {
+      setIsModalOpen(false);
+    }
+  }, [isLargeScreen]);
 
   // URL의 step 파라미터 변경 감지 및 적용
   useEffect(() => {
@@ -149,7 +162,7 @@ const RegularContent = () => {
       const imageUrl = await uploadClubImage(formData.egg_club_image);
       const data = await createClub({ ...formData, egg_club_image: imageUrl });
 
-      const representive = {
+      const representative = {
         egg_club_id: data.egg_club_id,
         user_id: data.user_id,
         egg_club_participation_request_status: "active",
@@ -157,7 +170,7 @@ const RegularContent = () => {
       };
 
       // 승인 테이블에 넣기
-      const res = await putRepresentative(representive);
+      const res = await putRepresentative(representative);
 
       const member = {
         user_id: data.user_id,
@@ -230,28 +243,61 @@ const RegularContent = () => {
   };
 
   return (
-    <div className="relative flex flex-col justify-center items-center">
-      <div className="w-[390px] h-12 flex justify-start">
-        <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
-          <ChevronLeft className="w-6 h-6 cursor-pointer" />
-        </div>
-      </div>
+    <>
+      {isLargeScreen ? (
+        <Modal isOpen={isModalOpen}>
+          <div className="relative flex flex-col justify-center items-center">
+            <div className="w-full flex justify-between items-center p-3">
+              <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
+                <ChevronLeft className="w-6 h-6 cursor-pointer" />
+              </div>
+              <button onClick={() => router.push("/")} className="p-2">
+                <IoCloseOutline className="w-6 h-6" />
+              </button>
+            </div>
 
-      <div className="mx-4 flex flex-col">
-        <ProgressBar currentStep={step} totalSteps={3} />
-        <div>{renderStep()}</div>
-      </div>
-      <div className="fixed bottom-[50px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
-        <Button
-          onClick={throttledHandleNext}
-          disabled={isNextButtonDisabled()}
-          colorType={isNextButtonDisabled() ? undefined : "black"}
-          borderType="circle"
-        >
-          {step === 3 ? (isPending ? "생성 중..." : "모임 생성") : "다음"}
-        </Button>
-      </div>
-    </div>
+            <div className="w-full px-5 mx-4 flex flex-col">
+              <ProgressBar currentStep={step} totalSteps={3} />
+              <div>{renderStep()}</div>
+            </div>
+            <div className="w-full -mt-4 flex justify-center items-center">
+              <Button
+                onClick={throttledHandleNext}
+                disabled={isNextButtonDisabled()}
+                colorType={isNextButtonDisabled() ? undefined : "black"}
+                borderType="circle"
+                sizeType="largeWeb"
+              >
+                {step === 3 ? (isPending ? "생성 중..." : "모임 생성") : "다음"}
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      ) : (
+        <div className="relative flex flex-col justify-center items-center">
+          <div className="w-[390px] h-12 flex justify-start">
+            <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
+              <ChevronLeft className="w-6 h-6 cursor-pointer" />
+            </div>
+          </div>
+
+          <div className="mx-4 flex flex-col">
+            <ProgressBar currentStep={step} totalSteps={3} />
+            <div>{renderStep()}</div>
+          </div>
+          <div className="fixed bottom-[50px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
+            <Button
+              onClick={throttledHandleNext}
+              disabled={isNextButtonDisabled()}
+              colorType={isNextButtonDisabled() ? undefined : "black"}
+              borderType="circle"
+            >
+              {step === 3 ? (isPending ? "생성 중..." : "모임 생성") : "다음"}
+            </Button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

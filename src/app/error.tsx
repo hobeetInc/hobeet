@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
-import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
+import Text from "@/components/ui/atoms/text/Text";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -10,13 +10,13 @@ const ErrorPage = () => {
   const router = useRouter();
 
   return (
-    <div className="w-full">
-      <div className="mt-[292px] flex flex-col justify-center items-center text-center">
-        <div className="flex  mb-[20px]">
-          <div className="w-[90px] h-[90px] -scale-y-100 ">
+    <div className="w-full h-screen flex flex-col">
+      <div className="mt-[30px] flex flex-col justify-center items-center text-center">
+        <div className="flex mb-[20px]">
+          <div className="w-[90px] h-[90px] -scale-y-100">
             <Icon name="whiteEgg" />
           </div>
-          <div className="w-[90px] h-[90px]  ">
+          <div className="w-[90px] h-[90px]">
             <Icon name="yellowEgg" />
           </div>
         </div>
@@ -26,7 +26,7 @@ const ErrorPage = () => {
         </Text>
       </div>
 
-      <div className="fixed bottom-[35px] flex w-full justify-center">
+      <div className="flex w-full justify-center mt-auto mb-[140px]">
         <Button borderType="circle" colorType="orange" onClick={() => router.push("/")} className="w-[358px]">
           모임 둘러보기
         </Button>

@@ -9,15 +9,17 @@ import { customDateFormat, customDateNotWeek } from "@/utils/CustomDate";
 import { CustomAddress } from "@/utils/CustomAddress";
 import { EggPopPay, EggClubPay, EggPopDataNoTax, EggClubDataNoTax } from "@/types/features/commerce/payment.types";
 import { approvePayment, fetchOrderData } from "../_api/kakaoPayment";
-import Text from "@/components/uiComponents/atoms/text/Text";
-import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
-import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import Text from "@/components/ui/atoms/text/Text";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
+import Tag from "@/components/ui/atoms/tags/Tag";
 import { HiOutlineChevronLeft } from "react-icons/hi";
-
+import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 const PaymentSuccessPage = () => {
   const [paymentAmount, setPaymentAmount] = useState<number | null>(null);
   const router = useRouter();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
   const { userName } = useAuth();
   // URL 파라미터 추출
   const searchParams = useSearchParams();
@@ -76,7 +78,7 @@ const PaymentSuccessPage = () => {
     processPayment();
   }, [paymentQuery.data, pgToken, clubId, requestUserId, isOneTimeClub]);
 
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <div>에러가 발생했습니다</div>;
 
   const clubData = isOneTimeClub ? clubQuery.data?.oneTimeClubData : clubQuery.data?.regularClubData;
@@ -111,22 +113,29 @@ const PaymentSuccessPage = () => {
 
   return (
     <div className="p-4 flex flex-col">
-      <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
-        <div className="left-0 m-3">
-          <button onClick={handleGoToMyClub}>
-            <HiOutlineChevronLeft className="w-6 h-6" />
-          </button>
-        </div>
-        <div className="flex flex-grow justify-center">
-          <Text variant="header-16" className="text-gray-900">
+      {isLargeScreen ? (
+        <div className="mt-5 p-5">
+          <Text variant="header-20" className="text-gray-900">
             주문완료
           </Text>
         </div>
-        <div className="w-6 m-3"></div>
-      </div>
+      ) : (
+        <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
+          <div className="left-0 m-3">
+            <button onClick={handleGoToMyClub}>
+              <HiOutlineChevronLeft className="w-6 h-6" />
+            </button>
+          </div>
+          <div className="flex flex-grow justify-center">
+            <Text variant="header-16" className="text-gray-900">
+              주문완료
+            </Text>
+          </div>
+        </div>
+      )}
 
       <div className="flex items-center justify-center mt-12">
-        <div className="w-[390px]">
+        <div className="w-[390px] lg:w-full">
           <div className="flex flex-col gap-2 mt-8">
             <Image
               src="/asset/AppIcon.svg"
@@ -139,10 +148,8 @@ const PaymentSuccessPage = () => {
               모임 참여 신청이 완료됐어요!
             </Text>
 
-            <div className="border-b border-gray-200 my-4"></div>
-
-            <div className="w-full h-[35px] flex items-center">
-              <Text variant="subtitle-14">
+            <div className="w-full h-[35px] flex items-center mt-8">
+              <Text variant={isLargeScreen ? "subtitle-16" : "subtitle-14"}>
                 {payData &&
                   customDateFormat(
                     isOneTimeClub
@@ -152,20 +159,20 @@ const PaymentSuccessPage = () => {
               </Text>
             </div>
 
-            <div className="flex items-center h-[131px] border-b-2 border-solid border-gray-50 pb-[35px]">
-              <div className="w-[88px] h-[88px] mr-2">
+            <div className="flex items-center h-[131px] pb-[35px] lg:relative lg:mt-10">
+              <div className="w-[88px] h-[88px] mr-2 lg:w-[144px] lg:h-[144px]">
                 <Image
                   src={clubInfo.image || ""}
                   alt="모임 이미지"
                   width={88}
                   height={88}
-                  className="rounded-lg mr-2 object-cover w-[88px] h-[88px]"
+                  className="rounded-lg mr-2 object-cover w-[88px] h-[88px] lg:w-[144px] lg:h-[144px]"
                 />
               </div>
 
-              <div>
+              <div className="lg:ml-2">
                 <Tag tagName={isOneTimeClub ? "eggpop" : "eggday"} className="mb-[4px]" />
-                <Text variant="subtitle-14">{clubInfo.name}</Text>
+                <Text variant={isLargeScreen ? "subtitle-16" : "subtitle-14"}>{clubInfo.name}</Text>
 
                 <div className="flex items-center text-xs text-gray-400 gap-1">
                   <div className="mr-1 w-4 h-4">
@@ -179,6 +186,8 @@ const PaymentSuccessPage = () => {
               </div>
             </div>
           </div>
+
+          <div className="border-b-2 border-solid border-gray-50 py-5"></div>
 
           <div className="mt-8 w-[359px] h-[116px] flex-col justify-start items-start gap-4 inline-flex">
             <div className="self-stretch h-6 flex-col justify-start items-start gap-2 flex">
@@ -210,8 +219,13 @@ const PaymentSuccessPage = () => {
             </div>
           </div>
 
-          <div className="w-full h-[82px] flex items-center justify-center fixed bottom-[34px] right-0 left-0">
-            <Button colorType="orange" borderType="circle" onClick={handleGoToMyClub}>
+          <div className="w-full h-[82px] flex items-center justify-center fixed bottom-[34px] right-0 left-0 lg:relative mt-20">
+            <Button
+              colorType="orange"
+              borderType="circle"
+              className="w-full mx-4 max-w-[1024px]"
+              onClick={handleGoToMyClub}
+            >
               내 모임으로 가기
             </Button>
           </div>

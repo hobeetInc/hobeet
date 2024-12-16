@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
-import Text from "@/components/uiComponents/atoms/text/Text";
-import { Icon } from "@/components/uiComponents/atoms/icons/Icon";
+import Tag from "@/components/ui/atoms/tags/Tag";
+import Text from "@/components/ui/atoms/text/Text";
+import { Icon } from "@/components/ui/atoms/icons/Icon";
 import { EggDayWithEggDayMember } from "@/types/features/club/eggday.types";
 import { MemberInfo } from "@/types/features/user/user.types";
 import { useAuthStore } from "@/store/authStore";
+import { CustomAddress } from "@/utils/CustomAddress";
 
 interface ClubCardProps {
   notification: EggDayWithEggDayMember;
@@ -30,13 +31,6 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
       date: `${month}월 ${day}일`,
       time: `${hours}:${addZero(minutes)}`
     };
-  };
-
-  // 주소 커스텀
-  const addressCustom = (address: string) => {
-    const shortAddress = address.split(" ").slice(1, 3).join(" ");
-
-    return shortAddress;
   };
 
   const handleClick = (e: React.MouseEvent) => {
@@ -78,7 +72,7 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
 
           <div className="flex gap-2">
             <Text variant="body_medium-14" className="text-gray-400">
-              {addressCustom(notification.egg_day_location)}
+              {CustomAddress(notification.egg_day_location)}
             </Text>
 
             <Text variant="body_medium-14" className="text-gray-400">

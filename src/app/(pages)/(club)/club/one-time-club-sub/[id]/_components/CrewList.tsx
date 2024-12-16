@@ -6,12 +6,15 @@ import FullScreenModal from "./FullScreenModal";
 import browserClient from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import OneTimeClubJoinButton from "./OneTimeClubJoinButtonCom";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { IoIosArrowForward } from "react-icons/io";
-import { Button } from "@/components/uiComponents/atoms/buttons/ButtonCom";
+import { Button } from "@/components/ui/atoms/buttons/ButtonCom";
 import { useAuthStore } from "@/store/authStore";
 import { useEggPopCrewList } from "@/hooks/utils/list/crewList";
 import { MemberInfo } from "@/types/features/user/user.types";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
+import { cn } from "@/utils/cn/util";
+import FloatingButton from "../../../../../../_components/FloatingButton";
 
 // CrewList 컴포넌트 props 타입
 interface CrewListProps {
@@ -23,6 +26,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   const { data: crewList = initialCrewMembers, isLoading, isError } = useEggPopCrewList(clubId);
 
@@ -86,8 +90,13 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
   const renderJoinButton = () => {
     if (!userId) {
       return (
-        <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50">
-          <Button onClick={handleAlertLogin} colorType="orange" borderType="circle">
+        <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50 px-4">
+          <Button
+            onClick={handleAlertLogin}
+            colorType="orange"
+            borderType="circle"
+            className={cn(isLargeScreen ? "w-[1024px]" : "w-[50%]")}
+          >
             참여하기
           </Button>
         </div>
@@ -96,11 +105,25 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
 
     if (isHost) {
       return (
-        <div className="px-4 w-full h-20 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
-          <div className="w-[50%] px-2.5 py-3.5 bg-primary-300 rounded-[25px] justify-center items-center gap-2 inline-flex">
+        <div
+          className={`px-4 w-full h-20 bg-white border-t border-solid border-gray-50 ${
+            isLargeScreen ? "justify-center " : "justify-between"
+          } items-center inline-flex gap-[10px]`}
+        >
+          <div
+            className={`${
+              isLargeScreen ? "w-[500px]" : "w-[50%]"
+            } px-2.5 py-3.5 bg-primary-300 rounded-[25px] justify-center items-center gap-2 inline-flex`}
+          >
             <Text variant="subtitle-16">{`참여 ${crewList.length}명`}</Text>
           </div>
-          <Button colorType="orange" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
+          <Button
+            colorType="orange"
+            borderType="circle"
+            sizeType="small"
+            className={cn(isLargeScreen ? "w-[500px] ml-[10px]" : "w-[50%]")}
+            onClick={handleChatClick}
+          >
             에그팝 채팅방
           </Button>
         </div>
@@ -109,11 +132,21 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
 
     if (isAlreadyJoined) {
       return (
-        <div className="px-4 w-full h-20 bg-white border-t border-solid border-gray-50 justify-between items-center inline-flex gap-[10px]">
-          <Text variant="subtitle-16" className="w-[50%]">
+        <div
+          className={`px-4 w-full h-20 bg-white border-t border-solid border-gray-50 ${
+            isLargeScreen ? "justify-center " : "justify-between"
+          } items-center inline-flex gap-[10px]`}
+        >
+          <Text variant="subtitle-16" className={cn(isLargeScreen ? "" : "w-[50%]")}>
             참여 중인 에그팝이에요
           </Text>
-          <Button colorType="orange" borderType="circle" sizeType="small" className="w-[50%]" onClick={handleChatClick}>
+          <Button
+            colorType="orange"
+            borderType="circle"
+            sizeType="small"
+            className={cn(isLargeScreen ? "w-[550px] ml-[250px]" : "w-[50%]")}
+            onClick={handleChatClick}
+          >
             에그팝 채팅방
           </Button>
         </div>
@@ -121,7 +154,7 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
     }
 
     return (
-      <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50">
+      <div className="w-full h-20 flex justify-center items-center bg-white border-t border-solid border-gray-50 px-4">
         <OneTimeClubJoinButton clubId={clubId} />
       </div>
     );
@@ -144,9 +177,17 @@ const CrewList = ({ crewMembers: initialCrewMembers, clubId, clubHostId }: CrewL
         </div>
         <div className="self-stretch justify-start items-center gap-[5px] inline-flex mb-[17px]">{displaySlots}</div>
 
-        <div className="w-full  fixed bottom-0 right-0 left-0 bg-white h-[114px]">{renderJoinButton()}</div>
+        <div
+          className={` ${
+            isLargeScreen ? "text-center w-full justify-center" : "w-full"
+          }  fixed bottom-0 right-0 left-0 bg-white h-[114px]`}
+        >
+          {renderJoinButton()}
+        </div>
         <FullScreenModal crewList={crewList} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
+
+      {isLargeScreen && <FloatingButton />}
     </>
   );
 };

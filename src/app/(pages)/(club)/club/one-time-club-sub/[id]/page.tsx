@@ -1,10 +1,9 @@
-import Image from "next/image";
 import { getOneTimeMember } from "../../_api/supabase";
 import CrewList from "./_components/CrewList";
 import PopHeader from "./_components/PopHeader";
-import { ProfileImageLarge } from "@/components/uiComponents/molecules/Images/ProfileImageLarge";
-import Text from "@/components/uiComponents/atoms/text/Text";
-import Tag from "@/components/uiComponents/atoms/tags/Tag";
+import { ProfileImageLarge } from "@/components/ui/molecules/Images/ProfileImageLarge";
+import Text from "@/components/ui/atoms/text/Text";
+import Tag from "@/components/ui/atoms/tags/Tag";
 import { MemberInfo } from "@/types/features/user/user.types";
 import {
   formatterAge,
@@ -14,6 +13,7 @@ import {
   formatterPeopleLimit,
   formatterTax
 } from "../../_utils/formatter";
+import EggPopImage from "./_components/EggPopImage";
 
 const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   const oneTimeClubId = Number(params.id);
@@ -34,20 +34,10 @@ const OneTimeClubSubPage = async ({ params }: { params: { id: string } }) => {
   const hostInfo = crewMembers.find((member) => member.userId === clubInfo.user_id);
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex w-full h-[48px] fixed top-0 right-0 left-0 z-50 bg-white">
-        <PopHeader clubInfo={clubInfo} />
-      </div>
+    <div className="flex flex-col items-center justify-center mb-[166px]">
+      <PopHeader clubInfo={clubInfo} />
 
-      <div className="flex overflow-hidden w-[390px] h-[332px] relative bg-gray-100 mb-6 mt-12">
-        <Image
-          src={clubInfo.egg_pop_image}
-          alt={clubInfo.egg_pop_name}
-          width={390}
-          height={332}
-          className="w-[390px] h-[332px] object-cover"
-        />
-      </div>
+      <EggPopImage clubInfo={clubInfo} />
 
       <div className="w-full flex-col justify-start items-start gap-8 px-4 inline-flex">
         <div className="self-stretch flex-col justify-start items-start gap-5 flex">

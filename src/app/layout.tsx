@@ -2,8 +2,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "@/components/providers/queryProvider";
 import { AuthProvider } from "@/store/AuthContext";
-import { Footer, Header } from "@/components/layout";
+import { FloatingButton, Footer, Header } from "@/components/layout";
 import { Metadata } from "next";
+import ScreenSizeInitializer from "@/components/ui/responsiveDesign/ScreenSizeInitializer";
 
 const pretendard = localFont({
   src: "../fonts/PretendardVariable.woff2",
@@ -38,7 +39,9 @@ export default function RootLayout({
         <AuthProvider>
           <Providers>
             <div className="flex flex-col h-full bg-white">
+              <ScreenSizeInitializer />
               <Header>{children}</Header>
+              <FloatingButton />
               <Footer />
             </div>
           </Providers>

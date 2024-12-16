@@ -2,14 +2,16 @@
 
 import { useRouter } from "next/navigation";
 import { EggPop } from "@/types/features/club/eggpop.types";
-import Text from "@/components/uiComponents/atoms/text/Text";
+import Text from "@/components/ui/atoms/text/Text";
 import { ChevronLeft } from "lucide-react";
+import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 interface PopHeaderProps {
   clubInfo: EggPop;
 }
 const PopHeader = ({ clubInfo }: PopHeaderProps) => {
   const router = useRouter();
+  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   // 추후 뒤로가기 고칠 예정 (지우지 마세요)
   // useEffect(() => {
@@ -69,15 +71,19 @@ const PopHeader = ({ clubInfo }: PopHeaderProps) => {
     router.push("/");
   };
 
+  if (isLargeScreen) return null;
+
   return (
-    <div className="flex justify-center items-center w-full">
-      <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
-        <ChevronLeft className="w-6 h-6 cursor-pointer" />
-      </div>
-      <div className="flex-1 text-center pr-7">
-        <Text variant="header-16">
-          {clubInfo.egg_pop_name.length > 8 ? `${clubInfo.egg_pop_name.slice(0, 8)}...` : clubInfo.egg_pop_name}
-        </Text>
+    <div className="flex w-full h-[48px] fixed top-0 right-0 left-0 z-10 bg-white">
+      <div className="flex justify-center items-center w-full">
+        <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
+          <ChevronLeft className="w-6 h-6 cursor-pointer" />
+        </div>
+        <div className="flex-1 text-center pr-7">
+          <Text variant="header-16">
+            {clubInfo.egg_pop_name.length > 20 ? `${clubInfo.egg_pop_name.slice(0, 20)}...` : clubInfo.egg_pop_name}
+          </Text>
+        </div>
       </div>
     </div>
   );
