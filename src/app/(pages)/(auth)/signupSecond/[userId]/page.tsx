@@ -176,21 +176,26 @@ const SignupSecondPage = () => {
   const days = getDaysList(Number(birthYear), Number(birthMonth));
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center min-h-screen">
       <div className="flex w-full h-12 bg-white items-center">
-        <div className="left-0 m-3">
-          <Link href="/signin">
-            <HiOutlineChevronLeft className="w-6 h-6" />
-          </Link>
-        </div>
-        <div className="flex flex-grow justify-center">
-          <Text variant="header-16" className="text-gray-900">
+        {isLargeScreen ? (
+          ""
+        ) : (
+          <div className="left-0 m-3">
+            <Link href="/signin">
+              <HiOutlineChevronLeft className="w-6 h-6" />
+            </Link>
+          </div>
+        )}
+
+        <div className="flex flex-grow justify-center lg:ml-5 lg:py-5 lg:mt-10">
+          <Text variant={isLargeScreen ? "header-20" : "header-16"} className="text-gray-900">
             회원가입
           </Text>
         </div>
       </div>
 
-      <div className=" mt-4 left-[16px] flex flex-col gap-12 lg:fixed lg:top-[21vh] lg:mx-[272px] lg:left-0 lg:w-[480px] lg:mt-0 lg:h-[438px] lg:gap-10">
+      <div className="mt-4 flex flex-col gap-12 lg:relative lg:w-[480px] lg:mt-20 lg:gap-10">
         <div className="flex flex-col gap-2">
           {!isLargeScreen ? <Text variant="subtitle-18">프로필</Text> : ""}
           <div className="relative w-[78px] h-[78px] mt-2 lg:mt-0">
@@ -249,7 +254,7 @@ const SignupSecondPage = () => {
               onClick={() => setUserGender("남성")}
               className={`w-[173px] h-12 px-4 rounded-lg border-2 lg:w-[234px] ${
                 userGender === "남성"
-                  ? "border-primary-500 text-primary-500 text-header-16"
+                  ? "border-primary-500 text-primary-500 text-subtitle-14"
                   : "border-gray-100 text-black text-subtitle-14"
               }`}
             >
@@ -260,7 +265,7 @@ const SignupSecondPage = () => {
               onClick={() => setUserGender("여성")}
               className={`w-[173px] h-12 px-4 rounded-lg border-2 lg:w-[234px] ${
                 userGender === "여성"
-                  ? "border-primary-500 text-primary-500 text-header-16"
+                  ? "border-primary-500 text-primary-500 text-subtitle-14"
                   : "border-gray-100 text-black text-subtitle-14"
               }`}
             >
@@ -342,12 +347,12 @@ const SignupSecondPage = () => {
         </div>
       </div>
 
-      <div className="fixed ml-[16px] mr-[16px] w-full bottom-0 mb-[54px] justify-items-center lg:mb-[524px] lg:w-[480px] lg:mx-0 lg:justify-items-center">
+      <div className="fixed ml-[16px] mr-[16px] w-full bottom-0 mb-[54px] justify-items-center lg:static lg:w-[480px] lg:mb-0 lg:mt-16 lg:mx-auto">
         {isFormComplete ? (
           <Button
             colorType="orange"
             borderType="rectangle"
-            className="ml-[16px] mr-[16px] text-white text-subtitle-16 lg:mx-[272px]"
+            className="ml-[16px] mr-[16px] text-white text-subtitle-16 lg:mx-0 lg:w-full"
             sizeType={isLargeScreen ? "web" : "large"}
             onClick={handleSubmit}
           >
@@ -358,7 +363,7 @@ const SignupSecondPage = () => {
             borderType="rectangle"
             sizeType={isLargeScreen ? "web" : "large"}
             disabled
-            className="ml-[16px] mr-[16px] text-subtitle-16 lg:mx-[272px]"
+            className="ml-[16px] mr-[16px] text-subtitle-16 lg:mx-0 lg:w-full"
           >
             다음
           </Button>

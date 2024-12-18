@@ -57,7 +57,10 @@ const PaymentButton = ({ clubType, clubId, agreeChecked }: PaymentButtonProps) =
   };
 
   return (
-    <button onClick={onClickKakaopayBtn} className="text-gray-900 text-base font-semibold leading-snug w-[358px]">
+    <button
+      onClick={onClickKakaopayBtn}
+      className="text-gray-900 text-base font-semibold leading-snug w-[358px] lg:w-full"
+    >
       <Text variant="subtitle-16">결제하기</Text>
     </button>
   );
