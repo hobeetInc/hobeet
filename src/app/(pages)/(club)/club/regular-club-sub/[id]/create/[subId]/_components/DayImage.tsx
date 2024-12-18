@@ -22,7 +22,7 @@ const DayImage = ({ imageSrc, imageName }: DayImageProps) => {
         width={isLargeScreen ? 1024 : 390}
         height={isLargeScreen ? 405 : 332}
         sizes={isLargeScreen ? "1024px" : "390px"}
-        className={`${isLargeScreen ? "w-[1024px] h-[405px] object-fill" : "w-[390px] h-[332px]"} object-cover`}
+        className={`${isLargeScreen ? "w-[1024px] h-[405px] object-contain" : "w-[390px] h-[332px]"} object-cover`}
       />
     </div>
   );
