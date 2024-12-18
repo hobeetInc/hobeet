@@ -34,7 +34,7 @@ const HomeContent = () => {
       <div className="w-full flex-col justify-start items-start gap-8 px-4 inline-flex">
         <div className="self-stretch flex-col justify-start items-start gap-5 flex">
           <div className="self-stretch flex-col justify-start items-start gap-1 flex">
-            <div className="px-2 py-0.5 bg-neutral-800 rounded-[124px] justify-center items-center inline-flex">
+            <div className="px-2 py-0.5 bg-neutral-800 rounded-[124px] justify-center items-center inline-flex mt-4">
               <Text variant="body-10" className="text-white">
                 {stringCategory}
               </Text>

@@ -52,7 +52,7 @@ const SubSubPage = async ({ params }: SubSubPageProps) => {
 
         <div className="w-full flex-col justify-start items-start gap-8 px-4 inline-flex">
           <div className="self-stretch flex-col justify-start items-start gap-5 flex">
-            <div className="self-stretch flex-col justify-start items-start gap-1 flex">
+            <div className="self-stretch flex-col justify-start items-start gap-1 flex mt-4">
               <Tag tagName="eggday" />
               <div className="self-stretch justify-start items-center gap-1.5 inline-flex">
                 <Text variant="subtitle-20"> {clubInfo.egg_day_name}</Text>
