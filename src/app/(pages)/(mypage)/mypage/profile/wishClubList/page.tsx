@@ -60,7 +60,7 @@ const WishClubListPage = () => {
               <div
                 onClick={() => handleClick(item.egg_club.egg_club_id)}
                 key={item.egg_club.egg_club_id}
-                className="max-w-[174px] lg:max-w-[228px] flex-col justify-start items-start gap-2 inline-flex"
+                className="hover:cursor-pointer max-w-[174px] lg:max-w-[228px] flex-col justify-start items-start gap-2 inline-flex"
               >
                 <div className="flex-col justify-start items-start gap-2 inline-flex min-h-[306px] mb-10">
                   <div className="w-[174px] h-[174px] overflow-hidden relative lg:w-[228px] lg:h-[228px]">
