@@ -44,6 +44,9 @@ const ProfilePage = () => {
                 width={78}
                 height={78}
                 className="object-cover w-[78px] h-[78px]"
+                priority
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
               />
             ) : (
               <div className="w-full h-full bg-gray-200" />
