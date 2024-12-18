@@ -36,7 +36,7 @@ const EggPopPayDetail = () => {
               onClick={() => {
                 router.push(`/club/one-time-club-sub/${oneTimeClub.egg_pop.egg_pop_id}`);
               }}
-              className="flex flex-col w-full h-[163px] border-b border-solid border-gray-100 mb-[32px] lg:h-[192px]"
+              className="flex flex-col w-full h-[163px] border-b border-solid border-gray-100 mb-[32px] hover:cursor-pointer lg:h-[192px]"
             >
               <div className="h-[35px] justify-start items-center gap-2.5 inline-flex">
                 <Text variant={isLargeScreen ? "subtitle-16" : "subtitle-14"}>

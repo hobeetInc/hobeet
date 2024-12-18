@@ -112,7 +112,7 @@ export default function RegularClubJoinButton({ clubId, onSuccess, onError }: Eg
       borderType="circle"
       onClick={handleJoin}
       disabled={isLoading}
-      className={`${isLargeScreen ? "w-[1024px]" : ""}`}
+      className={`${isLargeScreen ? "w-[1024px]" : "w-full"}`}
     >
       {isLoading ? "처리중..." : "참여하기"}
     </Button>
