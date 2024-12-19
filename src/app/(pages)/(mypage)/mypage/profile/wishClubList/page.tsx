@@ -67,9 +67,11 @@ const WishClubListPage = () => {
                     <Image
                       src={item.egg_club.egg_club_image}
                       alt={item.egg_club.egg_club_name}
-                      width={174}
-                      height={174}
-                      className="w-[174px] h-[174px] object-cover rounded-[12px] lg:w-[228px] lg:h-[228px]"
+                      fill
+                      className="object-cover rounded-[12px]"
+                      sizes="(max-width: 1023px) 174px, 228px"
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
                     />
                     <div className="absolute bottom-3 right-3">
                       <HeartImage selectedId={2} />
@@ -90,6 +92,9 @@ const WishClubListPage = () => {
                             width={22}
                             height={22}
                             className="w-[22px] h-[22px] left-0 top-0 absolute bg-gray-100 rounded-full"
+                            loading="lazy"
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
                           />
                         </div>
 

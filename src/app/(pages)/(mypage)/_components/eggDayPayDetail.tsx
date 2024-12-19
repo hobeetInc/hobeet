@@ -54,6 +54,9 @@ const EggDayPayDetail = () => {
                       alt="payList"
                       fill
                       className="w-[88px] h-[88px] bg-gray-100 rounded-xl"
+                      sizes="(max-width: 1023px) 88px, 144px"
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
                     />
                   </div>
                 </div>
