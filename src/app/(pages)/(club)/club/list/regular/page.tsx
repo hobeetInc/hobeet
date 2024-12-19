@@ -68,6 +68,10 @@ const AllRegularClubListPage = () => {
                         src={club.egg_club_image}
                         alt={club.egg_club_name}
                         className="w-full h-full object-cover"
+                        quality={50}
+                        sizes="88px"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
                       />
                     </div>
                     <div className="flex w-[161px] h-[90] flex-col items-start gap-[4px]">

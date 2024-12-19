@@ -142,6 +142,8 @@ const SignupSecondPage = () => {
       return;
     }
 
+    localStorage.removeItem("loginInfoStore");
+
     try {
       let uploadedImageUrl = userProfileImg;
 
@@ -162,6 +164,13 @@ const SignupSecondPage = () => {
         user_profile_img: uploadedImageUrl,
         user_birth: userBirth
       });
+
+      setUserId(null);
+      setUserEmail(null);
+      setUserName(null);
+      setUserGender(null);
+      setUserAge(null);
+      setUserProfileImg(null);
 
       alert("회원가입이 완료되었습니다. 로그인 해주세요.");
       router.push("/signin");
