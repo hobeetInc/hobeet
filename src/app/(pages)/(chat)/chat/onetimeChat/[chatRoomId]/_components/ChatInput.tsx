@@ -47,7 +47,7 @@ const ChatInput = ({ newMessage, setNewMessage, handleSendMessage }: ChatInputPr
             className={cn(
               "flex-grow p-2 border-gray-300 bg-gray-50 rounded-[20px]",
               "focus:outline-none  transition duration-200",
-              "min-h-[36px] max-h-[120px] content-center resize-none",
+              "min-h-[37px] max-h-[120px] content-center resize-none",
               "overflow-y-auto text-body-14",
               "min-w-[316px]"
             )}

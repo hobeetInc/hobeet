@@ -6,14 +6,15 @@ import { useEggPopTenList } from "@/hooks/utils/list/tenList";
 import Text from "@/components/ui/atoms/text/Text";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { BigVerticalContentsEggPopList } from "@/components/ui/organisms/lists/BigVerticalContentsList";
-import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
+
+import OneTimeClubSkeleton from "./skeletons/OneTimeClubSkeleton";
 
 const OneTimeClubList = () => {
   const { data: list, isLoading, isError } = useEggPopTenList();
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <OneTimeClubSkeleton />;
   }
 
   if (isError) {

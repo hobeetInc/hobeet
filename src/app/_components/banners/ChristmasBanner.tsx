@@ -1,12 +1,13 @@
 import Image from "next/image";
 import banner1 from "@/public/asset/Banner/banner1.jpg";
 import Text from "@/components/ui/atoms/text/Text";
+import React, { memo } from "react";
 
 interface BannerProps {
   isLargeScreen: boolean;
 }
 
-export default function ChristmasBanner({ isLargeScreen }: BannerProps) {
+const ChristmasBanner = memo(function ChristmasBanner({ isLargeScreen }: BannerProps) {
   return (
     <div className="flex mx-4 justify-center items-center mt-2">
       <div
@@ -17,13 +18,12 @@ export default function ChristmasBanner({ isLargeScreen }: BannerProps) {
         <Image
           src={banner1}
           alt="MainBigBanner"
-          //   className="object-cover"
-          priority
-          loading="eager"
-          fetchPriority="high"
-          sizes="984px"
           fill
+          priority
           placeholder="blur"
+          quality={75}
+          loading="eager"
+          sizes="984px"
         />
         <Text
           variant="subtitle-18"
@@ -42,4 +42,6 @@ export default function ChristmasBanner({ isLargeScreen }: BannerProps) {
       </div>
     </div>
   );
-}
+});
+
+export default ChristmasBanner;
