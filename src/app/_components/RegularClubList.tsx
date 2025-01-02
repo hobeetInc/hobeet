@@ -8,7 +8,7 @@ import Text from "@/components/ui/atoms/text/Text";
 import { EggClubForm } from "@/types/features/commerce/cardlist.types";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { BigVerticalContentsEggClubList } from "@/components/ui/organisms/lists/BigVerticalContentsList";
-import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
+import RegularClubSkeleton from "./skeletons/RegularClubSkeleton";
 
 const RegularClubList = () => {
   const { data: list, isLoading, error } = useEggClubTenList();
@@ -21,7 +21,7 @@ const RegularClubList = () => {
   };
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <RegularClubSkeleton />;
   }
 
   if (error) {

@@ -67,7 +67,7 @@ function ChatHeader() {
       <div
         className={cn(
           "flex items-center justify-between h-[60px] border-b border-gray-200 bg-white fixed top-0 left-0 right-0 z-10",
-          isLargeScreen ? "mt-[85px] w-[1024px] justify-self-center" : ""
+          isLargeScreen ? "mt-[120px] w-[1024px] justify-self-center" : ""
         )}
       >
         <button onClick={handleBack} className={cn("p-2")}>

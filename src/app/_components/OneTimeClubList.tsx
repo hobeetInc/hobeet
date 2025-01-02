@@ -6,14 +6,15 @@ import { useEggPopTenList } from "@/hooks/utils/list/tenList";
 import Text from "@/components/ui/atoms/text/Text";
 import useScreenSizeStore from "@/store/useScreenSizeStore";
 import { BigVerticalContentsEggPopList } from "@/components/ui/organisms/lists/BigVerticalContentsList";
-import LoadingSpinner from "@/components/ui/atoms/LoadingSpinner";
+
+import OneTimeClubSkeleton from "./skeletons/OneTimeClubSkeleton";
 
 const OneTimeClubList = () => {
   const { data: list, isLoading, isError } = useEggPopTenList();
   const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <OneTimeClubSkeleton />;
   }
 
   if (isError) {
@@ -23,7 +24,7 @@ const OneTimeClubList = () => {
   const displayedList = isLargeScreen ? list?.slice(0, 4) : list;
 
   return (
-    <div className={`relative mx-auto px-5 ${isLargeScreen ? "mt-5" : ""}`}>
+    <div className={`relative mx-auto ${isLargeScreen ? "mt-5 px-5" : ""}`}>
       <div className={`${isLargeScreen ? "w-[984px] h-[383px]" : "overflow-x-auto scrollbar-hide h-[330px]"}`}>
         <div className={`${isLargeScreen ? "w-full h-full flex gap-6" : "inline-flex items-center  px-4 pt-4"}`}>
           {displayedList?.map((club) => (

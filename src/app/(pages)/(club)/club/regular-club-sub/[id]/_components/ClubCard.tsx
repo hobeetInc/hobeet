@@ -60,6 +60,10 @@ const ClubCard = ({ notification, crewMembers }: ClubCardProps) => {
           width={102}
           height={102}
           className="object-cover w-[102px] h-[102px] rounded-[12px]"
+          quality={50}
+          sizes="102px"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
         />
       </div>
 
