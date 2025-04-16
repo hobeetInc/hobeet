@@ -56,7 +56,7 @@ const Category = ({ formData, setFormData }: EggClubProps) => {
   }
 
   return (
-    <div>
+    <div className="bg-pink-300 w-full overflow-y-auto">
       <Text variant="header-18" className="flex items-center mb-6 h-11">
         어떤 주제로 시작해볼까요?
       </Text>
@@ -68,7 +68,7 @@ const Category = ({ formData, setFormData }: EggClubProps) => {
             key={main.main_category_id}
             onClick={() => handleCategoryToggle(main.main_category_id)}
             className={` ${
-              isLargeScreen ? "w-[632px]" : "w-[358px]"
+              isLargeScreen ? "w-full max-w-[632px]" : "w-full max-w-[358px]"
             } rounded-xl border border-solid border-[#d9d9d9] hover:cursor-pointer ${
               formData.main_category_id === 0
                 ? "bg-white"

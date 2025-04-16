@@ -8,7 +8,7 @@ const Modal = ({ isOpen, children }: ModalProps) => {
   return (
     <>
       {/* 배경 오버레이 */}
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-40 h-[100vh]"></div>
 
       {/* 모달 컨테이너 */}
       <div className="fixed inset-0 flex items-center justify-center z-50">

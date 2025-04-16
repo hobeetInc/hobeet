@@ -274,23 +274,24 @@ const RegularContent = () => {
           </div>
         </Modal>
       ) : (
-        <div className="relative flex flex-col justify-center items-center">
+        <div className="relative h-[100vh] flex flex-col items-center bg-gray-600">
           <div className="w-[390px] h-12 flex justify-start">
             <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
               <ChevronLeft className="w-6 h-6 cursor-pointer" />
             </div>
           </div>
 
-          <div className="mx-4 flex flex-col">
+          <div className="w-full max-w-[358px] mx-4 flex flex-col">
             <ProgressBar currentStep={step} totalSteps={3} />
-            <div>{renderStep()}</div>
+            {renderStep()}
           </div>
-          <div className="fixed bottom-[50px] pt-10 left-0 right-0 px-4 flex justify-center items-center">
+          <div className="absolute bottom-0 left-0 right-0 px-4 flex justify-center">
             <Button
               onClick={throttledHandleNext}
               disabled={isNextButtonDisabled()}
               colorType={isNextButtonDisabled() ? undefined : "black"}
               borderType="circle"
+              className="w-full max-w-[358px]"
             >
               {step === 3 ? (isPending ? "생성 중..." : "모임 생성") : "다음"}
             </Button>
