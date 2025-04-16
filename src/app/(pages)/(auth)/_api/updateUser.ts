@@ -10,8 +10,12 @@ export const updateUser = async (
     user_birth: string;
   }
 ) => {
-  const { error } = await supabase.from("user").update(updateData).eq("user_id", userId);
+  try {
+    await supabase.from("user").update(updateData).eq("user_id", userId);
 
-  if (error) throw error;
-  return true;
+    return true;
+  } catch (error) {
+    console.error("유저 정보를 업데이트 하던 도중 오류가 발생했습니다:", error);
+    throw error;
+  }
 };

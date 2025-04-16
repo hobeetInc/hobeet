@@ -5,11 +5,12 @@ export const uploadProfileImage = async (userId: string, file: File) => {
   const sanitizedFileName = sanitizeFileName(file.name);
   const filePath = `public/${userId}/${sanitizedFileName}`;
 
-  const { error: uploadError } = await supabase.storage.from("avatars").upload(filePath, file);
-
-  if (uploadError) throw uploadError;
-
-  const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
-
-  return data.publicUrl;
+  try {
+    await supabase.storage.from("avatars").upload(filePath, file);
+    const { data } = await supabase.storage.from("avatars").getPublicUrl(filePath);
+    return data.publicUrl;
+  } catch (error) {
+    console.error("프로필 이미지 업로드 중 오류가 발생했습니다:", error);
+    throw error;
+  }
 };
