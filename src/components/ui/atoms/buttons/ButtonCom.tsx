@@ -1,7 +1,7 @@
 import { cn } from "@/utils/cn/util";
 import { cva, type VariantProps } from "class-variance-authority";
 import Text from "@/components/ui/atoms/text/Text";
-import useScreenSizeStore from "@/store/useScreenSizeStore";
+// import useScreenSizeStore from "@/store/useScreenSizeStore";
 
 const buttonVariants = cva(
   "flex justify-center items-center px-[10px] py-[14px] disabled:bg-gray-100 disabled:text-gray-500",
@@ -36,17 +36,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, Var
 }
 
 export const Button = ({ children, colorType, borderType, sizeType, className, ...props }: ButtonProps) => {
-  const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
+  // const isLargeScreen = useScreenSizeStore((state) => state.isLargeScreen);
 
   return (
-    <button
-      className={cn(
-        buttonVariants({ colorType, borderType, sizeType }),
-        sizeType === "large" && (isLargeScreen ? "w-[1024px] max-w-[1024px]" : "w-full max-w-[358px]"),
-        className
-      )}
-      {...props}
-    >
+    <button className={cn(buttonVariants({ colorType, borderType, sizeType }), sizeType, className)} {...props}>
       <Text variant="subtitle-16">{children}</Text>
     </button>
   );

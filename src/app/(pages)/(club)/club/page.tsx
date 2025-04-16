@@ -37,7 +37,7 @@ const TypeSelectionPage = () => {
     <>
       {isLargeScreen ? (
         <Modal isOpen={true}>
-          <div className="flex flex-col justify-center items-center mt-6">
+          <div className="relative h-full flex flex-col items-center mt-6 rounded-b-lg">
             <div className="w-full flex justify-between items-center mb-10 p-3">
               <div onClick={handleBack} className="inline-flex">
                 <ChevronLeft className="w-6 h-6 cursor-pointer" />
@@ -52,13 +52,12 @@ const TypeSelectionPage = () => {
               <div className="flex flex-col gap-6">
                 <div
                   onClick={() => setSelectedType("one-time")}
-                  className={`h-[104px] w-[656px] p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
+                  className={`h-[104px] w-full p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
                     selectedType === "one-time"
                       ? "bg-primary-500 border-primary-500"
                       : "bg-white border border-solid border-[#d9d9d9]"
                   }`}
                 >
-                  {/* 튜터님께 물어보기 */}
                   <Text
                     variant="subtitle-16"
                     className={`text-primary-900 ${selectedType === "one-time" ? "text-white" : ""}`}
@@ -75,7 +74,7 @@ const TypeSelectionPage = () => {
 
                 <div
                   onClick={() => setSelectedType("regular-time")}
-                  className={`h-[104px] w-[656px] p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
+                  className={`h-[104px] w-full p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
                     selectedType === "regular-time"
                       ? "bg-primary-900 border-primary-900 "
                       : "bg-white border border-solid border-[#d9d9d9]"
@@ -98,7 +97,7 @@ const TypeSelectionPage = () => {
                 </div>
               </div>
 
-              <div className="w-full mt-[280px]">
+              <div className="absolute w-full left-0 p-4 bottom-5">
                 {selectedType === null ? (
                   <Button disabled borderType="circle" sizeType="largeWeb">
                     다음
@@ -117,19 +116,21 @@ const TypeSelectionPage = () => {
           </div>
         </Modal>
       ) : (
-        <div className="relative flex flex-col justify-center items-center">
-          <div className="w-[390px] h-12 flex justify-start mb-10">
-            <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
-              <ChevronLeft className="w-6 h-6 cursor-pointer" />
+        <div className="w-full h-[100vh] flex justify-center px-4">
+          <div className="relative w-full h-full max-w-[358px] flex flex-col items-center">
+            <div className="w-full h-12 flex justify-start mb-10">
+              <div onClick={handleBack} className="h-12 w-12 p-3 inline-flex">
+                <ChevronLeft className="w-6 h-6 cursor-pointer" />
+              </div>
             </div>
-          </div>
-          <div className="mx-4">
-            <h1 className="text-header-18 mb-6 h-11">어떤 모임을 만들어볼까요?</h1>
+            <div className="w-full flex justify-start">
+              <h1 className="text-header-18 mb-6 h-11">어떤 모임을 만들어볼까요?</h1>
+            </div>
 
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 w-full">
               <div
                 onClick={() => setSelectedType("one-time")}
-                className={`h-[104px] w-[358px] p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
+                className={`h-[104px] w-full p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
                   selectedType === "one-time"
                     ? "bg-primary-500 border-primary-500"
                     : "bg-white border border-solid border-[#d9d9d9]"
@@ -152,7 +153,7 @@ const TypeSelectionPage = () => {
 
               <div
                 onClick={() => setSelectedType("regular-time")}
-                className={`h-[104px] w-[358px] p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
+                className={`h-[104px] w-full p-4 rounded-xl flex-col justify-center items-start gap-2 inline-flex hover:cursor-pointer ${
                   selectedType === "regular-time"
                     ? "bg-primary-900 border-primary-900 "
                     : "bg-white border border-solid border-[#d9d9d9]"
@@ -173,17 +174,17 @@ const TypeSelectionPage = () => {
               </div>
             </div>
 
-            <div className="w-[358px] fixed bottom-[50px]">
+            <div className="absolute bottom-5 right-0 left-0 w-full max-w-[358px]">
               {selectedType === null ? (
-                <Button disabled borderType="circle" className="mt-[308px]">
+                <Button disabled borderType="circle" className="w-full">
                   다음
                 </Button>
               ) : selectedType === "one-time" ? (
-                <Button onClick={handleNext} colorType="orange" borderType="circle" className="mt-[308px]">
+                <Button onClick={handleNext} colorType="orange" borderType="circle" className="w-full">
                   다음
                 </Button>
               ) : (
-                <Button onClick={handleNext} colorType="black" borderType="circle" className="mt-[308px]">
+                <Button onClick={handleNext} colorType="black" borderType="circle" className="w-full">
                   다음
                 </Button>
               )}
