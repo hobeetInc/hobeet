@@ -242,18 +242,31 @@ export default function Header({ children }) {
       )}
 
       <div className="flex items-center ml-auto gap-4 mr-3 my-3">
-        {(pathname === "/" || pathname === "/search" || pathname === "/myclublist") && (
-          <button
-            onClick={handleCreateMeet}
-            className="w-6 h-6 flex items-center justify-center"
-            aria-label="CreateMeet"
-          >
-            <BsPlusLg className="w-6 h-6" />
-          </button>
+        {userId ? (
+          <>
+            {(pathname === "/" || pathname === "/search" || pathname === "/myclublist") && (
+              <button
+                onClick={handleCreateMeet}
+                className="w-6 h-6 flex items-center justify-center"
+                aria-label="CreateMeet"
+              >
+                <BsPlusLg className="w-6 h-6" />
+              </button>
+            )}
+            <button onClick={handleAlarm} className="w-6 h-6 flex items-center justify-center" aria-label="AlarmBell">
+              <Icon name="bell" />
+            </button>
+          </>
+        ) : (
+          <div className="flex h-5 gap-9">
+            <button onClick={handleSignin}>
+              <Text variant="body-14">회원가입</Text>
+            </button>
+            <button onClick={handleLogin} className="mr-2">
+              <Text variant="body-14">로그인</Text>
+            </button>
+          </div>
         )}
-        <button onClick={handleAlarm} className="w-6 h-6 flex items-center justify-center" aria-label="AlarmBell">
-          <Icon name="bell" />
-        </button>
       </div>
     </header>
   );
