@@ -138,7 +138,7 @@ export default function Header({ children }) {
   };
 
   // 웹에서 헤더, 푸터 숨길 경로
-  const desktopNoHeaderFooterRoutes = ["/club"];
+  const desktopNoHeaderFooterRoutes = ["/club", "/signin"];
 
   const mobileNoHeaderRoutes = [/^\/category\/.*$/];
   const desktopNoHeaderRoutes = [];

@@ -49,17 +49,13 @@ const SigninPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center">
-      {isLargeScreen ? (
-        ""
-      ) : (
-        <div className="flex justify-start w-full h-12">
-          <div className="w-12 h-12 flex justify-center items-center">
-            <Link href="/">
-              <HiOutlineChevronLeft className="w-6 h-6" />
-            </Link>
-          </div>
+      <div className="flex justify-start w-full h-12">
+        <div className="w-12 h-12 flex justify-center items-center">
+          <Link href="/">
+            <HiOutlineChevronLeft className="w-6 h-6" />
+          </Link>
         </div>
-      )}
+      </div>
 
       <div className="lg:flex lg:flex-col lg:items-center lg:justify-between lg:h-[545px] lg:w-[480px] lg:mt-[20%]">
         <div className="fixed lg:relative top-[25vh] lg:top-0 left-1/2 lg:left-auto -translate-x-1/2 lg:transform-none flex flex-col items-center">
