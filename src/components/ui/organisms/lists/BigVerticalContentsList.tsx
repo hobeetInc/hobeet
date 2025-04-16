@@ -101,7 +101,7 @@ export const BigVerticalContentsEggClubList = ({
   wishListCount
 }) => {
   return (
-    <div className="w-full h-full flex-col justify-start items-start gap-3 inline-flex">
+    <div className="w-[228px] h-[383px] flex-col justify-start items-start gap-3 inline-flex">
       <div className="w-[228px] h-[228px] relative rounded-[16.7px] overflow-hidden">
         <Image
           width={228}

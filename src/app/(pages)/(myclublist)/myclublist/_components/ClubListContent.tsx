@@ -56,38 +56,38 @@ export default function ClubListContent({ activeTab }: ClubListContentProps) {
   }
 
   return (
-    <div className="w-full">
-      <div
-        className={`w-full flex ${isLargeScreen ? "flex-row gap-2" : "flex-col gap-2"} justify-start items-start px-4`}
-      >
-        {/* OneTime 클럽 조건부 렌더링 */}
-        {isLargeScreen
-          ? filteredClubs.oneTime.map((club) => (
-              <BigVerticalContentsEggPopList
-                key={club.egg_pop_id}
-                eggPop={club}
-                hostName={club.host_name}
-                hostImage={club.host_image}
-                memberCount={club.member_count}
-              />
-            ))
-          : filteredClubs.oneTime.map((club) => <OneTimeClubCard key={club.egg_pop_id} club={club} />)}
+    <div
+      className={`w-full grid ${
+        isLargeScreen ? "grid-cols-4 gap-2" : "grid-cols-1 gap-2"
+      } justify-start items-start px-4`}
+    >
+      {/* OneTime 클럽 조건부 렌더링 */}
+      {isLargeScreen
+        ? filteredClubs.oneTime.map((club) => (
+            <BigVerticalContentsEggPopList
+              key={club.egg_pop_id}
+              eggPop={club}
+              hostName={club.host_name}
+              hostImage={club.host_image}
+              memberCount={club.member_count}
+            />
+          ))
+        : filteredClubs.oneTime.map((club) => <OneTimeClubCard key={club.egg_pop_id} club={club} />)}
 
-        {/* Regular 클럽 조건부 렌더링 */}
-        {isLargeScreen
-          ? filteredClubs.regular.map((club) => (
-              <BigVerticalContentsEggClubList
-                key={club.egg_club_id}
-                eggClub={club}
-                hostName={club.host_name}
-                hostImage={club.host_image}
-                memberCount={club.member_count}
-                isWished={club.is_wished}
-                wishListCount={club.wish_list_count}
-              />
-            ))
-          : filteredClubs.regular.map((club) => <RegularClubCard key={club.egg_club_id} club={club} />)}
-      </div>
+      {/* Regular 클럽 조건부 렌더링 */}
+      {isLargeScreen
+        ? filteredClubs.regular.map((club) => (
+            <BigVerticalContentsEggClubList
+              key={club.egg_club_id}
+              eggClub={club}
+              hostName={club.host_name}
+              hostImage={club.host_image}
+              memberCount={club.member_count}
+              isWished={club.is_wished}
+              wishListCount={club.wish_list_count}
+            />
+          ))
+        : filteredClubs.regular.map((club) => <RegularClubCard key={club.egg_club_id} club={club} />)}
     </div>
   );
 }
