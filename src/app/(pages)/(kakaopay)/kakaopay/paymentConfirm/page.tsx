@@ -54,7 +54,7 @@ const PaymentConfirmPage = () => {
       };
 
   return (
-    <div className="lg:w-full">
+    <div className="lg:w-full mt-[3rem] lg:mt-0">
       {isLargeScreen ? (
         <div className="mt-5 p-5">
           <Text variant="header-20" className="text-gray-900">
@@ -82,13 +82,14 @@ const PaymentConfirmPage = () => {
 
       <div className="mt-5">
         <div className="flex justify-center items-center lg:justify-start">
-          <div className="flex items-center gap-2 mb-6 w-[390px] px-4">
+          <div className="flex items-center justify-start gap-2 mb-6 w-[360px] lg:w-full">
             <div className="overflow-hidden w-[88px] h-[88px] flex justify-center items-center rounded-xl lg:w-[144px] lg:h-[144px]">
               {clubInfo.image ? (
                 <Image
                   src={clubInfo.image}
                   alt="모임 이미지"
-                  fill
+                  width={88}
+                  height={88}
                   priority
                   className="rounded-xl object-cover w-[88px] h-[88px] lg:w-[144px] lg:h-[144px]"
                   sizes="(max-width: 1023px) 88px, 144px"
@@ -105,16 +106,16 @@ const PaymentConfirmPage = () => {
               <Text variant={isLargeScreen ? "subtitle-16" : "subtitle-14"} className="mb-[5px]">
                 {clubInfo.name}
               </Text>
-              <div className="flex items-center">
+              <div className="flex items-center gap-2">
                 <div className="mr-1 w-4 h-4">
                   <Icon name="location" />
                 </div>
 
-                <Text variant="body_medium-14" className="text-gray-600 mr-2">
+                <Text variant="body_medium-14" className="text-gray-600">
                   {CustomAddress(clubInfo.location || "")}
                 </Text>
 
-                <Text variant="body_medium-14" className="text-gray-600 mr-2">
+                <Text variant="body_medium-14" className="text-gray-600">
                   {customDateNotWeek(clubInfo.dateTime || "").date}
                 </Text>
 
