@@ -68,15 +68,15 @@ const EggPopPayDetail = () => {
                         <Icon name="location" />
                       </div>
 
-                      <Text variant="body_medium-14" className="text-gray-400">
+                      <Text variant="body_medium-14" className="text-gray-400 whitespace-nowrap">
                         {CustomAddress(oneTimeClub.egg_pop.egg_pop_location)}
                       </Text>
                     </div>
 
-                    <Text variant="body_medium-14" className="text-gray-400">
+                    <Text variant="body_medium-14" className="text-gray-400 whitespace-nowrap">
                       {customDateNotWeek(oneTimeClub.egg_pop.egg_pop_date_time).date}
                     </Text>
-                    <Text variant="body_medium-14" className="text-gray-400">
+                    <Text variant="body_medium-14" className="text-gray-400 whitespace-nowrap">
                       {customDateNotWeek(oneTimeClub.egg_pop.egg_pop_date_time).time}
                     </Text>
                   </div>

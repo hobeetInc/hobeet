@@ -181,9 +181,15 @@ const PaymentSuccessPage = () => {
                     <Icon name="location" />
                   </div>
 
-                  <Text variant="body_medium-14">{CustomAddress(clubInfo.location || "주소 정보 없음")}</Text>
-                  <Text variant="body_medium-14">{customDateNotWeek(clubInfo.dateTime || "날짜 정보 없음").date}</Text>
-                  <Text variant="body_medium-14">{customDateNotWeek(clubInfo.dateTime || "날짜 정보 없음").time}</Text>
+                  <Text variant="body_medium-14" className="whitespace-nowrap">
+                    {CustomAddress(clubInfo.location || "주소 정보 없음")}
+                  </Text>
+                  <Text variant="body_medium-14" className="whitespace-nowrap">
+                    {customDateNotWeek(clubInfo.dateTime || "날짜 정보 없음").date}
+                  </Text>
+                  <Text variant="body_medium-14" className="whitespace-nowrap">
+                    {customDateNotWeek(clubInfo.dateTime || "날짜 정보 없음").time}
+                  </Text>
                 </div>
               </div>
             </div>

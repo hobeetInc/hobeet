@@ -70,15 +70,15 @@ const EggDayPayDetail = () => {
                         <Icon name="location" />
                       </div>
 
-                      <Text variant="body_medium-14" className="text-gray-400">
+                      <Text variant="body_medium-14" className="text-gray-400 whitespace-nowrap">
                         {CustomAddress(notification.egg_day.egg_day_location)}
                       </Text>
                     </div>
 
-                    <Text variant="body_medium-14" className="text-gray-400">
+                    <Text variant="body_medium-14" className="text-gray-400 whitespace-nowrap">
                       {customDateNotWeek(notification.egg_day.egg_day_date_time).date}
                     </Text>
-                    <Text variant="body_medium-14" className="text-gray-400">
+                    <Text variant="body_medium-14" className="text-gray-400 whitespace-nowrap">
                       {customDateNotWeek(notification.egg_day.egg_day_date_time).time}
                     </Text>
                   </div>
