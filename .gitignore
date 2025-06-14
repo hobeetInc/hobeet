@@ -53,3 +53,5 @@ certificates
 !.yarn/sdks
 !.yarn/versions
 .yarn/unplugged/
+public/sw.js
+public/workbox-*.js
