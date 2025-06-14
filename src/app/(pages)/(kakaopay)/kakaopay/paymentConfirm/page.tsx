@@ -88,8 +88,9 @@ const PaymentConfirmPage = () => {
                 <Image
                   src={clubInfo.image}
                   alt="모임 이미지"
-                  fill
                   priority
+                  width={88}
+                  height={88}
                   className="rounded-xl object-cover w-[88px] h-[88px] lg:w-[144px] lg:h-[144px]"
                   sizes="(max-width: 1023px) 88px, 144px"
                   placeholder="blur"
@@ -110,15 +111,15 @@ const PaymentConfirmPage = () => {
                   <Icon name="location" />
                 </div>
 
-                <Text variant="body_medium-14" className="text-gray-600 mr-2">
+                <Text variant="body_medium-14" className="text-gray-600 mr-2 whitespace-nowrap">
                   {CustomAddress(clubInfo.location || "")}
                 </Text>
 
-                <Text variant="body_medium-14" className="text-gray-600 mr-2">
+                <Text variant="body_medium-14" className="text-gray-600 mr-2 whitespace-nowrap">
                   {customDateNotWeek(clubInfo.dateTime || "").date}
                 </Text>
 
-                <Text variant="body_medium-14" className="text-gray-600">
+                <Text variant="body_medium-14" className="text-gray-600 whitespace-nowrap">
                   {customDateNotWeek(clubInfo.dateTime || "").time}
                 </Text>
               </div>

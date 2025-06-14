@@ -164,7 +164,8 @@ const PaymentSuccessPage = () => {
                 <Image
                   src={clubInfo.image || ""}
                   alt="모임 이미지"
-                  fill
+                  width={88}
+                  height={88}
                   className="rounded-lg mr-2 object-cover w-[88px] h-[88px] lg:w-[144px] lg:h-[144px]"
                   sizes="(max-width: 1023px) 88px, 144px"
                   placeholder="blur"
