@@ -110,15 +110,15 @@ const PaymentConfirmPage = () => {
                   <Icon name="location" />
                 </div>
 
-                <Text variant="body_medium-14" className="text-gray-600 mr-2">
+                <Text variant="body_medium-14" className="text-gray-600 mr-2 whitespace-nowrap">
                   {CustomAddress(clubInfo.location || "")}
                 </Text>
 
-                <Text variant="body_medium-14" className="text-gray-600 mr-2">
+                <Text variant="body_medium-14" className="text-gray-600 mr-2 whitespace-nowrap">
                   {customDateNotWeek(clubInfo.dateTime || "").date}
                 </Text>
 
-                <Text variant="body_medium-14" className="text-gray-600">
+                <Text variant="body_medium-14" className="text-gray-600 whitespace-nowrap">
                   {customDateNotWeek(clubInfo.dateTime || "").time}
                 </Text>
               </div>
