@@ -88,10 +88,10 @@ const PaymentConfirmPage = () => {
                 <Image
                   src={clubInfo.image}
                   alt="모임 이미지"
-                  fill
+                  width={isLargeScreen ? 144 : 88}
+                  height={isLargeScreen ? 144 : 88}
                   priority
                   className="rounded-xl object-cover w-[88px] h-[88px] lg:w-[144px] lg:h-[144px]"
-                  sizes="(max-width: 1023px) 88px, 144px"
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
                 />

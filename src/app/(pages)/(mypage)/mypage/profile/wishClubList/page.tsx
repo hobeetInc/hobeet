@@ -67,9 +67,9 @@ const WishClubListPage = () => {
                     <Image
                       src={item.egg_club.egg_club_image}
                       alt={item.egg_club.egg_club_name}
-                      fill
+                      width={isLargeScreen ? 228 : 174}
+                      height={isLargeScreen ? 228 : 174}
                       className="object-cover rounded-[12px]"
-                      sizes="(max-width: 1023px) 174px, 228px"
                       placeholder="blur"
                       blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
                     />

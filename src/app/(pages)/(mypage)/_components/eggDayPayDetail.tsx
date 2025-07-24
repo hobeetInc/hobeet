@@ -52,9 +52,9 @@ const EggDayPayDetail = () => {
                     <Image
                       src={notification.egg_day.egg_day_image}
                       alt="payList"
-                      fill
+                      width={isLargeScreen ? 144 : 88}
+                      height={isLargeScreen ? 144 : 88}
                       className="w-[88px] h-[88px] bg-gray-100 rounded-xl"
-                      sizes="(max-width: 1023px) 88px, 144px"
                       placeholder="blur"
                       blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
                     />

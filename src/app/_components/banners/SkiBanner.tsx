@@ -17,8 +17,8 @@ export default function SkiBanner({ isLargeScreen }: BannerProps) {
           src={banner3}
           alt="Frame 2307"
           className="object-cover rounded-[12px]"
-          sizes="984px"
-          fill
+          width={984}
+          height={isLargeScreen ? 473 : 300}
           placeholder="blur"
         />
       </div>

@@ -14,8 +14,8 @@ export default function WinterCampingBanner({ isLargeScreen }: BannerProps) {
           src={banner2}
           alt="Rectangle 20"
           className="object-cover rounded-[12px]"
-          sizes="984px"
-          fill
+          width={984}
+          height={isLargeScreen ? 473 : 300}
           placeholder="blur"
         />
         <Text

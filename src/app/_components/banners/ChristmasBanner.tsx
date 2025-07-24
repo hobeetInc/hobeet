@@ -18,12 +18,12 @@ const ChristmasBanner = memo(function ChristmasBanner({ isLargeScreen }: BannerP
         <Image
           src={banner1}
           alt="MainBigBanner"
-          fill
+          width={984}
+          height={isLargeScreen ? 436 : 300}
           priority
           placeholder="blur"
           quality={75}
           loading="eager"
-          sizes="984px"
         />
         <Text
           variant="subtitle-18"
