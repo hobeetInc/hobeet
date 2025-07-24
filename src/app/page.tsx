@@ -43,37 +43,39 @@ export default function Home() {
 
   return (
     <div className="w-full">
-      <ChristmasBanner isLargeScreen={isLargeScreen} />
+      <ChristmasBanner isLargeScreen={isLargeScreen} aria-label="크리스마스 특별 모임 배너" />
       <Suspense fallback={<LoadingSkeleton />}>
-        <div className="flex flex-col items-start gap-[8px]">
+        <section aria-labelledby="category-title" className="flex flex-col items-start gap-[8px]">
           <Text variant="subtitle-18" className="mt-[32px] ml-[16px]">
             이런 모임 어때요?
           </Text>
-        </div>
+        </section>
         <CategorySlider />
         <div className="flex justify-between items-center mt-9 mx-4">
           <Text variant="subtitle-18">따끈따끈 에그팝</Text>
-          <div
+          <button
             className="w-[24px] h-[24px] flex items-center hover:cursor-pointer"
             onClick={() => router.push("/club/list/onetime")}
+            aria-label="원타임 클럽 더보기"
           >
-            <MdOutlineKeyboardArrowRight className="w-6 h-6" />
-          </div>
+            <MdOutlineKeyboardArrowRight className="w-6 h-6" aria-hidden="true" />
+          </button>
         </div>
         <OneTimeClubList />
-        <WinterCampingBanner isLargeScreen={isLargeScreen} />
+        <WinterCampingBanner isLargeScreen={isLargeScreen} aria-label="겨울 캠핑 모임 배너" />
         <div className="flex justify-between items-center gap-2 mt-16 mx-4">
           <Text variant="subtitle-18">프레쉬 에그클럽</Text>
-          <div
+          <button
             className="flex w-[24px] h-[24px]  flex-col items-start hover:cursor-pointer"
             onClick={() => router.push("/club/list/regular")}
+            aria-label="정기 클럽 더보기"
           >
-            <MdOutlineKeyboardArrowRight className="w-6 h-6" />
-          </div>
+            <MdOutlineKeyboardArrowRight className="w-6 h-6" aria-hidden="true" />
+          </button>
         </div>
         <RegularClubList />
 
-        <SkiBanner isLargeScreen={isLargeScreen} />
+        <SkiBanner isLargeScreen={isLargeScreen} aria-label="스키 모임 배너" />
 
         <div className="w-full">
           <Text variant="subtitle-18" className="mt-[20px] mx-4">
