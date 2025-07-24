@@ -62,9 +62,9 @@ export default function ApproveMembersPage() {
     <div className="flex flex-col justify-center items-center w-full">
       <div className="fixed top-0 right-0 left-0 flex w-full h-12 bg-white items-center">
         <div className="left-0 m-3">
-          <div onClick={handleBack}>
+          <button onClick={handleBack}>
             <HiOutlineChevronLeft className="w-6 h-6" />
-          </div>
+          </button>
         </div>
         <div className="flex flex-grow justify-center">
           <Text variant="header-16" className="text-gray-900">
